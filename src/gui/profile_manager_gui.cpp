@@ -32,7 +32,7 @@
     #include <QDesktopServices>
 #endif
 
-DlgProfileManager::DlgProfileManager(DlgOptions *_pDlgOptions, QWidget *parent) : QDialog(parent), pDlgOptions(_pDlgOptions)
+ProfileManagerGui::ProfileManagerGui(OptionsGui *_pOptionsGui, QWidget *parent) : QDialog(parent), pOptionsGui(_pOptionsGui)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -45,7 +45,7 @@ DlgProfileManager::DlgProfileManager(DlgOptions *_pDlgOptions, QWidget *parent) 
     createSignals();
 }
 
-void DlgProfileManager::createGui()
+void ProfileManagerGui::createGui()
 {
     ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
     ui.pushButton_edit->setIcon(QIcon(":/images/oxygen/16x16/user-group-properties.png"));
@@ -60,7 +60,7 @@ void DlgProfileManager::createGui()
     ui.pushButton_remove->setEnabled(false);
 }
 
-void DlgProfileManager::setDefaultValues()
+void ProfileManagerGui::setDefaultValues()
 {
     // create path
     createPath();
@@ -69,7 +69,7 @@ void DlgProfileManager::setDefaultValues()
     refreshProfilesList();
 }
 
-void DlgProfileManager::createSignals()
+void ProfileManagerGui::createSignals()
 {
     connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked()));
     connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(addProfile()));
@@ -78,13 +78,13 @@ void DlgProfileManager::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgProfileManager::refreshAllLists()
+void ProfileManagerGui::refreshAllLists()
 {
     refreshProfilesList(); // here
-    pDlgOptions->refreshProfilesList(); // in options
+    pOptionsGui->refreshProfilesList(); // in options
 }
 
-bool DlgProfileManager::existProfile(const QString &strExistProfile)
+bool ProfileManagerGui::existProfile(const QString &strExistProfile)
 {
     QDir dir(path);
     dir.setSorting(QDir::Name);
@@ -100,7 +100,7 @@ bool DlgProfileManager::existProfile(const QString &strExistProfile)
     return false;
 }
 
-void DlgProfileManager::createPath()
+void ProfileManagerGui::createPath()
 {
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
@@ -116,7 +116,7 @@ void DlgProfileManager::createPath()
         QDir().mkpath(path);
 }
 
-void DlgProfileManager::refreshProfilesList()
+void ProfileManagerGui::refreshProfilesList()
 {
     // clear
     ui.listWidget->clear();
@@ -132,7 +132,7 @@ void DlgProfileManager::refreshProfilesList()
     }
 }
 
-void DlgProfileManager::itemClicked()
+void ProfileManagerGui::itemClicked()
 {
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
 
@@ -144,18 +144,18 @@ void DlgProfileManager::itemClicked()
     ui.pushButton_remove->setEnabled(true);
 }
 
-void DlgProfileManager::addProfile()
+void ProfileManagerGui::addProfile()
 {
-    DlgProfileAdd(this).exec();
+    ProfileAddGui(this).exec();
 }
 
-void DlgProfileManager::editProfile()
+void ProfileManagerGui::editProfile()
 {
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
-    DlgProfileEdit(strNick).exec();
+    ProfileEditGui(strNick).exec();
 }
 
-void DlgProfileManager::removeProfile()
+void ProfileManagerGui::removeProfile()
 {
     if (ui.listWidget->count() <= 1)
     {
@@ -172,6 +172,6 @@ void DlgProfileManager::removeProfile()
         refreshAllLists();
 
         if (profileName == Settings::instance()->get("current_profile"))
-            pDlgOptions->setCurrentProfile(0);
+            pOptionsGui->setCurrentProfile(0);
     }
 }

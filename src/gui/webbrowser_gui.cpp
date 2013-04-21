@@ -22,7 +22,7 @@
 #include <QUrl>
 #include "webbrowser_gui.h"
 
-DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent), ui(new Ui::uiWebBrowser)
+WebBrowserGui::WebBrowserGui(const QUrl &url, QWidget *parent) : QDialog(parent), ui(new Ui::uiWebBrowser)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
@@ -47,12 +47,12 @@ DlgWebBrowser::DlgWebBrowser(const QUrl &url, QWidget *parent) : QDialog(parent)
     ui->webView->load(url);
 }
 
-DlgWebBrowser::~DlgWebBrowser()
+WebBrowserGui::~WebBrowserGui()
 {
     delete ui;
 }
 
-void DlgWebBrowser::loadFinished()
+void WebBrowserGui::loadFinished()
 {
     setWindowTitle(ui->webView->title());
 }

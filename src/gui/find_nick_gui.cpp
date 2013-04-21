@@ -26,7 +26,7 @@
 #include "find_nick.h"
 #include "find_nick_gui.h"
 
-DlgFindNick::DlgFindNick(QWidget *parent) : QDialog(parent)
+FindNickGui::FindNickGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -38,7 +38,7 @@ DlgFindNick::DlgFindNick(QWidget *parent) : QDialog(parent)
     createSignals();
 }
 
-void DlgFindNick::createGui()
+void FindNickGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
@@ -85,7 +85,7 @@ void DlgFindNick::createGui()
     ui.lineEdit_search->setFocus();
 }
 
-void DlgFindNick::createSignals()
+void FindNickGui::createSignals()
 {
     connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_search, SIGNAL(clicked()), this, SLOT(buttonFind()));
@@ -93,7 +93,7 @@ void DlgFindNick::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgFindNick::buttonFind()
+void FindNickGui::buttonFind()
 {
     ui.lineEdit_search->setFocus();
 
@@ -109,7 +109,7 @@ void DlgFindNick::buttonFind()
         ui.listWidget_nicks->clear();
 }
 
-void DlgFindNick::buttonClear()
+void FindNickGui::buttonClear()
 {
     ui.lineEdit_search->setFocus();
 
@@ -119,7 +119,7 @@ void DlgFindNick::buttonClear()
     ui.toolButton_options->setEnabled(false);
 }
 
-void DlgFindNick::refreshList()
+void FindNickGui::refreshList()
 {
     // ready
     if (FindNick::instance()->getStatus() != StatusCompleted)
@@ -148,13 +148,13 @@ void DlgFindNick::refreshList()
     ui.toolButton_options->setEnabled(false);
 }
 
-void DlgFindNick::itemClicked(QListWidgetItem *)
+void FindNickGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.toolButton_options->isEnabled())
         ui.toolButton_options->setEnabled(true);
 }
 
-void DlgFindNick::priv()
+void FindNickGui::priv()
 {
     if (ui.listWidget_nicks->selectedItems().size() != 0)
     {
@@ -164,7 +164,7 @@ void DlgFindNick::priv()
     }
 }
 
-void DlgFindNick::whois()
+void FindNickGui::whois()
 {
     if (ui.listWidget_nicks->selectedItems().size() != 0)
     {
@@ -174,7 +174,7 @@ void DlgFindNick::whois()
     }
 }
 
-void DlgFindNick::invite()
+void FindNickGui::invite()
 {
     if (ui.listWidget_nicks->selectedItems().size() != 0)
     {

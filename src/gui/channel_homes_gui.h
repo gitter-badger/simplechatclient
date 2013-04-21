@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_channel_homes.h"
 
-class DlgChannelHomes : public QDialog
+class ChannelHomesGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelHomes(QWidget *parent = 0);
+    ChannelHomesGui(QWidget *parent = 0);
 
 private:
     Ui::uiChannelHomes ui;

@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_ignore.h"
 
-class DlgIgnore : public QDialog
+class IgnoreGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgIgnore(QWidget *parent = 0);
+    IgnoreGui(QWidget *parent = 0);
 
 private:
     Ui::uiIgnore ui;

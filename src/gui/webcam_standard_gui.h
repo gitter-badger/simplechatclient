@@ -24,12 +24,12 @@
 #include "ui_webcam_standard.h"
 class SimpleRankWidget;
 
-class DlgWebcamStandard : public QDialog
+class WebcamStandardGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebcamStandard();
-    virtual ~DlgWebcamStandard();
+    WebcamStandardGui();
+    virtual ~WebcamStandardGui();
 
 public slots:
     void updateImage(const QByteArray &image);

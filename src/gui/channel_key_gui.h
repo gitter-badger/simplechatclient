@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_channel_key.h"
 
-class DlgChannelKey : public QDialog
+class ChannelKeyGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelKey(const QString &_strChannel, QWidget *parent = 0);
+    ChannelKeyGui(const QString &_strChannel, QWidget *parent = 0);
 
 private:
     Ui::uiChannelKey ui;

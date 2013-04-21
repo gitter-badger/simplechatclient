@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_options.h"
 
-class DlgOptions : public QDialog
+class OptionsGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOptions(QWidget *parent = 0);
+    OptionsGui(QWidget *parent = 0);
     void setCurrentProfile(int row);
     void refreshProfilesList();
 

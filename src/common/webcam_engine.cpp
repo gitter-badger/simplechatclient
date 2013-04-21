@@ -66,7 +66,7 @@ void WebcamEngine::setUser(const QString &_strNick)
     strNick = _strNick;
 }
 
-/* from WebcamNetwork to DlgWebcam */
+/* from WebcamNetwork to WebcamGui */
 void WebcamEngine::slotError(const QString &strError)
 {
     emit error(strError);

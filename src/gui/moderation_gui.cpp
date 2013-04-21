@@ -26,7 +26,7 @@
 #include "settings.h"
 #include "moderation_gui.h"
 
-DlgModeration::DlgModeration(const QString &_strCurrentChannel, QWidget *parent) : QDialog(parent), strCurrentChannel(_strCurrentChannel)
+ModerationGui::ModerationGui(const QString &_strCurrentChannel, QWidget *parent) : QDialog(parent), strCurrentChannel(_strCurrentChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -41,7 +41,7 @@ DlgModeration::DlgModeration(const QString &_strCurrentChannel, QWidget *parent)
     QTimer::singleShot(200, this, SLOT(refreshMessages())); // 0.2 sec
 }
 
-void DlgModeration::createGui()
+void ModerationGui::createGui()
 {
     ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
@@ -53,14 +53,14 @@ void DlgModeration::createGui()
     ui.label_channel->setText(strCurrentChannel);
 }
 
-void DlgModeration::createSignals()
+void ModerationGui::createSignals()
 {
     connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonAccept()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgModeration::refreshMessages()
+void ModerationGui::refreshMessages()
 {
     QList<OnetModerateMessage> lModerateMessages = Channel::instance()->getModerateMessages(strCurrentChannel);
     int listWidgetCount = ui.listWidget_msg->count();
@@ -92,7 +92,7 @@ void DlgModeration::refreshMessages()
     QTimer::singleShot(1000*1, this, SLOT(refreshMessages())); // 1 sec
 }
 
-void DlgModeration::removeSelected()
+void ModerationGui::removeSelected()
 {
     if (ui.listWidget_msg->selectedItems().isEmpty())
         return;
@@ -111,7 +111,7 @@ void DlgModeration::removeSelected()
     }
 }
 
-void DlgModeration::buttonAccept()
+void ModerationGui::buttonAccept()
 {
     if (ui.listWidget_msg->selectedItems().isEmpty())
         return;
@@ -138,7 +138,7 @@ void DlgModeration::buttonAccept()
     removeSelected();
 }
 
-void DlgModeration::buttonRemove()
+void ModerationGui::buttonRemove()
 {
     // remove
     removeSelected();

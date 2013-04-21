@@ -27,7 +27,7 @@
 #include "channel_favourites.h"
 #include "channel_favourites_gui.h"
 
-DlgChannelFavourites::DlgChannelFavourites(QWidget *parent) : QDialog(parent)
+ChannelFavouritesGui::ChannelFavouritesGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -41,7 +41,7 @@ DlgChannelFavourites::DlgChannelFavourites(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-void DlgChannelFavourites::createGui()
+void ChannelFavouritesGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
@@ -60,7 +60,7 @@ void DlgChannelFavourites::createGui()
     ui.toolButton_options->setMenu(optionsMenu);
 }
 
-void DlgChannelFavourites::createSignals()
+void ChannelFavouritesGui::createSignals()
 {
     connect(ui.pushButton_add, SIGNAL(clicked()), this, SLOT(buttonAdd()));
     connect(ui.pushButton_remove, SIGNAL(clicked()), this, SLOT(buttonRemove()));
@@ -68,7 +68,7 @@ void DlgChannelFavourites::createSignals()
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
 }
 
-void DlgChannelFavourites::refresh()
+void ChannelFavouritesGui::refresh()
 {
     ui.listWidget_channels->clear();
 
@@ -94,13 +94,13 @@ void DlgChannelFavourites::refresh()
     }
 }
 
-void DlgChannelFavourites::itemClicked(QListWidgetItem *)
+void ChannelFavouritesGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.toolButton_options->isEnabled())
         ui.toolButton_options->setEnabled(true);
 }
 
-void DlgChannelFavourites::buttonAdd()
+void ChannelFavouritesGui::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Change your favorite channels"), tr("Enter the name of the new channel to add to favorites:"), QLineEdit::Normal, QString::null, &ok);
@@ -113,7 +113,7 @@ void DlgChannelFavourites::buttonAdd()
     }
 }
 
-void DlgChannelFavourites::buttonRemove()
+void ChannelFavouritesGui::buttonRemove()
 {
     QString strSelected;
     if (ui.listWidget_channels->selectedItems().size() != 0)
@@ -130,7 +130,7 @@ void DlgChannelFavourites::buttonRemove()
     }
 }
 
-void DlgChannelFavourites::join()
+void ChannelFavouritesGui::join()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {

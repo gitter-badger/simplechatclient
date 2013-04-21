@@ -24,7 +24,7 @@
 #include "themes.h"
 #include "themes_gui.h"
 
-DlgThemes::DlgThemes(QWidget *parent) : QDialog(parent)
+ThemesGui::ThemesGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -37,7 +37,7 @@ DlgThemes::DlgThemes(QWidget *parent) : QDialog(parent)
     createSignals();
 }
 
-void DlgThemes::createGui()
+void ThemesGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
@@ -48,7 +48,7 @@ void DlgThemes::createGui()
     ui.listWidget->addItems(lThemes);
 }
 
-void DlgThemes::setDefaultValues()
+void ThemesGui::setDefaultValues()
 {
     QString strCurrentTheme = Settings::instance()->get("themes");
 
@@ -79,13 +79,13 @@ void DlgThemes::setDefaultValues()
     }
 }
 
-void DlgThemes::createSignals()
+void ThemesGui::createSignals()
 {
     connect(ui.listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(changeTheme(QModelIndex)));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgThemes::changeTheme(QModelIndex index)
+void ThemesGui::changeTheme(QModelIndex index)
 {
     QString strTheme = "Standard";
 

@@ -29,12 +29,12 @@ class QNetworkAccessManager;
 class QNetworkCookieJar;
 QT_END_NAMESPACE
 
-class DlgUpdate : public QDialog
+class UpdateGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUpdate(QWidget *parent = 0);
-    virtual ~DlgUpdate();
+    UpdateGui(QWidget *parent = 0);
+    virtual ~UpdateGui();
 
 private:
     Ui::uiUpdate ui;

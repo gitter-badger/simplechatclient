@@ -27,7 +27,7 @@
 #include "utils.h"
 #include "my_stats_gui.h"
 
-DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
+MyStatsGui::MyStatsGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -49,12 +49,12 @@ DlgMyStats::DlgMyStats(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-DlgMyStats::~DlgMyStats()
+MyStatsGui::~MyStatsGui()
 {
     delete pSimpleStatsWidget;
 }
 
-void DlgMyStats::createGui()
+void MyStatsGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
@@ -65,12 +65,12 @@ void DlgMyStats::createGui()
     ui.label_average_time->setText(tr("Average time:"));
 }
 
-void DlgMyStats::createSignals()
+void MyStatsGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgMyStats::refresh()
+void MyStatsGui::refresh()
 {
     QHashIterator <QString, QString> is(MyStats::instance()->getAll());
     while (is.hasNext())

@@ -21,7 +21,7 @@
 #include "chat_view.h"
 #include "find_text_gui.h"
 
-DlgFindText::DlgFindText(ChatView *_chatView, QWidget *parent) : QDialog(parent), chatView(_chatView)
+FindTextGui::FindTextGui(ChatView *_chatView, QWidget *parent) : QDialog(parent), chatView(_chatView)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -34,7 +34,7 @@ DlgFindText::DlgFindText(ChatView *_chatView, QWidget *parent) : QDialog(parent)
     createSignals();
 }
 
-void DlgFindText::createGui()
+void FindTextGui::createGui()
 {
     ui.label_find->setText(tr("Find what:"));
     ui.checkBox_highlight_all_occurrences->setText(tr("Highlight all occurrences"));
@@ -51,13 +51,13 @@ void DlgFindText::createGui()
     ui.radioButton_direction_up->setChecked(true);
 }
 
-void DlgFindText::createSignals()
+void FindTextGui::createSignals()
 {
     connect(ui.pushButton_find_next, SIGNAL(clicked()), this, SLOT(buttonFindNext()));
     connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
 }
 
-void DlgFindText::buttonFindNext()
+void FindTextGui::buttonFindNext()
 {
     QString strText = ui.lineEdit_find->text();
     bool bHighlightAllOccurrences = ui.checkBox_highlight_all_occurrences->isChecked();

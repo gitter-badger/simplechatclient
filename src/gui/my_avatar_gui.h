@@ -26,12 +26,12 @@
 #include "avatar_client.h"
 #include "ui_my_avatar.h"
 
-class DlgMyAvatar : public QDialog
+class MyAvatarGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyAvatar(QWidget *parent = 0);
-    virtual ~DlgMyAvatar();
+    MyAvatarGui(QWidget *parent = 0);
+    virtual ~MyAvatarGui();
 
 private:
     Ui::uiMyAvatar ui;

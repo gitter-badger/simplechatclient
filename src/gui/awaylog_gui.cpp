@@ -24,7 +24,7 @@
 #include "core.h"
 #include "awaylog_gui.h"
 
-DlgAwaylog::DlgAwaylog(QWidget *parent) : QDialog(parent)
+AwaylogGui::AwaylogGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -38,7 +38,7 @@ DlgAwaylog::DlgAwaylog(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-void DlgAwaylog::createGui()
+void AwaylogGui::createGui()
 {
     ui.pushButton_copy->setEnabled(false);
 
@@ -51,7 +51,7 @@ void DlgAwaylog::createGui()
     ui.pushButton_close->setText(tr("Close"));
 }
 
-void DlgAwaylog::createSignals()
+void AwaylogGui::createSignals()
 {
     connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_clear, SIGNAL(clicked()), this, SLOT(buttonClear()));
@@ -59,20 +59,20 @@ void DlgAwaylog::createSignals()
     connect(ui.pushButton_close, SIGNAL(clicked()), this, SLOT(close()));
 }
 
-void DlgAwaylog::refresh()
+void AwaylogGui::refresh()
 {
     QList<QString> list = Awaylog::instance()->get();
     foreach (const QString &strAwaylog, list)
         ui.listWidget->addItem(strAwaylog);
 }
 
-void DlgAwaylog::buttonClear()
+void AwaylogGui::buttonClear()
 {
     Awaylog::instance()->clear();
     ui.listWidget->clear();
 }
 
-void DlgAwaylog::buttonCopy()
+void AwaylogGui::buttonCopy()
 {
     if (ui.listWidget->selectedItems().size() != 0)
     {
@@ -83,7 +83,7 @@ void DlgAwaylog::buttonCopy()
     }
 }
 
-void DlgAwaylog::itemClicked(QListWidgetItem *)
+void AwaylogGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.pushButton_copy->isEnabled())
         ui.pushButton_copy->setEnabled(true);

@@ -30,7 +30,7 @@
 
 #include "my_avatar_gui.h"
 
-DlgMyAvatar::DlgMyAvatar(QWidget *parent) : QDialog(parent)
+MyAvatarGui::MyAvatarGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -50,28 +50,28 @@ DlgMyAvatar::DlgMyAvatar(QWidget *parent) : QDialog(parent)
     refreshAvatar();
 }
 
-DlgMyAvatar::~DlgMyAvatar()
+MyAvatarGui::~MyAvatarGui()
 {
     delete avatarClient;
 }
 
-void DlgMyAvatar::createGui()
+void MyAvatarGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 }
 
-void DlgMyAvatar::setDefaultValues()
+void MyAvatarGui::setDefaultValues()
 {
     ui.label_current_avatar->setText(tr("Current avatar:"));
 }
 
-void DlgMyAvatar::createSignals()
+void MyAvatarGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
     connect(ui.avatarListWidget, SIGNAL(avatarSelected(const QString &)), this, SLOT(avatarSelected(const QString &)));
 }
 
-void DlgMyAvatar::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void MyAvatarGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
 {
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
@@ -85,7 +85,7 @@ void DlgMyAvatar::getAvatarReady(const QByteArray &content, const QString &avata
         ui.label_my_avatar->setPixmap(pixmap);
 }
 
-void DlgMyAvatar::refreshAvatar()
+void MyAvatarGui::refreshAvatar()
 {
     QString avatarUrl = MyProfile::instance()->get("avatar");
 
@@ -95,7 +95,7 @@ void DlgMyAvatar::refreshAvatar()
         ui.label_my_avatar->setText(tr("No photo available"));
 }
 
-void DlgMyAvatar::avatarSelected(const QString &avatarUrl)
+void MyAvatarGui::avatarSelected(const QString &avatarUrl)
 {
     Core::instance()->network->send(QString("NS SET AVATAR %1").arg(avatarUrl));
     // FIXME: replace by chat event

@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_moderation.h"
 
-class DlgModeration : public QDialog
+class ModerationGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgModeration(const QString &_strCurrentChannel, QWidget *parent = 0);
+    ModerationGui(const QString &_strCurrentChannel, QWidget *parent = 0);
 
 private:
     Ui::uiModeration ui;

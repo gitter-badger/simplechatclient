@@ -38,7 +38,7 @@
 #include "utils.h"
 #include "user_profile_gui.h"
 
-DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
+UserProfileGui::UserProfileGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Profile"));
@@ -69,12 +69,12 @@ DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDial
     QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec
 }
 
-DlgUserProfile::~DlgUserProfile()
+UserProfileGui::~UserProfileGui()
 {
     accessManager->deleteLater();
 }
 
-void DlgUserProfile::createGui()
+void UserProfileGui::createGui()
 {
     toolButton_zoom = new QToolButton();
     toolButton_zoom->setEnabled(false);
@@ -184,14 +184,14 @@ void DlgUserProfile::createGui()
     moreWidget->setVisible(false);
 }
 
-void DlgUserProfile::createSignals()
+void UserProfileGui::createSignals()
 {
     connect(toolButton_zoom, SIGNAL(clicked()), this, SLOT(buttonZoom()));
     connect(pushButton_more, SIGNAL(clicked()), this, SLOT(buttonMore()));
     connect(pushButton_close, SIGNAL(clicked()), this, SLOT(buttonClose()));
 }
 
-void DlgUserProfile::refreshUserInfo()
+void UserProfileGui::refreshUserInfo()
 {
     if (UserProfile::instance()->getStatus() != StatusCompleted)
     {
@@ -240,7 +240,7 @@ void DlgUserProfile::refreshUserInfo()
     }
 }
 
-void DlgUserProfile::avatarFinished(QNetworkReply *reply)
+void UserProfileGui::avatarFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -262,12 +262,12 @@ void DlgUserProfile::avatarFinished(QNetworkReply *reply)
     }
 }
 
-void DlgUserProfile::buttonZoom()
+void UserProfileGui::buttonZoom()
 {
-    DlgUserAvatar(avatar).exec();
+    UserAvatarGui(avatar).exec();
 }
 
-void DlgUserProfile::buttonMore()
+void UserProfileGui::buttonMore()
 {
     if (moreWidget->isVisible())
     {
@@ -286,14 +286,14 @@ void DlgUserProfile::buttonMore()
     setMaximumSize(285, sizeHint().height());
 }
 
-void DlgUserProfile::buttonClose()
+void UserProfileGui::buttonClose()
 {
     UserProfile::instance()->clear();
 
     close();
 }
 
-QString DlgUserProfile::convertDesc(QString strContent)
+QString UserProfileGui::convertDesc(QString strContent)
 {
     // convert
     Convert::fixHtmlChars(strContent);
@@ -302,7 +302,7 @@ QString DlgUserProfile::convertDesc(QString strContent)
     return QString("<html><body style=\"background-color:white;font-size:12px;font-family:Verdana;\">%1</body></html>").arg(strContent);
 }
 
-void DlgUserProfile::showAvatar(const QString &strUrl)
+void UserProfileGui::showAvatar(const QString &strUrl)
 {
     if (!strUrl.contains(",")) return; // wrong url
 

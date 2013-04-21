@@ -712,7 +712,7 @@ void AvatarListWidget::editAvatarClicked()
     if (!ui.listWidget_my_avatars->selectedItems().isEmpty())
     {
         MyAvatarListWidgetItem *item = static_cast<MyAvatarListWidgetItem*>(ui.listWidget_my_avatars->selectedItems().at(0));
-        DlgAvatarEdit dialog(this, item->avatar, avatarClient);
+        AvatarEditGui dialog(this, item->avatar, avatarClient);
         if (dialog.exec() == QDialog::Accepted)
         {
             avatarClient->requestUpdatePhoto(dialog.getAvatar());

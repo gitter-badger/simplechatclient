@@ -36,12 +36,12 @@ class QNetworkAccessManager;
 class QNetworkReply;
 QT_END_NAMESPACE
 
-class DlgUserProfile : public QDialog
+class UserProfileGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserProfile(const QString &_strNick, QWidget *parent = 0);
-    virtual ~DlgUserProfile();
+    UserProfileGui(const QString &_strNick, QWidget *parent = 0);
+    virtual ~UserProfileGui();
 
 private:
     QPixmap avatar;

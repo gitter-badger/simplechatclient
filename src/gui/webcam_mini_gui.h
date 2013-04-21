@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_webcam_mini.h"
 
-class DlgWebcamMini : public QDialog
+class WebcamMiniGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebcamMini(QString nick);
+    WebcamMiniGui(QString nick);
 
 public slots:
     void updateImage(const QByteArray &data);

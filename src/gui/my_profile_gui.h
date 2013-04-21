@@ -28,12 +28,12 @@ class QNetworkAccessManager;
 class QNetworkReply;
 QT_END_NAMESPACE
 
-class DlgMyProfile : public QDialog
+class MyProfileGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyProfile(QWidget *parent = 0);
-    virtual ~DlgMyProfile();
+    MyProfileGui(QWidget *parent = 0);
+    virtual ~MyProfileGui();
 
 private:
     Ui::uiMyProfile ui;

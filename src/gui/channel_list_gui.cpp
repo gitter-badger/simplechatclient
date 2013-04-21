@@ -28,7 +28,7 @@
 #include "utils.h"
 #include "channel_list_gui.h"
 
-DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
+ChannelListGui::ChannelListGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -43,7 +43,7 @@ DlgChannelList::DlgChannelList(QWidget *parent) : QDialog(parent)
     createList();
 }
 
-void DlgChannelList::createGui()
+void ChannelListGui::createGui()
 {
     ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
     ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
@@ -87,7 +87,7 @@ void DlgChannelList::createGui()
     ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
 }
 
-void DlgChannelList::setDefaultValues()
+void ChannelListGui::setDefaultValues()
 {
     // clear
     clearFields();
@@ -106,7 +106,7 @@ void DlgChannelList::setDefaultValues()
     }
 }
 
-void DlgChannelList::createSignals()
+void ChannelListGui::createSignals()
 {
     connect(ui.tableWidget_all, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(allCellDoubleClicked(int,int)));
     connect(ui.tableWidget_teen, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(teenCellDoubleClicked(int,int)));
@@ -137,7 +137,7 @@ void DlgChannelList::createSignals()
     connect(ui.checkBox_recommended, SIGNAL(clicked()), this, SLOT(createList()));
 }
 
-bool DlgChannelList::showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended)
+bool ChannelListGui::showChannel(const QString &name, int people, int cat, int type, bool moderated, bool recommended)
 {
     if ((people == 0) && (bHideEmpty))
         return false;
@@ -185,7 +185,7 @@ bool DlgChannelList::showChannel(const QString &name, int people, int cat, int t
         return true;
 }
 
-void DlgChannelList::clearFields()
+void ChannelListGui::clearFields()
 {
     ui.checkBox_teen->setChecked(true);
     ui.checkBox_common->setChecked(true);
@@ -203,7 +203,7 @@ void DlgChannelList::clearFields()
     ui.checkBox_hide_empty_channels->setChecked(false);
 }
 
-void DlgChannelList::clearLists()
+void ChannelListGui::clearLists()
 {
     // clear
     ui.tableWidget_all->clear();
@@ -231,7 +231,7 @@ void DlgChannelList::clearLists()
     ui.tableWidget_regional->setHorizontalHeaderLabels(lLabels);
 }
 
-void DlgChannelList::createList()
+void ChannelListGui::createList()
 {
     // ready
     if (ChannelList::instance()->getStatus() != StatusCompleted)
@@ -371,7 +371,7 @@ void DlgChannelList::createList()
     ui.tableWidget_regional->sortByColumn(1);
 }
 
-void DlgChannelList::getOptions()
+void ChannelListGui::getOptions()
 {
     // search
     strSearch = ui.lineEdit_search->text();
@@ -449,7 +449,7 @@ void DlgChannelList::getOptions()
         bHideEmpty = false;
 }
 
-void DlgChannelList::allCellDoubleClicked(int row, int column)
+void ChannelListGui::allCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -480,7 +480,7 @@ void DlgChannelList::allCellDoubleClicked(int row, int column)
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::teenCellDoubleClicked(int row, int column)
+void ChannelListGui::teenCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -488,7 +488,7 @@ void DlgChannelList::teenCellDoubleClicked(int row, int column)
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::commonCellDoubleClicked(int row, int column)
+void ChannelListGui::commonCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -496,7 +496,7 @@ void DlgChannelList::commonCellDoubleClicked(int row, int column)
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::eroticCellDoubleClicked(int row, int column)
+void ChannelListGui::eroticCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -531,7 +531,7 @@ void DlgChannelList::eroticCellDoubleClicked(int row, int column)
         Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::thematicCellDoubleClicked(int row, int column)
+void ChannelListGui::thematicCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -539,7 +539,7 @@ void DlgChannelList::thematicCellDoubleClicked(int row, int column)
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::regionalCellDoubleClicked(int row, int column)
+void ChannelListGui::regionalCellDoubleClicked(int row, int column)
 {
     Q_UNUSED (column);
 
@@ -547,7 +547,7 @@ void DlgChannelList::regionalCellDoubleClicked(int row, int column)
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
-void DlgChannelList::buttonClear()
+void ChannelListGui::buttonClear()
 {
     clearFields();
 
@@ -556,7 +556,7 @@ void DlgChannelList::buttonClear()
     createList();
 }
 
-void DlgChannelList::showAdvOptions()
+void ChannelListGui::showAdvOptions()
 {
     if (ui.checkBox_show_adv_options->isChecked())
     {
@@ -570,7 +570,7 @@ void DlgChannelList::showAdvOptions()
     }
 }
 
-void DlgChannelList::resizeEvent(QResizeEvent *)
+void ChannelListGui::resizeEvent(QResizeEvent *)
 {
     ui.verticalLayoutWidget->setGeometry(QRect(0, 0, this->width(), this->height()));
     ui.tabWidget->setGeometry(QRect(205, 1, this->width()-205, this->height()-30));
@@ -582,7 +582,7 @@ void DlgChannelList::resizeEvent(QResizeEvent *)
     ui.tableWidget_regional->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
 }
 
-void DlgChannelList::keyPressEvent(QKeyEvent *event)
+void ChannelListGui::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {

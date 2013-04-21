@@ -23,7 +23,7 @@
 #include "invite.h"
 #include "invite_gui.h"
 
-DlgInvite::DlgInvite(const QString &_strNick, const QString &_strChannel, QWidget *parent) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
+InviteGui::InviteGui(const QString &_strNick, const QString &_strChannel, QWidget *parent) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
@@ -41,7 +41,7 @@ DlgInvite::DlgInvite(const QString &_strNick, const QString &_strChannel, QWidge
         ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick, strChannel));
 }
 
-void DlgInvite::createGui()
+void InviteGui::createGui()
 {
     ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
     ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
@@ -61,7 +61,7 @@ void DlgInvite::createGui()
     ui.toolButton_options->setMenu(optionsMenu);
 }
 
-void DlgInvite::createSignals()
+void InviteGui::createSignals()
 {
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
     connect(ui.pushButton_ignore, SIGNAL(clicked()), this, SLOT(buttonIgnore()));
@@ -69,28 +69,28 @@ void DlgInvite::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgInvite::buttonAccept()
+void InviteGui::buttonAccept()
 {
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
-void DlgInvite::buttonReject()
+void InviteGui::buttonReject()
 {
     Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
-void DlgInvite::buttonIgnore()
+void InviteGui::buttonIgnore()
 {
     Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strNick, strChannel);
     this->close();
 }
 
-void DlgInvite::whois()
+void InviteGui::whois()
 {
     Core::instance()->network->send(QString("WHOIS %1 %1").arg(strNick));
 }

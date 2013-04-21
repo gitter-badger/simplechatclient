@@ -29,7 +29,7 @@
 
 #define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"
 
-DlgRegisterNick::DlgRegisterNick(DlgProfileAdd *_pDlgProfileAdd, QWidget *parent) : QDialog(parent), pDlgProfileAdd(_pDlgProfileAdd)
+RegisterNickGui::RegisterNickGui(ProfileAddGui *_pProfileAddGui, QWidget *parent) : QDialog(parent), pProfileAddGui(_pProfileAddGui)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -49,13 +49,13 @@ DlgRegisterNick::DlgRegisterNick(DlgProfileAdd *_pDlgProfileAdd, QWidget *parent
     getImg();
 }
 
-DlgRegisterNick::~DlgRegisterNick()
+RegisterNickGui::~RegisterNickGui()
 {
     delete cookieJar;
     accessManager->deleteLater();
 }
 
-void DlgRegisterNick::createGui()
+void RegisterNickGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -68,20 +68,20 @@ void DlgRegisterNick::createGui()
     ui.pushButton_refresh->setText(tr("Refresh"));
 }
 
-void DlgRegisterNick::createSignals()
+void RegisterNickGui::createSignals()
 {
     connect(ui.pushButton_refresh, SIGNAL(clicked()), this, SLOT(buttonRefresh()));
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgRegisterNick::getCookies()
+void RegisterNickGui::getCookies()
 {
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl("http://kropka.onet.pl/_s/kropka/1?DV=czat%2Findex")));
     pReply->setProperty("category", RT_cookies);
 }
 
-void DlgRegisterNick::gotCookies()
+void RegisterNickGui::gotCookies()
 {
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
@@ -94,7 +94,7 @@ void DlgRegisterNick::gotCookies()
     }
 }
 
-void DlgRegisterNick::getImg()
+void RegisterNickGui::getImg()
 {
     // disable button
     ui.pushButton_refresh->setEnabled(false);
@@ -107,7 +107,7 @@ void DlgRegisterNick::getImg()
     pReply->setProperty("category", RT_img);
 }
 
-void DlgRegisterNick::gotImg(const QByteArray &bData)
+void RegisterNickGui::gotImg(const QByteArray &bData)
 {
     // show img
     QPixmap pixmap;
@@ -118,7 +118,7 @@ void DlgRegisterNick::gotImg(const QByteArray &bData)
     ui.pushButton_refresh->setEnabled(true);
 }
 
-void DlgRegisterNick::registerNick()
+void RegisterNickGui::registerNick()
 {
     QString strNick = ui.lineEdit_nick->text();
     QString strNickLength = QString::number(strNick.length());
@@ -162,7 +162,7 @@ void DlgRegisterNick::registerNick()
 
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>-1</status><error err_code="0"  err_text="OK" ></error></root>
 // <?xml version="1.0" encoding="ISO-8859-2"?><root><status>1</status><error err_code="0"  err_text="OK" ></error></root>
-void DlgRegisterNick::parseResult(const QString &strResult)
+void RegisterNickGui::parseResult(const QString &strResult)
 {
     QDomDocument doc;
     doc.setContent(strResult);
@@ -176,7 +176,7 @@ void DlgRegisterNick::parseResult(const QString &strResult)
         QString strNick = ui.lineEdit_nick->text();
         QString strPassword = ui.lineEdit_password->text();
 
-        pDlgProfileAdd->setNickPass(strNick, strPassword);
+        pProfileAddGui->setNickPass(strNick, strPassword);
 
         // close
         this->close();
@@ -222,7 +222,7 @@ void DlgRegisterNick::parseResult(const QString &strResult)
     }
 }
 
-void DlgRegisterNick::networkFinished(QNetworkReply *reply)
+void RegisterNickGui::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -249,7 +249,7 @@ void DlgRegisterNick::networkFinished(QNetworkReply *reply)
     }
 }
 
-void DlgRegisterNick::buttonOk()
+void RegisterNickGui::buttonOk()
 {
     bool identical = false;
 
@@ -266,7 +266,7 @@ void DlgRegisterNick::buttonOk()
     }
 }
 
-void DlgRegisterNick::buttonRefresh()
+void RegisterNickGui::buttonRefresh()
 {
     ui.lineEdit_code->clear();
     getImg();

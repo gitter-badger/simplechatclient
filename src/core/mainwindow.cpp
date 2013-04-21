@@ -490,43 +490,43 @@ void MainWindow::updateButtons()
 
 void MainWindow::openOptions()
 {
-    DlgOptions(this).exec();
+    OptionsGui(this).exec();
 }
 
 void MainWindow::openChannelList()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgChannelList(this).exec();
+        ChannelListGui(this).exec();
 }
 
 void MainWindow::openChannelHomes()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgChannelHomes(this).exec();
+        ChannelHomesGui(this).exec();
 }
 
 void MainWindow::openChannelFavourites()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgChannelFavourites(this).exec();
+        ChannelFavouritesGui(this).exec();
 }
 
 void MainWindow::openFriends()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgFriends(this).exec();
+        FriendsGui(this).exec();
 }
 
 void MainWindow::openIgnore()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgIgnore(this).exec();
+        IgnoreGui(this).exec();
 }
 
 void MainWindow::openFindNick()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgFindNick(this).exec();
+        FindNickGui(this).exec();
 }
 
 void MainWindow::openCams()
@@ -539,53 +539,53 @@ void MainWindow::openCams()
     }
 #else
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        new DlgWebcam();
+        new WebcamGui();
 #endif
 }
 
 void MainWindow::openMyStats()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgMyStats(this).exec();
+        MyStatsGui(this).exec();
 }
 
 void MainWindow::openMyProfile()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgMyProfile(this).exec();
+        MyProfileGui(this).exec();
 }
 
 void MainWindow::openMyAvatar()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgMyAvatar(this).exec();
+        MyAvatarGui(this).exec();
 }
 
 void MainWindow::openNotes()
 {
-    (new DlgNotes(this))->show();
+    (new NotesGui(this))->show();
 }
 
 void MainWindow::openAbout()
 {
-    DlgAbout(this).exec();
+    AboutGui(this).exec();
 }
 
 void MainWindow::openAwaylog()
 {
-    DlgAwaylog(this).exec();
+    AwaylogGui(this).exec();
 }
 
 void MainWindow::openInviteList()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgInviteList(this).exec();
+        InviteListGui(this).exec();
 }
 
 void MainWindow::openOfflineMessages()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        DlgOfflineList(this).exec();
+        OfflineListGui(this).exec();
 }
 
 // animated tray icon

@@ -26,7 +26,7 @@
 #include "settings.h"
 #include "offline_message_gui.h"
 
-DlgOfflineMessage::DlgOfflineMessage(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick), messagesQuoted(false), messagesReplied(false), messagesQuotedToSender(false)
+OfflineMessageGui::OfflineMessageGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick), messagesQuoted(false), messagesReplied(false), messagesQuotedToSender(false)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -40,19 +40,19 @@ DlgOfflineMessage::DlgOfflineMessage(const QString &_strNick, QWidget *parent) :
     refreshMessages();
 }
 
-void DlgOfflineMessage::createGui()
+void OfflineMessageGui::createGui()
 {
     ui.pushButton_reply->setIcon(QIcon(":/images/oxygen/16x16/mail-send.png"));
 
     ui.pushButton_reply->setText(tr("Reply"));
 }
 
-void DlgOfflineMessage::createSignals()
+void OfflineMessageGui::createSignals()
 {
     connect(ui.pushButton_reply, SIGNAL(clicked()), this, SLOT(buttonReply()));
 }
 
-void DlgOfflineMessage::refreshMessages()
+void OfflineMessageGui::refreshMessages()
 {
     QList<OnetOfflineMessage> lOfflineMessages = Offline::instance()->getMessagesReverted(strNick);
 
@@ -120,7 +120,7 @@ void DlgOfflineMessage::refreshMessages()
     QTimer::singleShot(1000*1, this, SLOT(refreshMessages())); // 1 sec
 }
 
-void DlgOfflineMessage::buttonReply()
+void OfflineMessageGui::buttonReply()
 {
     QString strMessage = ui.lineEdit->text();
     if (strMessage.isEmpty())

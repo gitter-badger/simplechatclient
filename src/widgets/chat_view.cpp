@@ -140,7 +140,7 @@ void ChatView::whois()
 
 void ChatView::profile()
 {
-    DlgUserProfile(strNick).exec();
+    UserProfileGui(strNick).exec();
 }
 
 void ChatView::cam()
@@ -148,7 +148,7 @@ void ChatView::cam()
 #if WITH_KAMERZYSTA
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
 #else
-    new DlgWebcam(strNick, true);
+    new WebcamGui(strNick, true);
 #endif
 }
 
@@ -300,7 +300,7 @@ void ChatView::watchVideo()
         strYoutubeLink = "http://www.youtube.com/embed/"+exYoutube_3.cap(1);
 
     if (QUrl(strYoutubeLink).isValid())
-        (new DlgWebBrowser(QUrl(strYoutubeLink)))->show();
+        (new WebBrowserGui(QUrl(strYoutubeLink)))->show();
 }
 
 void ChatView::openWebbrowser()
@@ -317,7 +317,7 @@ void ChatView::sendToNotes()
 
 void ChatView::search()
 {
-    DlgFindText(this).exec();
+    FindTextGui(this).exec();
 }
 
 void ChatView::clear()

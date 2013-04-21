@@ -21,7 +21,7 @@
 #include <QPushButton>
 #include "user_avatar_gui.h"
 
-DlgUserAvatar::DlgUserAvatar(const QPixmap &_avatar, QWidget *parent) : QDialog(parent), avatar(_avatar)
+UserAvatarGui::UserAvatarGui(const QPixmap &_avatar, QWidget *parent) : QDialog(parent), avatar(_avatar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -34,20 +34,20 @@ DlgUserAvatar::DlgUserAvatar(const QPixmap &_avatar, QWidget *parent) : QDialog(
     createSignals();
 }
 
-void DlgUserAvatar::createGui()
+void UserAvatarGui::createGui()
 {
     ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/zoom-out.png"));
     ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 }
 
-void DlgUserAvatar::setDefaultValues()
+void UserAvatarGui::setDefaultValues()
 {
     // slider value 5
     ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250)));
 }
 
-void DlgUserAvatar::createSignals()
+void UserAvatarGui::createSignals()
 {
     connect(ui.toolButton_zoom_out, SIGNAL(clicked()), this, SLOT(buttonZoomOut()));
     connect(ui.horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
@@ -55,7 +55,7 @@ void DlgUserAvatar::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgUserAvatar::buttonZoomOut()
+void UserAvatarGui::buttonZoomOut()
 {
     int value = ui.horizontalSlider->value();
     value--;
@@ -64,7 +64,7 @@ void DlgUserAvatar::buttonZoomOut()
         ui.horizontalSlider->setValue(value);
 }
 
-void DlgUserAvatar::sliderValueChanged(int iValue)
+void UserAvatarGui::sliderValueChanged(int iValue)
 {
     int iSize = 50;
     iSize *= iValue;
@@ -72,7 +72,7 @@ void DlgUserAvatar::sliderValueChanged(int iValue)
     ui.label_avatar->setPixmap(avatar.scaled(QSize(iSize,iSize)));
 }
 
-void DlgUserAvatar::buttonZoomIn()
+void UserAvatarGui::buttonZoomIn()
 {
     int value = ui.horizontalSlider->value();
     value++;

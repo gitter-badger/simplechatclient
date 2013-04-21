@@ -22,7 +22,7 @@
 #include "core.h"
 #include "channel_key_gui.h"
 
-DlgChannelKey::DlgChannelKey(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)
+ChannelKeyGui::ChannelKeyGui(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
@@ -35,7 +35,7 @@ DlgChannelKey::DlgChannelKey(const QString &_strChannel, QWidget *parent) : QDia
     createSignals();
 }
 
-void DlgChannelKey::createGui()
+void ChannelKeyGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -43,13 +43,13 @@ void DlgChannelKey::createGui()
     ui.label_msg->setText(tr("Enter key:"));
 }
 
-void DlgChannelKey::createSignals()
+void ChannelKeyGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgChannelKey::buttonOk()
+void ChannelKeyGui::buttonOk()
 {
     QString strKey = ui.lineEdit_key->text();
     if (!strKey.isEmpty())

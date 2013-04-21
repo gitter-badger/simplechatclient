@@ -940,7 +940,7 @@ void OnetKernel::raw_invite()
     // is active window
     if (Core::instance()->mainWindow()->isActiveWindow())
     {
-        (new DlgInvite(strNick, strChannel))->show(); // should be show - prevent hangup!
+        (new InviteGui(strNick, strChannel))->show(); // should be show - prevent hangup!
     }
 
     // sound
@@ -3680,7 +3680,7 @@ void OnetKernel::raw_475()
     QString strMessage = QString(tr("* Cannot join channel %1 - Incorrect channel key")).arg(strChannel);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
-    (new DlgChannelKey(strChannel))->show(); // should be show - prevent hangup!
+    (new ChannelKeyGui(strChannel))->show(); // should be show - prevent hangup!
 }
 
 // :cf1f3.onet 480 scc_test :Can't KNOCK on #Scrabble, channel is not invite only so knocking is pointless!

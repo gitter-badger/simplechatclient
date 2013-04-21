@@ -22,22 +22,22 @@
 
 #include <QObject>
 class WebcamEngine;
-class DlgWebcamMini;
-class DlgWebcamStandard;
+class WebcamMiniGui;
+class WebcamStandardGui;
 
-class DlgWebcam : public QObject
+class WebcamGui : public QObject
 {
     Q_OBJECT
 public:
-    DlgWebcam(QString _strNick = QString::null, bool _bMini = false);
-    virtual ~DlgWebcam();
+    WebcamGui(QString _strNick = QString::null, bool _bMini = false);
+    virtual ~WebcamGui();
 
 private:
     QString strNick;
     bool bMini;
     WebcamEngine *pWebcamEngine;
-    DlgWebcamMini *pWebcamMini;
-    DlgWebcamStandard *pWebcamStandard;
+    WebcamMiniGui *pWebcamMini;
+    WebcamStandardGui *pWebcamStandard;
 
     void createSignals();
 

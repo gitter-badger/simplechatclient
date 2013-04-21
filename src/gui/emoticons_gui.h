@@ -35,11 +35,11 @@ enum EmoticonsRoles
     EmoticonNameRole = Qt::UserRole
 };
 
-class DlgEmoticonsThread : public QThread
+class EmoticonsThread : public QThread
 {
     Q_OBJECT
 public:
-    DlgEmoticonsThread();
+    EmoticonsThread();
     void setDir(const QString &_strDir);
 
 private:
@@ -53,25 +53,25 @@ signals:
     void sortEmoticons();
 };
 
-class DlgEmoticonsTab : public QWidget
+class EmoticonsTabGui : public QWidget
 {
     Q_OBJECT
 public:
-    DlgEmoticonsTab(const QString &_strDir, QWidget *parent = 0);
+    EmoticonsTabGui(const QString &_strDir, QWidget *parent = 0);
     QListWidget *listWidget;
-    DlgEmoticonsThread thread;
+    EmoticonsThread thread;
 
 public slots:
     void addEmoticon(const QString &strEmoticon, const QByteArray &bData);
     void sortEmoticons();
 };
 
-class DlgEmoticons : public QDialog
+class EmoticonsGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgEmoticons(InputLineWidget *_pInputLineWidget, QWidget *parent = 0);
-    virtual ~DlgEmoticons();
+    EmoticonsGui(InputLineWidget *_pInputLineWidget, QWidget *parent = 0);
+    virtual ~EmoticonsGui();
 
 private:
     Ui::uiEmoticons ui;

@@ -24,11 +24,11 @@
 #include "ui_friends.h"
 #include "defines.h"
 
-class DlgFriends : public QDialog
+class FriendsGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFriends(QWidget *parent = 0);
+    FriendsGui(QWidget *parent = 0);
 
 private:
     Ui::uiFriends ui;

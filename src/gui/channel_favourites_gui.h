@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_channel_favourites.h"
 
-class DlgChannelFavourites : public QDialog
+class ChannelFavouritesGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelFavourites(QWidget *parent = 0);
+    ChannelFavouritesGui(QWidget *parent = 0);
 
 private:
     Ui::uiChannelFavourites ui;

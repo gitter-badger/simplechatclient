@@ -25,7 +25,7 @@
 #include "settings.h"
 #include "profile_edit_gui.h"
 
-DlgProfileEdit::DlgProfileEdit(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
+ProfileEditGui::ProfileEditGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -38,7 +38,7 @@ DlgProfileEdit::DlgProfileEdit(const QString &_strNick, QWidget *parent) : QDial
     createSignals();
 }
 
-void DlgProfileEdit::createGui()
+void ProfileEditGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -47,7 +47,7 @@ void DlgProfileEdit::createGui()
     ui.label_password->setText(tr("Password:"));
 }
 
-void DlgProfileEdit::setDefaultValues()
+void ProfileEditGui::setDefaultValues()
 {
     Config *pConfig = new Config(true, strNick);
     QString strPassword = pConfig->get("pass");
@@ -65,13 +65,13 @@ void DlgProfileEdit::setDefaultValues()
     ui.lineEdit_password->setText(strPassword);
 }
 
-void DlgProfileEdit::createSignals()
+void ProfileEditGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgProfileEdit::buttonOk()
+void ProfileEditGui::buttonOk()
 {
     QString strPassword = ui.lineEdit_password->text();
 

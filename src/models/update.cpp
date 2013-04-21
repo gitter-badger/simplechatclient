@@ -140,7 +140,7 @@ void Update::readSettings()
         compareVersion();
 
         if (Settings::instance()->get("version_status") == "outofdate")
-            DlgUpdate().exec();
+            UpdateGui().exec();
     }
 }
 

@@ -26,12 +26,12 @@ class AvatarClient;
 class SimpleStatsWidget;
 class SimplePercentageWidget;
 
-class DlgChannelSettings : public QDialog
+class ChannelSettingsGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelSettings(const QString &_strChannel, QWidget *parent = 0);
-    ~DlgChannelSettings();
+    ChannelSettingsGui(const QString &_strChannel, QWidget *parent = 0);
+    ~ChannelSettingsGui();
 
 private:
     Ui::uiChannelSettings ui;

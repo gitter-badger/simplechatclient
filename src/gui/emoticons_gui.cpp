@@ -29,14 +29,14 @@
     #include "scc-config.h"
 #endif
 
-DlgEmoticonsThread::DlgEmoticonsThread() {}
+EmoticonsThread::EmoticonsThread() {}
 
-void DlgEmoticonsThread::setDir(const QString &_strDir)
+void EmoticonsThread::setDir(const QString &_strDir)
 {
     strDir = _strDir;
 }
 
-void DlgEmoticonsThread::run()
+void EmoticonsThread::run()
 {
     QDir dEmoticonsDir = strDir;
 
@@ -65,7 +65,7 @@ void DlgEmoticonsThread::run()
     exec();
 }
 
-DlgEmoticonsTab::DlgEmoticonsTab(const QString &_strDir, QWidget *parent) : QWidget(parent)
+EmoticonsTabGui::EmoticonsTabGui(const QString &_strDir, QWidget *parent) : QWidget(parent)
 {
     listWidget = new QListWidget(this);
     listWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -85,7 +85,7 @@ DlgEmoticonsTab::DlgEmoticonsTab(const QString &_strDir, QWidget *parent) : QWid
     thread.setDir(_strDir);
 }
 
-void DlgEmoticonsTab::addEmoticon(const QString &strEmoticon, const QByteArray &bData)
+void EmoticonsTabGui::addEmoticon(const QString &strEmoticon, const QByteArray &bData)
 {
     QPixmap pix;
     if (!bData.isEmpty())
@@ -99,12 +99,12 @@ void DlgEmoticonsTab::addEmoticon(const QString &strEmoticon, const QByteArray &
     listWidget->addItem(item);
 }
 
-void DlgEmoticonsTab::sortEmoticons()
+void EmoticonsTabGui::sortEmoticons()
 {
     listWidget->setSortingEnabled(true);
 }
 
-DlgEmoticons::DlgEmoticons(InputLineWidget *_pInputLineWidget, QWidget *parent) : QDialog(parent), pInputLineWidget(_pInputLineWidget)
+EmoticonsGui::EmoticonsGui(InputLineWidget *_pInputLineWidget, QWidget *parent) : QDialog(parent), pInputLineWidget(_pInputLineWidget)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -121,7 +121,7 @@ DlgEmoticons::DlgEmoticons(InputLineWidget *_pInputLineWidget, QWidget *parent) 
         tabChanged(0);
 }
 
-void DlgEmoticons::createGui()
+void EmoticonsGui::createGui()
 {
     ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
@@ -129,7 +129,7 @@ void DlgEmoticons::createGui()
     ui.pushButton_insert->setText(tr("Insert"));
 }
 
-void DlgEmoticons::setDefaultValues()
+void EmoticonsGui::setDefaultValues()
 {
     QString path;
 #ifdef Q_WS_WIN
@@ -151,11 +151,11 @@ void DlgEmoticons::setDefaultValues()
         QStringList lFiles = dEmoticonsDir.entryList(lSupportedEmoticons, QDir::Files | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
         QString strFirstIconPath = dEmoticonsDir.absolutePath()+"/"+lFiles.first();
 
-        ui.tabWidget->addTab(new DlgEmoticonsTab(dEmoticonsDir.absolutePath()), QIcon(strFirstIconPath), strDir);
+        ui.tabWidget->addTab(new EmoticonsTabGui(dEmoticonsDir.absolutePath()), QIcon(strFirstIconPath), strDir);
     }
 }
 
-void DlgEmoticons::createSignals()
+void EmoticonsGui::createSignals()
 {
     connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
     connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(buttonInsert()));
@@ -163,39 +163,39 @@ void DlgEmoticons::createSignals()
 
     for (int i = 0; i < ui.tabWidget->count(); i++)
     {
-        DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(i);
+        EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->widget(i);
         connect(tab->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buttonInsert()));
     }
 }
 
-DlgEmoticons::~DlgEmoticons()
+EmoticonsGui::~EmoticonsGui()
 {
     for (int i = 0; i < ui.tabWidget->count(); i++)
     {
-        DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(i);
+        EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->widget(i);
         tab->thread.quit();
         tab->thread.wait();
         tab->thread.deleteLater();
     }
 }
 
-void DlgEmoticons::tabChanged(int index)
+void EmoticonsGui::tabChanged(int index)
 {
     if (!lReadedTabIndex.contains(index))
     {
         lReadedTabIndex.append(index);
 
-        DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->widget(index);
+        EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->widget(index);
         tab->thread.start();
     }
 }
 
-void DlgEmoticons::buttonInsert()
+void EmoticonsGui::buttonInsert()
 {
     if (ui.tabWidget->count() == 0) // not found tabs
         return;
 
-    DlgEmoticonsTab *tab = (DlgEmoticonsTab *)ui.tabWidget->currentWidget();
+    EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->currentWidget();
 
     if (!tab->listWidget->selectedItems().isEmpty())
     {

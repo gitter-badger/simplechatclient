@@ -29,11 +29,11 @@ class QNetworkCookieJar;
 class QNetworkReply;
 QT_END_NAMESPACE
 
-class DlgCaptcha : public QDialog
+class CaptchaGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgCaptcha(QNetworkCookieJar *_cookieJar, QString *_strCaptcha, QWidget *parent = 0);
+    CaptchaGui(QNetworkCookieJar *_cookieJar, QString *_strCaptcha, QWidget *parent = 0);
 
 private:
     Ui::uiCaptcha ui;

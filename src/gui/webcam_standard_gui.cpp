@@ -24,7 +24,7 @@
 #include "webcam_delegate.h"
 #include "webcam_standard_gui.h"
 
-DlgWebcamStandard::DlgWebcamStandard()
+WebcamStandardGui::WebcamStandardGui()
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -41,12 +41,12 @@ DlgWebcamStandard::DlgWebcamStandard()
     createSignals();
 }
 
-DlgWebcamStandard::~DlgWebcamStandard()
+WebcamStandardGui::~WebcamStandardGui()
 {
     delete pSimpleRankWidget;
 }
 
-void DlgWebcamStandard::createGui()
+void WebcamStandardGui::createGui()
 {
     ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
@@ -61,7 +61,7 @@ void DlgWebcamStandard::createGui()
     ui.textEdit_desc->hide();
 }
 
-void DlgWebcamStandard::createSignals()
+void WebcamStandardGui::createSignals()
 {
     connect(ui.listWidget_nicks, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(changeUser(QListWidgetItem*)));
     connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(voteMinus()));
@@ -69,7 +69,7 @@ void DlgWebcamStandard::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 }
 
-void DlgWebcamStandard::updateImage(const QByteArray &b)
+void WebcamStandardGui::updateImage(const QByteArray &b)
 {
     ui.label_img->clear();
     QPixmap pixmap;
@@ -77,17 +77,17 @@ void DlgWebcamStandard::updateImage(const QByteArray &b)
     ui.label_img->setPixmap(pixmap);
 }
 
-void DlgWebcamStandard::updateText(const QString &s)
+void WebcamStandardGui::updateText(const QString &s)
 {
     ui.label_img->setText(s);
 }
 
-void DlgWebcamStandard::updateRank(int i)
+void WebcamStandardGui::updateRank(int i)
 {
     pSimpleRankWidget->setRank(i);
 }
 
-void DlgWebcamStandard::userError(const QString &s)
+void WebcamStandardGui::userError(const QString &s)
 {
     // desc
     ui.textEdit_desc->clear();
@@ -100,25 +100,25 @@ void DlgWebcamStandard::userError(const QString &s)
     ui.textEdit_channels->clear();
 }
 
-void DlgWebcamStandard::updateStatus(const QString &s)
+void WebcamStandardGui::updateStatus(const QString &s)
 {
     ui.textEdit_desc->setText(s);
     ui.textEdit_desc->show();
 }
 
-void DlgWebcamStandard::voteMinus()
+void WebcamStandardGui::voteMinus()
 {
     if (!strCurrentNick.isEmpty())
         emit networkSend(QString("VOTE %1 -").arg(strCurrentNick));
 }
 
-void DlgWebcamStandard::votePlus()
+void WebcamStandardGui::votePlus()
 {
     if (!strCurrentNick.isEmpty())
         emit networkSend(QString("VOTE %1 +").arg(strCurrentNick));
 }
 
-void DlgWebcamStandard::voteOk()
+void WebcamStandardGui::voteOk()
 {
     ui.toolButton_vote_minus->setEnabled(false);
     ui.toolButton_vote_plus->setEnabled(false);
@@ -126,13 +126,13 @@ void DlgWebcamStandard::voteOk()
     QTimer::singleShot(1000*3, this, SLOT(enableVote())); // 3 sec
 }
 
-void DlgWebcamStandard::enableVote()
+void WebcamStandardGui::enableVote()
 {
     ui.toolButton_vote_minus->setEnabled(true);
     ui.toolButton_vote_plus->setEnabled(true);
 }
 
-void DlgWebcamStandard::error(const QString &s)
+void WebcamStandardGui::error(const QString &s)
 {
     updateText(s + "<br/>"+tr("Disconnected from server webcams"));
 
@@ -144,7 +144,7 @@ void DlgWebcamStandard::error(const QString &s)
     ui.textEdit_channels->clear();
 }
 
-void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels)
+void WebcamStandardGui::updateUser(const QString &strNick, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels)
 {
     // cam off or private cam
     if ((iCamOnOff == 0) || (lUserChannels.isEmpty()))
@@ -158,7 +158,7 @@ void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int 
     }
 }
 
-void DlgWebcamStandard::updateUserCount(const QString &strNick, int iSpectators, int iRank)
+void WebcamStandardGui::updateUserCount(const QString &strNick, int iSpectators, int iRank)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
@@ -171,7 +171,7 @@ void DlgWebcamStandard::updateUserCount(const QString &strNick, int iSpectators,
         updateRank(iRank);
 }
 
-void DlgWebcamStandard::addUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
+void WebcamStandardGui::addUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setText(strNick);
@@ -184,7 +184,7 @@ void DlgWebcamStandard::addUser(const QString &strNick, int iSpectators, int iRa
     ui.listWidget_nicks->addItem(item);
 }
 
-void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
+void WebcamStandardGui::updateUser(const QString &strNick, int iSpectators, int iRank, const QString &strUdget, const QStringList &lUserChannels)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
@@ -199,19 +199,19 @@ void DlgWebcamStandard::updateUser(const QString &strNick, int iSpectators, int 
         updateRank(iRank);
 }
 
-void DlgWebcamStandard::removeUser(const QString &strNick)
+void WebcamStandardGui::removeUser(const QString &strNick)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
         ui.listWidget_nicks->takeItem(ui.listWidget_nicks->row(item));
 }
 
-void DlgWebcamStandard::clearUsers()
+void WebcamStandardGui::clearUsers()
 {
     ui.listWidget_nicks->clear();
 }
 
-bool DlgWebcamStandard::existUser(const QString &strNick)
+bool WebcamStandardGui::existUser(const QString &strNick)
 {
     QList<QListWidgetItem*> items = ui.listWidget_nicks->findItems(strNick, Qt::MatchCaseSensitive);
 
@@ -221,7 +221,7 @@ bool DlgWebcamStandard::existUser(const QString &strNick)
         return false;
 }
 
-void DlgWebcamStandard::changeUser(QListWidgetItem *item)
+void WebcamStandardGui::changeUser(QListWidgetItem *item)
 {
     // img
     ui.label_img->setText(tr("Downloading image"));
@@ -259,12 +259,12 @@ void DlgWebcamStandard::changeUser(QListWidgetItem *item)
     ui.textEdit_channels->setText(QString("<b>%1:</b><br/><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels"), strNewNickChannels));
 }
 
-void DlgWebcamStandard::buttonClose()
+void WebcamStandardGui::buttonClose()
 {
     this->close();
 }
 
-void DlgWebcamStandard::closeEvent(QCloseEvent *)
+void WebcamStandardGui::closeEvent(QCloseEvent *)
 {
     emit closeCam();
 }

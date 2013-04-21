@@ -22,19 +22,19 @@
 
 #include <QDialog>
 #include "ui_profile_manager.h"
-class DlgOptions;
+class OptionsGui;
 
-class DlgProfileManager : public QDialog
+class ProfileManagerGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileManager(DlgOptions *_pDlgOptions, QWidget *parent = 0);
+    ProfileManagerGui(OptionsGui *_pOptionsGui, QWidget *parent = 0);
     void refreshAllLists();
     bool existProfile(const QString &strExistProfile);
 
 private:
     Ui::uiProfileManager ui;
-    DlgOptions *pDlgOptions;
+    OptionsGui *pOptionsGui;
     QString path;
 
     void createGui();

@@ -26,7 +26,7 @@
 #include "friends.h"
 #include "friends_gui.h"
 
-DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
+FriendsGui::FriendsGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -40,7 +40,7 @@ DlgFriends::DlgFriends(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-void DlgFriends::createGui()
+void FriendsGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
@@ -82,7 +82,7 @@ void DlgFriends::createGui()
     ui.toolButton_options->setMenu(optionsMenu);
 }
 
-void DlgFriends::createSignals()
+void FriendsGui::createSignals()
 {
     connect(ui.tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
     connect(ui.listWidget_online, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
@@ -91,7 +91,7 @@ void DlgFriends::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgFriends::refresh()
+void FriendsGui::refresh()
 {
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
@@ -112,7 +112,7 @@ void DlgFriends::refresh()
     }
 }
 
-void DlgFriends::tabChanged(int index)
+void FriendsGui::tabChanged(int index)
 {
     // online - show options
     if ((index == 0) && (ui.toolButton_options->isHidden()))
@@ -122,13 +122,13 @@ void DlgFriends::tabChanged(int index)
         ui.toolButton_options->setHidden(true);
 }
 
-void DlgFriends::itemClicked(QListWidgetItem *)
+void FriendsGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.toolButton_options->isEnabled())
         ui.toolButton_options->setEnabled(true);
 }
 
-void DlgFriends::buttonAdd()
+void FriendsGui::buttonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing your friends list"), tr("Enter a nickname to be added:"), QLineEdit::Normal, QString::null, &ok);
@@ -141,7 +141,7 @@ void DlgFriends::buttonAdd()
     }
 }
 
-void DlgFriends::buttonRemove()
+void FriendsGui::buttonRemove()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -166,7 +166,7 @@ void DlgFriends::buttonRemove()
     }
 }
 
-void DlgFriends::priv()
+void FriendsGui::priv()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -184,7 +184,7 @@ void DlgFriends::priv()
         Core::instance()->network->send(QString("PRIV %1").arg(strSelected));
 }
 
-void DlgFriends::whois()
+void FriendsGui::whois()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)
@@ -202,7 +202,7 @@ void DlgFriends::whois()
         Core::instance()->network->send(QString("WHOIS %1 :%1").arg(strSelected));
 }
 
-void DlgFriends::invite()
+void FriendsGui::invite()
 {
     QString strSelected;
     if (ui.tabWidget->currentIndex() == 0)

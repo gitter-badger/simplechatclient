@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_offline_list.h"
 
-class DlgOfflineList : public QDialog
+class OfflineListGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOfflineList(QWidget *parent = 0);
+    OfflineListGui(QWidget *parent = 0);
 
 private:
     Ui::uiOfflineList ui;

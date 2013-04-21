@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_themes.h"
 
-class DlgThemes : public QDialog
+class ThemesGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgThemes(QWidget *parent = 0);
+    ThemesGui(QWidget *parent = 0);
 
 private:
     Ui::uiThemes ui;

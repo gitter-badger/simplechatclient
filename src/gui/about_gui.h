@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_about.h"
 
-class DlgAbout : public QDialog
+class AboutGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAbout(QWidget *parent = 0);
+    AboutGui(QWidget *parent = 0);
 
 private:
     Ui::uiAbout ui;

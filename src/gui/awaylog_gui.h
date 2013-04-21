@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_awaylog.h"
 
-class DlgAwaylog : public QDialog
+class AwaylogGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAwaylog(QWidget *parent = 0);
+    AwaylogGui(QWidget *parent = 0);
 
 private:
     Ui::uiAwaylog ui;

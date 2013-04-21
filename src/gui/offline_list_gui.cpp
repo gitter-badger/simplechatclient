@@ -23,7 +23,7 @@
 #include "offline_message_gui.h"
 #include "offline_list_gui.h"
 
-DlgOfflineList::DlgOfflineList(QWidget *parent) : QDialog(parent)
+OfflineListGui::OfflineListGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -37,7 +37,7 @@ DlgOfflineList::DlgOfflineList(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-void DlgOfflineList::createGui()
+void OfflineListGui::createGui()
 {
     ui.pushButton_accept->setEnabled(false);
     ui.pushButton_reject->setEnabled(false);
@@ -50,7 +50,7 @@ void DlgOfflineList::createGui()
     ui.pushButton_reject->setText(tr("Reject"));
 }
 
-void DlgOfflineList::createSignals()
+void OfflineListGui::createSignals()
 {
     connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_accept, SIGNAL(clicked()), this, SLOT(buttonRead()));
@@ -58,7 +58,7 @@ void DlgOfflineList::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgOfflineList::itemClicked(QListWidgetItem *)
+void OfflineListGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.pushButton_accept->isEnabled())
         ui.pushButton_accept->setEnabled(true);
@@ -67,7 +67,7 @@ void DlgOfflineList::itemClicked(QListWidgetItem *)
         ui.pushButton_reject->setEnabled(true);
 }
 
-void DlgOfflineList::refresh()
+void OfflineListGui::refresh()
 {
     ui.listWidget->clear();
 
@@ -82,7 +82,7 @@ void DlgOfflineList::refresh()
     }
 }
 
-void DlgOfflineList::buttonRead()
+void OfflineListGui::buttonRead()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;
@@ -96,10 +96,10 @@ void DlgOfflineList::buttonRead()
     Core::instance()->network->send(QString("NS OFFLINE GET %1").arg(strNick));
 
     // dialog
-    DlgOfflineMessage(strNick, this).exec();
+    OfflineMessageGui(strNick, this).exec();
 }
 
-void DlgOfflineList::buttonReject()
+void OfflineListGui::buttonReject()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;

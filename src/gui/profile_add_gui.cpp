@@ -26,7 +26,7 @@
 #include "profile_manager_gui.h"
 #include "profile_add_gui.h"
 
-DlgProfileAdd::DlgProfileAdd(DlgProfileManager *_profileManager, QWidget *parent) : QDialog(parent), profileManager(_profileManager)
+ProfileAddGui::ProfileAddGui(ProfileManagerGui *_profileManager, QWidget *parent) : QDialog(parent), profileManager(_profileManager)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -41,7 +41,7 @@ DlgProfileAdd::DlgProfileAdd(DlgProfileManager *_profileManager, QWidget *parent
     ui.lineEdit_nick->setFocus();
 }
 
-void DlgProfileAdd::createGui()
+void ProfileAddGui::createGui()
 {
     ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
@@ -54,13 +54,13 @@ void DlgProfileAdd::createGui()
     ui.label_password->setText(tr("Password:"));
 }
 
-void DlgProfileAdd::setDefaultValues()
+void ProfileAddGui::setDefaultValues()
 {
     ui.radioButton_unregistered_nick->setChecked(true);
     hidePass();
 }
 
-void DlgProfileAdd::createSignals()
+void ProfileAddGui::createSignals()
 {
     connect(ui.radioButton_unregistered_nick, SIGNAL(clicked()), this, SLOT(hidePass()));
     connect(ui.radioButton_registered_nick, SIGNAL(clicked()), this, SLOT(showPass()));
@@ -69,7 +69,7 @@ void DlgProfileAdd::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgProfileAdd::setNickPass(const QString &n, const QString &p)
+void ProfileAddGui::setNickPass(const QString &n, const QString &p)
 {
     ui.radioButton_registered_nick->setChecked(true);
     showPass();
@@ -78,7 +78,7 @@ void DlgProfileAdd::setNickPass(const QString &n, const QString &p)
     ui.lineEdit_password->setText(p);
 }
 
-void DlgProfileAdd::hidePass()
+void ProfileAddGui::hidePass()
 {
     ui.label_password->hide();
     ui.lineEdit_password->hide();
@@ -92,7 +92,7 @@ void DlgProfileAdd::hidePass()
     ui.lineEdit_nick->setFocus();
 }
 
-void DlgProfileAdd::showPass()
+void ProfileAddGui::showPass()
 {
     ui.label_password->show();
     ui.lineEdit_password->show();
@@ -106,12 +106,12 @@ void DlgProfileAdd::showPass()
     ui.lineEdit_nick->setFocus();
 }
 
-void DlgProfileAdd::buttonRegisterNick()
+void ProfileAddGui::buttonRegisterNick()
 {
-    DlgRegisterNick(this).exec();
+    RegisterNickGui(this).exec();
 }
 
-void DlgProfileAdd::buttonOk()
+void ProfileAddGui::buttonOk()
 {
     QString strNick = ui.lineEdit_nick->text();
     QString strPassword = ui.lineEdit_password->text();

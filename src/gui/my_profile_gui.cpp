@@ -28,7 +28,7 @@
 #include "utils.h"
 #include "my_profile_gui.h"
 
-DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
+MyProfileGui::MyProfileGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -46,12 +46,12 @@ DlgMyProfile::DlgMyProfile(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-DlgMyProfile::~DlgMyProfile()
+MyProfileGui::~MyProfileGui()
 {
     accessManager->deleteLater();
 }
 
-void DlgMyProfile::createGui()
+void MyProfileGui::createGui()
 {
     ui.toolButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
     ui.toolButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
@@ -67,7 +67,7 @@ void DlgMyProfile::createGui()
     ui.label_www->setText(tr("Website:"));
 }
 
-void DlgMyProfile::setDefaultValues()
+void MyProfileGui::setDefaultValues()
 {
     // font
     QList<QString> lFonts = Utils::instance()->getFonts();
@@ -114,13 +114,13 @@ void DlgMyProfile::setDefaultValues()
         ui.comboBox_country->addItem(strCountry);
 }
 
-void DlgMyProfile::createSignals()
+void MyProfileGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgMyProfile::avatarFinished(QNetworkReply *reply)
+void MyProfileGui::avatarFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -139,7 +139,7 @@ void DlgMyProfile::avatarFinished(QNetworkReply *reply)
     }
 }
 
-void DlgMyProfile::refresh()
+void MyProfileGui::refresh()
 {
     QHashIterator <QString, QString> i(MyProfile::instance()->getAll());
     while (i.hasNext())
@@ -197,12 +197,12 @@ void DlgMyProfile::refresh()
     }
 }
 
-int DlgMyProfile::getIndex(QComboBox *comboBox, const QString &strFindText)
+int MyProfileGui::getIndex(QComboBox *comboBox, const QString &strFindText)
 {
     return comboBox->findText(strFindText);
 }
 
-QString DlgMyProfile::convertTextToDesc(QString strContent)
+QString MyProfileGui::convertTextToDesc(QString strContent)
 {
     // convert font
     bool bBold = Convert::isBold(strContent);
@@ -236,7 +236,7 @@ QString DlgMyProfile::convertTextToDesc(QString strContent)
     return strContent;
 }
 
-QString DlgMyProfile::convertDescToText(QString strContent)
+QString MyProfileGui::convertDescToText(QString strContent)
 {
     strContent.remove(QRegExp("(\r|\n)"));
     Convert::simpleReverseConvert(strContent);
@@ -277,7 +277,7 @@ QString DlgMyProfile::convertDescToText(QString strContent)
     return strContent;
 }
 
-void DlgMyProfile::buttonOk()
+void MyProfileGui::buttonOk()
 {
     // set desc - shortDesc
     QString strDesc = convertDescToText(ui.plainTextEdit_desc->toPlainText());

@@ -23,7 +23,7 @@
 #include "invite.h"
 #include "invite_list_gui.h"
 
-DlgInviteList::DlgInviteList(QWidget *parent) : QDialog(parent)
+InviteListGui::InviteListGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -36,7 +36,7 @@ DlgInviteList::DlgInviteList(QWidget *parent) : QDialog(parent)
     createList();
 }
 
-void DlgInviteList::createGui()
+void InviteListGui::createGui()
 {
     ui.pushButton_accept->setEnabled(false);
     ui.pushButton_reject->setEnabled(false);
@@ -61,7 +61,7 @@ void DlgInviteList::createGui()
     ui.toolButton_options->setMenu(optionsMenu);
 }
 
-void DlgInviteList::createSignals()
+void InviteListGui::createSignals()
 {
     connect(ui.listWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_reject, SIGNAL(clicked()), this, SLOT(buttonReject()));
@@ -70,7 +70,7 @@ void DlgInviteList::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgInviteList::createList()
+void InviteListGui::createList()
 {
     QHashIterator<QString, QString> i(Invite::instance()->get());
     while (i.hasNext())
@@ -92,7 +92,7 @@ void DlgInviteList::createList()
     }
 }
 
-void DlgInviteList::itemClicked(QListWidgetItem *)
+void InviteListGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.pushButton_accept->isEnabled())
         ui.pushButton_accept->setEnabled(true);
@@ -107,7 +107,7 @@ void DlgInviteList::itemClicked(QListWidgetItem *)
         ui.toolButton_options->setEnabled(true);
 }
 
-void DlgInviteList::buttonAccept()
+void InviteListGui::buttonAccept()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;
@@ -121,7 +121,7 @@ void DlgInviteList::buttonAccept()
     Invite::instance()->remove(strNick, strChannel);
 }
 
-void DlgInviteList::buttonReject()
+void InviteListGui::buttonReject()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;
@@ -135,7 +135,7 @@ void DlgInviteList::buttonReject()
     Invite::instance()->remove(strNick, strChannel);
 }
 
-void DlgInviteList::buttonIgnore()
+void InviteListGui::buttonIgnore()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;
@@ -149,7 +149,7 @@ void DlgInviteList::buttonIgnore()
     Invite::instance()->remove(strNick, strChannel);
 }
 
-void DlgInviteList::whois()
+void InviteListGui::whois()
 {
     if (ui.listWidget->selectedItems().isEmpty())
         return;

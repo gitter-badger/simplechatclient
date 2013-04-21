@@ -713,7 +713,7 @@ void ToolWidget::colorClicked(int index)
 
 void ToolWidget::emoticonsClicked()
 {
-    DlgEmoticons(pInputLine).exec();
+    EmoticonsGui(pInputLine).exec();
 }
 
 void ToolWidget::channelSettingsClicked()
@@ -723,7 +723,7 @@ void ToolWidget::channelSettingsClicked()
         QString strChannel = Channel::instance()->getCurrentName();
 
         if (!strChannel.isEmpty())
-            DlgChannelSettings(strChannel).exec();
+            ChannelSettingsGui(strChannel).exec();
     }
 }
 
@@ -732,7 +732,7 @@ void ToolWidget::moderationClicked()
     QString strChannel = Channel::instance()->getCurrentName();
 
     if (!strChannel.isEmpty())
-        DlgModeration(strChannel).exec();
+        ModerationGui(strChannel).exec();
 }
 
 void ToolWidget::inputlineReturnPressed()

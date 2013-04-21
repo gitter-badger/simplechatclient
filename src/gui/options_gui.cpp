@@ -34,7 +34,7 @@
 #include "themes_gui.h"
 #include "options_gui.h"
 
-DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
+OptionsGui::OptionsGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -48,7 +48,7 @@ DlgOptions::DlgOptions(QWidget *parent) : QDialog(parent)
     createSignals();
 }
 
-void DlgOptions::createGui()
+void OptionsGui::createGui()
 {
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
     ui.pushButton_themes->setIcon(QIcon(":/images/oxygen/16x16/view-presentation.png"));
@@ -208,7 +208,7 @@ void DlgOptions::createGui()
     adv->setToolTip(tr("Advanced"));
 }
 
-void DlgOptions::setDefaultValues()
+void OptionsGui::setDefaultValues()
 {
     // current option
     ui.listWidget_options->setCurrentRow(0);
@@ -404,7 +404,7 @@ void DlgOptions::setDefaultValues()
     }
 }
 
-void DlgOptions::createSignals()
+void OptionsGui::createSignals()
 {
     connect(ui.listWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
     connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
@@ -459,7 +459,7 @@ void DlgOptions::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgOptions::refreshProfilesList()
+void OptionsGui::refreshProfilesList()
 {
     // clear
     ui.comboBox_profiles->clear();
@@ -492,18 +492,18 @@ void DlgOptions::refreshProfilesList()
     ui.comboBox_profiles->setCurrentIndex(ui.comboBox_profiles->findText(Settings::instance()->get("current_profile")));
 }
 
-void DlgOptions::changePage(QModelIndex index)
+void OptionsGui::changePage(QModelIndex index)
 {
     ui.stackedWidget->setCurrentIndex(index.row());
 }
 
-void DlgOptions::setCurrentProfile(int row)
+void OptionsGui::setCurrentProfile(int row)
 {
     ui.comboBox_profiles->setCurrentIndex(row);
     currentProfileChanged(row);
 }
 
-void DlgOptions::currentProfileChanged(int row)
+void OptionsGui::currentProfileChanged(int row)
 {
     QString profileName = ui.comboBox_profiles->itemText(row);
 
@@ -532,17 +532,17 @@ void DlgOptions::currentProfileChanged(int row)
     Core::instance()->mainWindow()->refreshToolWidgetValues();
 }
 
-void DlgOptions::buttonProfiles()
+void OptionsGui::buttonProfiles()
 {
-    DlgProfileManager(this).exec();
+    ProfileManagerGui(this).exec();
 }
 
-void DlgOptions::buttonThemes()
+void OptionsGui::buttonThemes()
 {
-    DlgThemes(this).exec();
+    ThemesGui(this).exec();
 }
 
-void DlgOptions::languageChanged(int index)
+void OptionsGui::languageChanged(int index)
 {
     QString strLanguage = "pl";
 
@@ -561,7 +561,7 @@ void DlgOptions::languageChanged(int index)
     ui.label_language_warning->setText(tr("Restart program to apply the changes."));
 }
 
-void DlgOptions::highlightAdd()
+void OptionsGui::highlightAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing highlight text"), tr("Add highlight text:"), QLineEdit::Normal, QString::null, &ok);
@@ -578,7 +578,7 @@ void DlgOptions::highlightAdd()
     }
 }
 
-void DlgOptions::highlightRemove()
+void OptionsGui::highlightRemove()
 {
     QString strRemove;
     if (ui.listWidget_highlight->selectedItems().size() != 0)
@@ -598,7 +598,7 @@ void DlgOptions::highlightRemove()
     }
 }
 
-void DlgOptions::punishReasonAdd()
+void OptionsGui::punishReasonAdd()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing punish reason"), tr("Add punish reason:"), QLineEdit::Normal, QString::null, &ok);
@@ -615,7 +615,7 @@ void DlgOptions::punishReasonAdd()
     }
 }
 
-void DlgOptions::punishReasonRemove()
+void OptionsGui::punishReasonRemove()
 {
     QString strRemove;
     if (ui.listWidget_punish_reason->selectedItems().size() != 0)
@@ -635,7 +635,7 @@ void DlgOptions::punishReasonRemove()
     }
 }
 
-void DlgOptions::autoBusy(bool bValue)
+void OptionsGui::autoBusy(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -646,7 +646,7 @@ void DlgOptions::autoBusy(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::autoAway(bool bValue)
+void OptionsGui::autoAway(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -657,7 +657,7 @@ void DlgOptions::autoAway(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disableAutojoinFavourites(bool bValue)
+void OptionsGui::disableAutojoinFavourites(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -668,7 +668,7 @@ void DlgOptions::disableAutojoinFavourites(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::minimizeToTray(bool bValue)
+void OptionsGui::minimizeToTray(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -679,7 +679,7 @@ void DlgOptions::minimizeToTray(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::showZuoAndIp(bool bValue)
+void OptionsGui::showZuoAndIp(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -690,7 +690,7 @@ void DlgOptions::showZuoAndIp(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::hideFormating(bool bValue)
+void OptionsGui::hideFormating(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -701,7 +701,7 @@ void DlgOptions::hideFormating(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::hideJoinPart(bool bValue)
+void OptionsGui::hideJoinPart(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -712,7 +712,7 @@ void DlgOptions::hideJoinPart(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::hideJoinPart200(bool bValue)
+void OptionsGui::hideJoinPart200(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -723,7 +723,7 @@ void DlgOptions::hideJoinPart200(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disableEmots(bool bValue)
+void OptionsGui::disableEmots(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -734,7 +734,7 @@ void DlgOptions::disableEmots(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disableReplaces(bool bValue)
+void OptionsGui::disableReplaces(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -745,67 +745,67 @@ void DlgOptions::disableReplaces(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::setBackgroundColor()
+void OptionsGui::setBackgroundColor()
 {
     setColor("background_color");
 }
 
-void DlgOptions::setDefaultColor()
+void OptionsGui::setDefaultColor()
 {
     setColor("default_color");
 }
 
-void DlgOptions::setJoinColor()
+void OptionsGui::setJoinColor()
 {
     setColor("message_join_color");
 }
 
-void DlgOptions::setPartColor()
+void OptionsGui::setPartColor()
 {
     setColor("message_part_color");
 }
 
-void DlgOptions::setQuitColor()
+void OptionsGui::setQuitColor()
 {
     setColor("message_quit_color");
 }
 
-void DlgOptions::setKickColor()
+void OptionsGui::setKickColor()
 {
     setColor("message_kick_color");
 }
 
-void DlgOptions::setModeColor()
+void OptionsGui::setModeColor()
 {
     setColor("message_mode_color");
 }
 
-void DlgOptions::setNoticeColor()
+void OptionsGui::setNoticeColor()
 {
     setColor("message_notice_color");
 }
 
-void DlgOptions::setInfoColor()
+void OptionsGui::setInfoColor()
 {
     setColor("message_info_color");
 }
 
-void DlgOptions::setMeColor()
+void OptionsGui::setMeColor()
 {
     setColor("message_me_color");
 }
 
-void DlgOptions::setErrorColor()
+void OptionsGui::setErrorColor()
 {
     setColor("message_error_color");
 }
 
-void DlgOptions::setChannelColor()
+void OptionsGui::setChannelColor()
 {
     setColor("channel_color");
 }
 
-void DlgOptions::reverseColors()
+void OptionsGui::reverseColors()
 {
     Config *pConfig = new Config();
 
@@ -895,7 +895,7 @@ void DlgOptions::reverseColors()
     Core::instance()->mainWindow()->refreshToolWidgetValues();
 }
 
-void DlgOptions::restoreDefaultColors()
+void OptionsGui::restoreDefaultColors()
 {
     Config *pConfig = new Config();
 
@@ -968,42 +968,42 @@ void DlgOptions::restoreDefaultColors()
     Core::instance()->mainWindow()->refreshToolWidgetValues();
 }
 
-void DlgOptions::setNicklistNickColor()
+void OptionsGui::setNicklistNickColor()
 {
     setColor("nicklist_nick_color");
 }
 
-void DlgOptions::setNicklistSelectedNickColor()
+void OptionsGui::setNicklistSelectedNickColor()
 {
     setColor("nicklist_selected_nick_color");
 }
 
-void DlgOptions::setNicklistBusyNickColor()
+void OptionsGui::setNicklistBusyNickColor()
 {
     setColor("nicklist_busy_nick_color");
 }
 
-void DlgOptions::setNicklistGradient1Color()
+void OptionsGui::setNicklistGradient1Color()
 {
     setColor("nicklist_gradient_1_color");
 }
 
-void DlgOptions::setNicklistGradient2Color()
+void OptionsGui::setNicklistGradient2Color()
 {
     setColor("nicklist_gradient_2_color");
 }
 
-void DlgOptions::tryPlayBeep()
+void OptionsGui::tryPlayBeep()
 {
     SoundNotify::instance()->play(Beep);
 }
 
-void DlgOptions::tryPlayQuery()
+void OptionsGui::tryPlayQuery()
 {
     SoundNotify::instance()->play(Query);
 }
 
-void DlgOptions::setSoundBeep()
+void OptionsGui::setSoundBeep()
 {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -1024,7 +1024,7 @@ void DlgOptions::setSoundBeep()
     }
 }
 
-void DlgOptions::setSoundQuery()
+void OptionsGui::setSoundQuery()
 {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -1045,7 +1045,7 @@ void DlgOptions::setSoundQuery()
     }
 }
 
-void DlgOptions::disableSounds(bool bValue)
+void OptionsGui::disableSounds(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1056,14 +1056,14 @@ void DlgOptions::disableSounds(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::openLogsFolder()
+void OptionsGui::openLogsFolder()
 {
     QString strLogsPath = QDir::toNativeSeparators(ui.lineEdit_logs_folder->text());
 
     QDesktopServices::openUrl(QUrl::fromLocalFile(strLogsPath));
 }
 
-void DlgOptions::setSaveLogsByDate(bool bValue)
+void OptionsGui::setSaveLogsByDate(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1074,7 +1074,7 @@ void DlgOptions::setSaveLogsByDate(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::disableLogs(bool bValue)
+void OptionsGui::disableLogs(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1085,7 +1085,7 @@ void DlgOptions::disableLogs(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::setBackgroundImage()
+void OptionsGui::setBackgroundImage()
 {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
@@ -1109,7 +1109,7 @@ void DlgOptions::setBackgroundImage()
     }
 }
 
-void DlgOptions::disableBackgroundImage(bool bValue)
+void OptionsGui::disableBackgroundImage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1123,7 +1123,7 @@ void DlgOptions::disableBackgroundImage(bool bValue)
     Core::instance()->mainWindow()->refreshCSS();
 }
 
-void DlgOptions::setWinamp()
+void OptionsGui::setWinamp()
 {
     QString strValue = ui.lineEdit_winamp->text();
 
@@ -1134,7 +1134,7 @@ void DlgOptions::setWinamp()
     delete pConfig;
 }
 
-void DlgOptions::trayMessage(bool bValue)
+void OptionsGui::trayMessage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1145,7 +1145,7 @@ void DlgOptions::trayMessage(bool bValue)
     delete pConfig;
 }
 
-void DlgOptions::setColor(const QString &strKey)
+void OptionsGui::setColor(const QString &strKey)
 {
     // get current value
     QString strDefaultColor = Settings::instance()->get(strKey);
@@ -1217,7 +1217,7 @@ void DlgOptions::setColor(const QString &strKey)
     }
 }
 
-void DlgOptions::setMainwindowColors()
+void OptionsGui::setMainwindowColors()
 {
     QString strBackgroundColor = Settings::instance()->get("background_color");
     QString strDefaultColor = Settings::instance()->get("default_color");
@@ -1293,7 +1293,7 @@ void DlgOptions::setMainwindowColors()
     ui.pushButton_channel_color->setIcon(QIcon(cfcolor));
 }
 
-void DlgOptions::setNicklistColors()
+void OptionsGui::setNicklistColors()
 {
     QString strNicklistNickColor = Settings::instance()->get("nicklist_nick_color");
     QString strNicklistSelectedNickColor = Settings::instance()->get("nicklist_selected_nick_color");
@@ -1327,7 +1327,7 @@ void DlgOptions::setNicklistColors()
     ui.pushButton_nicklist_gradient_2_color->setIcon(QIcon(ng2color));
 }
 
-QString DlgOptions::reverseColor(QString strColor)
+QString OptionsGui::reverseColor(QString strColor)
 {
     if (strColor.size() != 8)
     {

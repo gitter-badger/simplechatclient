@@ -22,7 +22,7 @@
 #include "notes.h"
 #include "notes_gui.h"
 
-DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
+NotesGui::NotesGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
@@ -39,31 +39,31 @@ DlgNotes::DlgNotes(QWidget *parent) : QDialog(parent)
     createSignals();
 }
 
-void DlgNotes::createGui()
+void NotesGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 }
 
-void DlgNotes::createSignals()
+void NotesGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgNotes::read()
+void NotesGui::read()
 {
     QString strNotesContent = Notes::instance()->get();
     ui.plainTextEdit->setPlainText(strNotesContent);
 }
 
-void DlgNotes::save()
+void NotesGui::save()
 {
     QString strNotesContent = ui.plainTextEdit->toPlainText();
     Notes::instance()->set(strNotesContent);
 }
 
-void DlgNotes::buttonOk()
+void NotesGui::buttonOk()
 {
     // save notes
     save();
@@ -72,7 +72,7 @@ void DlgNotes::buttonOk()
     this->close();
 }
 
-void DlgNotes::resizeEvent(QResizeEvent *)
+void NotesGui::resizeEvent(QResizeEvent *)
 {
     int iWidth = this->width();
     int iHeight = this->height();

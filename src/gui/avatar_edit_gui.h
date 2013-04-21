@@ -27,12 +27,12 @@
 #include "my_avatar.h"
 #include "ui_avatar_edit.h"
 
-class DlgAvatarEdit : public QDialog
+class AvatarEditGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAvatarEdit(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient);
-    ~DlgAvatarEdit();
+    AvatarEditGui(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient);
+    ~AvatarEditGui();
     MyAvatar getAvatar() const;
 
 public slots:

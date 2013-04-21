@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_invite_list.h"
 
-class DlgInviteList : public QDialog
+class InviteListGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgInviteList(QWidget *parent = 0);
+    InviteListGui(QWidget *parent = 0);
 
 private:
     Ui::uiInviteList ui;   

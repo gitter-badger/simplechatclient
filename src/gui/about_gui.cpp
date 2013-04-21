@@ -22,7 +22,7 @@
 #include "settings.h"
 #include "about_gui.h"
 
-DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
+AboutGui::AboutGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -35,7 +35,7 @@ DlgAbout::DlgAbout(QWidget *parent) : QDialog(parent)
     createSignals();
 }
 
-void DlgAbout::createGui()
+void AboutGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.tabWidget->setTabText(0, tr("&About"));
@@ -43,7 +43,7 @@ void DlgAbout::createGui()
     ui.tabWidget->setTabText(2, tr("T&hanks to"));
 }
 
-void DlgAbout::setDefaultValues()
+void AboutGui::setDefaultValues()
 {
     QString strVersionStatus = Settings::instance()->get("version_status");
 
@@ -86,7 +86,7 @@ void DlgAbout::setDefaultValues()
     ui.label_thanks_to->setText(strThanksTo);
 }
 
-void DlgAbout::createSignals()
+void AboutGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(close()));
 }

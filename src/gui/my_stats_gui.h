@@ -25,12 +25,12 @@
 class SimpleStatsWidget;
 class SimplePercentageWidget;
 
-class DlgMyStats : public QDialog
+class MyStatsGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgMyStats(QWidget *parent = 0);
-    virtual ~DlgMyStats();
+    MyStatsGui(QWidget *parent = 0);
+    virtual ~MyStatsGui();
 
 private:
     Ui::uiMyStats ui;

@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_user_avatar.h"
 
-class DlgUserAvatar : public QDialog
+class UserAvatarGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgUserAvatar(const QPixmap &_avatar, QWidget *parent = 0);
+    UserAvatarGui(const QPixmap &_avatar, QWidget *parent = 0);
 
 private:
     Ui::uiUserAvatar ui;

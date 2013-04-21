@@ -115,7 +115,7 @@ void NickListWidget::profile()
 {
     if (strSelectedNick.isEmpty()) return;
 
-    DlgUserProfile(strSelectedNick).exec();
+    UserProfileGui(strSelectedNick).exec();
 }
 
 void NickListWidget::cam()
@@ -125,7 +125,7 @@ void NickListWidget::cam()
 #if WITH_KAMERZYSTA
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strSelectedNick);
 #else
-    new DlgWebcam(strSelectedNick, true);
+    new WebcamGui(strSelectedNick, true);
 #endif
 }
 

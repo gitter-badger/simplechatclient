@@ -24,11 +24,11 @@
 #include "ui_find_text.h"
 class ChatView;
 
-class DlgFindText : public QDialog
+class FindTextGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFindText(ChatView *_chatView, QWidget *parent = 0);
+    FindTextGui(ChatView *_chatView, QWidget *parent = 0);
 
 private:
     Ui::uiFindText ui;

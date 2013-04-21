@@ -28,7 +28,7 @@
 #include "channel_homes.h"
 #include "channel_homes_gui.h"
 
-DlgChannelHomes::DlgChannelHomes(QWidget *parent) : QDialog(parent)
+ChannelHomesGui::ChannelHomesGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -42,7 +42,7 @@ DlgChannelHomes::DlgChannelHomes(QWidget *parent) : QDialog(parent)
     refresh();
 }
 
-void DlgChannelHomes::createGui()
+void ChannelHomesGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
@@ -62,7 +62,7 @@ void DlgChannelHomes::createGui()
     ui.toolButton_options->setMenu(optionsMenu);
 }
 
-void DlgChannelHomes::createSignals()
+void ChannelHomesGui::createSignals()
 {
     connect(ui.listWidget_channels, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemClicked(QListWidgetItem*)));
     connect(ui.pushButton_create, SIGNAL(clicked()), this, SLOT(buttonCreate()));
@@ -70,7 +70,7 @@ void DlgChannelHomes::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
-void DlgChannelHomes::refresh()
+void ChannelHomesGui::refresh()
 {
     // ready
     if (ChannelHomes::instance()->getStatus() != StatusCompleted)
@@ -103,13 +103,13 @@ void DlgChannelHomes::refresh()
     }
 }
 
-void DlgChannelHomes::itemClicked(QListWidgetItem *)
+void ChannelHomesGui::itemClicked(QListWidgetItem *)
 {
     if (!ui.toolButton_options->isEnabled())
         ui.toolButton_options->setEnabled(true);
 }
 
-void DlgChannelHomes::buttonCreate()
+void ChannelHomesGui::buttonCreate()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), tr("Enter the name of the new channel:"), QLineEdit::Normal, QString::null, &ok);
@@ -125,7 +125,7 @@ void DlgChannelHomes::buttonCreate()
     }
 }
 
-void DlgChannelHomes::buttonRemove()
+void ChannelHomesGui::buttonRemove()
 {
     bool ok;
     QString strText = QInputDialog::getText(this, tr("Changing channels"), "<p><b>"+tr("The removal of the channel operation is irreversible!")+"</b></p><p>"+tr("Enter the name of the channel to remove:")+"</p>", QLineEdit::Normal, QString::null, &ok);
@@ -141,7 +141,7 @@ void DlgChannelHomes::buttonRemove()
     }
 }
 
-void DlgChannelHomes::join()
+void ChannelHomesGui::join()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
@@ -150,12 +150,12 @@ void DlgChannelHomes::join()
     }
 }
 
-void DlgChannelHomes::settings()
+void ChannelHomesGui::settings()
 {
     if (ui.listWidget_channels->selectedItems().size() != 0)
     {
         QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
 
-        DlgChannelSettings(strChannel).exec();
+        ChannelSettingsGui(strChannel).exec();
     }
 }

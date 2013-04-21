@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_notes.h"
 
-class DlgNotes : public QDialog
+class NotesGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgNotes(QWidget *parent = 0);
+    NotesGui(QWidget *parent = 0);
 
 private:
     Ui::uiNotes ui;

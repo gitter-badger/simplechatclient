@@ -22,7 +22,7 @@
 
 #include <QDialog>
 #include "ui_register_nick.h"
-class DlgProfileAdd;
+class ProfileAddGui;
 
 QT_BEGIN_NAMESPACE
 class QNetworkAccessManager;
@@ -30,12 +30,12 @@ class QNetworkCookieJar;
 class QNetworkReply;
 QT_END_NAMESPACE
 
-class DlgRegisterNick : public QDialog
+class RegisterNickGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgRegisterNick(DlgProfileAdd *_pDlgProfileAdd, QWidget *parent = 0);
-    virtual ~DlgRegisterNick();
+    RegisterNickGui(ProfileAddGui *_pProfileAddGui, QWidget *parent = 0);
+    virtual ~RegisterNickGui();
 
 private:
     enum RegisterType
@@ -46,7 +46,7 @@ private:
     };
 
     Ui::uiRegisterNick ui;
-    DlgProfileAdd *pDlgProfileAdd;
+    ProfileAddGui *pProfileAddGui;
     QNetworkAccessManager *accessManager;
     QNetworkCookieJar *cookieJar;
     QHash<QString,QString> mCookies;

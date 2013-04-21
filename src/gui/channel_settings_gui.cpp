@@ -36,7 +36,7 @@
 #include "utils.h"
 #include "channel_settings_gui.h"
 
-DlgChannelSettings::DlgChannelSettings(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)
+ChannelSettingsGui::ChannelSettingsGui(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -62,12 +62,12 @@ DlgChannelSettings::DlgChannelSettings(const QString &_strChannel, QWidget *pare
     refreshAll();
 }
 
-DlgChannelSettings::~DlgChannelSettings()
+ChannelSettingsGui::~ChannelSettingsGui()
 {
     delete avatarClient;
 }
 
-void DlgChannelSettings::createGui()
+void ChannelSettingsGui::createGui()
 {
     ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-request-response.png"));
     ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-no-response.png"));
@@ -187,7 +187,7 @@ void DlgChannelSettings::createGui()
     setSettingsTabsStatus(false);
 }
 
-void DlgChannelSettings::setDefaultValues()
+void ChannelSettingsGui::setDefaultValues()
 {
     // current option
     ui.listWidget_channel_settings->setCurrentRow(0);
@@ -221,7 +221,7 @@ void DlgChannelSettings::setDefaultValues()
     }
 }
 
-void DlgChannelSettings::createSignals()
+void ChannelSettingsGui::createSignals()
 {
     connect(ui.pushButton_transfer, SIGNAL(clicked()), this, SLOT(ownerChanged()));
     connect(ui.pushButton_remove_channel, SIGNAL(clicked()), this, SLOT(removeChannelClicked()));
@@ -251,7 +251,7 @@ void DlgChannelSettings::createSignals()
     connect(ui.listWidget_channel_settings, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
 }
 
-void DlgChannelSettings::changePage(QModelIndex modelIndex)
+void ChannelSettingsGui::changePage(QModelIndex modelIndex)
 {
     int index = modelIndex.row();
 
@@ -270,7 +270,7 @@ void DlgChannelSettings::changePage(QModelIndex modelIndex)
     }
 }
 
-void DlgChannelSettings::refreshAll()
+void ChannelSettingsGui::refreshAll()
 {
     // clear
     clear();
@@ -287,7 +287,7 @@ void DlgChannelSettings::refreshAll()
     QTimer::singleShot(200, this, SLOT(refreshChannelStats())); // 0.2 sec
 }
 
-void DlgChannelSettings::refreshChannelInfo()
+void ChannelSettingsGui::refreshChannelInfo()
 {
     if (ChannelSettings::instance()->getStatusInfo() != StatusCompleted)
     {
@@ -496,7 +496,7 @@ void DlgChannelSettings::refreshChannelInfo()
     refreshPermissionList();
 }
 
-void DlgChannelSettings::refreshChannelStats()
+void ChannelSettingsGui::refreshChannelStats()
 {
     if (ChannelSettings::instance()->getStatusStats() != StatusCompleted)
     {
@@ -542,7 +542,7 @@ void DlgChannelSettings::refreshChannelStats()
     }
 }
 
-void DlgChannelSettings::setSettingsTabsStatus(bool b)
+void ChannelSettingsGui::setSettingsTabsStatus(bool b)
 {
     Qt::ItemFlags flags;
     if (b) flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
@@ -554,7 +554,7 @@ void DlgChannelSettings::setSettingsTabsStatus(bool b)
     ui.listWidget_channel_settings->item(4)->setFlags(flags);
 }
 
-void DlgChannelSettings::setOwner(const QString &strNick)
+void ChannelSettingsGui::setOwner(const QString &strNick)
 {
     ui.label_owner->show();
     ui.label_owner_nick->show();
@@ -562,7 +562,7 @@ void DlgChannelSettings::setOwner(const QString &strNick)
     ui.label_owner_nick->setText(strNick);
 }
 
-void DlgChannelSettings::addOp(const QString &strNick)
+void ChannelSettingsGui::addOp(const QString &strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(SortedListWidgetNicklistRole, false); // is nicklist
@@ -571,7 +571,7 @@ void DlgChannelSettings::addOp(const QString &strNick)
     ((QListWidget*)ui.tabWidget_permissions->widget(0))->addItem(item);
 }
 
-void DlgChannelSettings::addHalfop(const QString &strNick)
+void ChannelSettingsGui::addHalfop(const QString &strNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(SortedListWidgetNicklistRole, false); // is nicklist
@@ -580,7 +580,7 @@ void DlgChannelSettings::addHalfop(const QString &strNick)
     ((QListWidget*)ui.tabWidget_permissions->widget(1))->addItem(item);
 }
 
-void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
+void ChannelSettingsGui::addBan(const QString &strNick, const QString &strWho, const QString &strDT, const QString &strIPNick)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(SortedListWidgetNicklistRole, false); // is nicklist
@@ -602,7 +602,7 @@ void DlgChannelSettings::addBan(const QString &strNick, const QString &strWho, c
     ((QListWidget*)ui.tabWidget_permissions->widget(2))->addItem(item);
 }
 
-void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho, const QString &strDT)
+void ChannelSettingsGui::addInvite(const QString &strNick, const QString &strWho, const QString &strDT)
 {
     SortedListWidgetItem *item = new SortedListWidgetItem();
     item->setData(SortedListWidgetNicklistRole, false); // is nicklist
@@ -612,7 +612,7 @@ void DlgChannelSettings::addInvite(const QString &strNick, const QString &strWho
     ((QListWidget*)ui.tabWidget_permissions->widget(3))->addItem(item);
 }
 
-void DlgChannelSettings::ownerChanged()
+void ChannelSettingsGui::ownerChanged()
 {
     QString strMsg = "<p><b>"+tr("The owner of the channel can be only one!")+"</b></p><p>"+tr("Enter the nickname of the new owner:")+"</p>";
     bool ok;
@@ -625,7 +625,7 @@ void DlgChannelSettings::ownerChanged()
     refreshAll();
 }
 
-void DlgChannelSettings::removeChannelClicked()
+void ChannelSettingsGui::removeChannelClicked()
 {
     QString strMsg = "<b>"+tr("The removal of the channel operation is irreversible!")+"</b>";
     bool ok;
@@ -638,14 +638,14 @@ void DlgChannelSettings::removeChannelClicked()
     buttonClose();
 }
 
-void DlgChannelSettings::wwwChanged()
+void ChannelSettingsGui::wwwChanged()
 {
     Core::instance()->network->send(QString("CS SET %1 WWW %2").arg(strChannel, ui.lineEdit_website->text()));
 
     refreshAll();
 }
 
-void DlgChannelSettings::topicChanged()
+void ChannelSettingsGui::topicChanged()
 {
     QString strTopic = ui.plainTextEdit_topic->toPlainText();
     strTopic.remove(QRegExp("(\r|\n)"));
@@ -689,28 +689,28 @@ void DlgChannelSettings::topicChanged()
     refreshAll();
 }
 
-void DlgChannelSettings::descChanged()
+void ChannelSettingsGui::descChanged()
 {
     Core::instance()->network->send(QString("CS SET %1 LONGDESC %2").arg(strChannel, ui.plainTextEdit_desc->toPlainText().replace(QRegExp("(\r|\n)"), QString::null)));
 
     refreshAll();
 }
 
-void DlgChannelSettings::statusPub()
+void ChannelSettingsGui::statusPub()
 {
     Core::instance()->network->send(QString("CS SET %1 PRIVATE OFF").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::statusPriv()
+void ChannelSettingsGui::statusPriv()
 {
     Core::instance()->network->send(QString("CS SET %1 PRIVATE ON").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::categoryChanged(int index)
+void ChannelSettingsGui::categoryChanged(int index)
 {
     QString strCatMajor = QString::number(index+1);
     Core::instance()->network->send(QString("CS SET %1 CATMAJOR %2").arg(strChannel, strCatMajor));
@@ -718,14 +718,14 @@ void DlgChannelSettings::categoryChanged(int index)
     refreshAll();
 }
 
-void DlgChannelSettings::guardianInactive()
+void ChannelSettingsGui::guardianInactive()
 {
     Core::instance()->network->send(QString("CS SET %1 GUARDIAN 0").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::guardianActive()
+void ChannelSettingsGui::guardianActive()
 {
     if (ui.comboBox_guardian_level->currentIndex() != -1)
     {
@@ -738,7 +738,7 @@ void DlgChannelSettings::guardianActive()
     refreshAll();
 }
 
-void DlgChannelSettings::guardianClicked(int iLevel)
+void ChannelSettingsGui::guardianClicked(int iLevel)
 {
     if (ui.radioButton_guardian_on->isChecked())
     {
@@ -749,14 +749,14 @@ void DlgChannelSettings::guardianClicked(int iLevel)
     refreshAll();
 }
 
-void DlgChannelSettings::passwordChanged()
+void ChannelSettingsGui::passwordChanged()
 {
     Core::instance()->network->send(QString("CS SET %1 PASSWORD %2").arg(strChannel, ui.lineEdit_password->text()));
 
     refreshAll();
 }
 
-void DlgChannelSettings::limitChanged()
+void ChannelSettingsGui::limitChanged()
 {
     QString strLimit = QString::number(ui.spinBox_limit->value());
     Core::instance()->network->send(QString("CS SET %1 LIMIT %2").arg(strChannel, strLimit));
@@ -764,35 +764,35 @@ void DlgChannelSettings::limitChanged()
     refreshAll();
 }
 
-void DlgChannelSettings::moderatedInactive()
+void ChannelSettingsGui::moderatedInactive()
 {
     Core::instance()->network->send(QString("CS SET %1 MODERATED OFF").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::moderatedActive()
+void ChannelSettingsGui::moderatedActive()
 {
     Core::instance()->network->send(QString("CS SET %1 MODERATED ON").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::auditoriumInactive()
+void ChannelSettingsGui::auditoriumInactive()
 {
     Core::instance()->network->send(QString("CS SET %1 AUDITORIUM OFF").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::auditoriumActive()
+void ChannelSettingsGui::auditoriumActive()
 {
     Core::instance()->network->send(QString("CS SET %1 AUDITORIUM ON").arg(strChannel));
 
     refreshAll();
 }
 
-void DlgChannelSettings::buttonPermissionAdd()
+void ChannelSettingsGui::buttonPermissionAdd()
 {
     int index = ui.tabWidget_permissions->currentIndex();
     QString strNick;
@@ -848,7 +848,7 @@ void DlgChannelSettings::buttonPermissionAdd()
     refreshAll();
 }
 
-void DlgChannelSettings::buttonPermissionRemove()
+void ChannelSettingsGui::buttonPermissionRemove()
 {
     int index = ui.tabWidget_permissions->currentIndex();
     QList<QListWidgetItem*> lRemoveNicks;
@@ -930,7 +930,7 @@ void DlgChannelSettings::buttonPermissionRemove()
     refreshAll();
 }
 
-void DlgChannelSettings::refreshPermissionList()
+void ChannelSettingsGui::refreshPermissionList()
 {
     ((QListWidget*)ui.tabWidget_permissions->widget(0))->clear();
     ((QListWidget*)ui.tabWidget_permissions->widget(1))->clear();
@@ -991,7 +991,7 @@ void DlgChannelSettings::refreshPermissionList()
     }
 }
 
-void DlgChannelSettings::clear()
+void ChannelSettingsGui::clear()
 {
     ChannelSettings::instance()->clear();
 
@@ -1043,14 +1043,14 @@ void DlgChannelSettings::clear()
     ui.label_stats_exists_days->setText("-");
 }
 
-void DlgChannelSettings::buttonClose()
+void ChannelSettingsGui::buttonClose()
 {
     ChannelSettings::instance()->clear();
 
     close();
 }
 
-void DlgChannelSettings::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void ChannelSettingsGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
 {
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
@@ -1064,7 +1064,7 @@ void DlgChannelSettings::getAvatarReady(const QByteArray &content, const QString
         ui.label_channel_avatar->setPixmap(pixmap);
 }
 
-void DlgChannelSettings::refreshAvatar()
+void ChannelSettingsGui::refreshAvatar()
 {
     if (!avatarUrl.isEmpty())
     {
@@ -1075,7 +1075,7 @@ void DlgChannelSettings::refreshAvatar()
     ui.label_channel_avatar->setText(tr("No photo available"));
 }
 
-void DlgChannelSettings::avatarSelected(const QString &avatarUrl)
+void ChannelSettingsGui::avatarSelected(const QString &avatarUrl)
 {
     Core::instance()->network->send(QString("CS SET %1 AVATAR %2").arg(strChannel, avatarUrl));
 

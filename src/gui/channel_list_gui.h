@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_channel_list.h"
 
-class DlgChannelList : public QDialog
+class ChannelListGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgChannelList(QWidget *parent = 0);
+    ChannelListGui(QWidget *parent = 0);
 
 private:
     Ui::uiChannelList ui;

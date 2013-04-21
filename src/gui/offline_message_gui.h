@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_offline_message.h"
 
-class DlgOfflineMessage : public QDialog
+class OfflineMessageGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgOfflineMessage(const QString &_strNick, QWidget *parent = 0);
+    OfflineMessageGui(const QString &_strNick, QWidget *parent = 0);
 
 private:
     Ui::uiOfflineMessage ui;

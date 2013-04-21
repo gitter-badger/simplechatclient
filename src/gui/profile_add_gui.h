@@ -22,18 +22,18 @@
 
 #include <QDialog>
 #include "ui_profile_add.h"
-class DlgProfileManager;
+class ProfileManagerGui;
 
-class DlgProfileAdd : public QDialog
+class ProfileAddGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileAdd(DlgProfileManager *_profileManager, QWidget *parent = 0);
+    ProfileAddGui(ProfileManagerGui *_profileManager, QWidget *parent = 0);
     void setNickPass(const QString &n, const QString &p);
 
 private:
     Ui::uiProfileAdd ui;
-    DlgProfileManager *profileManager;
+    ProfileManagerGui *profileManager;
 
     void createGui();
     void setDefaultValues();

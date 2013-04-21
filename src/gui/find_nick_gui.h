@@ -24,11 +24,11 @@
 #include "ui_find_nick.h"
 #include "defines.h"
 
-class DlgFindNick : public QDialog
+class FindNickGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgFindNick(QWidget *parent = 0);
+    FindNickGui(QWidget *parent = 0);
 
 private:
     Ui::uiFindNick ui;

@@ -23,11 +23,11 @@
 #include <QDialog>
 #include "ui_profile_edit.h"
 
-class DlgProfileEdit : public QDialog
+class ProfileEditGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgProfileEdit(const QString &_strNick, QWidget *parent = 0);
+    ProfileEditGui(const QString &_strNick, QWidget *parent = 0);
 
 private:
     Ui::uiProfileEdit ui;

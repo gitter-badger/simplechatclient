@@ -34,7 +34,7 @@
 #define DOWNLOAD_SITE_LINK "http://sourceforge.net/projects/simplechatclien/files/scc-%1.exe/download"
 #define DOWNLOAD_DIRECT_LINK "http://%1.dl.sourceforge.net/project/simplechatclien/scc-%2.exe"
 
-DlgUpdate::DlgUpdate(QWidget *parent) : QDialog(parent)
+UpdateGui::UpdateGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -53,13 +53,13 @@ DlgUpdate::DlgUpdate(QWidget *parent) : QDialog(parent)
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(networkFinished(QNetworkReply*)));
 }
 
-DlgUpdate::~DlgUpdate()
+UpdateGui::~UpdateGui()
 {
     accessManager->deleteLater();
     cookieJar->deleteLater();
 }
 
-void DlgUpdate::createGui()
+void UpdateGui::createGui()
 {
 #ifndef Q_WS_WIN
     ui.progressBar->hide();
@@ -68,7 +68,7 @@ void DlgUpdate::createGui()
     ui.pushButton_download->setText(tr("Download"));
 }
 
-void DlgUpdate::setDefaultValues()
+void UpdateGui::setDefaultValues()
 {
     strVersion = Settings::instance()->get("available_version");
 
@@ -83,12 +83,12 @@ void DlgUpdate::setDefaultValues()
     ui.label_content->setText(Settings::instance()->get("whats_new"));
 }
 
-void DlgUpdate::createSignals()
+void UpdateGui::createSignals()
 {
     connect(ui.pushButton_download, SIGNAL(clicked()), this, SLOT(buttonDownload()));
 }
 
-void DlgUpdate::buttonDownload()
+void UpdateGui::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
@@ -102,7 +102,7 @@ void DlgUpdate::buttonDownload()
 
 // <meta http-equiv="refresh" content="5; url=https://downloads.sourceforge.net/project/simplechatclien/scc-1.6.2.0.exe?r=&amp;ts=1354737755&amp;use_mirror=switch">
 // http://leaseweb.dl.sourceforge.net/project/simplechatclien/scc-1.0.13.917.exe
-void DlgUpdate::gotSFSite(QString site)
+void UpdateGui::gotSFSite(QString site)
 {
     QWebPage page;
     page.mainFrame()->setHtml(site);
@@ -125,7 +125,7 @@ void DlgUpdate::gotSFSite(QString site)
         showError(tr("Cannot download file"));
 }
 
-void DlgUpdate::gotFile(const QByteArray &bData)
+void UpdateGui::gotFile(const QByteArray &bData)
 {
     QString path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::TempLocation)).absoluteFilePath();
 
@@ -155,7 +155,7 @@ void DlgUpdate::gotFile(const QByteArray &bData)
     exit(0);
 }
 
-void DlgUpdate::networkFinished(QNetworkReply *reply)
+void UpdateGui::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -180,18 +180,18 @@ void DlgUpdate::networkFinished(QNetworkReply *reply)
         gotFile(bData);
 }
 
-void DlgUpdate::downloadProgress(qint64 bytesReceived,qint64 bytesTotal)
+void UpdateGui::downloadProgress(qint64 bytesReceived,qint64 bytesTotal)
 {
     ui.progressBar->setValue(bytesReceived);
     ui.progressBar->setMaximum(bytesTotal);
 }
 
-void DlgUpdate::downloadError(QNetworkReply::NetworkError)
+void UpdateGui::downloadError(QNetworkReply::NetworkError)
 {
     showError(tr("Cannot download file"));
 }
 
-void DlgUpdate::showError(const QString &strError)
+void UpdateGui::showError(const QString &strError)
 {
     ui.label_title->setText(tr("Error"));
     ui.label_content->setText(QString("<center><b>%1</b></center>").arg(strError));

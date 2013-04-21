@@ -27,12 +27,12 @@ QT_BEGIN_NAMESPACE
 class QUrl;
 QT_END_NAMESPACE
 
-class DlgWebBrowser : public QDialog
+class WebBrowserGui : public QDialog
 {
     Q_OBJECT
 public:
-    DlgWebBrowser(const QUrl &url, QWidget *parent = 0);
-    virtual ~DlgWebBrowser();
+    WebBrowserGui(const QUrl &url, QWidget *parent = 0);
+    virtual ~WebBrowserGui();
 
 private:
     Ui::uiWebBrowser *ui;

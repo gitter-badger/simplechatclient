@@ -19,7 +19,7 @@
 
 #include "webcam_mini_gui.h"
 
-DlgWebcamMini::DlgWebcamMini(QString nick)
+WebcamMiniGui::WebcamMiniGui(QString nick)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -27,24 +27,24 @@ DlgWebcamMini::DlgWebcamMini(QString nick)
     setWindowTitle(nick);
 }
 
-void DlgWebcamMini::updateImage(const QByteArray &data)
+void WebcamMiniGui::updateImage(const QByteArray &data)
 {
     QPixmap pixmap;
     pixmap.loadFromData(data);
     ui.label_img->setPixmap(pixmap);
 }
 
-void DlgWebcamMini::updateText(const QString &text)
+void WebcamMiniGui::updateText(const QString &text)
 {
     ui.label_img->setText(text);
 }
 
-void DlgWebcamMini::error(const QString &s)
+void WebcamMiniGui::error(const QString &s)
 {
     updateText(s + "<br/>"+tr("Disconnected from server webcams"));
 }
 
-void DlgWebcamMini::closeEvent(QCloseEvent *)
+void WebcamMiniGui::closeEvent(QCloseEvent *)
 {
     emit closeCam();
 }

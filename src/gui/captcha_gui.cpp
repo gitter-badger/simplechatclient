@@ -26,7 +26,7 @@
 #include <QUrl>
 #include "captcha_gui.h"
 
-DlgCaptcha::DlgCaptcha(QNetworkCookieJar *_cookieJar, QString *_strCaptcha, QWidget *parent) : QDialog(parent), strCaptcha(_strCaptcha), cookieJar(_cookieJar)
+CaptchaGui::CaptchaGui(QNetworkCookieJar *_cookieJar, QString *_strCaptcha, QWidget *parent) : QDialog(parent), strCaptcha(_strCaptcha), cookieJar(_cookieJar)
 {
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -44,19 +44,19 @@ DlgCaptcha::DlgCaptcha(QNetworkCookieJar *_cookieJar, QString *_strCaptcha, QWid
     getImg();
 }
 
-void DlgCaptcha::createGui()
+void CaptchaGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
 
     ui.label_text->setText(tr("Enter the characters you see:"));
 }
 
-void DlgCaptcha::createSignals()
+void CaptchaGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(buttonOk()));
 }
 
-void DlgCaptcha::getImg()
+void CaptchaGui::getImg()
 {
     // clear
     ui.label_img->setText(tr("Loading..."));
@@ -66,7 +66,7 @@ void DlgCaptcha::getImg()
     pReply->setProperty("category", "get_captcha");
 }
 
-void DlgCaptcha::gotImg(const QByteArray &bData)
+void CaptchaGui::gotImg(const QByteArray &bData)
 {
     // show img
     QPixmap pixmap;
@@ -74,7 +74,7 @@ void DlgCaptcha::gotImg(const QByteArray &bData)
     ui.label_img->setPixmap(pixmap);
 }
 
-void DlgCaptcha::networkFinished(QNetworkReply *reply)
+void CaptchaGui::networkFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
@@ -91,7 +91,7 @@ void DlgCaptcha::networkFinished(QNetworkReply *reply)
         gotImg(bData);
 }
 
-void DlgCaptcha::buttonOk()
+void CaptchaGui::buttonOk()
 {
     (*strCaptcha) = ui.lineEdit_code->text();
     this->close();

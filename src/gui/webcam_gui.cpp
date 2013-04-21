@@ -22,16 +22,16 @@
 #include "webcam_engine.h"
 #include "webcam_gui.h"
 
-DlgWebcam::DlgWebcam(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
+WebcamGui::WebcamGui(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
 {
     if (bMini)
     {
-        pWebcamMini = new DlgWebcamMini(strNick);
+        pWebcamMini = new WebcamMiniGui(strNick);
         pWebcamMini->show();
     }
     else
     {
-        pWebcamStandard = new DlgWebcamStandard();
+        pWebcamStandard = new WebcamStandardGui();
         pWebcamStandard->show();
     }
 
@@ -40,7 +40,7 @@ DlgWebcam::DlgWebcam(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_
     createSignals();
 }
 
-DlgWebcam::~DlgWebcam()
+WebcamGui::~WebcamGui()
 {
     delete pWebcamEngine;
 
@@ -50,7 +50,7 @@ DlgWebcam::~DlgWebcam()
         delete pWebcamStandard;
 }
 
-void DlgWebcam::createSignals()
+void WebcamGui::createSignals()
 {
     if (bMini)
     {
@@ -80,13 +80,13 @@ void DlgWebcam::createSignals()
     }
 }
 
-void DlgWebcam::closeCam()
+void WebcamGui::closeCam()
 {
     pWebcamEngine->closeEngine();
     this->deleteLater();
 }
 
-void DlgWebcam::userError(const QString &s)
+void WebcamGui::userError(const QString &s)
 {
     /* mini */
     pWebcamMini->updateText(s);

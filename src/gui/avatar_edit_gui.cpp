@@ -29,10 +29,10 @@
 
 #include "avatar_edit_gui.h"
 
-DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient) :
+AvatarEditGui::AvatarEditGui(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient) :
     QDialog(parent), avatar(avatar), avatarClient(avatarClient)
 {
-    //avatar.debug("DlgAvatarEdit");
+    //avatar.debug("AvatarEditGui");
 
     ui.setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
@@ -54,13 +54,13 @@ DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatar avatar, AvatarClient *ava
     avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
 
-DlgAvatarEdit::~DlgAvatarEdit()
+AvatarEditGui::~AvatarEditGui()
 {
     delete editScene;
     delete previewScene;
 }
 
-void DlgAvatarEdit::createGui()
+void AvatarEditGui::createGui()
 {
     ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
@@ -77,13 +77,13 @@ void DlgAvatarEdit::createGui()
     ui.graphicsView_preview->setScene(previewScene);
 }
 
-void DlgAvatarEdit::setDefaultValues()
+void AvatarEditGui::setDefaultValues()
 {
     ui.label_fileName->setText(avatar.desc());
     ui.label_size->setText(QString("%1x%2 px").arg(QString::number(avatar.width()), QString::number(avatar.height())));
 }
 
-void DlgAvatarEdit::createSignals()
+void AvatarEditGui::createSignals()
 {
     connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(okClicked()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -91,21 +91,21 @@ void DlgAvatarEdit::createSignals()
     connect(ui.toolButton_rotate_right, SIGNAL(clicked()), this, SLOT(rotateRightClicked()));
 }
 
-void DlgAvatarEdit::rotateLeftClicked()
+void AvatarEditGui::rotateLeftClicked()
 {
     avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateLeft();
     avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
 
-void DlgAvatarEdit::rotateRightClicked()
+void AvatarEditGui::rotateRightClicked()
 {
     avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateRight();
     avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
 
-void DlgAvatarEdit::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void AvatarEditGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
 {
     if (type != AvatarClient::AT_myRaw)
         return;
@@ -134,18 +134,18 @@ void DlgAvatarEdit::getAvatarReady(const QByteArray &content, const QString &ava
     ui.graphicsView_preview->fitInView(crop);
 }
 
-void DlgAvatarEdit::cropChanged(const QRect &crop)
+void AvatarEditGui::cropChanged(const QRect &crop)
 {
     this->crop = crop;
     ui.graphicsView_preview->fitInView(crop);
 }
 
-MyAvatar DlgAvatarEdit::getAvatar() const
+MyAvatar AvatarEditGui::getAvatar() const
 {
     return avatar;
 }
 
-void DlgAvatarEdit::okClicked()
+void AvatarEditGui::okClicked()
 {
     avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle()));
     accept();
