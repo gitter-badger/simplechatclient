@@ -163,6 +163,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 404: raw_404(); break;
             case 405: raw_405(); break;
             case 406: raw_406(); break;
+            case 412: raw_412(); break;
             case 421: raw_421(); break;
             case 432: raw_432(); break;
             case 433: raw_433(); break;
@@ -172,6 +173,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 445: raw_445(); break;
             case 446: raw_446(); break;
             case 451: raw_451(); break;
+            case 453: raw_453(); break;
             case 461: raw_461(); break;
             case 462: raw_462(); break;
             case 470: raw_470(); break;
@@ -3107,6 +3109,13 @@ void OnetKernel::raw_409n()
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
+// :cf1f3.onet 412 scc_test :No text to send
+void OnetKernel::raw_412()
+{
+    QString strMessage = QString(tr("* No text to send"));
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
 // :NickServ!service@service.onet NOTICE ~Merovingian :412 admi :user's data is not ready
 void OnetKernel::raw_412n()
 {
@@ -3381,6 +3390,17 @@ void OnetKernel::raw_452n()
     QString strChannel = strDataList.at(4);
 
     QString strMessage = QString(tr("* %1 :Channel name already in use")).arg(strChannel);
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :453 #aaaaaaaa :is not valid channel name
+void OnetKernel::raw_453()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strChannel = strDataList.at(4);
+
+    QString strMessage = QString(tr("* %1 :is not valid channel name")).arg(strChannel);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
@@ -4034,8 +4054,13 @@ void OnetKernel::raw_817()
     for (int i = 7; i < strDataList.size(); i++) { if (i != 7) strMessage += " "; strMessage += strDataList.at(i); }
     if (strMessage[0] == ':') strMessage.remove(0,1);
 
-    if (!strMessage.isEmpty())
-        Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick, iTime);
+    if (strMessage.isEmpty())
+        return;
+
+    // convert emots :)
+    Replace::replaceEmots(strMessage);
+
+    Message::instance()->showMessage(strChannel, strMessage, MessageDefault, strNick, iTime);
 }
 
 // SLIST

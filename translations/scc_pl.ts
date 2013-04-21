@@ -2912,6 +2912,10 @@
         <translation>* %1 :Nie ma takiego pokoju</translation>
     </message>
     <message>
+        <source>* No text to send</source>
+        <translation>* Brak tekstu do wysłania</translation>
+    </message>
+    <message>
         <source>* Nick %1 is already on your friend list</source>
         <translation>* Nick %1 jest już na liście przyjaciół</translation>
     </message>
@@ -2982,6 +2986,10 @@
     <message>
         <source>* %1 :Channel name already in use</source>
         <translation>* %1 :Nazwa pokoju już istnieje</translation>
+    </message>
+    <message>
+        <source>* %1 :is not valid channel name</source>
+        <translation>* %1 :Nazwa pokoju jest nieprawidłowa</translation>
     </message>
     <message>
         <source>* %1 :Not enough unique channel name</source>
