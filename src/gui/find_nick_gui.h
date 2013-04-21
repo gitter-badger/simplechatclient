@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FIND_NICK_H
-#define FIND_NICK_H
+#ifndef FIND_NICK_GUI_H
+#define FIND_NICK_GUI_H
 
 #include <QDialog>
 #include "ui_find_nick.h"
@@ -47,4 +47,4 @@ private slots:
     void invite();
 };
 
-#endif // FIND_NICK_H
+#endif // FIND_NICK_GUI_H

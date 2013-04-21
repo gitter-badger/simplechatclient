@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PROFILE_EDIT_H
-#define PROFILE_EDIT_H
+#ifndef PROFILE_EDIT_GUI_H
+#define PROFILE_EDIT_GUI_H
 
 #include <QDialog>
 #include "ui_profile_edit.h"
@@ -41,4 +41,4 @@ private slots:
     void buttonOk();
 };
 
-#endif // PROFILE_EDIT_H
+#endif // PROFILE_EDIT_GUI_H

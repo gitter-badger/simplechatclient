@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEBBROWSER_H
-#define WEBBROWSER_H
+#ifndef WEBBROWSER_GUI_H
+#define WEBBROWSER_GUI_H
 
 #include <QDialog>
 #include "ui_webbrowser.h"
@@ -41,4 +41,4 @@ private slots:
     void loadFinished();
 };
 
-#endif // WEBBROWSER_H
+#endif // WEBBROWSER_GUI_H

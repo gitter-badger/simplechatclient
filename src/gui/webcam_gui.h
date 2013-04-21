@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEBCAM_H
-#define WEBCAM_H
+#ifndef WEBCAM_GUI_H
+#define WEBCAM_GUI_H
 
 #include <QObject>
 class WebcamEngine;
@@ -46,4 +46,4 @@ private slots:
     void userError(const QString&);
 };
 
-#endif // WEBCAM_H
+#endif // WEBCAM_GUI_H

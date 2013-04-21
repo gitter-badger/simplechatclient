@@ -30,30 +30,30 @@
 #define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.xml"
 #define UPDATE_URL_2 "http://simplechatclient.github.com/update.xml"
 
-Updates * Updates::Instance = 0;
+Update * Update::Instance = 0;
 
-Updates * Updates::instance()
+Update * Update::instance()
 {
     if (!Instance)
     {
-        Instance = new Updates();
+        Instance = new Update();
     }
 
     return Instance;
 }
 
-Updates::Updates()
+Update::Update()
 {
     accessManager = new QNetworkAccessManager;
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateFinished(QNetworkReply*)));
 }
 
-Updates::~Updates()
+Update::~Update()
 {
     accessManager->deleteLater();
 }
 
-void Updates::checkUpdate()
+void Update::checkUpdate()
 {
     QString strPlatform = "unknown";
 #ifdef Q_WS_WIN
@@ -72,7 +72,7 @@ void Updates::checkUpdate()
     pReply->setProperty("update_url", "1");
 }
 
-void Updates::compareVersion()
+void Update::compareVersion()
 {
     QString strCurrentVersion = Settings::instance()->get("version");
     QStringList lCurrentVersion = strCurrentVersion.split(".");
@@ -105,7 +105,7 @@ void Updates::compareVersion()
         qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion << " Status: " << strVersionStatus;
 }
 
-void Updates::saveSettings(QString strUpdateXml)
+void Update::saveSettings(QString strUpdateXml)
 {
     QDomDocument doc;
     doc.setContent(strUpdateXml);
@@ -124,7 +124,7 @@ void Updates::saveSettings(QString strUpdateXml)
         Settings::instance()->set("available_version", strAvailableVersion);
 }
 
-void Updates::readSettings()
+void Update::readSettings()
 {
     QString strMOTD = Settings::instance()->get("motd");
     QString strAvailableVersion = Settings::instance()->get("available_version");
@@ -144,7 +144,7 @@ void Updates::readSettings()
     }
 }
 
-void Updates::updateFinished(QNetworkReply *reply)
+void Update::updateFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 

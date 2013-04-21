@@ -276,7 +276,7 @@ void DlgChannelSettings::refreshAll()
     clear();
 
     // set channel
-    ChannelSettingsModel::instance()->setChannel(strChannel);
+    ChannelSettings::instance()->setChannel(strChannel);
 
     // get data
     Core::instance()->network->send(QString("CS INFO %1").arg(strChannel));
@@ -289,13 +289,13 @@ void DlgChannelSettings::refreshAll()
 
 void DlgChannelSettings::refreshChannelInfo()
 {
-    if (ChannelSettingsModel::instance()->getStatusInfo() != StatusCompleted)
+    if (ChannelSettings::instance()->getStatusInfo() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshChannelInfo())); // 0.2 sec
         return;
     }
 
-    QHashIterator<QString, QString> iSettingsInfo(ChannelSettingsModel::instance()->getAllInfo());
+    QHashIterator<QString, QString> iSettingsInfo(ChannelSettings::instance()->getAllInfo());
     while (iSettingsInfo.hasNext())
     {
         iSettingsInfo.next();
@@ -498,13 +498,13 @@ void DlgChannelSettings::refreshChannelInfo()
 
 void DlgChannelSettings::refreshChannelStats()
 {
-    if (ChannelSettingsModel::instance()->getStatusStats() != StatusCompleted)
+    if (ChannelSettings::instance()->getStatusStats() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshChannelStats())); // 0.2 sec
         return;
     }
 
-    QHashIterator<QString, QString> i(ChannelSettingsModel::instance()->getAllStats());
+    QHashIterator<QString, QString> i(ChannelSettings::instance()->getAllStats());
     while (i.hasNext())
     {
         i.next();
@@ -953,7 +953,7 @@ void DlgChannelSettings::refreshPermissionList()
     }
 
     // refresh permissions
-    QHashIterator<QString, QString> iSettingsPermissions(ChannelSettingsModel::instance()->getAllPermission());
+    QHashIterator<QString, QString> iSettingsPermissions(ChannelSettings::instance()->getAllPermission());
     while (iSettingsPermissions.hasNext())
     {
         iSettingsPermissions.next();
@@ -993,7 +993,7 @@ void DlgChannelSettings::refreshPermissionList()
 
 void DlgChannelSettings::clear()
 {
-    ChannelSettingsModel::instance()->clear();
+    ChannelSettings::instance()->clear();
 
     // summary
     ui.label_summary_datetime->setText("-");
@@ -1045,7 +1045,7 @@ void DlgChannelSettings::clear()
 
 void DlgChannelSettings::buttonClose()
 {
-    ChannelSettingsModel::instance()->clear();
+    ChannelSettings::instance()->clear();
 
     close();
 }

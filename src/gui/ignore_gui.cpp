@@ -59,7 +59,7 @@ void DlgIgnore::refresh()
 {
     ui.listWidget_nicks->clear();
 
-    QList<QString> ignoreList = IgnoreModel::instance()->getAll();
+    QList<QString> ignoreList = Ignore::instance()->getAll();
     foreach (QString strNick, ignoreList)
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();

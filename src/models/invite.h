@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INVITE_MODEL_H
-#define INVITE_MODEL_H
+#ifndef INVITE_H
+#define INVITE_H
 
 #include <QMultiHash>
 #include <QObject>
@@ -51,4 +51,4 @@ private:
     void init();
 };
 
-#endif // INVITE_MODEL_H
+#endif // INVITE_H

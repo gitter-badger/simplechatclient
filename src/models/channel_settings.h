@@ -17,22 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_SETTINGS_MODEL_H
-#define CHANNEL_SETTINGS_MODEL_H
+#ifndef CHANNEL_SETTINGS_H
+#define CHANNEL_SETTINGS_H
 
 #include <QHash>
 #include <QObject>
 #include "defines.h"
 
-class ChannelSettingsModel : public QObject
+class ChannelSettings : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ChannelSettingsModel)
-    static ChannelSettingsModel *Instance;
+    Q_DISABLE_COPY(ChannelSettings)
+    static ChannelSettings *Instance;
 public:
-    static ChannelSettingsModel *instance();
+    static ChannelSettings *instance();
 
-    ChannelSettingsModel();
+    ChannelSettings();
     void clear();
 
     QString getChannel();
@@ -67,4 +67,4 @@ private:
     ObjectStatus statsStatus;
 };
 
-#endif // CHANNEL_SETTINGS_MODEL_H
+#endif // CHANNEL_SETTINGS_H

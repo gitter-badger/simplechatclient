@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MY_AVATAR_MODEL_H
-#define MY_AVATAR_MODEL_H
+#ifndef MY_AVATAR_H
+#define MY_AVATAR_H
 
 #include <QString>
 
@@ -26,11 +26,11 @@ QT_BEGIN_NAMESPACE
 class QRect;
 QT_END_NAMESPACE
 
-class MyAvatarModel
+class MyAvatar
 {
 public:
-    MyAvatarModel();
-    ~MyAvatarModel();
+    MyAvatar();
+    ~MyAvatar();
 
     QString getUrl() const;
     QString getRawUrl() const;
@@ -87,4 +87,4 @@ private:
 
 };
 
-#endif /* MY_AVATAR_MODEL_H */
+#endif // MY_AVATAR_H

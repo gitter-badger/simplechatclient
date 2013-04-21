@@ -19,46 +19,46 @@
 
 #include "ignore.h"
 
-IgnoreModel * IgnoreModel::Instance = 0;
+Ignore * Ignore::Instance = 0;
 
-IgnoreModel * IgnoreModel::instance()
+Ignore * Ignore::instance()
 {
     if (!Instance)
     {
-        Instance = new IgnoreModel();
+        Instance = new Ignore();
         Instance->clear();
     }
 
     return Instance;
 }
 
-IgnoreModel::IgnoreModel()
+Ignore::Ignore()
 {
 }
 
-void IgnoreModel::clear()
+void Ignore::clear()
 {
     ignore.clear();
 }
 
-QList<QString> IgnoreModel::getAll()
+QList<QString> Ignore::getAll()
 {
     return ignore;
 }
 
-void IgnoreModel::add(const QString &key)
+void Ignore::add(const QString &key)
 {
     if (!ignore.contains(key))
         ignore.append(key);
 }
 
-void IgnoreModel::remove(const QString &key)
+void Ignore::remove(const QString &key)
 {
     if (ignore.contains(key))
         ignore.removeOne(key);
 }
 
-bool IgnoreModel::contains(const QString &key)
+bool Ignore::contains(const QString &key)
 {
     return ignore.contains(key);
 }

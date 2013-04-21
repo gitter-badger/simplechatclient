@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UPDATE_H
-#define UPDATE_H
+#ifndef UPDATE_GUI_H
+#define UPDATE_GUI_H
 
 #include <QDialog>
 #include <QNetworkReply>
@@ -56,4 +56,4 @@ private slots:
     void downloadError(QNetworkReply::NetworkError);
 };
 
-#endif // UPDATE_H
+#endif // UPDATE_GUI_H

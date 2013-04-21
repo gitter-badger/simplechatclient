@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_HOMES_H
-#define CHANNEL_HOMES_H
+#ifndef CHANNEL_HOMES_GUI_H
+#define CHANNEL_HOMES_GUI_H
 
 #include <QDialog>
 #include "ui_channel_homes.h"
@@ -44,4 +44,4 @@ private slots:
     void settings();
 };
 
-#endif // CHANNEL_HOMES_H
+#endif // CHANNEL_HOMES_GUI_H

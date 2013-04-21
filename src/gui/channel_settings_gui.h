@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_SETTINGS_H
-#define CHANNEL_SETTINGS_H
+#ifndef CHANNEL_SETTINGS_GUI_H
+#define CHANNEL_SETTINGS_GUI_H
 
 #include <QDialog>
 #include "ui_channel_settings.h"
@@ -90,4 +90,4 @@ private slots:
     void refreshAvatar();
 };
 
-#endif // CHANNEL_SETTINGS_H
+#endif // CHANNEL_SETTINGS_GUI_H

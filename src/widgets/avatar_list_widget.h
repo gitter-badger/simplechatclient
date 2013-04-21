@@ -61,8 +61,8 @@ private:
     class MyAvatarListWidgetItem : public QListWidgetItem
     {
     public:
-        MyAvatarListWidgetItem(const MyAvatarModel &avatar) : avatar(avatar) {}
-        MyAvatarModel avatar;
+        MyAvatarListWidgetItem(const MyAvatar &avatar) : avatar(avatar) {}
+        MyAvatar avatar;
     };
 
 private slots:

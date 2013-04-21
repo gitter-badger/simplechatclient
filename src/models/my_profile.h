@@ -17,21 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MY_PROFILE_MODEL_H
-#define MY_PROFILE_MODEL_H
+#ifndef MY_PROFILE_H
+#define MY_PROFILE_H
 
 #include <QHash>
 #include <QObject>
 
-class MyProfileModel : public QObject
+class MyProfile : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(MyProfileModel)
-    static MyProfileModel *Instance;
+    Q_DISABLE_COPY(MyProfile)
+    static MyProfile *Instance;
 public:
-    static MyProfileModel *instance();
+    static MyProfile *instance();
 
-    MyProfileModel();
+    MyProfile();
     void clear();
     QString get(const QString &key);
     QHash<QString,QString> getAll();
@@ -41,4 +41,4 @@ private:
     QHash<QString,QString> myProfile;
 };
 
-#endif // MY_PROFILE_MODEL_H
+#endif // MY_PROFILE_H

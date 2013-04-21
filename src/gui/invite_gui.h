@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INVITE_H
-#define INVITE_H
+#ifndef INVITE_GUI_H
+#define INVITE_GUI_H
 
 #include <QDialog>
 #include "ui_invite.h"
@@ -44,4 +44,4 @@ private slots:
     void whois();
 };
 
-#endif // INVITE_H
+#endif // INVITE_GUI_H

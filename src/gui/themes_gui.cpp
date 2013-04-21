@@ -44,7 +44,7 @@ void DlgThemes::createGui()
     ui.label_view->setText(tr("View"));
 
     // themes
-    QStringList lThemes = ThemesModel::instance()->getAll();
+    QStringList lThemes = Themes::instance()->getAll();
     ui.listWidget->addItems(lThemes);
 }
 
@@ -116,5 +116,5 @@ void DlgThemes::changeTheme(QModelIndex index)
     delete pConfig;
 
     // refresh
-    ThemesModel::instance()->refreshCurrent();
+    Themes::instance()->refreshCurrent();
 }

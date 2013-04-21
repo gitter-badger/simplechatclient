@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OFFLINE_LIST_H
-#define OFFLINE_LIST_H
+#ifndef OFFLINE_LIST_GUI_H
+#define OFFLINE_LIST_GUI_H
 
 #include <QDialog>
 #include "ui_offline_list.h"
@@ -46,4 +46,4 @@ private slots:
     void buttonReject();
 };
 
-#endif // OFFLINE_LIST_H
+#endif // OFFLINE_LIST_GUI_H

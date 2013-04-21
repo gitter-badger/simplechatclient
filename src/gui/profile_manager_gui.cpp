@@ -167,7 +167,7 @@ void DlgProfileManager::removeProfile()
 
     if (QDir().exists(path+"/"+profileName))
     {
-        ProfileManagerModel::instance()->removeProfileDirectory(path+"/"+profileName);
+        ProfileManager::instance()->removeProfileDirectory(path+"/"+profileName);
 
         refreshAllLists();
 

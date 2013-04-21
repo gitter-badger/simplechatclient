@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AWAYLOG_MODEL_H
-#define AWAYLOG_MODEL_H
+#ifndef AWAYLOG_H
+#define AWAYLOG_H
 
 #include <QObject>
 
@@ -49,4 +49,4 @@ private:
     void init();
 };
 
-#endif // AWAYLOG_MODEL_H
+#endif // AWAYLOG_H

@@ -337,7 +337,7 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
 */
 void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
 {
-    QList<MyAvatarModel> lMyAvatars;
+    QList<MyAvatar> lMyAvatars;
 
     QDomDocument doc;
     doc.setContent(content);
@@ -360,7 +360,7 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
     for (int ii = 0; ii < nnodes.size(); ii++)
     {
         QDomNode nn = nnodes.item(ii);
-        MyAvatarModel avatar;
+        MyAvatar avatar;
 
         QDomNodeList nnnodes = nn.childNodes();
         for (int iii = 0; iii < nnnodes.size(); iii++)
@@ -397,7 +397,7 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
 
     ui.listWidget_my_avatars->clear();
 
-    foreach(MyAvatarModel avatar, lMyAvatars)
+    foreach(MyAvatar avatar, lMyAvatars)
     {
         MyAvatarListWidgetItem *item = new MyAvatarListWidgetItem(avatar);
         item->setIcon(icon);
@@ -454,7 +454,7 @@ void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString
         QDomElement el = dataNodeList.at(0).toElement();
         QDomNode pEntries = el.firstChild();
 
-        MyAvatarModel avatar;
+        MyAvatar avatar;
 
         while (!pEntries.isNull())
         {

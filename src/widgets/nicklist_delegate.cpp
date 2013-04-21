@@ -98,7 +98,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains(FLAG_DEV)) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((!nick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithNicklistAvatar()))
+    if ((!nick.startsWith('~')) && (Themes::instance()->isCurrentWithNicklistAvatar()))
     {
         // is valid avatar
         if (!userAvatar.isEmpty())
@@ -116,7 +116,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // nick
-    if (ThemesModel::instance()->isCurrentWithNicklistAvatar())
+    if (Themes::instance()->isCurrentWithNicklistAvatar())
     {
         // with avatars
         if ((busy) && (!selected)) painter->setPen(busyPen); // gray
@@ -164,7 +164,7 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
 {
     Q_UNUSED (index);
 
-    if (ThemesModel::instance()->isCurrentWithNicklistAvatar()) // with avatars
+    if (Themes::instance()->isCurrentWithNicklistAvatar()) // with avatars
     {
         int w = 200;
         int h = 35;

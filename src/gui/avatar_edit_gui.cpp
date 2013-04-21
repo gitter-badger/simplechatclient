@@ -29,7 +29,7 @@
 
 #include "avatar_edit_gui.h"
 
-DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatarModel avatar, AvatarClient *avatarClient) :
+DlgAvatarEdit::DlgAvatarEdit(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient) :
     QDialog(parent), avatar(avatar), avatarClient(avatarClient)
 {
     //avatar.debug("DlgAvatarEdit");
@@ -93,14 +93,14 @@ void DlgAvatarEdit::createSignals()
 
 void DlgAvatarEdit::rotateLeftClicked()
 {
-    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
+    avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateLeft();
     avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
 
 void DlgAvatarEdit::rotateRightClicked()
 {
-    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
+    avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateRight();
     avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
 }
@@ -124,7 +124,7 @@ void DlgAvatarEdit::getAvatarReady(const QByteArray &content, const QString &ava
     }
     else
     {
-        crop = MyAvatarModel::stringToScaledCrop(avatar.crop(), photo.size(), avatar.size(), avatar.angle(), angle != avatar.angle());
+        crop = MyAvatar::stringToScaledCrop(avatar.crop(), photo.size(), avatar.size(), avatar.angle(), angle != avatar.angle());
     }
     angle = avatar.angle();
 
@@ -140,14 +140,14 @@ void DlgAvatarEdit::cropChanged(const QRect &crop)
     ui.graphicsView_preview->fitInView(crop);
 }
 
-MyAvatarModel DlgAvatarEdit::getAvatar() const
+MyAvatar DlgAvatarEdit::getAvatar() const
 {
     return avatar;
 }
 
 void DlgAvatarEdit::okClicked()
 {
-    avatar.setCrop(MyAvatarModel::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle()));
+    avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle()));
     accept();
 }
 

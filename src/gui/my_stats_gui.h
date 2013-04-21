@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MY_STATS_H
-#define MY_STATS_H
+#ifndef MY_STATS_GUI_H
+#define MY_STATS_GUI_H
 
 #include <QDialog>
 #include "ui_my_stats.h"
@@ -43,4 +43,4 @@ private:
     void refresh();
 };
 
-#endif // MY_STATS_H
+#endif // MY_STATS_GUI_H

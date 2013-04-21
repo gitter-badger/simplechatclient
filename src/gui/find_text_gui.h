@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FIND_TEXT_H
-#define FIND_TEXT_H
+#ifndef FIND_TEXT_GUI_H
+#define FIND_TEXT_GUI_H
 
 #include <QDialog>
 #include "ui_find_text.h"
@@ -41,4 +41,4 @@ private slots:
     void buttonFindNext();
 };
 
-#endif // FIND_TEXT_H
+#endif // FIND_TEXT_GUI_H

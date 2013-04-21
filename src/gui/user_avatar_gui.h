@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef USER_AVATAR_H
-#define USER_AVATAR_H
+#ifndef USER_AVATAR_GUI_H
+#define USER_AVATAR_GUI_H
 
 #include <QDialog>
 #include "ui_user_avatar.h"
@@ -43,4 +43,4 @@ private slots:
     void buttonZoomIn();
 };
 
-#endif // USER_AVATAR_H
+#endif // USER_AVATAR_GUI_H

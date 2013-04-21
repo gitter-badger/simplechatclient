@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FRIENDS_H
-#define FRIENDS_H
+#ifndef FRIENDS_GUI_H
+#define FRIENDS_GUI_H
 
 #include <QDialog>
 #include "ui_friends.h"
@@ -48,4 +48,4 @@ private slots:
     void invite();
 };
 
-#endif // FRIENDS_H
+#endif // FRIENDS_GUI_H

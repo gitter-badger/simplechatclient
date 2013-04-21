@@ -17,21 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef THEMES_MODEL_H
-#define THEMES_MODEL_H
+#ifndef THEMES_H
+#define THEMES_H
 
 #include "defines.h"
 #include <QObject>
 
-class ThemesModel : public QObject
+class Themes : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ThemesModel)
-    static ThemesModel *Instance;
+    Q_DISABLE_COPY(Themes)
+    static Themes *Instance;
 public:
-    static ThemesModel *instance();
+    static Themes *instance();
 
-    ThemesModel();
+    Themes();
     void refreshCurrent();
     QList<QString> getAll();
     bool isCurrentWithAvatar();
@@ -47,4 +47,4 @@ private:
     Theme get();
 };
 
-#endif // THEMES_MODEL_H
+#endif // THEMES_H

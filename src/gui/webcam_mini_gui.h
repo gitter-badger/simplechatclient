@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEBCAM_MINI_H
-#define WEBCAM_MINI_H
+#ifndef WEBCAM_MINI_GUI_H
+#define WEBCAM_MINI_GUI_H
 
 #include <QDialog>
 #include "ui_webcam_mini.h"
@@ -44,4 +44,4 @@ signals:
     void closeCam();
 };
 
-#endif // WEBCAM_MINI_H
+#endif // WEBCAM_MINI_GUI_H

@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef USER_PROFILE_H
-#define USER_PROFILE_H
+#ifndef USER_PROFILE_GUI_H
+#define USER_PROFILE_GUI_H
 
 #include <QDialog>
 
@@ -95,4 +95,4 @@ private slots:
     void buttonClose();
 };
 
-#endif // USER_PROFILE_H
+#endif // USER_PROFILE_GUI_H

@@ -17,21 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MY_STATS_MODEL_H
-#define MY_STATS_MODEL_H
+#ifndef MY_STATS_H
+#define MY_STATS_H
 
 #include <QHash>
 #include <QObject>
 
-class MyStatsModel : public QObject
+class MyStats : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(MyStatsModel)
-    static MyStatsModel *Instance;
+    Q_DISABLE_COPY(MyStats)
+    static MyStats *Instance;
 public:
-    static MyStatsModel *instance();
+    static MyStats *instance();
 
-    MyStatsModel();
+    MyStats();
     void clear();
     QString get(const QString &key);
     QHash<QString,QString> getAll();
@@ -41,4 +41,4 @@ private:
     QHash<QString,QString> myStats;
 };
 
-#endif // MY_STATS_MODEL_H
+#endif // MY_STATS_H

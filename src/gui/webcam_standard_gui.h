@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEBCAM_STANDARD_H
-#define WEBCAM_STANDARD_H
+#ifndef WEBCAM_STANDARD_GUI_H
+#define WEBCAM_STANDARD_GUI_H
 
 #include <QDialog>
 #include "ui_webcam_standard.h"
@@ -79,4 +79,4 @@ signals:
     void setUser(const QString &strNewNick);
 };
 
-#endif // WEBCAM_STANDARD_H
+#endif // WEBCAM_STANDARD_GUI_H

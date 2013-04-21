@@ -17,21 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FRIENDS_MODEL_H
-#define FRIENDS_MODEL_H
+#ifndef FRIENDS_H
+#define FRIENDS_H
 
 #include <QHash>
 #include <QObject>
 
-class FriendsModel : public QObject
+class Friends : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(FriendsModel)
-    static FriendsModel *Instance;
+    Q_DISABLE_COPY(Friends)
+    static Friends *Instance;
 public:
-    static FriendsModel *instance();
+    static Friends *instance();
 
-    FriendsModel();
+    Friends();
     void clear();
     bool get(const QString &key);
     QHash<QString,bool> getAll();
@@ -43,4 +43,4 @@ private:
     QHash<QString, bool> friends;
 };
 
-#endif // FRIENDS_MODEL_H
+#endif // FRIENDS_H

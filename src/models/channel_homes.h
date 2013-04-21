@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_HOMES_MODEL_H
-#define CHANNEL_HOMES_MODEL_H
+#ifndef CHANNEL_HOMES_H
+#define CHANNEL_HOMES_H
 
 #include <QObject>
 #include "defines.h"
@@ -46,4 +46,4 @@ private:
     ObjectStatus channelHomesStatus;
 };
 
-#endif // CHANNEL_HOMES_MODEL_H
+#endif // CHANNEL_HOMES_H

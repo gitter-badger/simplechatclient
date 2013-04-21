@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_LIST_MODEL_H
-#define CHANNEL_LIST_MODEL_H
+#ifndef CHANNEL_LIST_H
+#define CHANNEL_LIST_H
 
 #include <QObject>
 #include "defines.h"
@@ -46,4 +46,4 @@ private:
     ObjectStatus channelListStatus;
 };
 
-#endif // CHANNEL_LIST_MODEL_H
+#endif // CHANNEL_LIST_H

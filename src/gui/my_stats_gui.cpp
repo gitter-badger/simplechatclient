@@ -72,7 +72,7 @@ void DlgMyStats::createSignals()
 
 void DlgMyStats::refresh()
 {
-    QHashIterator <QString, QString> is(MyStatsModel::instance()->getAll());
+    QHashIterator <QString, QString> is(MyStats::instance()->getAll());
     while (is.hasNext())
     {
         is.next();
@@ -114,7 +114,7 @@ void DlgMyStats::refresh()
         }
     }
 
-    QHashIterator <QString, QString> im(MyProfileModel::instance()->getAll());
+    QHashIterator <QString, QString> im(MyProfile::instance()->getAll());
     while (im.hasNext())
     {
         im.next();

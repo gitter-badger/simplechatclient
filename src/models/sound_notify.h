@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTIFY_H
-#define NOTIFY_H
+#ifndef SOUND_NOTIFY_H
+#define SOUND_NOTIFY_H
 
 #include "scc-config.h"
 #if WITH_PHONON
@@ -57,4 +57,4 @@ private:
     void init();
 };
 
-#endif // NOTIFY_H
+#endif // SOUND_NOTIFY_H

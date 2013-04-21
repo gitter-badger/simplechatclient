@@ -23,7 +23,7 @@
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
-class MyAvatarModel;
+class MyAvatar;
 
 QT_BEGIN_NAMESPACE
 class QByteArray;
@@ -48,8 +48,8 @@ public:
     void requestGetMyAvatars();
     void requestSetAvatar(int imgId, int albumId);
     void requestUploadImage(const QString &fileName, const QByteArray &data);
-    void requestUpdatePhoto(const MyAvatarModel &avatar);
-    void requestAddPhoto(const MyAvatarModel &avatar);
+    void requestUpdatePhoto(const MyAvatar &avatar);
+    void requestAddPhoto(const MyAvatar &avatar);
     void requestDeletePhoto(int imgId);
     void requestGetAvatar(const QString &avatarUrl, AvatarType type);
 

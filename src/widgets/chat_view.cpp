@@ -407,14 +407,14 @@ void ChatView::menuNick(QContextMenuEvent *event)
 
     QMenu *friends = new QMenu(tr("Friends list"));
     friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
-    if (FriendsModel::instance()->contains(strNick))
+    if (Friends::instance()->contains(strNick))
         friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
         friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
     ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
-    if (IgnoreModel::instance()->contains(strNick))
+    if (Ignore::instance()->contains(strNick))
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
         ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));

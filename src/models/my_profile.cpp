@@ -19,39 +19,39 @@
 
 #include "my_profile.h"
 
-MyProfileModel * MyProfileModel::Instance = 0;
+MyProfile * MyProfile::Instance = 0;
 
-MyProfileModel * MyProfileModel::instance()
+MyProfile * MyProfile::instance()
 {
     if (!Instance)
     {
-        Instance = new MyProfileModel();
+        Instance = new MyProfile();
         Instance->clear();
     }
 
     return Instance;
 }
 
-MyProfileModel::MyProfileModel()
+MyProfile::MyProfile()
 {
 }
 
-void MyProfileModel::clear()
+void MyProfile::clear()
 {
     myProfile.clear();
 }
 
-QString MyProfileModel::get(const QString &key)
+QString MyProfile::get(const QString &key)
 {
     return myProfile.value(key, QString::null);
 }
 
-QHash<QString,QString> MyProfileModel::getAll()
+QHash<QString,QString> MyProfile::getAll()
 {
     return myProfile;
 }
 
-void MyProfileModel::set(const QString &key, const QString &value)
+void MyProfile::set(const QString &key, const QString &value)
 {
     myProfile[key] = value;
 }

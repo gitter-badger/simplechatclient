@@ -19,34 +19,34 @@
 
 #include "channel_favourites.h"
 
-ChannelFavouritesModel * ChannelFavouritesModel::Instance = 0;
+ChannelFavourites * ChannelFavourites::Instance = 0;
 
-ChannelFavouritesModel * ChannelFavouritesModel::instance()
+ChannelFavourites * ChannelFavourites::instance()
 {
     if (!Instance)
     {
-        Instance = new ChannelFavouritesModel();
+        Instance = new ChannelFavourites();
         Instance->clear();
     }
 
     return Instance;
 }
 
-ChannelFavouritesModel::ChannelFavouritesModel()
+ChannelFavourites::ChannelFavourites()
 {
 }
 
-void ChannelFavouritesModel::clear()
+void ChannelFavourites::clear()
 {
     favourites.clear();
 }
 
-QHash<QString, OnetChannelFavourites> ChannelFavouritesModel::getAll()
+QHash<QString, OnetChannelFavourites> ChannelFavourites::getAll()
 {
     return favourites;
 }
 
-QList<CaseIgnoreString> ChannelFavouritesModel::getAllCaseIgnoreSorted()
+QList<CaseIgnoreString> ChannelFavourites::getAllCaseIgnoreSorted()
 {
     QList<CaseIgnoreString> lChannelsCaseIgnore;
 
@@ -61,7 +61,7 @@ QList<CaseIgnoreString> ChannelFavouritesModel::getAllCaseIgnoreSorted()
     return lChannelsCaseIgnore;
 }
 
-void ChannelFavouritesModel::add(const QString &channel)
+void ChannelFavourites::add(const QString &channel)
 {
     if (!favourites.contains(channel))
     {
@@ -72,24 +72,24 @@ void ChannelFavouritesModel::add(const QString &channel)
     }
 }
 
-void ChannelFavouritesModel::remove(const QString &channel)
+void ChannelFavourites::remove(const QString &channel)
 {
     if (favourites.contains(channel))
         favourites.remove(channel);
 }
 
-bool ChannelFavouritesModel::contains(const QString &channel)
+bool ChannelFavourites::contains(const QString &channel)
 {
     return favourites.contains(channel);
 }
 
-void ChannelFavouritesModel::setAvatar(const QString &channel, const QString &avatar)
+void ChannelFavourites::setAvatar(const QString &channel, const QString &avatar)
 {
     if (favourites.contains(channel))
         favourites[channel].avatar = avatar;
 }
 
-QString ChannelFavouritesModel::getAvatar(const QString &channel)
+QString ChannelFavourites::getAvatar(const QString &channel)
 {
     if (favourites.contains(channel))
         return favourites[channel].avatar;

@@ -20,20 +20,20 @@
 #include "settings.h"
 #include "themes.h"
 
-ThemesModel * ThemesModel::Instance = 0;
+Themes * Themes::Instance = 0;
 
-ThemesModel * ThemesModel::instance()
+Themes * Themes::instance()
 {
     if (!Instance)
     {
-        Instance = new ThemesModel();
+        Instance = new Themes();
         Instance->init();
     }
 
     return Instance;
 }
 
-ThemesModel::ThemesModel()
+Themes::Themes()
 {
     add("Standard", ThemeFlags::Default);
     add("Alhena");
@@ -41,12 +41,12 @@ ThemesModel::ThemesModel()
     add("Adara", ThemeFlags::ChannelAvatar);
 }
 
-void ThemesModel::init()
+void Themes::init()
 {
     refreshCurrent();
 }
 
-void ThemesModel::add(const QString &name, ThemeFlags::Flags flags)
+void Themes::add(const QString &name, ThemeFlags::Flags flags)
 {
     Theme add;
     add.name = name;
@@ -55,7 +55,7 @@ void ThemesModel::add(const QString &name, ThemeFlags::Flags flags)
     lThemes.append(add);
 }
 
-Theme ThemesModel::get()
+Theme Themes::get()
 {
     QString currentName = Settings::instance()->get("themes");
 
@@ -74,12 +74,12 @@ Theme ThemesModel::get()
 	return lThemes.at(0);
 }
 
-void ThemesModel::refreshCurrent()
+void Themes::refreshCurrent()
 {
     current = get();
 }
 
-QList<QString> ThemesModel::getAll()
+QList<QString> Themes::getAll()
 {
     QList<QString> lThemesName;
 
@@ -91,7 +91,7 @@ QList<QString> ThemesModel::getAll()
     return lThemesName;
 }
 
-bool ThemesModel::isCurrentWithAvatar()
+bool Themes::isCurrentWithAvatar()
 {
     if (current.flags & (ThemeFlags::ChannelAvatar | ThemeFlags::NicklistAvatar))
         return true;
@@ -99,12 +99,12 @@ bool ThemesModel::isCurrentWithAvatar()
         return false;
 }
 
-bool ThemesModel::isCurrentWithChannelAvatar()
+bool Themes::isCurrentWithChannelAvatar()
 {
     return current.flags & ThemeFlags::ChannelAvatar;
 }
 
-bool ThemesModel::isCurrentWithNicklistAvatar()
+bool Themes::isCurrentWithNicklistAvatar()
 {
     return current.flags & ThemeFlags::NicklistAvatar;
 }

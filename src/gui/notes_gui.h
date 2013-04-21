@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTES_H
-#define NOTES_H
+#ifndef NOTES_GUI_H
+#define NOTES_GUI_H
 
 #include <QDialog>
 #include "ui_notes.h"
@@ -45,4 +45,4 @@ protected:
     virtual void resizeEvent(QResizeEvent *);
 };
 
-#endif // NOTES_H
+#endif // NOTES_GUI_H

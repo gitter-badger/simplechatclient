@@ -17,21 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_FAVOURITES_MODEL_H
-#define CHANNEL_FAVOURITES_MODEL_H
+#ifndef CHANNEL_FAVOURITES_H
+#define CHANNEL_FAVOURITES_H
 
 #include <QObject>
 #include "defines.h"
 
-class ChannelFavouritesModel : public QObject
+class ChannelFavourites : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ChannelFavouritesModel)
-    static ChannelFavouritesModel *Instance;
+    Q_DISABLE_COPY(ChannelFavourites)
+    static ChannelFavourites *Instance;
 public:
-    static ChannelFavouritesModel *instance();
+    static ChannelFavourites *instance();
 
-    ChannelFavouritesModel();
+    ChannelFavourites();
     void clear();
     QHash<QString, OnetChannelFavourites> getAll();
     QList<CaseIgnoreString> getAllCaseIgnoreSorted();
@@ -45,4 +45,4 @@ private:
     QHash<QString, OnetChannelFavourites> favourites;
 };
 
-#endif // CHANNEL_FAVOURITES_MODEL_H
+#endif // CHANNEL_FAVOURITES_H

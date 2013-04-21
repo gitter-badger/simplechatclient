@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DLG_MY_AVATAR_H
-#define DLG_MY_AVATAR_H
+#ifndef MY_AVATAR_GUI_H
+#define MY_AVATAR_GUI_H
 
 #include <QDialog>
 
@@ -47,4 +47,4 @@ private slots:
     void refreshAvatar();
 };
 
-#endif // DLG_MY_AVATAR_H
+#endif // MY_AVATAR_GUI_H

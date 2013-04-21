@@ -120,7 +120,7 @@ void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrCh
     {
         Channel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
         ChannelHomes::instance()->setAvatar(strNickOrChannel, strAvatarFile);
-        ChannelFavouritesModel::instance()->setAvatar(strNickOrChannel, strAvatarFile);
+        ChannelFavourites::instance()->setAvatar(strNickOrChannel, strAvatarFile);
     }
 }
 

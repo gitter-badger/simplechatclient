@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#ifndef OPTIONS_GUI_H
+#define OPTIONS_GUI_H
 
 #include <QDialog>
 #include "ui_options.h"
@@ -97,4 +97,4 @@ private slots:
     void trayMessage(bool);
 };
 
-#endif // OPTIONS_H
+#endif // OPTIONS_GUI_H

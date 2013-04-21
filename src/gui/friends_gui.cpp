@@ -96,7 +96,7 @@ void DlgFriends::refresh()
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QHashIterator <QString, bool> i(FriendsModel::instance()->getAll());
+    QHashIterator <QString, bool> i(Friends::instance()->getAll());
     while (i.hasNext())
     {
         i.next();

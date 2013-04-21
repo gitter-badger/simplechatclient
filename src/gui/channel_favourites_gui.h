@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_FAVOURITES_H
-#define CHANNEL_FAVOURITES_H
+#ifndef CHANNEL_FAVOURITES_GUI_H
+#define CHANNEL_FAVOURITES_GUI_H
 
 #include <QDialog>
 #include "ui_channel_favourites.h"
@@ -43,4 +43,4 @@ private slots:
     void join();
 };
 
-#endif // CHANNEL_FAVOURITES_H
+#endif // CHANNEL_FAVOURITES_GUI_H

@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FIND_NICK_MODEL_H
-#define FIND_NICK_MODEL_H
+#ifndef FIND_NICK_H
+#define FIND_NICK_H
 
 #include <QObject>
 #include "defines.h"
@@ -43,4 +43,4 @@ private:
     ObjectStatus nickListStatus;
 };
 
-#endif // FIND_NICK_MODEL_H
+#endif // FIND_NICK_H

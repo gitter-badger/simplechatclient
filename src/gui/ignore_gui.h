@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef IGNORE_H
-#define IGNORE_H
+#ifndef IGNORE_GUI_H
+#define IGNORE_GUI_H
 
 #include <QDialog>
 #include "ui_ignore.h"
@@ -41,4 +41,4 @@ private slots:
     void buttonRemove();
 };
 
-#endif // IGNORE_H
+#endif // IGNORE_GUI_H

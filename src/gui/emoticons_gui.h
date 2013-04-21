@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef EMOTICONS_H
-#define EMOTICONS_H
+#ifndef EMOTICONS_GUI_H
+#define EMOTICONS_GUI_H
 
 #include <QDialog>
 #include <QThread>
@@ -87,4 +87,4 @@ public slots:
     void buttonInsert();
 };
 
-#endif // EMOTICONS_H
+#endif // EMOTICONS_GUI_H

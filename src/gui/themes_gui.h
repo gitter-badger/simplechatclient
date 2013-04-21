@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef THEMES_H
-#define THEMES_H
+#ifndef THEMES_GUI_H
+#define THEMES_GUI_H
 
 #include <QDialog>
 #include "ui_themes.h"
@@ -40,4 +40,4 @@ private slots:
     void changeTheme(QModelIndex index);
 };
 
-#endif // THEMES_H
+#endif // THEMES_GUI_H

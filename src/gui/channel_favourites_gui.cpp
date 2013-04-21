@@ -72,7 +72,7 @@ void DlgChannelFavourites::refresh()
 {
     ui.listWidget_channels->clear();
 
-    QHashIterator<QString, OnetChannelFavourites> i(ChannelFavouritesModel::instance()->getAll());
+    QHashIterator<QString, OnetChannelFavourites> i(ChannelFavourites::instance()->getAll());
     while (i.hasNext())
     {
         i.next();

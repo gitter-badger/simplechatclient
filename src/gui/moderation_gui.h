@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MODERATION_H
-#define MODERATION_H
+#ifndef MODERATION_GUI_H
+#define MODERATION_GUI_H
 
 #include <QDialog>
 #include "ui_moderation.h"
@@ -52,4 +52,4 @@ private slots:
     void buttonRemove();
 };
 
-#endif // MODERATION_H
+#endif // MODERATION_GUI_H

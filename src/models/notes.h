@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTES_MODEL_H
-#define NOTES_MODEL_H
+#ifndef NOTES_H
+#define NOTES_H
 
 #include <QObject>
 
@@ -45,4 +45,4 @@ private:
     QString strNotesUserProfile;
 };
 
-#endif // NOTES_MODEL_H
+#endif // NOTES_H

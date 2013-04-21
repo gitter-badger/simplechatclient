@@ -17,20 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PROFILE_MANAGER_MODEL_H
-#define PROFILE_MANAGER_MODEL_H
+#ifndef PROFILE_MANAGER_H
+#define PROFILE_MANAGER_H
 
 #include <QObject>
 
-class ProfileManagerModel : public QObject
+class ProfileManager : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(ProfileManagerModel)
-    static ProfileManagerModel *Instance;
+    Q_DISABLE_COPY(ProfileManager)
+    static ProfileManager *Instance;
 public:
-    static ProfileManagerModel *instance();
+    static ProfileManager *instance();
 
-    ProfileManagerModel();
+    ProfileManager();
     bool removeProfileDirectory(const QString &strDir);
     void renameProfile(const QString &strProfile, const QString &strNewProfile);
 
@@ -40,4 +40,4 @@ private:
     void init();
 };
 
-#endif // PROFILE_MANAGER_MODEL_H
+#endif // PROFILE_MANAGER_H

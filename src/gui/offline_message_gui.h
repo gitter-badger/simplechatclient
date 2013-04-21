@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OFFLINE_MESSAGE_H
-#define OFFLINE_MESSAGE_H
+#ifndef OFFLINE_MESSAGE_GUI_H
+#define OFFLINE_MESSAGE_GUI_H
 
 #include <QDialog>
 #include "ui_offline_message.h"
@@ -44,4 +44,4 @@ private slots:
     void buttonReply();
 };
 
-#endif // OFFLINE_MESSAGE_H
+#endif // OFFLINE_MESSAGE_GUI_H

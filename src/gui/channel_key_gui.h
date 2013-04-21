@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHANNEL_KEY_H
-#define CHANNEL_KEY_H
+#ifndef CHANNEL_KEY_GUI_H
+#define CHANNEL_KEY_GUI_H
 
 #include <QDialog>
 #include "ui_channel_key.h"
@@ -40,4 +40,4 @@ private slots:
     void buttonOk();
 };
 
-#endif // CHANNEL_KEY_H
+#endif // CHANNEL_KEY_GUI_H

@@ -19,39 +19,39 @@
 
 #include "my_stats.h"
 
-MyStatsModel * MyStatsModel::Instance = 0;
+MyStats * MyStats::Instance = 0;
 
-MyStatsModel * MyStatsModel::instance()
+MyStats * MyStats::instance()
 {
     if (!Instance)
     {
-        Instance = new MyStatsModel();
+        Instance = new MyStats();
         Instance->clear();
     }
 
     return Instance;
 }
 
-MyStatsModel::MyStatsModel()
+MyStats::MyStats()
 {
 }
 
-void MyStatsModel::clear()
+void MyStats::clear()
 {
     myStats.clear();
 }
 
-QString MyStatsModel::get(const QString &key)
+QString MyStats::get(const QString &key)
 {
     return myStats.value(key, QString::null);
 }
 
-QHash<QString,QString> MyStatsModel::getAll()
+QHash<QString,QString> MyStats::getAll()
 {
     return myStats;
 }
 
-void MyStatsModel::set(const QString &key, const QString &value)
+void MyStats::set(const QString &key, const QString &value)
 {
     myStats[key] = value;
 }

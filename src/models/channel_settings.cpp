@@ -19,24 +19,24 @@
 
 #include "channel_settings.h"
 
-ChannelSettingsModel * ChannelSettingsModel::Instance = 0;
+ChannelSettings * ChannelSettings::Instance = 0;
 
-ChannelSettingsModel * ChannelSettingsModel::instance()
+ChannelSettings * ChannelSettings::instance()
 {
     if (!Instance)
     {
-        Instance = new ChannelSettingsModel();
+        Instance = new ChannelSettings();
         Instance->clear();
     }
 
     return Instance;
 }
 
-ChannelSettingsModel::ChannelSettingsModel()
+ChannelSettings::ChannelSettings()
 {
 }
 
-void ChannelSettingsModel::clear()
+void ChannelSettings::clear()
 {
     strChannel.clear();
 
@@ -48,79 +48,79 @@ void ChannelSettingsModel::clear()
     statsStatus = StatusAwaiting;
 }
 
-QString ChannelSettingsModel::getChannel()
+QString ChannelSettings::getChannel()
 {
     return strChannel;
 }
 
-void ChannelSettingsModel::setChannel(const QString &channel)
+void ChannelSettings::setChannel(const QString &channel)
 {
     clear();
 
     strChannel = channel;
 }
 
-QString ChannelSettingsModel::getInfo(const QString &key)
+QString ChannelSettings::getInfo(const QString &key)
 {
     return lSettingsInfo.value(key, QString::null);
 }
 
-QHash<QString,QString> ChannelSettingsModel::getAllInfo()
+QHash<QString,QString> ChannelSettings::getAllInfo()
 {
     return lSettingsInfo;
 }
 
-void ChannelSettingsModel::setInfo(const QString &key, const QString &value)
+void ChannelSettings::setInfo(const QString &key, const QString &value)
 {
     lSettingsInfo[key] = value;
 }
 
-QMultiHash<QString,QString> ChannelSettingsModel::getAllPermission()
+QMultiHash<QString,QString> ChannelSettings::getAllPermission()
 {
     return lSettingsPermissions;
 }
 
-void ChannelSettingsModel::setPermission(const QString &key, const QString &value)
+void ChannelSettings::setPermission(const QString &key, const QString &value)
 {
     lSettingsPermissions.insert(key, value);
 }
 
-bool ChannelSettingsModel::containsPermission(const QString &key, const QString &value)
+bool ChannelSettings::containsPermission(const QString &key, const QString &value)
 {
     return lSettingsPermissions.contains(key, value);
 }
 
-void ChannelSettingsModel::setStatusInfo(ObjectStatus status)
+void ChannelSettings::setStatusInfo(ObjectStatus status)
 {
     infoStatus = status;
 }
 
-ObjectStatus ChannelSettingsModel::getStatusInfo()
+ObjectStatus ChannelSettings::getStatusInfo()
 {
     return infoStatus;
 }
 
-QString ChannelSettingsModel::getStats(const QString &key)
+QString ChannelSettings::getStats(const QString &key)
 {
     return lSettingsStats.value(key, QString::null);
 }
 
-QHash<QString,QString> ChannelSettingsModel::getAllStats()
+QHash<QString,QString> ChannelSettings::getAllStats()
 {
     return lSettingsStats;
 }
 
-void ChannelSettingsModel::setStats(const QString &key, const QString &value)
+void ChannelSettings::setStats(const QString &key, const QString &value)
 {
     lSettingsStats[key] = value;
 }
 
-void ChannelSettingsModel::setStatusStats(ObjectStatus status)
+void ChannelSettings::setStatusStats(ObjectStatus status)
 {
     statsStatus = status;
 }
 
-ObjectStatus ChannelSettingsModel::getStatusStats()
+ObjectStatus ChannelSettings::getStatusStats()
 {
     return statsStatus;
 }

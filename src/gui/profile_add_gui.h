@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PROFILE_ADD_H
-#define PROFILE_ADD_H
+#ifndef PROFILE_ADD_GUI_H
+#define PROFILE_ADD_GUI_H
 
 #include <QDialog>
 #include "ui_profile_add.h"
@@ -46,4 +46,4 @@ private slots:
     void buttonOk();
 };
 
-#endif // PROFILE_ADD_H
+#endif // PROFILE_ADD_GUI_H

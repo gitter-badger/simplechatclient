@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef REGISTER_NICK_H
-#define REGISTER_NICK_H
+#ifndef REGISTER_NICK_GUI_H
+#define REGISTER_NICK_GUI_H
 
 #include <QDialog>
 #include "ui_register_nick.h"
@@ -67,4 +67,4 @@ private slots:
     void buttonOk();
 };
 
-#endif // REGISTER_NICK_H
+#endif // REGISTER_NICK_GUI_H

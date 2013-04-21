@@ -17,20 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef IGNORE_MODEL_H
-#define IGNORE_MODEL_H
+#ifndef IGNORE_H
+#define IGNORE_H
 
 #include <QObject>
 
-class IgnoreModel : public QObject
+class Ignore : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(IgnoreModel)
-    static IgnoreModel *Instance;
+    Q_DISABLE_COPY(Ignore)
+    static Ignore *Instance;
 public:
-    static IgnoreModel *instance();
+    static Ignore *instance();
 
-    IgnoreModel();
+    Ignore();
     void clear();
     QList<QString> getAll();
     void add(const QString &key);
@@ -41,4 +41,4 @@ private:
     QList<QString> ignore;
 };
 
-#endif // IGNORE_MODEL_H
+#endif // IGNORE_H

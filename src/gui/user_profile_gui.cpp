@@ -57,7 +57,7 @@ DlgUserProfile::DlgUserProfile(const QString &_strNick, QWidget *parent) : QDial
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(avatarFinished(QNetworkReply*)));
 
     // set nick
-    UserProfileModel::instance()->setNick(strNick);
+    UserProfile::instance()->setNick(strNick);
 
     //set label
     label_nick->setText(strNick);
@@ -193,13 +193,13 @@ void DlgUserProfile::createSignals()
 
 void DlgUserProfile::refreshUserInfo()
 {
-    if (UserProfileModel::instance()->getStatus() != StatusCompleted)
+    if (UserProfile::instance()->getStatus() != StatusCompleted)
     {
         QTimer::singleShot(200, this, SLOT(refreshUserInfo())); // 0.2 sec
         return;
     }
 
-    QHashIterator<QString, QString> i(UserProfileModel::instance()->getAll());
+    QHashIterator<QString, QString> i(UserProfile::instance()->getAll());
     while (i.hasNext())
     {
         i.next();
@@ -288,7 +288,7 @@ void DlgUserProfile::buttonMore()
 
 void DlgUserProfile::buttonClose()
 {
-    UserProfileModel::instance()->clear();
+    UserProfile::instance()->clear();
 
     close();
 }

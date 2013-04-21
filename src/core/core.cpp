@@ -89,7 +89,7 @@ void Core::createAndShowGui()
     window->init();
 
     // updates
-    Updates::instance()->checkUpdate();
+    Update::instance()->checkUpdate();
 }
 
 void Core::createSettings()
@@ -133,7 +133,7 @@ void Core::reloadSettings()
     fixSettings();
 
     // themes
-    ThemesModel::instance()->refreshCurrent();
+    Themes::instance()->refreshCurrent();
 }
 
 void Core::configValues()

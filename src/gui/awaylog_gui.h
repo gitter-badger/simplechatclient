@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AWAYLOG_H
-#define AWAYLOG_H
+#ifndef AWAYLOG_GUI_H
+#define AWAYLOG_GUI_H
 
 #include <QDialog>
 #include "ui_awaylog.h"
@@ -43,4 +43,4 @@ private slots:
     void itemClicked(QListWidgetItem*);
 };
 
-#endif // AWAYLOG_H
+#endif // AWAYLOG_GUI_H

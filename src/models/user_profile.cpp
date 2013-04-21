@@ -19,63 +19,63 @@
 
 #include "user_profile.h"
 
-UserProfileModel * UserProfileModel::Instance = 0;
+UserProfile * UserProfile::Instance = 0;
 
-UserProfileModel * UserProfileModel::instance()
+UserProfile * UserProfile::instance()
 {
     if (!Instance)
     {
-        Instance = new UserProfileModel();
+        Instance = new UserProfile();
         Instance->clear();
     }
 
     return Instance;
 }
 
-UserProfileModel::UserProfileModel()
+UserProfile::UserProfile()
 {
 }
 
-void UserProfileModel::clear()
+void UserProfile::clear()
 {
     userProfileNick = QString::null;
     userProfile.clear();
     userProfileStatus = StatusAwaiting;
 }
 
-QString UserProfileModel::getNick()
+QString UserProfile::getNick()
 {
     return userProfileNick;
 }
 
-void UserProfileModel::setNick(const QString &newNick)
+void UserProfile::setNick(const QString &newNick)
 {
     clear();
 
     userProfileNick = newNick;
 }
 
-QString UserProfileModel::get(const QString &key)
+QString UserProfile::get(const QString &key)
 {
     return userProfile.value(key, QString::null);
 }
 
-QHash<QString,QString> UserProfileModel::getAll()
+QHash<QString,QString> UserProfile::getAll()
 {
     return userProfile;
 }
 
-void UserProfileModel::set(const QString &key, const QString &value)
+void UserProfile::set(const QString &key, const QString &value)
 {
     userProfile[key] = value;
 }
 
-void UserProfileModel::setStatus(ObjectStatus status)
+void UserProfile::setStatus(ObjectStatus status)
 {
     userProfileStatus = status;
 }
 
-ObjectStatus UserProfileModel::getStatus()
+ObjectStatus UserProfile::getStatus()
 {
     return userProfileStatus;
 }

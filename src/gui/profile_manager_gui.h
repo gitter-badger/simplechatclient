@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PROFILE_MANAGER_H
-#define PROFILE_MANAGER_H
+#ifndef PROFILE_MANAGER_GUI_H
+#define PROFILE_MANAGER_GUI_H
 
 #include <QDialog>
 #include "ui_profile_manager.h"
@@ -51,4 +51,4 @@ private slots:
     void removeProfile();
 };
 
-#endif // PROFILE_MANAGER_H
+#endif // PROFILE_MANAGER_GUI_H

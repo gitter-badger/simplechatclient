@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UPDATES_H
-#define UPDATES_H
+#ifndef UPDATE_H
+#define UPDATE_H
 
 #include <QObject>
 
@@ -27,16 +27,16 @@ class QNetworkAccessManager;
 class QNetworkReply;
 QT_END_NAMESPACE
 
-class Updates : public QObject
+class Update : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(Updates)
-    static Updates *Instance;
+    Q_DISABLE_COPY(Update)
+    static Update *Instance;
 public:
-    static Updates *instance();
+    static Update *instance();
 
-    Updates();
-    virtual ~Updates();
+    Update();
+    virtual ~Update();
     void checkUpdate();
 
 private:
@@ -50,4 +50,4 @@ private slots:
     void updateFinished(QNetworkReply *reply);
 };
 
-#endif // UPDATES_H
+#endif // UPDATE_H

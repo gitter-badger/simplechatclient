@@ -19,49 +19,49 @@
 
 #include "friends.h"
 
-FriendsModel * FriendsModel::Instance = 0;
+Friends * Friends::Instance = 0;
 
-FriendsModel * FriendsModel::instance()
+Friends * Friends::instance()
 {
     if (!Instance)
     {
-        Instance = new FriendsModel();
+        Instance = new Friends();
         Instance->clear();
     }
 
     return Instance;
 }
 
-FriendsModel::FriendsModel()
+Friends::Friends()
 {
 }
 
-void FriendsModel::clear()
+void Friends::clear()
 {
     friends.clear();
 }
 
-bool FriendsModel::get(const QString &key)
+bool Friends::get(const QString &key)
 {
     return friends.value(key, false);
 }
 
-QHash<QString,bool> FriendsModel::getAll()
+QHash<QString,bool> Friends::getAll()
 {
     return friends;
 }
 
-void FriendsModel::set(const QString &key, bool value)
+void Friends::set(const QString &key, bool value)
 {
     friends[key] = value;
 }
 
-void FriendsModel::remove(const QString &key)
+void Friends::remove(const QString &key)
 {
     friends.remove(key);
 }
 
-bool FriendsModel::contains(const QString &key)
+bool Friends::contains(const QString &key)
 {
     return friends.contains(key);
 }

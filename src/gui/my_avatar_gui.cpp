@@ -87,7 +87,7 @@ void DlgMyAvatar::getAvatarReady(const QByteArray &content, const QString &avata
 
 void DlgMyAvatar::refreshAvatar()
 {
-    QString avatarUrl = MyProfileModel::instance()->get("avatar");
+    QString avatarUrl = MyProfile::instance()->get("avatar");
 
     if (!avatarUrl.isEmpty())
         avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_other);

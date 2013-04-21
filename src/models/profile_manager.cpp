@@ -26,24 +26,24 @@
     #include <QDesktopServices>
 #endif
 
-ProfileManagerModel * ProfileManagerModel::Instance = 0;
+ProfileManager * ProfileManager::Instance = 0;
 
-ProfileManagerModel * ProfileManagerModel::instance()
+ProfileManager * ProfileManager::instance()
 {
     if (!Instance)
     {
-        Instance = new ProfileManagerModel();
+        Instance = new ProfileManager();
         Instance->init();
     }
 
     return Instance;
 }
 
-ProfileManagerModel::ProfileManagerModel()
+ProfileManager::ProfileManager()
 {
 }
 
-void ProfileManagerModel::init()
+void ProfileManager::init()
 {
 #ifdef Q_WS_WIN
     path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
@@ -59,7 +59,7 @@ void ProfileManagerModel::init()
         QDir().mkpath(path);
 }
 
-bool ProfileManagerModel::removeProfileDirectory(const QString &strDir)
+bool ProfileManager::removeProfileDirectory(const QString &strDir)
 {
     bool result = true;
     QDir dir(strDir);
@@ -83,7 +83,7 @@ bool ProfileManagerModel::removeProfileDirectory(const QString &strDir)
     return result;
 }
 
-void ProfileManagerModel::renameProfile(const QString &strProfile, const QString &strNewProfile)
+void ProfileManager::renameProfile(const QString &strProfile, const QString &strNewProfile)
 {
     // current profile
     Config *pConfig = new Config(false);

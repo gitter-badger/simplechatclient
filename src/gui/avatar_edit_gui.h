@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AVATAR_EDIT_H
-#define AVATAR_EDIT_H
+#ifndef AVATAR_EDIT_GUI_H
+#define AVATAR_EDIT_GUI_H
 
 #include <QDialog>
 
@@ -31,9 +31,9 @@ class DlgAvatarEdit : public QDialog
 {
     Q_OBJECT
 public:
-    DlgAvatarEdit(QWidget *parent, MyAvatarModel avatar, AvatarClient *avatarClient);
+    DlgAvatarEdit(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient);
     ~DlgAvatarEdit();
-    MyAvatarModel getAvatar() const;
+    MyAvatar getAvatar() const;
 
 public slots:
     void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
@@ -41,7 +41,7 @@ public slots:
 
 private:
     Ui::uiAvatarEdit ui;
-    MyAvatarModel avatar;
+    MyAvatar avatar;
     AvatarEditScene *editScene;
     QGraphicsScene *previewScene;
     QGraphicsPixmapItem *cropItem;
@@ -63,4 +63,4 @@ private slots:
 
 };
 
-#endif /* AVATAR_EDIT_H */
+#endif // AVATAR_EDIT_GUI_H

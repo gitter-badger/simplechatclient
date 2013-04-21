@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ABOUT_H
-#define ABOUT_H
+#ifndef ABOUT_GUI_H
+#define ABOUT_GUI_H
 
 #include <QDialog>
 #include "ui_about.h"
@@ -37,4 +37,4 @@ private:
     void createSignals();
 };
 
-#endif // ABOUT_H
+#endif // ABOUT_GUI_H

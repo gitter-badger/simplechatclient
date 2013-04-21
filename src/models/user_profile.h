@@ -17,22 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef USER_PROFILE_MODEL_H
-#define USER_PROFILE_MODEL_H
+#ifndef USER_PROFILE_H
+#define USER_PROFILE_H
 
 #include <QHash>
 #include <QObject>
 #include "defines.h"
 
-class UserProfileModel : public QObject
+class UserProfile : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(UserProfileModel)
-    static UserProfileModel *Instance;
+    Q_DISABLE_COPY(UserProfile)
+    static UserProfile *Instance;
 public:
-    static UserProfileModel *instance();
+    static UserProfile *instance();
 
-    UserProfileModel();
+    UserProfile();
     void clear();
     QString getNick();
     void setNick(const QString &newNick);
@@ -48,4 +48,4 @@ private:
     ObjectStatus userProfileStatus;
 };
 
-#endif // USER_PROFILE_MODEL_H
+#endif // USER_PROFILE_H

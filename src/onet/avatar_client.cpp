@@ -174,7 +174,7 @@ void AvatarClient::requestUploadImage(const QString &fileName, const QByteArray 
     pReply->setProperty("fileName", info.fileName());
 }
 
-void AvatarClient::requestUpdatePhoto(const MyAvatarModel &avatar)
+void AvatarClient::requestUpdatePhoto(const MyAvatar &avatar)
 {
     QString postData = QString("fnc=updatePhoto&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:7:{s:5:\"imgId\";i:%1;s:5:\"mHash\";s:%2:\"%3\";s:5:\"angle\";i:%4;s:4:\"crop\";s:%5:\"%6\";s:4:\"desc\";s:%7:\"%8\";s:5:\"width\";i:%9;s:6:\"height\";i:%10;}")
@@ -198,7 +198,7 @@ void AvatarClient::requestUpdatePhoto(const MyAvatarModel &avatar)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestAddPhoto(const MyAvatarModel &avatar)
+void AvatarClient::requestAddPhoto(const MyAvatar &avatar)
 {
     QString strImgId = createRid();
     QString postData = QString("fnc=addPhoto&rdr=xml&rid=%1").arg(createRid());

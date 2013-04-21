@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CAPTCHA_H
-#define CAPTCHA_H
+#ifndef CAPTCHA_GUI_H
+#define CAPTCHA_GUI_H
 
 #include <QDialog>
 #include "ui_captcha.h"
@@ -52,4 +52,4 @@ private slots:
     void buttonOk();
 };
 
-#endif // CAPTCHA_H
+#endif // CAPTCHA_GUI_H

@@ -428,7 +428,7 @@ void OnetKernel::raw_join()
     Nick::instance()->add(strNick, strChannel, strSuffix);
 
     // nick avatar
-    if ((!strNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
+    if ((!strNick.startsWith('~')) && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
     {
         Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
@@ -1127,7 +1127,7 @@ void OnetKernel::raw_nick()
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
     {
-        ProfileManagerModel::instance()->renameProfile(strNick, strNewNick);
+        ProfileManager::instance()->renameProfile(strNick, strNewNick);
 
         // update nick
         Core::instance()->mainWindow()->updateNick(strNewNick);
@@ -1141,17 +1141,17 @@ void OnetKernel::raw_001()
     Settings::instance()->set("logged", "true");
 
     // clear
-    FriendsModel::instance()->clear();
-    IgnoreModel::instance()->clear();
-    ChannelFavouritesModel::instance()->clear();
+    Friends::instance()->clear();
+    Ignore::instance()->clear();
+    ChannelFavourites::instance()->clear();
     ChannelList::instance()->clear();
-    MyStatsModel::instance()->clear();
-    MyProfileModel::instance()->clear();
+    MyStats::instance()->clear();
+    MyProfile::instance()->clear();
     ChannelHomes::instance()->clear();
     // user profile
-    UserProfileModel::instance()->clear();
+    UserProfile::instance()->clear();
     // channel settings
-    ChannelSettingsModel::instance()->clear();
+    ChannelSettings::instance()->clear();
 
     // protocol
     Core::instance()->network->send("PROTOCTL ONETNAMESX");
@@ -1319,15 +1319,15 @@ void OnetKernel::raw_111n()
     QString strMe = Settings::instance()->get("nick");
 
     // set user info
-    if ((UserProfileModel::instance()->getNick() == strNick) && (UserProfileModel::instance()->getStatus() != StatusCompleted))
-        UserProfileModel::instance()->set(strKey, strValue);
+    if ((UserProfile::instance()->getNick() == strNick) && (UserProfile::instance()->getStatus() != StatusCompleted))
+        UserProfile::instance()->set(strKey, strValue);
 
     // set my profile
     if (strNick == strMe)
-        MyProfileModel::instance()->set(strKey, strValue);
+        MyProfile::instance()->set(strKey, strValue);
 
     // get avatar
-    if ((strKey == "avatar") && (!strValue.isEmpty()) && (ThemesModel::instance()->isCurrentWithAvatar()))
+    if ((strKey == "avatar") && (!strValue.isEmpty()) && (Themes::instance()->isCurrentWithAvatar()))
     {
         QString strAvatar = Nick::instance()->getAvatar(strNick);
         if ((strAvatar.isEmpty()) || (strAvatar != strValue))
@@ -1345,8 +1345,8 @@ void OnetKernel::raw_112n()
 
     QString strNick = strDataList.at(4);
 
-    if (UserProfileModel::instance()->getNick() == strNick)
-        UserProfileModel::instance()->setStatus(StatusCompleted);
+    if (UserProfile::instance()->getNick() == strNick)
+        UserProfile::instance()->setStatus(StatusCompleted);
 }
 
 // NS FRIENDS
@@ -1396,7 +1396,7 @@ void OnetKernel::raw_131n()
         QString strNick = strDataList.at(i);
         if (strNick[0] == ':') strNick.remove(0,1);
 
-        IgnoreModel::instance()->add(strNick);
+        Ignore::instance()->add(strNick);
     }
 }
 
@@ -1432,7 +1432,7 @@ void OnetKernel::raw_141n()
         QString strChannel = strDataList.at(i);
         if (strChannel[0] == ':') strChannel.remove(0,1);
 
-        ChannelFavouritesModel::instance()->add(strChannel);
+        ChannelFavourites::instance()->add(strChannel);
     }
 }
 
@@ -1445,7 +1445,7 @@ void OnetKernel::raw_142n()
     {
         Settings::instance()->set("ignore_favourites", "true");
 
-        QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavouritesModel::instance()->getAllCaseIgnoreSorted();
+        QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavourites::instance()->getAllCaseIgnoreSorted();
         foreach (QString strChannel, lChannelsCaseIgnore)
         {
             if (!Channel::instance()->contains(strChannel))
@@ -1536,8 +1536,8 @@ void OnetKernel::raw_160n()
     if (strTopic[0] == ':') strTopic.remove(0,1);
 
     // set topic in channel settings
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
-        ChannelSettingsModel::instance()->setInfo("topic", strTopic);
+    if (ChannelSettings::instance()->getChannel() == strChannel)
+        ChannelSettings::instance()->setInfo("topic", strTopic);
 
     // set topic in widget
     if (Channel::instance()->contains(strChannel))
@@ -1565,14 +1565,14 @@ void OnetKernel::raw_161n()
     }
 
     // channel settins - data
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+    if (ChannelSettings::instance()->getChannel() == strChannel)
     {
         QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
         {
             i.next();
 
-            ChannelSettingsModel::instance()->setInfo(i.key(), i.value());
+            ChannelSettings::instance()->setInfo(i.key(), i.value());
         }
     }
 
@@ -1614,7 +1614,7 @@ void OnetKernel::raw_161n()
     {
         QString strChannelAvatar = Channel::instance()->getAvatar(strChannel);
         QString strChannelHomesAvatar = ChannelHomes::instance()->getAvatar(strChannel);
-        QString strChannelFavouritesAvatar = ChannelFavouritesModel::instance()->getAvatar(strChannel);
+        QString strChannelFavouritesAvatar = ChannelFavourites::instance()->getAvatar(strChannel);
 
         if ((!strChannelAvatar.isEmpty()) && (strChannelAvatar == strAvatarUrl) &&
             (!strChannelHomesAvatar.isEmpty()) && (strChannelHomesAvatar == strAvatarUrl) &&
@@ -1622,7 +1622,7 @@ void OnetKernel::raw_161n()
         {
             Channel::instance()->setAvatar(strChannel, strChannelAvatar);
             ChannelHomes::instance()->setAvatar(strChannel, strChannelHomesAvatar);
-            ChannelFavouritesModel::instance()->setAvatar(strChannel, strChannelFavouritesAvatar);
+            ChannelFavourites::instance()->setAvatar(strChannel, strChannelFavouritesAvatar);
         }
         else
             Avatar::instance()->get(strChannel, "channel", strAvatarUrl);
@@ -1637,7 +1637,7 @@ void OnetKernel::raw_162n()
 
     QString strChannel = strDataList.at(4);
 
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
+    if (ChannelSettings::instance()->getChannel() == strChannel)
     {
         for (int i = 5; i < strDataList.size(); i++)
         {
@@ -1647,7 +1647,7 @@ void OnetKernel::raw_162n()
             QString strValue = strLine.right(strLine.length() - strLine.indexOf(",")-1);
 
             if ((!strKey.isEmpty()) && (!strValue.isEmpty()))
-                ChannelSettingsModel::instance()->setPermission(strKey, strValue);
+                ChannelSettings::instance()->setPermission(strKey, strValue);
         }
     }
 }
@@ -1670,8 +1670,8 @@ void OnetKernel::raw_163n()
 
     strDT = QDateTime::fromTime_t(strDT.toInt()).toString("dd MMM yyyy hh:mm:ss");
 
-    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (ChannelSettingsModel::instance()->getStatusInfo() != StatusCompleted))
-        ChannelSettingsModel::instance()->setPermission(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
+    if ((ChannelSettings::instance()->getChannel() == strChannel) && (ChannelSettings::instance()->getStatusInfo() != StatusCompleted))
+        ChannelSettings::instance()->setPermission(strFlag, QString("%1;%2;%3;%4").arg(strNick, strWho, strDT, strIPNick));
 }
 
 // CS INFO #scc
@@ -1682,8 +1682,8 @@ void OnetKernel::raw_164n()
 
     QString strChannel = strDataList.at(4);
 
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
-        ChannelSettingsModel::instance()->setStatusInfo(StatusCompleted);
+    if (ChannelSettings::instance()->getChannel() == strChannel)
+        ChannelSettings::instance()->setStatusInfo(StatusCompleted);
 }
 
 // CS INFO #Relax
@@ -1698,8 +1698,8 @@ void OnetKernel::raw_165n()
     for (int i = 5; i < strDataList.size(); i++) { if (i != 5) strDescription += " "; strDescription += strDataList.at(i); }
     if (strDescription[0] == ':') strDescription.remove(0,1);
 
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
-        ChannelSettingsModel::instance()->setInfo("desc", strDescription);
+    if (ChannelSettings::instance()->getChannel() == strChannel)
+        ChannelSettings::instance()->setInfo("desc", strDescription);
 }
 
 // RS INFO Merovingian
@@ -1719,7 +1719,7 @@ void OnetKernel::raw_170n()
         QString strKey = strLine.left(strLine.indexOf("="));
         QString strValue = strLine.right(strLine.length() - strLine.indexOf("=")-1);
 
-        MyStatsModel::instance()->set(strKey, strValue);
+        MyStats::instance()->set(strKey, strValue);
     }
 }
 
@@ -1750,14 +1750,14 @@ void OnetKernel::raw_175n()
         mKeyValue.insert(strKey, strValue);
     }
 
-    if ((ChannelSettingsModel::instance()->getChannel() == strChannel) && (ChannelSettingsModel::instance()->getStatusStats() != StatusCompleted))
+    if ((ChannelSettings::instance()->getChannel() == strChannel) && (ChannelSettings::instance()->getStatusStats() != StatusCompleted))
     {
         QHashIterator <QString, QString> i(mKeyValue);
         while (i.hasNext())
         {
             i.next();
 
-            ChannelSettingsModel::instance()->setStats(i.key(), i.value());
+            ChannelSettings::instance()->setStats(i.key(), i.value());
         }
     }
 }
@@ -1769,8 +1769,8 @@ void OnetKernel::raw_176n()
 
     QString strChannel = strDataList.at(4);
 
-    if (ChannelSettingsModel::instance()->getChannel() == strChannel)
-        ChannelSettingsModel::instance()->setStatusStats(StatusCompleted);
+    if (ChannelSettings::instance()->getChannel() == strChannel)
+        ChannelSettings::instance()->setStatusStats(StatusCompleted);
 }
 
 // NS SET city
@@ -1792,7 +1792,7 @@ void OnetKernel::raw_211n()
 
     // set my profile
     if (strNick == strMe)
-        MyProfileModel::instance()->set(strKey, QString::null);
+        MyProfile::instance()->set(strKey, QString::null);
 }
 
 // NS FRIENDS ADD aaa
@@ -1830,7 +1830,7 @@ void OnetKernel::raw_230n()
     QString strDisplay = QString(tr("* Added %1 to your ignore list")).arg(strNick);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    IgnoreModel::instance()->add(strNick);
+    Ignore::instance()->add(strNick);
 }
 
 // NS IGNORE DEL aaa
@@ -1844,7 +1844,7 @@ void OnetKernel::raw_231n()
     QString strDisplay = QString(tr("* Removed %1 from your ignore list")).arg(strNick);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    IgnoreModel::instance()->remove(strNick);
+    Ignore::instance()->remove(strNick);
 }
 
 // NS FAVOURITES ADD scc
@@ -1858,7 +1858,7 @@ void OnetKernel::raw_240n()
     QString strDisplay = QString(tr("* Added %1 channel to your favorites list")).arg(strChannel);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    ChannelFavouritesModel::instance()->add(strChannel);
+    ChannelFavourites::instance()->add(strChannel);
 }
 
 // NS FAVOURITES DEL scc
@@ -1872,7 +1872,7 @@ void OnetKernel::raw_241n()
     QString strDisplay = QString(tr("* Removed channel %1 from your favorites list")).arg(strChannel);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
-    ChannelFavouritesModel::instance()->remove(strChannel);
+    ChannelFavourites::instance()->remove(strChannel);
 }
 
 // CS REGISTER czesctoja
@@ -2739,7 +2739,7 @@ void OnetKernel::raw_353()
             Nick::instance()->add(strCleanNick, strChannel, strModes);
 
             // nick avatar
-            if ((!strCleanNick.startsWith('~')) && (ThemesModel::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
+            if ((!strCleanNick.startsWith('~')) && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
             {
                 Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
@@ -3796,7 +3796,7 @@ void OnetKernel::raw_600()
     QString strMessage = QString(tr("* Your friend %1 arrived online")).arg(strNick);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
-    FriendsModel::instance()->set(strNick, true);
+    Friends::instance()->set(strNick, true);
 }
 
 // :cf1f4.onet 601 scc_test Radowsky 16172032 690A6F.A8219B.7F5EC1.35E57C 1267055692 :went offline
@@ -3809,7 +3809,7 @@ void OnetKernel::raw_601()
     QString strMessage = QString(tr("* Your friend %1 went offline")).arg(strNick);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 
-    FriendsModel::instance()->set(strNick, false);
+    Friends::instance()->set(strNick, false);
 }
 
 // NS FRIENDS DEL nick
@@ -3820,7 +3820,7 @@ void OnetKernel::raw_602()
 
     QString strNick = strDataList.at(3);
 
-    FriendsModel::instance()->remove(strNick);
+    Friends::instance()->remove(strNick);
 }
 
 //:cf1f1.onet 604 scc_test scc_test 51976824 3DE379.B7103A.6CF799.6902F4 1267054441 :is online
@@ -3834,7 +3834,7 @@ void OnetKernel::raw_604()
 //    QString strMessage = QString(tr("* Your friend %1 is now on-line")).arg(strNick);
 //    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
-    FriendsModel::instance()->set(strNick, true);
+    Friends::instance()->set(strNick, true);
 }
 
 // :cf1f1.onet 605 scc_test Radowsky * * 0 :is offline
@@ -3848,7 +3848,7 @@ void OnetKernel::raw_605()
 //    QString strMessage = QString(tr("* Your friend %1 is now off-line")).arg(strNick);
 //    Message::instance()->showMessageActive(strMessage, InfoMessage);
 
-    FriendsModel::instance()->set(strNick, false);
+    Friends::instance()->set(strNick, false);
 }
 
 // WATCH
