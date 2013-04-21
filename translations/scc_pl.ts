@@ -346,7 +346,7 @@
     </message>
 </context>
 <context>
-    <name>DlgAbout</name>
+    <name>AboutGui</name>
     <message>
         <source>About...</source>
         <translation>O programie SCC...</translation>
@@ -413,7 +413,7 @@
     </message>
 </context>
 <context>
-    <name>DlgAvatarEdit</name>
+    <name>AvatarEditGui</name>
     <message>
         <source>Edit Avatar</source>
         <translation>Edycja awatara</translation>
@@ -428,7 +428,7 @@
     </message>
 </context>
 <context>
-    <name>DlgAwaylog</name>
+    <name>AwaylogGui</name>
     <message>
         <source>Clear</source>
         <translation>Wyczyść</translation>
@@ -443,7 +443,7 @@
     </message>
 </context>
 <context>
-    <name>DlgCaptcha</name>
+    <name>CaptchaGui</name>
     <message>
         <source>Captcha</source>
         <translation>Captcha</translation>
@@ -458,7 +458,7 @@
     </message>
 </context>
 <context>
-    <name>DlgChannelFavourites</name>
+    <name>ChannelFavouritesGui</name>
     <message>
         <source>Favorite channels</source>
         <translation>Ulubione pokoje</translation>
@@ -493,7 +493,7 @@
     </message>
 </context>
 <context>
-    <name>DlgChannelHomes</name>
+    <name>ChannelHomesGui</name>
     <message>
         <source>My channels</source>
         <translation>Moje pokoje</translation>
@@ -536,7 +536,7 @@
     </message>
 </context>
 <context>
-    <name>DlgChannelKey</name>
+    <name>ChannelKeyGui</name>
     <message>
         <source>Key required</source>
         <translation>Wymagany klucz</translation>
@@ -547,7 +547,7 @@
     </message>
 </context>
 <context>
-    <name>DlgChannelList</name>
+    <name>ChannelListGui</name>
     <message>
         <source>Channel list</source>
         <translation>Lista pokoi</translation>
@@ -658,7 +658,7 @@
     </message>
 </context>
 <context>
-    <name>DlgChannelSettings</name>
+    <name>ChannelSettingsGui</name>
     <message>
         <source>Channel settings</source>
         <translation>Ustawienia pokoju</translation>
@@ -941,7 +941,7 @@
     </message>
 </context>
 <context>
-    <name>DlgFindNick</name>
+    <name>FindNickGui</name>
     <message>
         <source>Find nick</source>
         <translation>Znajdź nick</translation>
@@ -976,7 +976,7 @@
     </message>
 </context>
 <context>
-    <name>DlgEmoticons</name>
+    <name>EmoticonsGui</name>
     <message>
         <source>Emoticons</source>
         <translation>Emotikony</translation>
@@ -987,7 +987,7 @@
     </message>
 </context>
 <context>
-    <name>DlgFindText</name>
+    <name>FindTextGui</name>
     <message>
         <source>Find</source>
         <translation>Znajdź</translation>
@@ -1026,7 +1026,7 @@
     </message>
 </context>
 <context>
-    <name>DlgFriends</name>
+    <name>FriendsGui</name>
     <message>
         <source>Friends list</source>
         <translation>Lista przyjaciół</translation>
@@ -1069,7 +1069,7 @@
     </message>
 </context>
 <context>
-    <name>DlgIgnore</name>
+    <name>IgnoreGui</name>
     <message>
         <source>Ignore list</source>
         <translation>Lista ignorowanych</translation>
@@ -1096,7 +1096,7 @@
     </message>
 </context>
 <context>
-    <name>DlgInvite</name>
+    <name>InviteGui</name>
     <message>
         <source>Invitation</source>
         <translation>Zaproszenie</translation>
@@ -1131,7 +1131,7 @@
     </message>
 </context>
 <context>
-    <name>DlgInviteList</name>
+    <name>InviteListGui</name>
     <message>
         <source>Invitations</source>
         <translation>Zaproszenia</translation>
@@ -1166,7 +1166,7 @@
     </message>
 </context>
 <context>
-    <name>DlgModeration</name>
+    <name>ModerationGui</name>
     <message>
         <source>Moderation</source>
         <translation>Moderacja wiadomości</translation>
@@ -1185,7 +1185,7 @@
     </message>
 </context>
 <context>
-    <name>DlgMyAvatar</name>
+    <name>MyAvatarGui</name>
     <message>
         <source>My avatar</source>
         <translation>Mój awatar</translation>
@@ -1231,7 +1231,7 @@
     </message>
 </context>
 <context>
-    <name>DlgMyProfile</name>
+    <name>MyProfileGui</name>
     <message>
         <source>My profile</source>
         <translation>Moja wizytówka</translation>
@@ -1270,7 +1270,7 @@
     </message>
 </context>
 <context>
-    <name>DlgMyStats</name>
+    <name>MyStatsGui</name>
     <message>
         <source>My statistics</source>
         <translation>Moje statystyki</translation>
@@ -1297,14 +1297,14 @@
     </message>
 </context>
 <context>
-    <name>DlgNotes</name>
+    <name>NotesGui</name>
     <message>
         <source>Notes</source>
         <translation>Notatki</translation>
     </message>
 </context>
 <context>
-    <name>DlgOfflineList</name>
+    <name>OfflineListGui</name>
     <message>
         <source>Offline messages</source>
         <translation>Wiadomości offline</translation>
@@ -1323,7 +1323,7 @@
     </message>	
 </context>
 <context>
-    <name>DlgOfflineMessage</name>
+    <name>OfflineMessageGui</name>
     <message>
         <source>Offline messages from %1</source>
         <translation>Wiadomości offline od %1</translation>
@@ -1342,7 +1342,7 @@
     </message>
 </context>
 <context>
-    <name>DlgOptions</name>
+    <name>OptionsGui</name>
     <message>
         <source>Options</source>
         <translation>Opcje programu</translation>
@@ -1669,7 +1669,7 @@
     </message>
 </context>
 <context>
-    <name>DlgProfileAdd</name>
+    <name>ProfileAddGui</name>
     <message>
         <source>Add profile</source>
         <translation>Dodaj profil</translation>
@@ -1704,7 +1704,7 @@
     </message>
 </context>
 <context>
-    <name>DlgProfileEdit</name>
+    <name>ProfileEditGui</name>
     <message>
         <source>Edit profile</source>
         <translation>Edycja profilu</translation>
@@ -1723,7 +1723,7 @@
     </message>
 </context>
 <context>
-    <name>DlgProfileManager</name>
+    <name>ProfileManagerGui</name>
     <message>
         <source>Profile manager</source>
         <translation>Ustawienia profili</translation>
@@ -1746,7 +1746,7 @@
     </message>
 </context>
 <context>
-    <name>DlgRegisterNick</name>
+    <name>RegisterNickGui</name>
     <message>
         <source>Register nick</source>
         <translation>Rejestracja nowego nicka</translation>
@@ -1821,7 +1821,7 @@
     </message>
 </context>
 <context>
-    <name>DlgThemes</name>
+    <name>ThemesGui</name>
     <message>
         <source>Themes</source>
         <translation>Kompozycje</translation>
@@ -1832,7 +1832,7 @@
     </message>
 </context>
 <context>
-    <name>DlgUpdate</name>
+    <name>UpdateGui</name>
     <message>
         <source>Update</source>
         <translation>Aktualizacja</translation>
@@ -1859,14 +1859,14 @@
     </message>
 </context>
 <context>
-    <name>DlgUserAvatar</name>
+    <name>UserAvatarGui</name>
     <message>
         <source>Avatar</source>
         <translation>Avatar</translation>
     </message>
 </context>
 <context>
-    <name>DlgUserProfile</name>
+    <name>UserProfileGui</name>
     <message>
         <source>Profile</source>
         <translation>Wizytówka</translation>
@@ -1921,14 +1921,14 @@
     </message>
 </context>
 <context>
-    <name>DlgWebcamMini</name>
+    <name>WebcamMiniGui</name>
     <message>
         <source>Disconnected from server webcams</source>
         <translation>Rozłączono z serwerem kamerek</translation>
     </message>
 </context>
 <context>
-    <name>DlgWebcamStandard</name>
+    <name>WebcamStandardGui</name>
     <message>
         <source>Webcams</source>
         <translation>Kamerki</translation>
