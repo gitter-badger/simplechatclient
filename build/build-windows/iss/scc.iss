@@ -1,5 +1,5 @@
 [Setup]
-AppVerName=Simple Chat Client 1.7.3
+AppVerName=Simple Chat Client
 AppVersion=1.7.3
 VersionInfoVersion=1.7.3
 OutputBaseFilename=scc-1.7.3.0
