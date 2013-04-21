@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "webcam_mini.h"
-#include "webcam_standard.h"
+#include "webcam_mini_gui.h"
+#include "webcam_standard_gui.h"
 #include "webcam_engine.h"
 #include "webcam_gui.h"
 
