@@ -22,10 +22,10 @@
 #include <QPushButton>
 #include <QTimer>
 
-#include "avatar_client.h"
 #include "avatar_list_widget.h"
-#include "my_profile.h"
 #include "core.h"
+#include "my_profile.h"
+#include "onet_avatar.h"
 #include "settings.h"
 
 #include "my_avatar_gui.h"
@@ -42,17 +42,17 @@ MyAvatarGui::MyAvatarGui(QWidget *parent) : QDialog(parent)
     setDefaultValues();
     createSignals();
 
-    avatarClient = new AvatarClient();
-    ui.avatarListWidget->initialize(avatarClient);
+    onetAvatar = new OnetAvatar();
+    ui.avatarListWidget->initialize(onetAvatar);
 
-    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
+    connect(onetAvatar, SIGNAL(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)));
 
     refreshAvatar();
 }
 
 MyAvatarGui::~MyAvatarGui()
 {
-    delete avatarClient;
+    delete onetAvatar;
 }
 
 void MyAvatarGui::createGui()
@@ -71,7 +71,7 @@ void MyAvatarGui::createSignals()
     connect(ui.avatarListWidget, SIGNAL(avatarSelected(const QString &)), this, SLOT(avatarSelected(const QString &)));
 }
 
-void MyAvatarGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void MyAvatarGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type)
 {
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
@@ -81,7 +81,7 @@ void MyAvatarGui::getAvatarReady(const QByteArray &content, const QString &avata
         return;
     }
 
-    if (type == AvatarClient::AT_other)
+    if (type == OnetAvatar::AT_other)
         ui.label_my_avatar->setPixmap(pixmap);
 }
 
@@ -90,7 +90,7 @@ void MyAvatarGui::refreshAvatar()
     QString avatarUrl = MyProfile::instance()->get("avatar");
 
     if (!avatarUrl.isEmpty())
-        avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_other);
+        onetAvatar->requestGetAvatar(avatarUrl, OnetAvatar::AT_other);
     else
         ui.label_my_avatar->setText(tr("No photo available"));
 }

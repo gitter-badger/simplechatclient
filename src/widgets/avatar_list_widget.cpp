@@ -27,47 +27,47 @@
 #include "avatar_list_widget.h"
 #include "ui_avatar_list_widget.h"
 
-AvatarListWidget::AvatarListWidget(QWidget *parent) : QWidget(parent), avatarClient(0)
+AvatarListWidget::AvatarListWidget(QWidget *parent) : QWidget(parent), onetAvatar(0)
 {
     ui.setupUi(this);
 
     createGui();
 }
 
-void AvatarListWidget::initialize(AvatarClient *avatarClient)
+void AvatarListWidget::initialize(OnetAvatar *_onetAvatar)
 {
     // let's make it simple, you can init widget only once
-    if (this->avatarClient || avatarClient == 0)
+    if (onetAvatar || _onetAvatar == 0)
         return;
 
     createSignals();
 
-    this->avatarClient = avatarClient;
+    onetAvatar = _onetAvatar;
 
-    connect(avatarClient, SIGNAL(getCollectionsReady(const QByteArray &)),
+    connect(onetAvatar, SIGNAL(getCollectionsReady(const QByteArray &)),
             this, SLOT(getCollectionsReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(getCollectionAvatarsReady(const QByteArray &)),
+    connect(onetAvatar, SIGNAL(getCollectionAvatarsReady(const QByteArray &)),
             this, SLOT(getCollectionAvatarsReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(getMyAvatarsReady(const QByteArray &)),
+    connect(onetAvatar, SIGNAL(getMyAvatarsReady(const QByteArray &)),
             this, SLOT(getMyAvatarsReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(uploadImageReady(const QByteArray &, const QString &)),
+    connect(onetAvatar, SIGNAL(uploadImageReady(const QByteArray &, const QString &)),
             this, SLOT(uploadImageReady(const QByteArray &, const QString &)));
-    connect(avatarClient, SIGNAL(updatePhotoReady(const QByteArray &)),
+    connect(onetAvatar, SIGNAL(updatePhotoReady(const QByteArray &)),
             this, SLOT(updatePhotoReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(addPhotoReady(const QByteArray &)),
+    connect(onetAvatar, SIGNAL(addPhotoReady(const QByteArray &)),
             this, SLOT(addPhotoReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(deletePhotoReady(const QByteArray &)),
+    connect(onetAvatar, SIGNAL(deletePhotoReady(const QByteArray &)),
             this, SLOT(deletePhotoReady(const QByteArray &)));
-    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)),
-            this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
+    connect(onetAvatar, SIGNAL(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)),
+            this, SLOT(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)));
 
     // load my avatars
-    avatarClient->requestGetMyAvatars();
+    onetAvatar->requestGetMyAvatars();
 }
 
 bool AvatarListWidget::isInitialized() const
 {
-    return avatarClient != 0;
+    return onetAvatar != 0;
 }
 
 void AvatarListWidget::createGui()
@@ -305,7 +305,7 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
         // add blank avatar placeholder
         ui.listWidget_collections->addItem(item);
         // get avatar for current position
-        avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_collection);
+        onetAvatar->requestGetAvatar(avatarUrl, OnetAvatar::AT_collection);
     }
 }
 
@@ -405,7 +405,7 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
         // add blank avatar placeholder
         ui.listWidget_my_avatars->addItem(item);
         // get avatar for current position
-        avatarClient->requestGetAvatar(avatar.getUrl(), AvatarClient::AT_my);
+        onetAvatar->requestGetAvatar(avatar.getUrl(), OnetAvatar::AT_my);
     }
 }
 
@@ -479,7 +479,7 @@ void AvatarListWidget::uploadImageReady(const QByteArray &content, const QString
             avatar.setAngle(0);
             avatar.setDesc(fileName);
 
-            avatarClient->requestAddPhoto(avatar);
+            onetAvatar->requestAddPhoto(avatar);
         }
     }
 }
@@ -518,7 +518,7 @@ void AvatarListWidget::updatePhotoReady(const QByteArray &content)
     }
 
     // FIXME: just update one in ui.listWidget_my_avatars
-    avatarClient->requestGetMyAvatars();
+    onetAvatar->requestGetMyAvatars();
 }
 
 /*!
@@ -571,7 +571,7 @@ void AvatarListWidget::addPhotoReady(const QByteArray &content)
     }
 
     // FIXME: just add one to ui.listWidget_my_avatars
-    avatarClient->requestGetMyAvatars();
+    onetAvatar->requestGetMyAvatars();
 }
 
 /*!
@@ -606,11 +606,11 @@ void AvatarListWidget::deletePhotoReady(const QByteArray &content)
     }
 
     // FIXME: just remove one from ui.listWidget_my_avatars
-    avatarClient->requestGetMyAvatars();
+    onetAvatar->requestGetMyAvatars();
 }
 
 void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &avatarUrl,
-    AvatarClient::AvatarType type)
+    OnetAvatar::AvatarType type)
 {
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
@@ -622,10 +622,10 @@ void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &
 
     switch (type)
     {
-    case AvatarClient::AT_my:
+    case OnetAvatar::AT_my:
         drawMyAvatar(pixmap, avatarUrl);
         break;
-    case AvatarClient::AT_collection:
+    case OnetAvatar::AT_collection:
         drawAvatarFromCollection(pixmap, avatarUrl);
         break;
     default:
@@ -667,7 +667,7 @@ void AvatarListWidget::tabChanged(int index)
 {
     if (index == 1 && collections.empty())
     {
-        avatarClient->requestGetCollections();
+        onetAvatar->requestGetCollections();
     }
 }
 
@@ -676,7 +676,7 @@ void AvatarListWidget::collectionChanged(QString name)
     if (collections.contains(name))
     {
         int index = collections.value(name);
-        avatarClient->requestGetCollectionAvatars(index);
+        onetAvatar->requestGetCollectionAvatars(index);
     }
 }
 
@@ -703,7 +703,7 @@ void AvatarListWidget::addAvatarClicked()
         }
         content = file.readAll();
         file.close();
-        avatarClient->requestUploadImage(fileName, content);
+        onetAvatar->requestUploadImage(fileName, content);
     }
 }
 
@@ -712,10 +712,10 @@ void AvatarListWidget::editAvatarClicked()
     if (!ui.listWidget_my_avatars->selectedItems().isEmpty())
     {
         MyAvatarListWidgetItem *item = static_cast<MyAvatarListWidgetItem*>(ui.listWidget_my_avatars->selectedItems().at(0));
-        AvatarEditGui dialog(this, item->avatar, avatarClient);
+        AvatarEditGui dialog(this, item->avatar, onetAvatar);
         if (dialog.exec() == QDialog::Accepted)
         {
-            avatarClient->requestUpdatePhoto(dialog.getAvatar());
+            onetAvatar->requestUpdatePhoto(dialog.getAvatar());
         }
     }
 }
@@ -741,7 +741,7 @@ void AvatarListWidget::removeAvatarClicked()
         int imgId = item->avatar.imgId();
         if (imgId > 0)
         {
-            avatarClient->requestDeletePhoto(imgId);
+            onetAvatar->requestDeletePhoto(imgId);
         }
     }
 }

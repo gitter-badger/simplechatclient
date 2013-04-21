@@ -22,7 +22,7 @@
 
 #include <QDialog>
 
-#include "avatar_client.h"
+#include "onet_avatar.h"
 #include "avatar_edit_scene.h"
 #include "my_avatar.h"
 #include "ui_avatar_edit.h"
@@ -31,12 +31,12 @@ class AvatarEditGui : public QDialog
 {
     Q_OBJECT
 public:
-    AvatarEditGui(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient);
+    AvatarEditGui(QWidget *parent, MyAvatar avatar, OnetAvatar *onetAvatar);
     ~AvatarEditGui();
     MyAvatar getAvatar() const;
 
 public slots:
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type);
     void cropChanged(const QRect &crop);
 
 private:
@@ -46,7 +46,7 @@ private:
     QGraphicsScene *previewScene;
     QGraphicsPixmapItem *cropItem;
 
-    AvatarClient *avatarClient;
+    OnetAvatar *onetAvatar;
 
     QRect crop;
     int angle;

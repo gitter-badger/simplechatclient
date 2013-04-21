@@ -22,7 +22,7 @@
 
 #include <QWidget>
 
-#include "avatar_client.h"
+#include "onet_avatar.h"
 #include "my_avatar.h"
 
 #include "ui_avatar_list_widget.h"
@@ -36,7 +36,7 @@ public:
 
     AvatarListWidget(QWidget *parent = 0);
 
-    void initialize(AvatarClient *avatarClient);
+    void initialize(OnetAvatar *_onetAvatar);
     bool isInitialized() const;
 
 signals:
@@ -45,7 +45,7 @@ signals:
 private:
     Ui::AvatarListWidget ui;
 
-    AvatarClient *avatarClient;
+    OnetAvatar *onetAvatar;
     AvatarCollections collections; // name, id
     enum AvatarRoles
     {
@@ -73,8 +73,7 @@ private slots:
     void updatePhotoReady(const QByteArray &content);
     void addPhotoReady(const QByteArray &content);
     void deletePhotoReady(const QByteArray &content);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl,
-        AvatarClient::AvatarType type);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type);
 
     void tabChanged(int index);
     void collectionChanged(QString strName);

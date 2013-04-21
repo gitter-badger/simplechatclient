@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AVATAR_CLIENT_H
-#define AVATAR_CLIENT_H
+#ifndef ONET_AVATAR_H
+#define ONET_AVATAR_H
 
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 class QByteArray;
 QT_END_NAMESPACE
 
-class AvatarClient : public QNetworkAccessManager
+class OnetAvatar : public QNetworkAccessManager
 {
     Q_OBJECT
 public:
@@ -41,7 +41,7 @@ public:
         AT_other
     };
 
-    AvatarClient();
+    OnetAvatar();
 
     void requestGetCollections();
     void requestGetCollectionAvatars(int id);
@@ -62,7 +62,7 @@ signals:
     void updatePhotoReady(const QByteArray &content);
     void addPhotoReady(const QByteArray &content);
     void deletePhotoReady(const QByteArray &content);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type);
     void errorOccured(QNetworkReply::NetworkError error);
 
 protected slots:
@@ -95,4 +95,4 @@ private:
     QNetworkRequest basicRequest;
 };
 
-#endif /* AVATAR_CLIENT_H */
+#endif // ONET_AVATAR_H

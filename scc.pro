@@ -94,8 +94,8 @@ SOURCES += src/common/commands.cpp \
     src/models/update.cpp \
     src/models/user_profile.cpp \
     src/models/utils.cpp \
-    src/onet/avatar_client.cpp \
     src/onet/onet_auth.cpp \
+    src/onet/onet_avatar.cpp \
     src/onet/onet_kernel.cpp \
     src/onet/onet_utils.cpp \	
     src/tab/tab_container.cpp \
@@ -199,8 +199,8 @@ HEADERS += src/common/commands.h \
     src/models/updates.h \
     src/models/user_profile.h \
     src/models/utils.h \
-    src/onet/avatar_client.h \
     src/onet/onet_auth.h \
+    src/onet/onet_avatar.h \
     src/onet/onet_kernel.h \
     src/onet/onet_utils.h \
     src/tab/tab_container.h \

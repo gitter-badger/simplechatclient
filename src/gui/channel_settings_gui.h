@@ -22,7 +22,7 @@
 
 #include <QDialog>
 #include "ui_channel_settings.h"
-class AvatarClient;
+class OnetAvatar;
 class SimpleStatsWidget;
 class SimplePercentageWidget;
 
@@ -38,7 +38,7 @@ private:
     QString strChannel;
     SimplePercentageWidget *pSimplePercentageWidget;
     SimpleStatsWidget *pSimpleStatsWidget;
-    AvatarClient *avatarClient;
+    OnetAvatar *onetAvatar;
     QString avatarUrl;
     enum BanRoles
     {
@@ -86,7 +86,7 @@ private slots:
     void buttonClose();
 
     void avatarSelected(const QString &avatarUrl);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type);
     void refreshAvatar();
 };
 

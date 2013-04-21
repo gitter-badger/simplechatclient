@@ -33,11 +33,11 @@
 #include "settings.h"
 #include "my_avatar.h"
 
-#include "avatar_client.h"
+#include "onet_avatar.h"
 
 #define AVATAR_API "http://czat.onet.pl/_x/ludzie/avatars/api.php3"
 
-AvatarClient::AvatarClient() : QNetworkAccessManager(), basicRequest(QUrl(AVATAR_API))
+OnetAvatar::OnetAvatar() : QNetworkAccessManager(), basicRequest(QUrl(AVATAR_API))
 {
     // Connection to the normal replyFinished function
     connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
@@ -45,7 +45,7 @@ AvatarClient::AvatarClient() : QNetworkAccessManager(), basicRequest(QUrl(AVATAR
     getCookies();
 }
 
-void AvatarClient::getCookies()
+void OnetAvatar::getCookies()
 {
     /* TODO: replace with central cookies storage */
 
@@ -64,14 +64,14 @@ void AvatarClient::getCookies()
     this->cookieJar()->setCookiesFromUrl(cookies, QUrl("http://czat.onet.pl"));
 }
 
-QString AvatarClient::createRid()
+QString OnetAvatar::createRid()
 {
     QString uuidStr = QUuid::createUuid().toString();
     uuidStr.remove("{"); uuidStr.remove("}");
     return uuidStr;
 }
 
-void AvatarClient::requestGetCollections()
+void OnetAvatar::requestGetCollections()
 {
     QString postData = QString("fnc=getCollections&rdr=xml&rid=%1").arg(createRid());
 
@@ -84,7 +84,7 @@ void AvatarClient::requestGetCollections()
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestGetCollectionAvatars(int id)
+void OnetAvatar::requestGetCollectionAvatars(int id)
 {
     QString postData = QString("fnc=getAvatarsFromCollect&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:1:{s:10:\"collectIds\";i:%1;}").arg(id);
@@ -98,7 +98,7 @@ void AvatarClient::requestGetCollectionAvatars(int id)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestGetMyAvatars()
+void OnetAvatar::requestGetMyAvatars()
 {
     QString postData = QString("fnc=loadFAvatars&rdr=xml&rid=%1").arg(createRid());
 
@@ -111,7 +111,7 @@ void AvatarClient::requestGetMyAvatars()
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestSetAvatar(int imgId, int albumId)
+void OnetAvatar::requestSetAvatar(int imgId, int albumId)
 {
     QString postData = QString("fnc=setAvatar&rdr=xml&rid=%1").arg(createRid());
     if (albumId == 0)
@@ -130,7 +130,7 @@ void AvatarClient::requestSetAvatar(int imgId, int albumId)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestUploadImage(const QString &fileName, const QByteArray &data)
+void OnetAvatar::requestUploadImage(const QString &fileName, const QByteArray &data)
 {
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -174,7 +174,7 @@ void AvatarClient::requestUploadImage(const QString &fileName, const QByteArray 
     pReply->setProperty("fileName", info.fileName());
 }
 
-void AvatarClient::requestUpdatePhoto(const MyAvatar &avatar)
+void OnetAvatar::requestUpdatePhoto(const MyAvatar &avatar)
 {
     QString postData = QString("fnc=updatePhoto&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:7:{s:5:\"imgId\";i:%1;s:5:\"mHash\";s:%2:\"%3\";s:5:\"angle\";i:%4;s:4:\"crop\";s:%5:\"%6\";s:4:\"desc\";s:%7:\"%8\";s:5:\"width\";i:%9;s:6:\"height\";i:%10;}")
@@ -198,7 +198,7 @@ void AvatarClient::requestUpdatePhoto(const MyAvatar &avatar)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestAddPhoto(const MyAvatar &avatar)
+void OnetAvatar::requestAddPhoto(const MyAvatar &avatar)
 {
     QString strImgId = createRid();
     QString postData = QString("fnc=addPhoto&rdr=xml&rid=%1").arg(createRid());
@@ -224,7 +224,7 @@ void AvatarClient::requestAddPhoto(const MyAvatar &avatar)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestDeletePhoto(int imgId)
+void OnetAvatar::requestDeletePhoto(int imgId)
 {
     QString postData = QString("fnc=deletePhoto&rdr=xml&rid=%1").arg(createRid());
     postData += QString("&envelope=a:1:{s:5:\"imgId\";i:%1;}").arg(imgId);
@@ -238,7 +238,7 @@ void AvatarClient::requestDeletePhoto(int imgId)
     this->post(request, postData.toAscii());
 }
 
-void AvatarClient::requestGetAvatar(const QString &avatarUrl, AvatarType type)
+void OnetAvatar::requestGetAvatar(const QString &avatarUrl, AvatarType type)
 {
     QNetworkRequest request(basicRequest);
     request.setUrl(QUrl(avatarUrl));
@@ -263,7 +263,7 @@ void AvatarClient::requestGetAvatar(const QString &avatarUrl, AvatarType type)
     this->get(request);
 }
 
-void AvatarClient::replyFinished(QNetworkReply *reply)
+void OnetAvatar::replyFinished(QNetworkReply *reply)
 {
     QNetworkRequest request = reply->request();
     RequestType requestType = (RequestType) request.attribute(QNetworkRequest::User,RT_undefined).toInt();

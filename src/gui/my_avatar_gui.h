@@ -23,7 +23,7 @@
 
 #include <QDialog>
 
-#include "avatar_client.h"
+#include "onet_avatar.h"
 #include "ui_my_avatar.h"
 
 class MyAvatarGui : public QDialog
@@ -35,7 +35,7 @@ public:
 
 private:
     Ui::uiMyAvatar ui;
-    AvatarClient *avatarClient;
+    OnetAvatar *onetAvatar;
 
     void createGui();
     void setDefaultValues();
@@ -43,7 +43,7 @@ private:
 
 private slots:
     void avatarSelected(const QString &url);
-    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type);
+    void getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type);
     void refreshAvatar();
 };
 

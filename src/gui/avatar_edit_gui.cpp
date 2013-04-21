@@ -22,15 +22,15 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
-#include "avatar_client.h"
+#include "onet_avatar.h"
 #include "avatar_edit_scene.h"
 #include "my_avatar.h"
 #include "settings.h"
 
 #include "avatar_edit_gui.h"
 
-AvatarEditGui::AvatarEditGui(QWidget *parent, MyAvatar avatar, AvatarClient *avatarClient) :
-    QDialog(parent), avatar(avatar), avatarClient(avatarClient)
+AvatarEditGui::AvatarEditGui(QWidget *parent, MyAvatar avatar, OnetAvatar *_onetAvatar) :
+    QDialog(parent), avatar(avatar), onetAvatar(_onetAvatar)
 {
     //avatar.debug("AvatarEditGui");
 
@@ -40,7 +40,7 @@ AvatarEditGui::AvatarEditGui(QWidget *parent, MyAvatar avatar, AvatarClient *ava
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
-    Q_ASSERT(avatarClient);
+    Q_ASSERT(onetAvatar);
 
     angle = avatar.angle();
 
@@ -48,10 +48,10 @@ AvatarEditGui::AvatarEditGui(QWidget *parent, MyAvatar avatar, AvatarClient *ava
     setDefaultValues();
     createSignals();
 
-    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
+    connect(onetAvatar, SIGNAL(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)));
     connect(editScene, SIGNAL(cropChanged(const QRect &)), this, SLOT(cropChanged(const QRect &)));
 
-    avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+    onetAvatar->requestGetAvatar(avatar.getRawUrl(), OnetAvatar::AT_myRaw);
 }
 
 AvatarEditGui::~AvatarEditGui()
@@ -95,19 +95,19 @@ void AvatarEditGui::rotateLeftClicked()
 {
     avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateLeft();
-    avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+    onetAvatar->requestGetAvatar(avatar.getRawUrl(), OnetAvatar::AT_myRaw);
 }
 
 void AvatarEditGui::rotateRightClicked()
 {
     avatar.setCrop(MyAvatar::scaledCropToString(crop, photo.size(), avatar.size(), avatar.angle(), true));
     avatar.rotateRight();
-    avatarClient->requestGetAvatar(avatar.getRawUrl(), AvatarClient::AT_myRaw);
+    onetAvatar->requestGetAvatar(avatar.getRawUrl(), OnetAvatar::AT_myRaw);
 }
 
-void AvatarEditGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void AvatarEditGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type)
 {
-    if (type != AvatarClient::AT_myRaw)
+    if (type != OnetAvatar::AT_myRaw)
         return;
 
     if (!photo.loadFromData(content))

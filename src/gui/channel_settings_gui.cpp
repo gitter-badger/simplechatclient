@@ -23,13 +23,13 @@
 #include <QMessageBox>
 #include <QTimer>
 
-#include "avatar_client.h"
 #include "avatar_list_widget.h"
 #include "convert.h"
 #include "core.h"
 #include "channel_homes.h"
 #include "channel_settings.h"
 #include "nick.h"
+#include "onet_avatar.h"
 #include "settings.h"
 #include "simple_percentage_widget.h"
 #include "simple_stats_widget.h"
@@ -56,15 +56,15 @@ ChannelSettingsGui::ChannelSettingsGui(const QString &_strChannel, QWidget *pare
     setDefaultValues();
     createSignals();
 
-    avatarClient = new AvatarClient();
-    connect(avatarClient, SIGNAL(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,AvatarClient::AvatarType)));
+    onetAvatar = new OnetAvatar();
+    connect(onetAvatar, SIGNAL(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)), this, SLOT(getAvatarReady(const QByteArray &,const QString &,OnetAvatar::AvatarType)));
 
     refreshAll();
 }
 
 ChannelSettingsGui::~ChannelSettingsGui()
 {
-    delete avatarClient;
+    delete onetAvatar;
 }
 
 void ChannelSettingsGui::createGui()
@@ -265,7 +265,7 @@ void ChannelSettingsGui::changePage(QModelIndex modelIndex)
         if (index == 4 && !ui.avatarListWidget->isInitialized())
         {
             // lazy initialization
-            ui.avatarListWidget->initialize(avatarClient);
+            ui.avatarListWidget->initialize(onetAvatar);
         }
     }
 }
@@ -1050,7 +1050,7 @@ void ChannelSettingsGui::buttonClose()
     close();
 }
 
-void ChannelSettingsGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, AvatarClient::AvatarType type)
+void ChannelSettingsGui::getAvatarReady(const QByteArray &content, const QString &avatarUrl, OnetAvatar::AvatarType type)
 {
     QPixmap pixmap;
     if (!pixmap.loadFromData(content))
@@ -1060,7 +1060,7 @@ void ChannelSettingsGui::getAvatarReady(const QByteArray &content, const QString
         return;
     }
 
-    if (type == AvatarClient::AT_other)
+    if (type == OnetAvatar::AT_other)
         ui.label_channel_avatar->setPixmap(pixmap);
 }
 
@@ -1068,7 +1068,7 @@ void ChannelSettingsGui::refreshAvatar()
 {
     if (!avatarUrl.isEmpty())
     {
-        avatarClient->requestGetAvatar(avatarUrl, AvatarClient::AT_other);
+        onetAvatar->requestGetAvatar(avatarUrl, OnetAvatar::AT_other);
         return;
     }
 
