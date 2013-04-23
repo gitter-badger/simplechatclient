@@ -2148,7 +2148,7 @@
     </message>
 </context>
 <context>
-    <name>Nicklist</name>
+    <name>NickList</name>
     <message>
         <source>Users (%1)</source>
         <translation>Użytkownicy (%1)</translation>
