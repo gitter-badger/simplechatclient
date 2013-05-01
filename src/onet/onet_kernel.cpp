@@ -138,6 +138,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 317: raw_317(); break;
             case 318: raw_318(); break;
             case 319: raw_319(); break;
+            case 320: raw_320(); break;
             case 332: raw_332(); break;
             case 333: raw_333(); break;
             case 335: raw_335(); break;
@@ -2608,6 +2609,21 @@ void OnetKernel::raw_319()
     }
 
     QString strDisplay = QString(tr("* %1 is on channels: %2")).arg(strNick, strChannels);
+    Message::instance()->showMessageActive(strDisplay, MessageInfo);
+}
+
+// :cf1f4.onet 320 Merovingian Merovingian :is Official Chat Hacker
+void OnetKernel::raw_320()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strNick = strDataList.at(3);
+
+    QString strTitle;
+    for (int i = 4; i < strDataList.size(); i++) { if (i != 4) strTitle += " "; strTitle += strDataList.at(i); }
+    if (strTitle[0] == ':') strTitle.remove(0,1);
+
+    QString strDisplay = QString("* %1 %2").arg(strNick, strTitle);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 }
 

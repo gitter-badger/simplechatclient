@@ -8,3 +8,5 @@
 /.project
 /.cproject
 /install_manifest.txt
+/*.txt.user
+/*.cbp
