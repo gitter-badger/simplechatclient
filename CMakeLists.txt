@@ -6,6 +6,7 @@ find_package (Qt4 REQUIRED)
 
 # optimization
 set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 #set (CMAKE_C_FLAGS "-W -Wall ${CMAKE_C_FLAGS}")
 #set (CMAKE_CXX_FLAGS "-W -Wall ${CMAKE_CXX_FLAGS}")
 
