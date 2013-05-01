@@ -31,7 +31,7 @@ WebBrowserGui::WebBrowserGui(const QUrl &url, QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+#if (QT_VERSION >= 0x050000)
     ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
 #else
     ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);

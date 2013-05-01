@@ -21,8 +21,12 @@
 #define SOUND_NOTIFY_H
 
 #include "scc-config.h"
-#if WITH_PHONON
-    #include <phonon/MediaObject>
+#if (QT_VERSION >= 0x050000)
+    #include <QMediaPlayer>
+#else
+    #if WITH_PHONON
+        #include <phonon/MediaObject>
+    #endif
 #endif
 #include <QObject>
 
@@ -49,8 +53,12 @@ public slots:
 
 private:
     QString apath;
-#if WITH_PHONON
-    Phonon::MediaObject *music;
+#if (QT_VERSION >= 0x050000)
+    QMediaPlayer *music;
+#else
+    #if WITH_PHONON
+        Phonon::MediaObject *music;
+    #endif
 #endif
     NotifyCategory eCurrentCategory;
 

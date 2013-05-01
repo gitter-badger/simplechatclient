@@ -35,29 +35,35 @@ SoundNotify * SoundNotify::instance()
 
 void SoundNotify::init()
 {
-#if WITH_PHONON
-    QString strSoundBeep = Settings::instance()->get("sound_beep");
-    music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
+#if (QT_VERSION >= 0x050000)
+    music = new QMediaPlayer;
+#else
+    #if WITH_PHONON
+        QString strSoundBeep = Settings::instance()->get("sound_beep");
+        music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
+    #endif
 #endif
 }
 
 SoundNotify::SoundNotify()
 {
-#if WITH_PHONON
     eCurrentCategory = Beep;
-#endif
 }
 
 SoundNotify::~SoundNotify()
 {
-#if WITH_PHONON
+#if (QT_VERSION >= 0x050000)
     delete music;
+#else
+    #if WITH_PHONON
+        delete music;
+    #endif
 #endif
 }
 
 void SoundNotify::play(NotifyCategory eCategory)
 {
-#if WITH_PHONON
+#if (QT_VERSION >= 0x050000)
     music->stop();
 
     if (eCategory == Query)
@@ -65,7 +71,7 @@ void SoundNotify::play(NotifyCategory eCategory)
         if (eCurrentCategory != Query)
         {
             QString strSoundQuery = Settings::instance()->get("sound_query");
-            music->setCurrentSource(strSoundQuery);
+            music->setMedia(QUrl::fromLocalFile(strSoundQuery));
             eCurrentCategory = Query;
         }
     }
@@ -74,14 +80,39 @@ void SoundNotify::play(NotifyCategory eCategory)
         if (eCurrentCategory != Beep)
         {
             QString strSoundBeep = Settings::instance()->get("sound_beep");
-            music->setCurrentSource(strSoundBeep);
+            music->setMedia(QUrl::fromLocalFile(strSoundBeep));
             eCurrentCategory = Beep;
         }
     }
 
     music->play();
 #else
-    Q_UNUSED(eCategory)
+    #if WITH_PHONON
+        music->stop();
+
+        if (eCategory == Query)
+        {
+            if (eCurrentCategory != Query)
+            {
+                QString strSoundQuery = Settings::instance()->get("sound_query");
+                music->setCurrentSource(strSoundQuery);
+                eCurrentCategory = Query;
+            }
+        }
+        else
+        {
+            if (eCurrentCategory != Beep)
+            {
+                QString strSoundBeep = Settings::instance()->get("sound_beep");
+                music->setCurrentSource(strSoundBeep);
+                eCurrentCategory = Beep;
+            }
+        }
+
+        music->play();
+    #else
+        Q_UNUSED(eCategory)
+    #endif
 #endif
 }
 
