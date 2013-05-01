@@ -34,9 +34,6 @@ set (SCC_BIN_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 set (SCC_SHARE_DIR ${CMAKE_INSTALL_PREFIX}/share)
 set (SCC_DATA_DIR ${CMAKE_INSTALL_PREFIX}/share/scc)
 
-# modules
-set (CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
-
 # include
 include (FindPkgConfig)
 include (CheckIncludeFiles)
