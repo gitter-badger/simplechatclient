@@ -68,21 +68,7 @@ void ChatView::createBody()
     path = SCC_DATA_DIR;
 #endif
 
-    QString jsCode;
-    QFile file(path+"/scripts/chat.js");
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        jsCode = file.readAll();
-        file.close();
-    }
-
-    if (jsCode.isEmpty())
-    {
-        jsCode = QByteArray::fromBase64("CmZ1bmN0aW9uIGFwcGVuZE1lc3NhZ2UoaHRtbCkKewp2YXIgZGl2ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ0NoYXQnKS5nZXRFbGVtZW50c0J5VGFnTmFtZSgnZGl2Jyk7CmlmIChkaXYubGVuZ3RoICZndDsgMzUwKQp7CnZhciBjaGF0RWxlbWVudCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdDaGF0Jyk7CmNoYXRFbGVtZW50LnJlbW92ZUNoaWxkKGNoYXRFbGVtZW50LmZpcnN0Q2hpbGQpOwp9Cgp2YXIgY2hhdEVsZW1lbnQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnQ2hhdCcpOwp2YXIgbiA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpOwpuLmlubmVySFRNTCA9IGh0bWw7CmNoYXRFbGVtZW50LmFwcGVuZENoaWxkKG4pOyAKfQoKZnVuY3Rpb24gY2xlYXJNZXNzYWdlcygpCnsKdmFyIGNoYXRFbGVtZW50ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ0NoYXQnKTsKY2hhdEVsZW1lbnQuaW5uZXJIVE1MID0gIiI7Cn0K").data();
-
-        if (Settings::instance()->get("debug") == "true")
-            qWarning() << "Error: chat.js does not exist!";
-    }
+    QString jsCode = "function appendMessage(html) { var div = document.getElementById('Chat').getElementsByTagName('div'); if (div.length > 350) { var chatElement = document.getElementById('Chat'); chatElement.removeChild(chatElement.firstChild); } var chatElement = document.getElementById('Chat'); var n = document.createElement('div'); n.innerHTML = html; chatElement.appendChild(n); } function clearMessages() { var chatElement = document.getElementById('Chat'); chatElement.innerHTML = ''; }";
 
     QString strMainHtml = "<html><head><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";
     this->setHtml(strMainHtml);

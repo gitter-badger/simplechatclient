@@ -132,9 +132,6 @@ xcopy %QCA2_DIR%\lib\qca2.dll %DESTINATION%\ /C /H /R /Y /Q
 echo Copying crypto plugin
 xcopy %QT_DIR%\plugins\crypto\qca-ossl2.dll           %DESTINATION%\plugins\crypto\         /C /H /R /Y /Q
 
-echo Copying scripts
-xcopy scripts\*.js %DESTINATION%\scripts\ /C /H /R /Y /Q 
-
 echo Copying translations
 xcopy translations\*.qm %DESTINATION%\translations\ /C /H /R /Y /Q 
 

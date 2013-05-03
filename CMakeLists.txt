@@ -52,7 +52,6 @@ if (UNIX AND NOT APPLE)
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
 	install (FILES images/user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
 
-	install (DIRECTORY scripts DESTINATION ${SCC_DATA_DIR})
 	install (DIRECTORY images/wallpaper DESTINATION ${SCC_DATA_DIR}/images)
 	install (DIRECTORY sounds DESTINATION ${SCC_DATA_DIR})
 	install (DIRECTORY emoticons DESTINATION ${SCC_DATA_DIR})
