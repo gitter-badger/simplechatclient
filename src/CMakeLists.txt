@@ -330,7 +330,7 @@ else (WITH_PHONON)
 endif (WITH_PHONON)
 
 # qt
-find_package (Qt4 REQUIRED)
+#find_package (Qt4 REQUIRED)
 
 # xml
 set (QT_USE_QTXML TRUE)
