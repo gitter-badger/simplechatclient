@@ -67,9 +67,6 @@ public:
     virtual ~SoundNotify();
     void play(NotifyCategory);
 
-public slots:
-    void quit();
-
 private:
     QString apath;
 #if (QT_VERSION >= 0x050000)

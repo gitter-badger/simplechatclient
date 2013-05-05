@@ -117,12 +117,3 @@ void SoundNotify::play(NotifyCategory eCategory)
     #endif
 #endif
 }
-
-void SoundNotify::quit()
-{
-    if (!Instance)
-        return;
-
-    delete Instance;
-    Instance = 0;
-}
