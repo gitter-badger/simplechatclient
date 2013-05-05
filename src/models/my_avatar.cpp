@@ -222,9 +222,11 @@ QString MyAvatar::scaledCropToString(QRect crop, QSize scaled, QSize original, i
     QString s = QString("%1-%2-%3-%4").arg(QString::number(crop.x()), QString::number(crop.y()),
         QString::number(crop.width()), QString::number(crop.height()));
 
-    //qDebug() << "scaledCropToString: string:" << s << "crop:" << crop << "scale:" << scale
-    //    << "orgW:" << original.width() << "orgH:" << original.height() << "scaledW:"
-    //    << scaled.width() << "scaledH:" << scaled.height() << "angle:" << angle;
+    /*
+    qDebug() << "scaledCropToString: string:" << s << "crop:" << crop << "scale:" << scale
+        << "orgW:" << original.width() << "orgH:" << original.height() << "scaledW:"
+        << scaled.width() << "scaledH:" << scaled.height() << "angle:" << angle;
+    */
 
     return s;
 }
@@ -276,9 +278,11 @@ QRect MyAvatar::stringToScaledCrop(QString s, QSize scaled, QSize original, int 
     crop.setWidth(qRound(crop.width() * scale));
     crop.setHeight(qRound(crop.height() * scale));
 
-    //qDebug() << "stringToScaledCrop: string:" << s << "crop:" << crop << "scale:" << scale
-    //    << "orgW:" << original.width() << "orgH:" << original.height() << "scaledW:"
-    //    << scaled.width() << "scaledH:" << scaled.height() << "angle:" << angle;
+    /*
+    qDebug() << "stringToScaledCrop: string:" << s << "crop:" << crop << "scale:" << scale
+        << "orgW:" << original.width() << "orgH:" << original.height() << "scaledW:"
+        << scaled.width() << "scaledH:" << scaled.height() << "angle:" << angle;
+    */
 
     return crop;
 }
@@ -287,8 +291,9 @@ QSize MyAvatar::size() const
 {
     return QSize(m_width, m_height);
 }
-
+/*
 void MyAvatar::debug(QString title) const
 {
     qDebug() << title << "angle:" << angle() << "crop:" << crop() << "height:" << height() << "img:" << img() << "imgId:" << imgId() << "width:" << width() << "desc:" << desc() << "mApp:" << mApp() << "mSrv:" << mSrv();
 }
+*/

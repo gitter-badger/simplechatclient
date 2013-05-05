@@ -40,7 +40,7 @@ public:
     static QString scaledCropToString(QRect crop, QSize scaled, QSize original, int angle, bool rotate = false);
     static QRect stringToScaledCrop(QString s, QSize scaled, QSize original, int angle, bool rotate = false);
     QSize size() const;
-    void debug(QString title = 0) const;
+    // void debug(QString title = 0) const;
 
     int angle() const;
     int mApp() const;
