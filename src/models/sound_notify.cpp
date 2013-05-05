@@ -64,8 +64,6 @@ SoundNotify::~SoundNotify()
 void SoundNotify::play(NotifyCategory eCategory)
 {
 #if (QT_VERSION >= 0x050000)
-    music->stop();
-
     if (eCategory == Query)
     {
         if (eCurrentCategory != Query)
@@ -85,11 +83,12 @@ void SoundNotify::play(NotifyCategory eCategory)
         }
     }
 
-    music->play();
+    thread.setMedia(music);
+    thread.start();
+    thread.quit();
+    //thread.wait();
 #else
     #if WITH_PHONON
-        music->stop();
-
         if (eCategory == Query)
         {
             if (eCurrentCategory != Query)
@@ -109,7 +108,10 @@ void SoundNotify::play(NotifyCategory eCategory)
             }
         }
 
-        music->play();
+        thread.setMedia(music);
+        thread.start();
+        thread.quit();
+        //thread.wait();
     #else
         Q_UNUSED(eCategory)
     #endif

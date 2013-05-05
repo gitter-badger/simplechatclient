@@ -29,8 +29,27 @@
     #endif
 #endif
 #include <QObject>
+#include <QThread>
 
 enum NotifyCategory {Beep, Query};
+
+class SoundThread : public QThread
+{
+public:
+    void run() { music->stop(); music->play(); exec(); }
+
+#if (QT_VERSION >= 0x050000)
+    void setMedia(QMediaPlayer *m) { music = m; }
+private:
+    QMediaPlayer *music;
+#else
+    #if WITH_PHONON
+        void setMedia(Phonon::MediaObject *m) { music = m; }
+private:
+        Phonon::MediaObject *music;
+    #endif
+#endif
+};
 
 /**
  * Notify using Phonon
@@ -61,6 +80,7 @@ private:
     #endif
 #endif
     NotifyCategory eCurrentCategory;
+    SoundThread thread;
 
     void init();
 };
