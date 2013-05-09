@@ -255,7 +255,7 @@ void UserProfileGui::avatarFinished(QNetworkReply *reply)
     {
         // display
         avatar.loadFromData(bData);
-        label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+        label_avatar->setPixmap(avatar.scaled(QSize(50,50), Qt::KeepAspectRatio));
 
         // enable zoom
         toolButton_zoom->setEnabled(true);
