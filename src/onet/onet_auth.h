@@ -47,15 +47,15 @@ private:
     {
         AT_chat,
         AT_deploy,
-        AT_kropka,
-        AT_kropkaFull,
+        AT_kropka_1,
+        AT_kropka_1_full,
+        AT_kropka_5_full,
         AT_sk,
-        AT_secureKropka,
-        AT_secureLogin,
+        AT_secure_login,
         AT_override,
-        AT_checkCode,
+        AT_check_code,
         AT_uo,
-        AT_refreshSk,
+        AT_refresh_sk,
         AT_undefined
     };
     QNetworkAccessManager *accessManager;
@@ -77,10 +77,10 @@ private:
     void getChat();
     void getDeploy();
     void gotDeploy(const QString &strData);
-    void getKropka();
-    void getKropkaFull();
+    void getKropka1();
+    void getKropka1Full();
+    void getKropka5Full();
     void getSk();
-    void getSecureKropka();
     void getSecureLogin();
     void getOverride();
     void getUo();

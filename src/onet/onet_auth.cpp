@@ -124,26 +124,37 @@ void OnetAuth::gotDeploy(const QString &strData)
     strVersionLen = QString::number(strVersion.length());
 }
 
-void OnetAuth::getKropka()
+void OnetAuth::getKropka1()
 {
-    if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: kropka"; }
+    if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: kropka 1"; }
 
     // kropka
-    QString strUrl = "http://kropka.onet.pl/_s/kropka/1?DV=czat%2Fchat&SC=1&IP=&DG=id%3Dno-gemius&RI=&C1=&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://czat.onet.pl/chat.html&DR=http://czat.onet.pl/";
+    QString strUrl = "http://kropka.onet.pl/_s/kropka/1?DV=czat/applet";
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-    pReply->setProperty("category", AT_kropka);
+    pReply->setProperty("category", AT_kropka_1);
 }
 
-void OnetAuth::getKropkaFull()
+void OnetAuth::getKropka1Full()
 {
-    if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: kropka full"; }
+    if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: kropka 1 full"; }
 
     // full
     QString strUrl = "http://kropka.onet.pl/_s/kropka/1?DV=czat/applet/FULL";
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-    pReply->setProperty("category", AT_kropkaFull);
+    pReply->setProperty("category", AT_kropka_1_full);
+}
+
+void OnetAuth::getKropka5Full()
+{
+    if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: kropka 5 full"; }
+
+    // secure kropka
+    QString strUrl = "http://kropka.onet.pl/_s/kropka/5?DV=czat/applet/FULL";
+
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
+    pReply->setProperty("category", AT_kropka_5_full);
 }
 
 void OnetAuth::getSk()
@@ -155,17 +166,6 @@ void OnetAuth::getSk()
 
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
     pReply->setProperty("category", AT_sk);
-}
-
-void OnetAuth::getSecureKropka()
-{
-    if (Settings::instance()->get("debug") == "true") { qDebug() << "Request: secure kropka"; }
-
-    // secure kropka
-    QString strUrl = "http://kropka.onet.pl/_s/kropka/1?DV=secure&SC=1&CL=std161&CS=1280x800x24&CW=1280x243&DU=http://secure.onet.pl/&DR=";
-
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-    pReply->setProperty("category", AT_secureKropka);
 }
 
 void OnetAuth::getSecureLogin()
@@ -180,7 +180,7 @@ void OnetAuth::getSecureLogin()
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
-    pReply->setProperty("category", AT_secureLogin);
+    pReply->setProperty("category", AT_secure_login);
     pReply->ignoreSslErrors();
 }
 
@@ -234,7 +234,7 @@ void OnetAuth::getCheckCode()
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
-    pReply->setProperty("category", AT_checkCode);
+    pReply->setProperty("category", AT_check_code);
 }
 
 void OnetAuth::networkFinished(QNetworkReply *reply)
@@ -261,27 +261,27 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
             break;
         case AT_deploy:
             gotDeploy(QString(bData));
-            getKropka();
+            getKropka1();
             break;
-        case AT_kropka:
-            getKropkaFull();
+        case AT_kropka_1:
+            getKropka1Full();
             break;
-        case AT_kropkaFull:
+        case AT_kropka_1_full:
+            getKropka5Full();
+            break;
+        case AT_kropka_5_full:
             getSk();
             break;
         case AT_sk:
             if (bRegisteredNick)
-                getSecureKropka();
+                getSecureLogin();
             else
             {
                 showCaptchaDialog();
                 getCheckCode();
             }
             break;
-        case AT_secureKropka:
-            getSecureLogin();
-            break;
-        case AT_secureLogin:
+        case AT_secure_login:
             if (bOverride)
                 getOverride();
             else
@@ -290,7 +290,7 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
         case AT_override:
             getUo();
             break;
-        case AT_checkCode:
+        case AT_check_code:
             getUo();
             break;
         case AT_uo:
@@ -307,7 +307,7 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
                 emit authStateChanged();
                 break;
             }
-        case AT_refreshSk:
+        case AT_refresh_sk:
             saveCookies();
             break;
         default:
@@ -437,6 +437,6 @@ void OnetAuth::refreshSk()
         QString strUrl = "http://czat.onet.pl/sk.gif";
 
         QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
-        pReply->setProperty("category", AT_refreshSk);
+        pReply->setProperty("category", AT_refresh_sk);
     }
 }
