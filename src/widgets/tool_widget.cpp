@@ -207,7 +207,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     pInputLine->show();
 
     sendButton = new QToolButton(this);
-    sendButton->setIcon(QIcon(":/images/oxygen/16x16/go-jump-locationbar.png"));
+    sendButton->setIcon(QIcon(":/images/oxygen/16x16/key-enter.png"));
     sendButton->setToolTip(tr("Send"));
     sendButton->show();
 
