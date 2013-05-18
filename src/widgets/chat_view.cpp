@@ -52,7 +52,14 @@
 ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bAtBottom(true)
 {
     setFocusPolicy(Qt::NoFocus);
+
     settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+    settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, false);
+    settings()->setAttribute(QWebSettings::PrintElementBackgrounds, false);
+    //settings()->setAttribute(QWebSettings::NotificationsEnabled, false);
+    settings()->setObjectCacheCapacities(0, 0, 0);
+    settings()->setMaximumPagesInCache(0);
+
     connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
 
     createBody();
