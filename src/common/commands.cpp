@@ -267,7 +267,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/whereis [nick] or /whois [nick] - show where is user"));
 
     QStringList lHelp = strHelp.split(";");
-    foreach (QString strDisplay, lHelp)
+    foreach (const QString &strDisplay, lHelp)
         Message::instance()->showMessage(strChan, strDisplay, MessageInfo);
 
     return QString::null;

@@ -45,7 +45,7 @@ void EmoticonsThread::run()
 
     QStringList lFiles = dEmoticonsDir.entryList(lSupportedEmoticons, QDir::Files | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
 
-    foreach (QString strFileName, lFiles)
+    foreach (const QString &strFileName, lFiles)
     {
         QString strEmoticon = QFileInfo(strFileName).baseName();
 
@@ -144,7 +144,7 @@ void EmoticonsGui::setDefaultValues()
     QDir dAllEmoticonsDirs = path+"/emoticons/";
     QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDir::Name | QDir::IgnoreCase);
 
-    foreach (QString strDir, lDirs)
+    foreach (const QString &strDir, lDirs)
     {
         QDir dEmoticonsDir = dAllEmoticonsDirs.absolutePath()+"/"+strDir;
 

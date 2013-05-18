@@ -60,7 +60,7 @@ bool Message::isHighlightMessage(const QString &strMessage)
     {
         Convert::simpleConvert(strData);
 
-        foreach (QString strHighlight, lHighlight)
+        foreach (const QString &strHighlight, lHighlight)
         {
             if (strData.toLower().contains(strHighlight.toLower()))
                 return true;
@@ -151,7 +151,7 @@ void Message::showMessageAll(const QString &strData, MessageCategory eMessageCat
 {
     QList<QString> lChannels = Channel::instance()->getList();
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         showMessage(strChannel, strData, eMessageCategory);
     }

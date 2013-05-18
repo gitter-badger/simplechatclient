@@ -67,7 +67,7 @@ bool ProfileManager::removeProfileDirectory(const QString &strDir)
     if (dir.exists(strDir))
     {
         QFileInfoList listInfo = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst);
-        foreach(QFileInfo info, listInfo)
+        foreach(const QFileInfo &info, listInfo)
         {
             if (info.isDir())
                 result = removeProfileDirectory(info.absoluteFilePath());

@@ -40,7 +40,7 @@ Utils::Utils()
 bool Utils::isErotic(const QString &strChannel)
 {
     QList<OnetChannelList> list = ChannelList::instance()->getAll();
-    foreach (OnetChannelList channel, list)
+    foreach (const OnetChannelList &channel, list)
     {
         QString strName = channel.name;
         int iType = channel.type;

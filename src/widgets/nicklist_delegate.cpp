@@ -149,7 +149,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         QRect rect = option.rect;
         rect.setX(rect.right());
 
-        foreach (QIcon icon, icons)
+        foreach (const QIcon &icon, icons)
         {
             rect.setX(rect.x() - 16);
             icon.paint(painter, rect, Qt::AlignVCenter | Qt::AlignAbsolute, QIcon::Normal, QIcon::On);

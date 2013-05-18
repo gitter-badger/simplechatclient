@@ -99,7 +99,7 @@ void TabContainer::refreshColors()
 {
     QList<QString> lChannels = Channel::instance()->getList();
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         // update tab name color
         int index = Channel::instance()->getIndexFromName(strChannel);
@@ -111,7 +111,7 @@ void TabContainer::refreshCSS()
 {
     QList<QString> lChannels = Channel::instance()->getList();
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         Channel::instance()->getChatView(strChannel)->refreshCSS();
     }
@@ -121,7 +121,7 @@ void TabContainer::resizeMainWindow(QSize s)
 {
     QList<QString> lChannels = Channel::instance()->getList();
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         if (!Channel::instance()->getNickListWidget(strChannel)->isHidden())
         {

@@ -45,7 +45,7 @@ NickList::NickList()
 void NickList::clearUsers()
 {
     QList<QString> lChannels = Channel::instance()->getList();
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         if (strChannel.at(0) == '^')
             Channel::instance()->setOffline(strChannel, true);
@@ -84,7 +84,7 @@ void NickList::renameUser(const QString &strNick, const QString &strNewNick, con
 {
     MessageCategory eMessageCategory = MessageMode;
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);
         Channel::instance()->getNickListWidget(strChannel)->renameUser(strNick, strNewNick);
@@ -95,7 +95,7 @@ void NickList::quitUser(const QString &strNick, const QList<QString> &lChannels,
 {
     MessageCategory eMessageCategory = MessageQuit;
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         if (strChannel.at(0) == '^')
             Channel::instance()->setOffline(strChannel, true);
@@ -123,7 +123,7 @@ void NickList::setUserModes(const QString &strNick, const QString &strChannel, c
 
 void NickList::setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar)
 {
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
     {
         Channel::instance()->getNickListWidget(strChannel)->setUserAvatar(strNick, strAvatar);
     }

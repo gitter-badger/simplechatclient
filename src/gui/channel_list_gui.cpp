@@ -258,7 +258,7 @@ void ChannelListGui::createList()
     int iRegionalCount = 0;
 
     QList<OnetChannelList> list1 = ChannelList::instance()->getAll();
-    foreach (OnetChannelList channel, list1)
+    foreach (const OnetChannelList &channel, list1)
     {
         QString strName = channel.name;
         int iPeople = channel.people;
@@ -301,7 +301,7 @@ void ChannelListGui::createList()
     int iRegionalRow = 0;
 
     QList<OnetChannelList> list2 = ChannelList::instance()->getAll();
-    foreach (OnetChannelList channel, list2)
+    foreach (const OnetChannelList &channel, list2)
     {
         QString strName = channel.name;
         int iPeople = channel.people;

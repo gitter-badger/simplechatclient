@@ -296,7 +296,7 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
 
     ui.listWidget_collections->clear();
 
-    foreach(QString avatarUrl, lCollectionAvatars)
+    foreach(const QString &avatarUrl, lCollectionAvatars)
     {
         QListWidgetItem *item = new QListWidgetItem();
         item->setData(AvatarUrlRole, avatarUrl);
@@ -397,7 +397,7 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
 
     ui.listWidget_my_avatars->clear();
 
-    foreach(MyAvatar avatar, lMyAvatars)
+    foreach(const MyAvatar &avatar, lMyAvatars)
     {
         MyAvatarListWidgetItem *item = new MyAvatarListWidgetItem(avatar);
         item->setIcon(icon);

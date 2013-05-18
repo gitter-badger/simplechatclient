@@ -44,9 +44,9 @@ QString findEmoticon(const QString &strEmoticon)
     QStringList lSupportedEmoticons;
     lSupportedEmoticons << ".gif" << ".jpg" << ".jpeg" << ".png" << ".bmp";
 
-    foreach (QString strDir, lDirs)
+    foreach (const QString &strDir, lDirs)
     {
-        foreach (QString strSupportedEmoticon, lSupportedEmoticons)
+        foreach (const QString &strSupportedEmoticon, lSupportedEmoticons)
         {
             QString strEmoticonCheck = QString("%1/emoticons/%2/%3%4").arg(path, strDir, strEmoticon, strSupportedEmoticon);
             if (QFile::exists(strEmoticonCheck))
@@ -62,7 +62,7 @@ void convertColor(QString &strData)
 
     if (Settings::instance()->get("hide_formating") == "false")
     {
-        foreach (QString strColor, lColors)
+        foreach (const QString &strColor, lColors)
         {
             if (strData.contains(QString("%C%1%").arg(strColor)))
             {
@@ -73,7 +73,7 @@ void convertColor(QString &strData)
     }
     else
     {
-        foreach (QString strColor, lColors)
+        foreach (const QString &strColor, lColors)
             strData.remove(QString("%C%1%").arg(strColor));
     }
 }
@@ -195,7 +195,7 @@ void convertSlashToEmoticons(QString &strData)
 void removeColor(QString &strData)
 {
     QList<QString> lColors = Utils::instance()->getColors();
-    foreach (QString strColor, lColors)
+    foreach (const QString &strColor, lColors)
         strData.remove(QString("%C%1%").arg(strColor));
 }
 
@@ -352,7 +352,7 @@ int Convert::getColor(const QString &strData)
     QList<QString> lColors = Utils::instance()->getColors();
 
     int iColor = 0;
-    foreach (QString strColor, lColors)
+    foreach (const QString &strColor, lColors)
     {
         if (strData.contains(QString("%C%1%").arg(strColor)))
             return iColor;

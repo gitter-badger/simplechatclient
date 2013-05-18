@@ -90,7 +90,7 @@ bool ProfileManagerGui::existProfile(const QString &strExistProfile)
     dir.setSorting(QDir::Name);
 
     QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-    foreach (QFileInfo info, list)
+    foreach (const QFileInfo &info, list)
     {
         QString profileName = info.fileName();
 
@@ -125,7 +125,7 @@ void ProfileManagerGui::refreshProfilesList()
     dir.setSorting(QDir::Name);
 
     QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-    foreach (QFileInfo info, list)
+    foreach (const QFileInfo &info, list)
     {
         QString profileName = info.fileName();
         ui.listWidget->addItem(profileName);

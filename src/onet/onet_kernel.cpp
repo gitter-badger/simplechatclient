@@ -1187,7 +1187,7 @@ void OnetKernel::raw_001()
     //foreach (QString strChannel, lChannelsCaseIgnore)
         //pTabC->removeTab(strChannel);
 
-    foreach (QString strChannel, lChannelsCaseIgnore)
+    foreach (const QString &strChannel, lChannelsCaseIgnore)
         Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
 
     // channel list
@@ -1449,7 +1449,7 @@ void OnetKernel::raw_142n()
         Settings::instance()->set("ignore_favourites", "true");
 
         QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavourites::instance()->getAllCaseIgnoreSorted();
-        foreach (QString strChannel, lChannelsCaseIgnore)
+        foreach (const QString &strChannel, lChannelsCaseIgnore)
         {
             if (!Channel::instance()->contains(strChannel))
                 Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));

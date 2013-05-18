@@ -52,7 +52,7 @@ QList<CaseIgnoreString> ChannelFavourites::getAllCaseIgnoreSorted()
 
     // copy to new list
     QList<QString> lChannels = getAll().keys();
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
         lChannelsCaseIgnore.append(strChannel);
 
     // sort

@@ -71,7 +71,7 @@ void MyProfileGui::setDefaultValues()
 {
     // font
     QList<QString> lFonts = Utils::instance()->getFonts();
-    foreach (QString strFont, lFonts)
+    foreach (const QString &strFont, lFonts)
         ui.comboBox_font->addItem(strFont);
 
     // color
@@ -79,7 +79,7 @@ void MyProfileGui::setDefaultValues()
     ui.comboBox_color->setIconSize(QSize(50,10));
 
     QList<QString> lColors = Utils::instance()->getColors();
-    foreach (QString strColor, lColors)
+    foreach (const QString &strColor, lColors)
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor("#"+strColor));
@@ -88,29 +88,29 @@ void MyProfileGui::setDefaultValues()
 
     // sex
     QList<QString> lSex = Utils::instance()->getSex();
-    foreach (QString strSex, lSex)
+    foreach (const QString &strSex, lSex)
         ui.comboBox_sex->addItem(strSex);
 
     // days
     QList<QString> lDays = Utils::instance()->getDays();
-    foreach (QString strDay, lDays)
+    foreach (const QString &strDay, lDays)
         ui.comboBox_day->addItem(strDay);
 
     // months
     QList<QString> lMonths = Utils::instance()->getMonths();
-    foreach (QString strMonth, lMonths)
+    foreach (const QString &strMonth, lMonths)
         ui.comboBox_month->addItem(strMonth);
 
     // years
     QList<QString> lYears = Utils::instance()->getYears();
-    foreach (QString strYear, lYears)
+    foreach (const QString &strYear, lYears)
         ui.comboBox_year->addItem(strYear);
 
     // country
     QString strCountries = Utils::instance()->getCountries();
     QStringList lCountries = strCountries.split(",");
     lCountries.insert(0, QString::null);
-    foreach (QString strCountry, lCountries)
+    foreach (const QString &strCountry, lCountries)
         ui.comboBox_country->addItem(strCountry);
 }
 

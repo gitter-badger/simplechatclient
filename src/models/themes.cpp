@@ -59,13 +59,13 @@ Theme Themes::get()
 {
     QString currentName = Settings::instance()->get("themes");
 
-    foreach (Theme _Theme, lThemes)
+    foreach (const Theme &_Theme, lThemes)
     {
         if (_Theme.name == currentName)
             return _Theme;
     }
 
-    foreach (Theme _Theme, lThemes)
+    foreach (const Theme &_Theme, lThemes)
     {
         if (_Theme.flags & ThemeFlags::Default)
             return _Theme;
@@ -83,7 +83,7 @@ QList<QString> Themes::getAll()
 {
     QList<QString> lThemesName;
 
-    foreach (Theme _Theme, lThemes)
+    foreach (const Theme &_Theme, lThemes)
     {
         lThemesName.append(_Theme.name);
     }

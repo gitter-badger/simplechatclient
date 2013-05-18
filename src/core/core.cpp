@@ -117,7 +117,7 @@ void Core::createSettings()
     QStringList constCookies;
     constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
 
-    foreach (QString constCookie, constCookies)
+    foreach (const QString &constCookie, constCookies)
         Settings::instance()->set(constCookie, QString::null);
 }
 

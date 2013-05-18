@@ -60,7 +60,7 @@ void IgnoreGui::refresh()
     ui.listWidget_nicks->clear();
 
     QList<QString> ignoreList = Ignore::instance()->getAll();
-    foreach (QString strNick, ignoreList)
+    foreach (const QString &strNick, ignoreList)
     {
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(SortedListWidgetNicklistRole, false); // is nicklist

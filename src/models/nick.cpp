@@ -95,7 +95,7 @@ void Nick::removeFromChannel(const QString &strChannel)
 {
     QList<CaseIgnoreString> lNicksFromChannel = getFromChannel(strChannel);
 
-    foreach (QString strNick, lNicksFromChannel)
+    foreach (const QString &strNick, lNicksFromChannel)
     {
         lNicks[strNick].channels.removeOne(strChannel);
         lNicks[strNick].channel_modes.remove(strChannel);
@@ -127,7 +127,7 @@ void Nick::quit(const QString &strNick, const QString &strDisplay)
     QString strMe = Settings::instance()->get("nick");
     if (strNick == strMe)
     {
-        foreach (QString strChannel, lChannels)
+        foreach (const QString &strChannel, lChannels)
             removeFromChannel(strChannel);
     }
 }
@@ -176,7 +176,7 @@ void Nick::changeFlag(const QString &strNick, const QString &strFlag)
     if (!lNicks.contains(strNick)) return;
 
     QList<QString> lChannels = lNicks[strNick].channels;
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
         changeFlag(strNick, strChannel, strFlag);
 }
 

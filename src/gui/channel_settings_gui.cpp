@@ -205,7 +205,7 @@ void ChannelSettingsGui::setDefaultValues()
 
     // font
     QStringList comboBoxFont = Utils::instance()->getFonts();
-    foreach (QString strFont, comboBoxFont)
+    foreach (const QString &strFont, comboBoxFont)
         ui.comboBox_font->addItem(strFont);
 
     // color
@@ -213,7 +213,7 @@ void ChannelSettingsGui::setDefaultValues()
     ui.comboBox_color->setIconSize(QSize(50,10));
 
     QList<QString> comboBoxColors = Utils::instance()->getColors();
-    foreach (QString strColor, comboBoxColors)
+    foreach (const QString &strColor, comboBoxColors)
     {
         QPixmap pixmap(50,10);
         pixmap.fill(QColor("#"+strColor));

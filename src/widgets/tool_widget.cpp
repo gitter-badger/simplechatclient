@@ -98,7 +98,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     color->setIconSize(QSize(20,10));
 
     QList<QString> comboBoxColors = Utils::instance()->getColors();
-    foreach (QString strColor, comboBoxColors)
+    foreach (const QString &strColor, comboBoxColors)
     {
         QPixmap pixmap(20,10);
         pixmap.fill(QColor("#"+strColor));
@@ -838,7 +838,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
         Convert::createText(strText);
 
         QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
-        foreach (QString strChannel, lChannelsCleared)
+        foreach (const QString &strChannel, lChannelsCleared)
         {
             Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);

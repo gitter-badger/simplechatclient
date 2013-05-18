@@ -91,7 +91,7 @@ void Channel::remove(const QString &channel)
     Log::logClosed(channel);
 
     // fix index
-    foreach (OnetChannel ochannel, lChannels)
+    foreach (const OnetChannel &ochannel, lChannels)
     {
         if (ochannel.index >= index)
             lChannels[ochannel.name].index--;
@@ -100,7 +100,7 @@ void Channel::remove(const QString &channel)
 
 void Channel::removeAll()
 {
-    foreach (OnetChannel ochannel, lChannels)
+    foreach (const OnetChannel &ochannel, lChannels)
     {
         QString channel = ochannel.name;
 
@@ -129,7 +129,7 @@ bool Channel::contains(const QString &channel)
 
 QString Channel::getNameFromIndex(int index)
 {
-    foreach (OnetChannel ochannel, lChannels)
+    foreach (const OnetChannel &ochannel, lChannels)
     {
         if (ochannel.index == index)
             return ochannel.name;
@@ -172,7 +172,7 @@ QList<CaseIgnoreString> Channel::getListClearedSorted()
 
     QList<CaseIgnoreString> lChannelsCaseIgnore;
 
-    foreach (QString strChannel, lChannels)
+    foreach (const QString &strChannel, lChannels)
         lChannelsCaseIgnore.append(strChannel);
 
     // sort

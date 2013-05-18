@@ -327,7 +327,7 @@ void OnetAuth::saveCookies()
 
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    foreach (QNetworkCookie cookie, cookies)
+    foreach (const QNetworkCookie &cookie, cookies)
     {
         QString strKey = cookie.name();
         QString strValue = cookie.value();
@@ -342,13 +342,13 @@ void OnetAuth::removeCookies()
     QStringList constCookies;
     constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
 
-    foreach (QString constCookie, constCookies)
+    foreach (const QString &constCookie, constCookies)
         Settings::instance()->set(constCookie, QString::null);
 
     // clear from cookie jar
 #if (QT_VERSION >= 0x050000)
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    foreach (QNetworkCookie cookie, cookies)
+    foreach (const QNetworkCookie &cookie, cookies)
         accessManager->cookieJar()->deleteCookie(cookie);
 #else
     /*
