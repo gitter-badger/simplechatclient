@@ -88,9 +88,9 @@ void TabWidget::createGui()
 
 void TabWidget::setDefaultValues()
 {
-    if (strName[0] == '^')
+    if (strName.at(0) == '^')
         topic->hide();
-    if ((strName[0] != '^') && (strName[0] != '#'))
+    if ((strName.at(0) != '^') && (strName.at(0) != '#'))
     {
         topic->hide();
         users->hide();

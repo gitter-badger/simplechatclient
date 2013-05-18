@@ -61,7 +61,7 @@ void Tray::showMessage(const QString &strTitle, const QString &strMessage)
     strLastMessageTitle = strTrayTitle;
 
     // fix priv
-    if ((strTrayTitle[0] == '^') && (Channel::instance()->containsAlternativeName(strTrayTitle)))
+    if ((strTrayTitle.at(0) == '^') && (Channel::instance()->containsAlternativeName(strTrayTitle)))
         strTrayTitle = Channel::instance()->getAlternativeName(strTrayTitle);
 
     Core::instance()->mainWindow()->getTrayIcon()->showMessage(strTrayTitle, strTrayMessage);

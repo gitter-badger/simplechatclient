@@ -56,7 +56,7 @@ void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strDat
     QString strAwayLogChannel = strChannel;
 
     // fix priv
-    if ((strAwayLogChannel[0] == '^') && (Channel::instance()->containsAlternativeName(strAwayLogChannel)))
+    if ((strAwayLogChannel.at(0) == '^') && (Channel::instance()->containsAlternativeName(strAwayLogChannel)))
         strAwayLogChannel = Channel::instance()->getAlternativeName(strAwayLogChannel);
 
     // data

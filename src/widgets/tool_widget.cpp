@@ -803,7 +803,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
     QString strTextOriginal;
 
     // is command
-    if ((strText[0] == '/') && (strText[1] != '/'))
+    if ((strText.at(0) == '/') && (strText.at(1) != '/'))
     {
         strText.remove(0,1);
         strTextOriginal = strText;

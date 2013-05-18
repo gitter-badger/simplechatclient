@@ -65,7 +65,7 @@ void Channel::add(const QString &channel)
     lChannels[channel] = ochannel;
 
     // log
-    if (channel[0] == '^')
+    if (channel.at(0) == '^')
     {
         QString alternativeName = getAlternativeName(channel);
         if (!alternativeName.isEmpty())

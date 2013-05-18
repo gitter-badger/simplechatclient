@@ -35,7 +35,7 @@ InviteGui::InviteGui(const QString &_strNick, const QString &_strChannel, QWidge
     createGui();
     createSignals();
 
-    if (strChannel[0] == '^')
+    if (strChannel.at(0) == '^')
         ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
     else
         ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick, strChannel));

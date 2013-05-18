@@ -287,7 +287,7 @@ void Kamerzysta::networkRead()
         {
             if (strDataRecv == "d")
                 authorize();
-            else if (strDataRecv[0] == 'e')
+            else if (strDataRecv.at(0) == 'e')
                 invite(strDataRecv);
         }
     }

@@ -47,7 +47,7 @@ void NickList::clearUsers()
     QList<QString> lChannels = Channel::instance()->getList();
     foreach (QString strChannel, lChannels)
     {
-        if (strChannel[0] == '^')
+        if (strChannel.at(0) == '^')
             Channel::instance()->setOffline(strChannel, true);
 
         Channel::instance()->getNickListWidget(strChannel)->clear();
@@ -60,7 +60,7 @@ void NickList::addUser(const QString &strNick, const QString &strChannel, const 
 {
     if (!Channel::instance()->contains(strChannel)) return;
 
-    if (strChannel[0] == '^')
+    if (strChannel.at(0) == '^')
         Channel::instance()->setOffline(strChannel, false);
 
     Channel::instance()->getNickListWidget(strChannel)->addUser(strNick, strModes, iMaxModes, strAvatar);
@@ -72,7 +72,7 @@ void NickList::delUser(const QString &strNick, const QString &strChannel)
 {
     if (!Channel::instance()->contains(strChannel)) return;
 
-    if (strChannel[0] == '^')
+    if (strChannel.at(0) == '^')
         Channel::instance()->setOffline(strChannel, true);
 
     Channel::instance()->getNickListWidget(strChannel)->delUser(strNick);
@@ -97,7 +97,7 @@ void NickList::quitUser(const QString &strNick, const QList<QString> &lChannels,
 
     foreach (QString strChannel, lChannels)
     {
-        if (strChannel[0] == '^')
+        if (strChannel.at(0) == '^')
             Channel::instance()->setOffline(strChannel, true);
 
         Message::instance()->showMessage(strChannel, strDisplay, eMessageCategory);

@@ -73,7 +73,7 @@ void Log::save(const QString &strChannel, const QString &strMessage)
     QString strFileName = strChannel;
 
     // fixed priv name
-    if (strFileName[0] == '^')
+    if (strFileName.at(0) == '^')
         strFileName = Channel::instance()->getAlternativeName(strFileName);
 
     QFile f(path+strFileName+".txt");

@@ -47,7 +47,7 @@ void TabContainer::addTab(const QString &strChannel)
     pTabM->setCurrentIndex(pTabM->count()-1);
 
     // if priv
-    if (strChannel[0] == '^')
+    if (strChannel.at(0) == '^')
     {
         QString strAlternativeName = Channel::instance()->getAlternativeName(strChannel);
 
@@ -72,7 +72,7 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
 
     if (index >= 0 && index <= pTabM->count())
     {
-        if (pTabM->tabText(index)[0] == '^')
+        if (pTabM->tabText(index).at(0) == '^')
         {
             pTabM->setTabText(index, strNewName);
 

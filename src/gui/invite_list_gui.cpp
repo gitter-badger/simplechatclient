@@ -83,7 +83,7 @@ void InviteListGui::createList()
         item->setData(InviteNickRole, strNick);
         item->setData(InviteChannelRole, strChannel);
 
-        if (strChannel[0] == '^')
+        if (strChannel.at(0) == '^')
             item->setText(QString(tr("%1 invites you to priv")).arg(strNick));
         else
             item->setText(QString(tr("%1 invites you to channel %2")).arg(strNick, strChannel));

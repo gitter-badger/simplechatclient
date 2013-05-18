@@ -679,7 +679,7 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
     QString strMe = Settings::instance()->get("nick");
 
     // hide/show settings on non channel
-    if (strChannel[0] != '#')
+    if (strChannel.at(0) != '#')
         pToolWidget->showChannelSettings(false);
     else
         pToolWidget->showChannelSettings(true);

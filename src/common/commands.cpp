@@ -136,9 +136,9 @@ QString Commands::cmdBan()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -175,9 +175,9 @@ QString Commands::cmdBanip()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -219,9 +219,9 @@ QString Commands::cmdFriend()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -280,9 +280,9 @@ QString Commands::cmdIgnore()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -309,7 +309,7 @@ QString Commands::cmdJoin()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strChannel = strDataList.at(1);
-    if ((strChannel[0] != '#') && (strChannel[0] != '^'))
+    if ((strChannel.at(0) != '#') && (strChannel.at(0) != '^'))
         strChannel = "#"+strChannel;
 
     QString strKey;
@@ -416,9 +416,9 @@ QString Commands::cmdModer()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -500,9 +500,9 @@ QString Commands::cmdOp()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -572,9 +572,9 @@ QString Commands::cmdSop()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 
@@ -608,9 +608,9 @@ QString Commands::cmdVip()
     QString strNick = strDataList.at(1);
     QChar cPlusMinus =  '+';
 
-    if ((strNick[0] == '+') || (strNick[0] == '-'))
+    if ((strNick.at(0) == '+') || (strNick.at(0) == '-'))
     {
-        cPlusMinus = strNick[0];
+        cPlusMinus = strNick.at(0);
         strNick.remove(0,1);
     }
 

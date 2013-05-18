@@ -65,8 +65,8 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
             QStringList strWords = strWord.split(" ");
             if (strWords.size() == 2)
             {
-                QString strBeforeLink = strWords[0];
-                QString strAfterLink = strWords[1];
+                QString strBeforeLink = strWords.at(0);
+                QString strAfterLink = strWords.at(1);
 
                 Convert::removeStyles(strAfterLink);
                 strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);

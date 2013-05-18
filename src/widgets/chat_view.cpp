@@ -339,7 +339,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
         QString strOpenChannel = lChannelsCleared.at(i);
-        if (strOpenChannel[0] == '^')
+        if (strOpenChannel.at(0) == '^')
             strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
