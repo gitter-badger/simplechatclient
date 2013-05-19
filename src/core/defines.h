@@ -60,7 +60,7 @@ enum SortedListWidgetRoles
     SortedListWidgetStatusRole = Qt::UserRole+11
 };
 
-const int MAX_OPEN_CHANNELS = 30;
+const int MAX_OPEN_CHANNELS = 20+2; // 20 - onet limit, 2 - status,debug
 const int MAX_PUNISH_REASONS = 255;
 
 const int HOURS_IN_DAY = 24;
@@ -71,6 +71,16 @@ const int NOTICE_INFO = 100 | 0x070000;
 const int NOTICE_WARNING = 101 | 0x070000;
 const int NOTICE_ERROR = 102 | 0x070000;
 const int NOTICE_QUESTION = 103 | 0x070000;
+
+const int FLAG_DEV_INT = 64;
+const int FLAG_ADMIN_INT = 32;
+const int FLAG_OWNER_INT = 16;
+const int FLAG_OP_INT = 8;
+const int FLAG_HALFOP_INT = 4;
+const int FLAG_MOD_INT = 2;
+const int FLAG_SCREENER_INT = 1;
+const int FLAG_VOICE_INT = 0;
+const int FLAG_UNKNOWN_INT = -1;
 
 #define STATUS_WINDOW "Status"
 #define DEBUG_WINDOW "Debug"

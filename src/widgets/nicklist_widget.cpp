@@ -388,24 +388,24 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QMenu *privilege = new QMenu(tr("Actions"));
     privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
 
-    if ((strNickModes.contains(FLAG_OP)) && ((iSelfMaxModes >= 16) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_OP)) && ((iSelfMaxModes >= FLAG_OWNER_INT) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
-    else if ((!strNickModes.contains(FLAG_OP)) && (iSelfMaxModes >= 16))
+    else if ((!strNickModes.contains(FLAG_OP)) && (iSelfMaxModes >= FLAG_OWNER_INT))
         privilege->addAction(QIcon(":/images/op.png"), tr("Give super operator status"), this, SLOT(opAdd()));
 
-    if ((strNickModes.contains(FLAG_HALFOP)) && ((iSelfMaxModes >= 8) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_HALFOP)) && ((iSelfMaxModes >= FLAG_OP_INT) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Take operator status"), this, SLOT(halfopDel()));
-    else if ((!strNickModes.contains(FLAG_HALFOP)) && (iSelfMaxModes >= 8))
+    else if ((!strNickModes.contains(FLAG_HALFOP)) && (iSelfMaxModes >= FLAG_OP_INT))
         privilege->addAction(QIcon(":/images/halfop.png"), tr("Give operator status"), this, SLOT(halfopAdd()));
 
-    if ((strNickModes.contains(FLAG_MOD)) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_MOD)) && ((iSelfMaxModes >= FLAG_HALFOP_INT) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Take moderator status"), this, SLOT(moderatorDel()));
-    else if ((!strNickModes.contains(FLAG_MOD)) && (iSelfMaxModes >= 4))
+    else if ((!strNickModes.contains(FLAG_MOD)) && (iSelfMaxModes >= FLAG_HALFOP_INT))
         privilege->addAction(QIcon(":/images/mod.png"), tr("Give moderator status"), this, SLOT(moderatorAdd()));
 
-    if ((strNickModes.contains(FLAG_VOICE)) && ((iSelfMaxModes >= 4) || (strSelectedNick == strMe)))
+    if ((strNickModes.contains(FLAG_VOICE)) && ((iSelfMaxModes >= FLAG_HALFOP_INT) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Take guest status"), this, SLOT(voiceDel()));
-    else if ((!strNickModes.contains(FLAG_VOICE)) && (iSelfMaxModes >= 4))
+    else if ((!strNickModes.contains(FLAG_VOICE)) && (iSelfMaxModes >= FLAG_HALFOP_INT))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QAction *nickAct = new QAction(strSelectedNick, this);
@@ -429,7 +429,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
         menu->addMenu(friends);
         menu->addMenu(ignore);
     }
-    if (iSelfMaxModes >= 4)
+    if (iSelfMaxModes >= FLAG_HALFOP_INT)
     {
         menu->addSeparator();
         menu->addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));

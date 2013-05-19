@@ -941,7 +941,7 @@ void ChannelSettingsGui::refreshPermissionList()
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
-    if ((iSelfMaxModes >= 4) || ((iSelfMaxModes == -1) && (ChannelHomes::instance()->contains(strChannel))))
+    if ((iSelfMaxModes >= FLAG_HALFOP_INT) || ((iSelfMaxModes == FLAG_UNKNOWN_INT) && (ChannelHomes::instance()->contains(strChannel))))
     {
         setSettingsTabsStatus(true);
     }

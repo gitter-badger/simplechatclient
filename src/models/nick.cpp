@@ -233,13 +233,13 @@ QList<CaseIgnoreString> Nick::getFromChannel(const QString &strChannel)
 
 int Nick::createMaxModes(const QString &strModes)
 {
-    if (strModes.contains(FLAG_DEV)) { return 64; }
-    else if (strModes.contains(FLAG_ADMIN)) { return 32; }
-    else if (strModes.contains(FLAG_OWNER)) { return 16; }
-    else if (strModes.contains(FLAG_OP)) { return 8; }
-    else if (strModes.contains(FLAG_HALFOP)) { return 4; }
-    else if (strModes.contains(FLAG_MOD)) { return 2; }
-    else if (strModes.contains(FLAG_SCREENER)) { return 1; }
-    else if (strModes.contains(FLAG_VOICE)) { return 0; }
-    else return -1;
+    if (strModes.contains(FLAG_DEV)) { return FLAG_DEV_INT; }
+    else if (strModes.contains(FLAG_ADMIN)) { return FLAG_ADMIN_INT; }
+    else if (strModes.contains(FLAG_OWNER)) { return FLAG_OWNER_INT; }
+    else if (strModes.contains(FLAG_OP)) { return FLAG_OP_INT; }
+    else if (strModes.contains(FLAG_HALFOP)) { return FLAG_HALFOP_INT; }
+    else if (strModes.contains(FLAG_MOD)) { return FLAG_MOD_INT; }
+    else if (strModes.contains(FLAG_SCREENER)) { return FLAG_SCREENER_INT; }
+    else if (strModes.contains(FLAG_VOICE)) { return FLAG_VOICE_INT; }
+    else return FLAG_UNKNOWN_INT;
 }
