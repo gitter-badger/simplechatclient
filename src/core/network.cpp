@@ -281,7 +281,7 @@ void Network::write(const QString &strData)
 
 void Network::send(const QString &strData)
 {
-    if (strData.startsWith("NS"))
+    if (strData.startsWith("NS INFO"))
         msgSendQueueNS.append(strData);
     else
         write(strData);
