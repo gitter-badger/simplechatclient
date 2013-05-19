@@ -1184,7 +1184,7 @@ void OnetKernel::raw_001()
     // auto rejoin
     QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getListClearedSorted();
 
-    //foreach (QString strChannel, lChannelsCaseIgnore)
+    //foreach (const QString &strChannel, lChannelsCaseIgnore)
         //pTabC->removeTab(strChannel);
 
     foreach (const QString &strChannel, lChannelsCaseIgnore)
