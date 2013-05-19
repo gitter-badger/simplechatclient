@@ -696,7 +696,7 @@ void OnetKernel::raw_mode()
             else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strChannel, strValue, strWho);
             else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strChannel, strWho);
 
-            else if (strFlag.at(1) == QChar('F'))
+            else if (strFlag.at(1) == 'F')
             {
                 QString strStatus;
                 if (strValue.toInt() == 0) strStatus = tr("Wild");
@@ -705,12 +705,12 @@ void OnetKernel::raw_mode()
                 else if (strValue.toInt() == 3) strStatus = tr("Cult");
                 else strStatus = tr("unknown");
 
-                if (strFlag.at(0) == QChar('+'))
+                if (strFlag.at(0) == '+')
                     strDisplay = QString(tr("* Channel %1 now has status %2 (set by %3)")).arg(strChannel, strStatus, strWho);
-                else if (strFlag.at(0) == QChar('-'))
+                else if (strFlag.at(0) == '-')
                     strDisplay = QString(tr("* %1 changed channel %2 status")).arg(strWho, strChannel);
             }
-            else if (strFlag.at(1) == QChar('c'))
+            else if (strFlag.at(1) == 'c')
             {
                 QString strCategory;
                 if (strValue.toInt() == 1) strCategory = tr("Teen");
@@ -720,9 +720,9 @@ void OnetKernel::raw_mode()
                 else if (strValue.toInt() == 5) strCategory = tr("Regional");
                 else strCategory = tr("unknown");
 
-                if (strFlag.at(0) == QChar('+'))
+                if (strFlag.at(0) == '+')
                     strDisplay = QString(tr("* Channel %1 now belongs to a category %2 (set by %3)")).arg(strChannel, strCategory, strWho);
-                else if (strFlag.at(0) == QChar('-'))
+                else if (strFlag.at(0) == '-')
                     strDisplay = QString(tr("* %1 changed channel %2 category")).arg(strWho, strChannel);
             }
             else
