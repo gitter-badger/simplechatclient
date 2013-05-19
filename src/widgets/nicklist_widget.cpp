@@ -417,7 +417,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     menu->addSeparator();
     menu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
     menu->addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));
-    if (!strSelectedNick.startsWith('~'))
+    if (strSelectedNick.at(0) != '~')
     {
         menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
         if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))

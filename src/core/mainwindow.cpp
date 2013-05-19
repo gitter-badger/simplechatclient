@@ -463,7 +463,7 @@ void MainWindow::updateButtons()
     {
         QString strNick = Settings::instance()->get("nick");
 
-        bool bRegistered = (strNick.startsWith('~') ? false : true);
+        bool bRegistered = (strNick.at(0) == '~' ? false : true);
 
         if (bRegistered)
         {

@@ -136,7 +136,7 @@ void ProfileManagerGui::itemClicked()
 {
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
 
-    if (!strNick.startsWith('~'))
+    if (strNick.at(0) != '~')
         ui.pushButton_edit->setEnabled(true);
     else
         ui.pushButton_edit->setEnabled(false);

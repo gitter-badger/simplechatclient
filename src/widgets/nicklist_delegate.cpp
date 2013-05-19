@@ -98,7 +98,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains(FLAG_DEV)) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((!nick.startsWith('~')) && (Themes::instance()->isCurrentWithNicklistAvatar()))
+    if ((nick.at(0) != '~') && (Themes::instance()->isCurrentWithNicklistAvatar()))
     {
         // is valid avatar
         if (!userAvatar.isEmpty())
@@ -127,7 +127,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setFont(font);
 
         QRect rect = option.rect;
-        if (!nick.startsWith('~')) rect.setX(rect.x()+40);
+        if (nick.at(0) != '~') rect.setX(rect.x()+40);
         painter->drawText(rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
     }
     else

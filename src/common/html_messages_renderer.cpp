@@ -40,7 +40,7 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         QString strWord = strDataList.at(i);
 
         // channel
-        if (strWord.startsWith('#'))
+        if (strWord.at(0) == '#')
         {
             Convert::removeStyles(strWord);
             strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" style=\"text-decoration:none;\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);

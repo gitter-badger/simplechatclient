@@ -431,7 +431,7 @@ void OnetKernel::raw_join()
     Nick::instance()->add(strNick, strChannel, strSuffix);
 
     // nick avatar
-    if ((!strNick.startsWith('~')) && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
+    if ((strNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
     {
         Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
     }
@@ -2757,7 +2757,7 @@ void OnetKernel::raw_353()
             Nick::instance()->add(strCleanNick, strChannel, strModes);
 
             // nick avatar
-            if ((!strCleanNick.startsWith('~')) && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
+            if ((strCleanNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
             {
                 Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
             }
@@ -3263,7 +3263,7 @@ void OnetKernel::raw_433()
     Settings::instance()->set("reconnect", "false");
     Core::instance()->network->disconnect();
 
-    if (!strNick.startsWith('~'))
+    if (strNick.at(0) != '~')
     {
         QString strMessage =
             QString("%1\r\n%2").arg(
