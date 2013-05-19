@@ -17,16 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopServices>
 #include <QDir>
 #include <QFile>
 #include <QHostAddress>
 #include <QIcon>
 #include <QMessageBox>
 #include <QProcess>
+#include <QPushButton>
 #include <QSettings>
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTextStream>
+#include <QUrl>
 #include "core.h"
 #include "log.h"
 #include "settings.h"
@@ -86,9 +89,31 @@ void Kamerzysta::getPath()
     QDir dir;
     if (!dir.exists(strAppPath))
     {
-        QMessageBox::critical(0, tr("Error"), tr("Kamerzysta not found!"));
-        close();
-        return;
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowIcon(QIcon(":/images/logo16x16.png"));
+        msgBox.setWindowTitle(tr("Error"));
+        msgBox.setText(tr("Kamerzysta not found!"));
+        QPushButton *downloadButton = msgBox.addButton(tr("Download"), QMessageBox::AcceptRole);
+        downloadButton->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
+        QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+        cancelButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+        msgBox.exec();
+
+        if (msgBox.clickedButton() == downloadButton)
+        {
+            close();
+
+            QString strWebsite = "http://pliki.onet.pl/Onet.Kamerzysta,Komunikatory,Windows,112343.html";
+            QDesktopServices::openUrl(QUrl(strWebsite));
+
+            return;
+        }
+        else
+        {
+            close();
+            return;
+        }
     }
 
     log("App path:"+strAppPath);

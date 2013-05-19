@@ -1969,6 +1969,14 @@
         <translation>Nie znaleziono Kamerzysty!</translation>
     </message>
     <message>
+        <source>Download</source>
+        <translation>Pobierz</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
         <source>Kamerzysta is wrong installed!</source>
         <translation>Program Kamerzysta jest nie poprawnie zainstalowany!</translation>
     </message>
