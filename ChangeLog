@@ -4,6 +4,7 @@ ChangeLog for Simple Chat Client
 Version dev (unknown)
 ================================
 * Changed default emoticons,sounds dir
+* Added nick option in context menu
 * Fixed avatar display
 * Fixed sound
 * Fixed offline messages
