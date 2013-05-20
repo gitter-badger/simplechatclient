@@ -170,22 +170,35 @@ void Core::configProfileValues()
 
 void Core::fixSettings()
 {
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
     Config *pConfig = new Config();
 
     if (!QFile::exists(Settings::instance()->get("sound_beep")))
     {
-        pConfig->set("sound_beep", QString::null);
-        Settings::instance()->set("sound_beep", QString::null);
+        QString strSoundBeep = path+"/sounds/beep.wav";
+
+        pConfig->set("sound_beep", strSoundBeep);
+        Settings::instance()->set("sound_beep", strSoundBeep);
     }
     if (!QFile::exists(Settings::instance()->get("sound_query")))
     {
-        pConfig->set("sound_query", QString::null);
-        Settings::instance()->set("sound_query", QString::null);
+        QString strSoundQuery = path+"/sounds/query.wav";
+
+        pConfig->set("sound_query", strSoundQuery);
+        Settings::instance()->set("sound_query", strSoundQuery);
     }
     if (!QFile::exists(Settings::instance()->get("background_image")))
     {
-        pConfig->set("background_image", QString::null);
-        Settings::instance()->set("background_image", QString::null);
+        QString strBackgroundImage = path+"/images/wallpaper/default.jpg";
+
+        pConfig->set("background_image", strBackgroundImage);
+        Settings::instance()->set("background_image", strBackgroundImage);
     }
     if ((Settings::instance()->get("themes") != "Standard") &&
         (Settings::instance()->get("themes") != "Alhena") &&
