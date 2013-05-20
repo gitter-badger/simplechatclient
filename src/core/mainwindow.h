@@ -61,6 +61,7 @@ public:
     void startAnimatedTrayIcon();
     void stopAnimatedTrayIcon();
     void inputLineKeyEvent(QKeyEvent *k);
+    void insertTextToInputLine(const QString &strText);
 
 public slots:
     void updateNick(const QString &strNick);

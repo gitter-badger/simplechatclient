@@ -380,6 +380,11 @@ void ToolWidget::clearInputLine()
     pInputLine->clear();
 }
 
+void ToolWidget::insertTextToInputLine(const QString &strText)
+{
+    pInputLine->insertText(strText);
+}
+
 void ToolWidget::showModeration(bool bShow)
 {
     if (bShow)

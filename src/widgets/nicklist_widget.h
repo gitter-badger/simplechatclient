@@ -50,6 +50,7 @@ private:
     bool existUser(const QString &strNick);
 
 private slots:
+    void nick();
     void priv();
     void whois();
     void profile();

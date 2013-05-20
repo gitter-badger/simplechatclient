@@ -702,6 +702,11 @@ void MainWindow::updateChannelIcon(int index, const QString &avatar)
     pTabM->updateIcon(index, avatar);
 }
 
+void MainWindow::insertTextToInputLine(const QString &strText)
+{
+    pToolWidget->insertTextToInputLine(strText);
+}
+
 // part tab
 void MainWindow::tabCloseRequested(int index)
 {

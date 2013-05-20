@@ -26,6 +26,7 @@
 #include "defines.h"
 #include "friends.h"
 #include "ignore.h"
+#include "mainwindow.h"
 #include "nick.h"
 #include "punish_reason.h"
 #include "settings.h"
@@ -95,6 +96,13 @@ bool NickListWidget::existUser(const QString &strNick)
         return false;
     else
         return true;
+}
+
+void NickListWidget::nick()
+{
+    if (strSelectedNick.isEmpty()) return;
+
+    Core::instance()->mainWindow()->insertTextToInputLine(strSelectedNick+" ");
 }
 
 void NickListWidget::priv()
@@ -408,12 +416,8 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     else if ((!strNickModes.contains(FLAG_VOICE)) && (iSelfMaxModes >= FLAG_HALFOP_INT))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
-    QAction *nickAct = new QAction(strSelectedNick, this);
-    nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
-    nickAct->setDisabled(true);
-
     QMenu *menu = new QMenu(strSelectedNick);
-    menu->addAction(nickAct);
+    menu->addAction(QIcon(":/images/oxygen/16x16/user-identity.png"), strSelectedNick, this, SLOT(nick()));
     menu->addSeparator();
     menu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
     menu->addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));

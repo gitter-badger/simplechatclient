@@ -53,6 +53,7 @@ public slots:
 
 private slots:
     void joinChannel();
+    void nick();
     void priv();
     void whois();
     void profile();

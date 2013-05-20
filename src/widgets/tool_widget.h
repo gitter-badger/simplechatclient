@@ -41,6 +41,7 @@ public:
     void showChannelSettings(bool bShow);
     void setDefaultValues();
     void clearInputLine();
+    void insertTextToInputLine(const QString &strText);
 
 public slots:
     void showModeration(bool bShow);

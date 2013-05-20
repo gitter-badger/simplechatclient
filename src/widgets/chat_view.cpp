@@ -31,6 +31,7 @@
 #include "friends.h"
 #include "html_messages_renderer.h"
 #include "ignore.h"
+#include "mainwindow.h"
 #include "notes.h"
 #include "nick.h"
 #include "punish_reason.h"
@@ -119,6 +120,11 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 void ChatView::joinChannel()
 {
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+}
+
+void ChatView::nick()
+{
+    Core::instance()->mainWindow()->insertTextToInputLine(strNick+" ");
 }
 
 void ChatView::priv()
@@ -435,12 +441,8 @@ void ChatView::menuNick(QContextMenuEvent *event)
     else if ((!strNickModes.contains(FLAG_VOICE)) && (iSelfMaxModes >= FLAG_HALFOP_INT))
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
-    QAction *nickAct = new QAction(strNick, this);
-    nickAct->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
-    nickAct->setDisabled(true);
-
     QMenu menu;
-    menu.addAction(nickAct);
+    menu.addAction(QIcon(":/images/oxygen/16x16/user-identity.png"), strNick, this, SLOT(nick()));
     menu.addSeparator();
     menu.addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
     menu.addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));
