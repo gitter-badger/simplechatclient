@@ -45,6 +45,7 @@ private:
     void compareVersion();
     void saveSettings(QString strUpdateXml);
     void readSettings();
+    QString statsContent();
 
 private slots:
     void updateFinished(QNetworkReply *reply);
