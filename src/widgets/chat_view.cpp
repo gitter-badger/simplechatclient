@@ -78,7 +78,7 @@ void ChatView::createBody()
 
     QString jsCode = "function appendMessage(html) { var div = document.getElementById('Chat').getElementsByTagName('div'); if (div.length > 350) { var chatElement = document.getElementById('Chat'); chatElement.removeChild(chatElement.firstChild); } var chatElement = document.getElementById('Chat'); var n = document.createElement('div'); n.innerHTML = html; chatElement.appendChild(n); } function clearMessages() { var chatElement = document.getElementById('Chat'); chatElement.innerHTML = ''; }";
 
-    QString strMainHtml = "<html><head><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";
+    QString strMainHtml = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";
     this->setHtml(strMainHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
 }

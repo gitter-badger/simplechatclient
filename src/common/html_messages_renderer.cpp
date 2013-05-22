@@ -99,6 +99,9 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     // convert emoticons, font
     Convert::convertText(strData, true);
 
+    // fix utf8
+    strData = Convert::fixUtf8Chars(strData);
+
     // font class
     QString strFontClass;
     if (eMessageCategory == MessageDefault) strFontClass = "DefaultColor";
