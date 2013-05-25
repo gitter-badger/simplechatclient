@@ -58,13 +58,13 @@ public:
     QSystemTrayIcon *getTrayIcon();
     QToolButton *getNotificationToolButton();
     QAction *getNotificationAction();
-    void startAnimatedTrayIcon();
-    void stopAnimatedTrayIcon();
     void inputLineKeyEvent(QKeyEvent *k);
     void insertTextToInputLine(const QString &strText);
 
 public slots:
     void updateNick(const QString &strNick);
+    void startAnimatedTrayIcon();
+    void stopAnimatedTrayIcon();
 
 private:
     QToolBar *toolBar;
