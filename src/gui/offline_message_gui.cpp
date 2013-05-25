@@ -59,7 +59,7 @@ void OfflineMessageGui::refreshMessages()
     int listWidgetCount = ui.listWidget->count();
     int moderateMessagesCount = lOfflineMessages.size();
 
-    for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); i++)
+    for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); ++i)
     {
         OnetOfflineMessage omessage = lOfflineMessages.at(i);
 

@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     Settings::instance()->set("debug", "false");
 
     // args
-    for (int i = 1; i < app.argc(); i++)
+    for (int i = 1; i < app.argc(); ++i)
     {
         QString param = app.argv()[i];
         if (param == "--debug")

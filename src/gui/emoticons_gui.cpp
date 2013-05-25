@@ -161,7 +161,7 @@ void EmoticonsGui::createSignals()
     connect(ui.pushButton_insert, SIGNAL(clicked()), this, SLOT(buttonInsert()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
-    for (int i = 0; i < ui.tabWidget->count(); i++)
+    for (int i = 0; i < ui.tabWidget->count(); ++i)
     {
         EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->widget(i);
         connect(tab->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buttonInsert()));
@@ -170,7 +170,7 @@ void EmoticonsGui::createSignals()
 
 EmoticonsGui::~EmoticonsGui()
 {
-    for (int i = 0; i < ui.tabWidget->count(); i++)
+    for (int i = 0; i < ui.tabWidget->count(); ++i)
     {
         EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->widget(i);
         tab->thread.quit();

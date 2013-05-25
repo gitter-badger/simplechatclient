@@ -32,34 +32,34 @@ QString OnetUtils::transformKey(QString s)
     if (s.length() < 16)
         return QString::null;
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
     {
         int c = s[i].toAscii();
         ai[i] = (c > 57 ? c > 90 ? (c - 97) + 36 : (c - 65) + 10 : c - 48);
     }
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
         ai[i] = f1[ai[i] + i];
 
     //  arraycopy
-    for (int i = 0; i < 16; i++) ai1[i] = ai[i];
+    for (int i = 0; i < 16; ++i) ai1[i] = ai[i];
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
         ai[i] = (ai[i] + ai1[p1[i]]) % 62;
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
         ai[i] = f2[ai[i] + i];
 
     //  arraycopy
-    for (int i = 0; i < 16; i++) ai1[i] = ai[i];
+    for (int i = 0; i < 16; ++i) ai1[i] = ai[i];
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
         ai[i] = (ai[i] + ai1[p2[i]]) % 62;
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
         ai[i] = f3[ai[i] + i];
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
     {
         int j = ai[i];
         ai[i] = j >= 10 ? j >= 36 ? (97 + j) - 36 : (65 + j) - 10 : 48 + j;
@@ -67,7 +67,7 @@ QString OnetUtils::transformKey(QString s)
 
     //  result
     QString strResult;
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
         strResult += ai[i];
 
     return strResult;

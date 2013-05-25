@@ -66,7 +66,7 @@ void ModerationGui::refreshMessages()
     int listWidgetCount = ui.listWidget_msg->count();
     int moderateMessagesCount = lModerateMessages.size();
 
-    for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); i++)
+    for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); ++i)
     {
         OnetModerateMessage omessage = lModerateMessages.at(i);
 

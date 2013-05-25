@@ -111,7 +111,7 @@ QString Commands::cmdAll()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     return strMessage;
 }
@@ -119,7 +119,7 @@ QString Commands::cmdAll()
 QString Commands::cmdAway()
 {
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -204,7 +204,7 @@ QString Commands::cmdCycle()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     if (!strMessage.isEmpty())
         return QString("PART %1 :%2\nJOIN %1").arg(strChannel, strMessage);
@@ -313,7 +313,7 @@ QString Commands::cmdJoin()
         strChannel = "#"+strChannel;
 
     QString strKey;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strKey += " "; strKey += strDataList.at(i); }
+    for (int i = 2; i < strDataList.size(); ++i) { if (i != 2) strKey += " "; strKey += strDataList.at(i); }
 
     if (Utils::instance()->isErotic(strChannel))
     {
@@ -353,7 +353,7 @@ QString Commands::cmdKBan()
     QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
+    for (int i = 2; i < strDataList.size(); ++i) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -370,7 +370,7 @@ QString Commands::cmdKBanip()
     QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
+    for (int i = 2; i < strDataList.size(); ++i) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -386,7 +386,7 @@ QString Commands::cmdKick()
     QString strNick = strDataList.at(1);
 
     QString strReason;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
+    for (int i = 2; i < strDataList.size(); ++i) { if (i != 2) strReason += " "; strReason += strDataList.at(i); }
 
     if (strReason.isEmpty())
         strReason = tr("No reason");
@@ -399,7 +399,7 @@ QString Commands::cmdMe()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -484,7 +484,7 @@ QString Commands::cmdOffmsg()
     QString strNick = strDataList.at(1);
 
     QString strMessage;
-    for (int i = 2; i < strDataList.size(); i++) { if (i != 2) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 2; i < strDataList.size(); ++i) { if (i != 2) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);
@@ -519,7 +519,7 @@ QString Commands::cmdPart()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     if (!strMessage.isEmpty())
         return QString("PART %1 :%2").arg(strChannel, strMessage);
@@ -539,7 +539,7 @@ QString Commands::cmdPriv()
 QString Commands::cmdQuit()
 {
     QString strReason;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strReason += " "; strReason += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strReason += " "; strReason += strDataList.at(i); }
 
     Settings::instance()->set("reconnect", "false");
 
@@ -559,7 +559,7 @@ QString Commands::cmdRaw()
     if (strDataList.value(1).isEmpty()) return QString::null;
 
     QString strCommand;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strCommand += " "; strCommand += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strCommand += " "; strCommand += strDataList.at(i); }
 
     return strCommand;
 }
@@ -591,7 +591,7 @@ QString Commands::cmdTopic()
     QString strChannel = strChan;
 
     QString strMessage;
-    for (int i = 1; i < strDataList.size(); i++) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
+    for (int i = 1; i < strDataList.size(); ++i) { if (i != 1) strMessage += " "; strMessage += strDataList.at(i); }
 
     Convert::simpleReverseConvert(strMessage);
     Replace::replaceEmots(strMessage);

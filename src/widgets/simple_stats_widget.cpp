@@ -96,7 +96,7 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *)
         }
 
         // draw
-        for (int i = 0; i < lStatsF.size(); i++)
+        for (int i = 0; i < lStatsF.size(); ++i)
         {
             QBrush brush(Qt::green);
 
@@ -108,7 +108,7 @@ void SimpleStatsWidget::paintEvent(QPaintEvent *)
     }
 
     // draw zero
-    for (int i = 0; i < lStats.size(); i++)
+    for (int i = 0; i < lStats.size(); ++i)
     {
         QBrush brush(Qt::green);
 

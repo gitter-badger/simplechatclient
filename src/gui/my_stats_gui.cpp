@@ -84,7 +84,7 @@ void MyStatsGui::refresh()
             QList<int> lStats;
 
             qreal fAverageTime = 0;
-            for (int i = 0; i < strValue.size(); i++)
+            for (int i = 0; i < strValue.size(); ++i)
             {
                 int iTime = Utils::instance()->timeToPercentage(strValue.at(i));
 

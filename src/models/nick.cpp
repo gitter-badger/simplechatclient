@@ -143,7 +143,7 @@ void Nick::changeFlag(const QString &strNick, const QString &strChannel, QString
     QString strConvertFrom = "qaohXYv";
     QString strConvertTo = "`&@%!=+";
 
-    for (int i = 0; i < strConvertFrom.size(); i++)
+    for (int i = 0; i < strConvertFrom.size(); ++i)
         strFlag.replace(strConvertFrom.at(i), strConvertTo.at(i));
 
     if (plusminus == "+")

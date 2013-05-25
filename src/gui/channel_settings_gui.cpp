@@ -518,7 +518,7 @@ void ChannelSettingsGui::refreshChannelStats()
             QList<int> lIWords;
 
             int iWords = 0;
-            for (int i = 0; i < lWords.size(); i++)
+            for (int i = 0; i < lWords.size(); ++i)
             {
                 bool ok;
                 int iWord = lWords.value(i, 0).toInt(&ok, 16);

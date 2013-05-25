@@ -159,7 +159,7 @@ void AvatarListWidget::getCollectionsReady(const QByteArray &content)
     // data
     QDomNodeList nodeList = docElem.elementsByTagName("data");
 
-    for (int i = 0; i < nodeList.size(); i++)
+    for (int i = 0; i < nodeList.size(); ++i)
     {
         QDomElement el = nodeList.at(i).toElement();
         QDomNode pEntries = el.firstChild();
@@ -249,13 +249,13 @@ void AvatarListWidget::getCollectionAvatarsReady(const QByteArray &content)
     // data
     QDomNodeList avatarsNodeList = docElem.elementsByTagName("data");
 
-    for (int i = 0; i < avatarsNodeList.size(); i++)
+    for (int n = 0; n < avatarsNodeList.size(); ++n)
     {
-        QDomNodeList nodeList = avatarsNodeList.at(i).childNodes();
+        QDomNodeList nodeList = avatarsNodeList.at(n).childNodes();
 
-        for (int i = 0; i < nodeList.size(); i++)
+        for (int c = 0; c < nodeList.size(); ++c)
         {
-            QDomElement el = nodeList.at(i).toElement();
+            QDomElement el = nodeList.at(c).toElement();
             QDomNode pEntries = el.firstChild();
 
             QString server;
@@ -356,35 +356,35 @@ void AvatarListWidget::getMyAvatarsReady(const QByteArray &content)
     }
 
     // images
-    QDomNodeList nnodes = docElem.elementsByTagName("images");
-    for (int ii = 0; ii < nnodes.size(); ii++)
+    QDomNodeList nodes = docElem.elementsByTagName("images");
+    for (int n = 0; n < nodes.size(); ++n)
     {
-        QDomNode nn = nnodes.item(ii);
         MyAvatar avatar;
 
-        QDomNodeList nnnodes = nn.childNodes();
-        for (int iii = 0; iii < nnnodes.size(); iii++)
+        QDomNode node = nodes.item(n);
+        QDomNodeList child_nodes = node.childNodes();
+        for (int c = 0; c < child_nodes.size(); ++c)
         {
-            QDomNode nnn = nnnodes.item(iii);
+            QDomNode child_node = child_nodes.item(c);
 
-            if (nnn.nodeName() == "angle")
-                avatar.setAngle(nnn.toElement().text().toInt());
-            else if (nnn.nodeName() == "crop")
-                avatar.setCrop(nnn.toElement().text());
-            else if (nnn.nodeName() == "height")
-                avatar.setHeight(nnn.toElement().text().toInt());
-            else if (nnn.nodeName() == "img")
-                avatar.setImg(nnn.toElement().text());
-            else if (nnn.nodeName() == "imgId")
-                avatar.setImgId(nnn.toElement().text().toInt());
-            else if (nnn.nodeName() == "width")
-                avatar.setWidth(nnn.toElement().text().toInt());
-            else if (nnn.nodeName() == "desc")
-                avatar.setDesc(nnn.toElement().text());
-            else if (nnn.nodeName() == "mApp")
-                avatar.setMApp(nnn.toElement().text().toInt());
-            else if (nnn.nodeName() == "mSrv")
-                avatar.setMSrv(nnn.toElement().text());
+            if (child_node.nodeName() == "angle")
+                avatar.setAngle(child_node.toElement().text().toInt());
+            else if (child_node.nodeName() == "crop")
+                avatar.setCrop(child_node.toElement().text());
+            else if (child_node.nodeName() == "height")
+                avatar.setHeight(child_node.toElement().text().toInt());
+            else if (child_node.nodeName() == "img")
+                avatar.setImg(child_node.toElement().text());
+            else if (child_node.nodeName() == "imgId")
+                avatar.setImgId(child_node.toElement().text().toInt());
+            else if (child_node.nodeName() == "width")
+                avatar.setWidth(child_node.toElement().text().toInt());
+            else if (child_node.nodeName() == "desc")
+                avatar.setDesc(child_node.toElement().text());
+            else if (child_node.nodeName() == "mApp")
+                avatar.setMApp(child_node.toElement().text().toInt());
+            else if (child_node.nodeName() == "mSrv")
+                avatar.setMSrv(child_node.toElement().text());
         }
 
         lMyAvatars.append(avatar);
@@ -635,7 +635,7 @@ void AvatarListWidget::getAvatarReady(const QByteArray &content, const QString &
 
 void AvatarListWidget::drawMyAvatar(const QPixmap &pixmap, const QString &avatarUrl)
 {
-    for (int i = 0; i < ui.listWidget_my_avatars->count(); i++)
+    for (int i = 0; i < ui.listWidget_my_avatars->count(); ++i)
     {
         MyAvatarListWidgetItem *item = static_cast<MyAvatarListWidgetItem*>(ui.listWidget_my_avatars->item(i));
         Q_ASSERT(item != 0);
@@ -650,7 +650,7 @@ void AvatarListWidget::drawMyAvatar(const QPixmap &pixmap, const QString &avatar
 
 void AvatarListWidget::drawAvatarFromCollection(const QPixmap &pixmap, const QString &avatarUrl)
 {
-    for (int i = 0; i < ui.listWidget_collections->count(); i++)
+    for (int i = 0; i < ui.listWidget_collections->count(); ++i)
     {
         QListWidgetItem *item = ui.listWidget_collections->item(i);
         Q_ASSERT(item != 0);

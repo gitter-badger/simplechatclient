@@ -35,7 +35,7 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strWord);
     }
 
-    for (int i = 0; i < strDataList.size(); i++)
+    for (int i = 0; i < strDataList.size(); ++i)
     {
         QString strWord = strDataList.at(i);
 

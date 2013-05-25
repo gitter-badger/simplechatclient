@@ -136,7 +136,7 @@ QString Utils::convertIntToMonth(const QString &strConvertMonth)
 {
     QStringList lMonths;
     lMonths << QString::null << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < lMonths.size(); i++)
+    for (int i = 0; i < lMonths.size(); ++i)
     {
         QString strMonth = (i < 10 ? "0"+QString::number(i) : QString::number(i));
         if (strMonth == strConvertMonth)
@@ -150,7 +150,7 @@ QString Utils::convertMonthToInt(const QString &strMonth)
 {
     QStringList lMonths;
     lMonths << QString::null << tr("January") << tr("February") << tr("March") << tr("April") << tr("May") << tr("June") << tr("July") << tr("August") << tr("September") << tr("October") << tr("November") << tr("December");
-    for (int i = 0; i < lMonths.size(); i++)
+    for (int i = 0; i < lMonths.size(); ++i)
     {
         QString strInt = (i < 10 ? "0"+QString::number(i) : QString::number(i));
         if (strInt == "00") strInt = QString::null; // fix 0 month
@@ -254,7 +254,7 @@ QList<QString> Utils::getDays()
 {
     QList<QString> lDays;
     lDays << QString::null;
-    for (int i = 1; i <= 31; i++)
+    for (int i = 1; i <= 31; ++i)
         lDays << (i < 10 ? "0"+QString::number(i) : QString::number(i));
     return lDays;
 }
@@ -270,7 +270,7 @@ QList<QString> Utils::getYears()
 {
     QList<QString> lYears;
     lYears << QString::null;
-    for (int i = 1900; i <= QDate::currentDate().year()-5; i++)
+    for (int i = 1900; i <= QDate::currentDate().year()-5; ++i)
         lYears << QString::number(i);
     return lYears;
 }
@@ -337,7 +337,7 @@ int Utils::timeToPercentage(const QString &strValue)
 
     // ascii to number
     int i = 0;
-    for (int c = 97; c <= 122; c++)
+    for (int c = 97; c <= 122; ++c)
     {
         QString strChar = QString(QChar(c));
         if (strChar == strValue)
