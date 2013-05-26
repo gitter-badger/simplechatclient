@@ -73,10 +73,10 @@ void InviteListGui::createSignals()
 
 void InviteListGui::createList()
 {
-    QListIterator<OnetInvite> i(Invite::instance()->get());
-    while (i.hasNext())
+    QListIterator<OnetInvite> it(Invite::instance()->get());
+    while (it.hasNext())
     {
-        OnetInvite oinvite = i.next();
+        OnetInvite oinvite = it.next();
 
         QString strId = oinvite.id;
         qint64 iDateTime = oinvite.datetime;

@@ -295,13 +295,13 @@ void ChannelSettingsGui::refreshChannelInfo()
         return;
     }
 
-    QHashIterator<QString, QString> iSettingsInfo(ChannelSettings::instance()->getAllInfo());
-    while (iSettingsInfo.hasNext())
+    QHashIterator<QString, QString> it(ChannelSettings::instance()->getAllInfo());
+    while (it.hasNext())
     {
-        iSettingsInfo.next();
+        it.next();
 
-        QString strKey = iSettingsInfo.key();
-        QString strValue = iSettingsInfo.value();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
         if (strKey == "auditorium")
         {
@@ -504,13 +504,13 @@ void ChannelSettingsGui::refreshChannelStats()
         return;
     }
 
-    QHashIterator<QString, QString> i(ChannelSettings::instance()->getAllStats());
-    while (i.hasNext())
+    QHashIterator<QString, QString> it(ChannelSettings::instance()->getAllStats());
+    while (it.hasNext())
     {
-        i.next();
+        it.next();
 
-        QString strKey = i.key();
-        QString strValue = i.value();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
         if (strKey == "histWords")
         {
@@ -953,13 +953,13 @@ void ChannelSettingsGui::refreshPermissionList()
     }
 
     // refresh permissions
-    QHashIterator<QString, QString> iSettingsPermissions(ChannelSettings::instance()->getAllPermission());
-    while (iSettingsPermissions.hasNext())
+    QHashIterator<QString, QString> it(ChannelSettings::instance()->getAllPermission());
+    while (it.hasNext())
     {
-        iSettingsPermissions.next();
+        it.next();
 
-        QString strKey = iSettingsPermissions.key();
-        QString strValue = iSettingsPermissions.value();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
         if (strKey == PERMISSION_OWNER)
             setOwner(strValue);

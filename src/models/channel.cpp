@@ -266,12 +266,12 @@ void Channel::removeModerateMessage(const QString &channel, const QString &id)
     if (!lChannels.contains(channel))
         return;
 
-    QMutableListIterator<OnetModerateMessage> i(lChannels[channel].moderateMessages);
-    while (i.hasNext())
+    QMutableListIterator<OnetModerateMessage> it(lChannels[channel].moderateMessages);
+    while (it.hasNext())
     {
-        OnetModerateMessage omessage = i.next();
+        OnetModerateMessage omessage = it.next();
         if (omessage.id == id)
-            i.remove();
+            it.remove();
     }
 }
 

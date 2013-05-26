@@ -144,11 +144,11 @@ void Core::configValues()
     delete pConfig;
 
     // set settings
-    QHashIterator <QString, QString> i(lConfigValues);
-    while (i.hasNext())
+    QHashIterator <QString, QString> it(lConfigValues);
+    while (it.hasNext())
     {
-        i.next();
-        Settings::instance()->set(i.key(), i.value());
+        it.next();
+        Settings::instance()->set(it.key(), it.value());
     }
 }
 
@@ -160,11 +160,11 @@ void Core::configProfileValues()
     delete pConfigProfile;
 
     // set profile settings
-    QHashIterator <QString, QString> ip(lConfigProfileValues);
-    while (ip.hasNext())
+    QHashIterator <QString, QString> it(lConfigProfileValues);
+    while (it.hasNext())
     {
-        ip.next();
-        Settings::instance()->set(ip.key(), ip.value());
+        it.next();
+        Settings::instance()->set(it.key(), it.value());
     }
 }
 

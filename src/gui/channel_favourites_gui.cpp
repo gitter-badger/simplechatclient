@@ -72,12 +72,12 @@ void ChannelFavouritesGui::refresh()
 {
     ui.listWidget_channels->clear();
 
-    QHashIterator<QString, OnetChannelFavourites> i(ChannelFavourites::instance()->getAll());
-    while (i.hasNext())
+    QHashIterator<QString, OnetChannelFavourites> it(ChannelFavourites::instance()->getAll());
+    while (it.hasNext())
     {
-        i.next();
-        QString strChannel = i.key();
-        OnetChannelFavourites onetChannelFavourites = i.value();
+        it.next();
+        QString strChannel = it.key();
+        OnetChannelFavourites onetChannelFavourites = it.value();
 
         QString strAvatar = onetChannelFavourites.avatar;
         if (!strAvatar.isEmpty())

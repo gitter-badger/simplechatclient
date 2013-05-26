@@ -95,12 +95,12 @@ QHash<QString, QString> Config::read()
 
 void Config::fix()
 {
-    QHashIterator<QString, QString> i(lDefaultValues);
-    while (i.hasNext())
+    QHashIterator<QString, QString> it(lDefaultValues);
+    while (it.hasNext())
     {
-        i.next();
-        QString strDefaultKey = i.key();
-        QString strDefaultValue = i.value();
+        it.next();
+        QString strDefaultKey = it.key();
+        QString strDefaultValue = it.value();
 
         QString strValue = xml->get(strDefaultKey);
         if (strValue.isEmpty())

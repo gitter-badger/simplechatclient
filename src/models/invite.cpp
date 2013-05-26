@@ -59,12 +59,12 @@ void Invite::add(const QString &id, qint64 datetime, const QString &nick, const 
 
 void Invite::remove(const QString &id)
 {
-    QMutableListIterator<OnetInvite> i(lInvite);
-    while (i.hasNext())
+    QMutableListIterator<OnetInvite> it(lInvite);
+    while (it.hasNext())
     {
-        OnetInvite oinvite = i.next();
+        OnetInvite oinvite = it.next();
         if (oinvite.id == id)
-            i.remove();
+            it.remove();
     }
 
     Notification::instance()->refreshInvite();

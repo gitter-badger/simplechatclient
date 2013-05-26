@@ -139,12 +139,12 @@ void Xml::createNewFile()
     QDomElement root = doc.createElement(strRootName);
     doc.appendChild(root);
 
-    QHashIterator<QString, QString> i(lDefaultValues);
-    while (i.hasNext())
+    QHashIterator<QString, QString> it(lDefaultValues);
+    while (it.hasNext())
     {
-        i.next();
-        QString strKey = i.key();
-        QString strValue = i.value();
+        it.next();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
         addKeyValue(&doc, &root, strKey, strValue);
     }

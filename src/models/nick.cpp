@@ -214,12 +214,12 @@ QList<CaseIgnoreString> Nick::getFromChannel(const QString &strChannel)
 {
     QList<CaseIgnoreString> lNicksFromChannel;
 
-    QHashIterator<QString, OnetNick> i(lNicks);
-    while (i.hasNext())
+    QHashIterator<QString, OnetNick> it(lNicks);
+    while (it.hasNext())
     {
-        i.next();
+        it.next();
 
-        QString strNick = i.key();
+        QString strNick = it.key();
 
         if (lNicks[strNick].channels.contains(strChannel))
             lNicksFromChannel.append(strNick);

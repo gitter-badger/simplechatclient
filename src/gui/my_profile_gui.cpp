@@ -141,12 +141,12 @@ void MyProfileGui::avatarFinished(QNetworkReply *reply)
 
 void MyProfileGui::refresh()
 {
-    QHashIterator <QString, QString> i(MyProfile::instance()->getAll());
-    while (i.hasNext())
+    QHashIterator <QString, QString> it(MyProfile::instance()->getAll());
+    while (it.hasNext())
     {
-        i.next();
-        QString strKey = i.key();
-        QString strValue = i.value();
+        it.next();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
         if (strKey == "avatar")
         {

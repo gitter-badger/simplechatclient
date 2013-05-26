@@ -85,10 +85,10 @@ void RegisterNickGui::gotCookies()
 {
     // save cookies
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
-    for (QList<QNetworkCookie>::const_iterator i = cookies.constBegin(); i != cookies.constEnd(); ++i)
+    foreach (const QNetworkCookie &cookie, cookies)
     {
-        QString strKey = i->name();
-        QString strValue = i->value();
+        QString strKey = cookie.name();
+        QString strValue = cookie.value();
 
         mCookies.insert(strKey, strValue);
     }
@@ -134,13 +134,13 @@ void RegisterNickGui::registerNick()
     QList<QNetworkCookie> cookieList;
     QNetworkCookie cookie;
 
-    QHashIterator <QString, QString> i(mCookies);
-    while (i.hasNext())
+    QHashIterator <QString, QString> it(mCookies);
+    while (it.hasNext())
     {
-         i.next();
+         it.next();
 
-         QString strKey = i.key();
-         QString strValue = i.value();
+         QString strKey = it.key();
+         QString strValue = it.value();
 
          cookie.setName(strKey.toAscii());
          cookie.setValue(strValue.toAscii());

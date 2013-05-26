@@ -199,12 +199,12 @@ void UserProfileGui::refreshUserInfo()
         return;
     }
 
-    QHashIterator<QString, QString> i(UserProfile::instance()->getAll());
-    while (i.hasNext())
+    QHashIterator<QString, QString> it(UserProfile::instance()->getAll());
+    while (it.hasNext())
     {
-        i.next();
-        QString strKey = i.key();
-        QString strValue = i.value();
+        it.next();
+        QString strKey = it.key();
+        QString strValue = it.value();
 
         if (strKey == "avatar")
         {

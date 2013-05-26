@@ -81,12 +81,12 @@ void ChannelHomesGui::refresh()
 
     ui.listWidget_channels->clear();
 
-    QHashIterator<QString, OnetChannelHomes> i(ChannelHomes::instance()->get());
-    while (i.hasNext())
+    QHashIterator<QString, OnetChannelHomes> it(ChannelHomes::instance()->get());
+    while (it.hasNext())
     {
-        i.next();
-        QString strChannel = i.key();
-        OnetChannelHomes onetChannelHomes = i.value();
+        it.next();
+        QString strChannel = it.key();
+        OnetChannelHomes onetChannelHomes = it.value();
 
         QString strAvatar = onetChannelHomes.avatar;
         if (!strAvatar.isEmpty())

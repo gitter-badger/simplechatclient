@@ -96,16 +96,16 @@ void FriendsGui::refresh()
     ui.listWidget_online->clear();
     ui.listWidget_offline->clear();
 
-    QHashIterator <QString, bool> i(Friends::instance()->getAll());
-    while (i.hasNext())
+    QHashIterator <QString, bool> it(Friends::instance()->getAll());
+    while (it.hasNext())
     {
-        i.next();
+        it.next();
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(SortedListWidgetNicklistRole, false); // is nicklist
-        item->setText(i.key());
+        item->setText(it.key());
         item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
 
-        if (i.value())
+        if (it.value())
             ui.listWidget_online->addItem(item);
         else
             ui.listWidget_offline->addItem(item);

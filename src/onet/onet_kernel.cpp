@@ -639,13 +639,13 @@ void OnetKernel::raw_mode()
             }
         }
 
-        QHashIterator <QString, QString> i(flag_value);
-        i.toBack();
-        while (i.hasPrevious())
+        QHashIterator <QString, QString> it(flag_value);
+        it.toBack();
+        while (it.hasPrevious())
         {
-            i.previous();
-            QString strFlag = i.key();
-            QString strValue = i.value();
+            it.previous();
+            QString strFlag = it.key();
+            QString strValue = it.value();
             QString strDisplay;
             bool bNickFlag = false;
 
@@ -1576,12 +1576,12 @@ void OnetKernel::raw_161n()
     // channel settins - data
     if (ChannelSettings::instance()->getChannel() == strChannel)
     {
-        QHashIterator <QString, QString> i(mKeyValue);
-        while (i.hasNext())
+        QHashIterator <QString, QString> it(mKeyValue);
+        while (it.hasNext())
         {
-            i.next();
+            it.next();
 
-            ChannelSettings::instance()->setInfo(i.key(), i.value());
+            ChannelSettings::instance()->setInfo(it.key(), it.value());
         }
     }
 
@@ -1761,12 +1761,12 @@ void OnetKernel::raw_175n()
 
     if ((ChannelSettings::instance()->getChannel() == strChannel) && (ChannelSettings::instance()->getStatusStats() != StatusCompleted))
     {
-        QHashIterator <QString, QString> i(mKeyValue);
-        while (i.hasNext())
+        QHashIterator <QString, QString> it(mKeyValue);
+        while (it.hasNext())
         {
-            i.next();
+            it.next();
 
-            ChannelSettings::instance()->setStats(i.key(), i.value());
+            ChannelSettings::instance()->setStats(it.key(), it.value());
         }
     }
 }
