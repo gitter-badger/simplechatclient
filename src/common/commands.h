@@ -45,6 +45,7 @@ private:
     QString cmdBan();
     QString cmdBanip();
     QString cmdBusy();
+    QString cmdClear();
     QString cmdCycle();
     QString cmdFriend();
     QString cmdHelp();

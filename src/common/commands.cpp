@@ -20,6 +20,7 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QPushButton>
+#include "channel.h"
 #include "channel_list.h"
 #include "convert.h"
 #include "message.h"
@@ -50,6 +51,8 @@ QString Commands::execute()
         return cmdAway();
     else if (strCmd == "busy")
         return cmdBusy();
+    else if (strCmd == "clear")
+        return cmdClear();
     else if (strCmd == "friend")
         return cmdFriend();
     else if ((strCmd == "help") || (strCmd == "pomoc"))
@@ -199,6 +202,15 @@ QString Commands::cmdBusy()
         return "BUSY 1";
 }
 
+QString Commands::cmdClear()
+{
+    QString strChannel = strChan;
+
+    Channel::instance()->getChatView(strChannel)->clearMessages();
+
+    return QString::null;
+}
+
 QString Commands::cmdCycle()
 {
     QString strChannel = strChan;
@@ -243,6 +255,7 @@ QString Commands::cmdHelp()
     strHelp.append(tr("/ban [nick] or /ban -[nick] - ban or unban nick on current channel")+";");
     strHelp.append(tr("/banip [nick] or /banip -[nick] - ban user ip or unban user ip on current channel")+";");
     strHelp.append(tr("/busy - mark/unmark as busy")+";");
+    strHelp.append(tr("/clear - clear current screen")+";");
     strHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel")+";");
     strHelp.append(tr("/friend [nick] or /friend -[nick] - add or remove nick from friends list")+";");
     strHelp.append(tr("/help")+";");

@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added /clear command
 * Added time to invite list
 * Fixed animated icon
 * Changed default emoticons,sounds dir

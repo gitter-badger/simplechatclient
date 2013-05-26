@@ -213,6 +213,10 @@
         <translation>/busy - włączenie lub wyłączenie zajętości</translation>
     </message>
     <message>
+        <source>/clear - clear current screen</source>
+        <translation>/clear - wyczyszczenie aktualnego ekranu</translation>
+    </message>
+    <message>
         <source>/cycle [text] or /hop [text] - part and join current channel</source>
         <translation>/cycle [tekst] lub /hop [tekst] - wyjście i ponowne wejście do aktualnego pokoju</translation>
     </message>
