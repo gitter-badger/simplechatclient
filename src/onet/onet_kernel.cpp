@@ -175,7 +175,6 @@ void OnetKernel::kernel(const QString &_strData)
             case 445: raw_445(); break;
             case 446: raw_446(); break;
             case 451: raw_451(); break;
-            case 453: raw_453(); break;
             case 461: raw_461(); break;
             case 462: raw_462(); break;
             case 470: raw_470(); break;
@@ -296,6 +295,7 @@ void OnetKernel::kernel(const QString &_strData)
                 case 440: raw_440n(); break;
                 case 441: raw_441n(); break;
                 case 452: raw_452n(); break;
+                case 453: raw_453n(); break;
                 case 454: raw_454n(); break;
                 case 455: raw_455n(); break;
                 case 456: raw_456n(); break;
@@ -3414,7 +3414,7 @@ void OnetKernel::raw_452n()
 }
 
 // :ChanServ!service@service.onet NOTICE Merovingian :453 #aaaaaaaa :is not valid channel name
-void OnetKernel::raw_453()
+void OnetKernel::raw_453n()
 {
     if (strDataList.size() < 5) return;
 
