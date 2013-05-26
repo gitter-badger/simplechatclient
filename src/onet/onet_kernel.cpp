@@ -156,6 +156,7 @@ void OnetKernel::kernel(const QString &_strData)
             case 375: raw_375(); break;
             case 376: raw_376(); break;
             case 378: raw_378(); break;
+            case 379: raw_379(); break;
             case 381: raw_381(); break;
             case 391: raw_391(); break;
             case 396: raw_396(); break;
@@ -2846,6 +2847,41 @@ void OnetKernel::raw_378()
 
     QString strMessage = QString(tr("* %1 is connecting from %2 %3")).arg(strNick, strZuoIP, strIP);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// WHOIS
+// :cf1f4.onet 379 Darom Darom :usermodes [+Oborx]
+// WHOWAS
+// :cf1f4.onet 379 %s %s :was connecting from *@%s
+void OnetKernel::raw_379()
+{
+    if (strDataList.size() < 6) return;
+
+    QString strNick = strDataList.at(3);
+
+    QString strMessage;
+    for (int i = 4; i < strDataList.size(); ++i) { if (i != 4) strMessage += " "; strMessage += strDataList.at(i); }
+    if (strMessage.at(0) == ':') strMessage.remove(0,1);
+
+    if (strMessage.contains("modes"))
+    {
+        QString strUserModes = strMessage;
+        strUserModes.remove("usermodes "); // version <= 1.1
+        //strUserModes.remove("is using modes "); // version >= 1.2
+        strUserModes.remove("[");
+        strUserModes.remove("]");
+
+        QString strMessage = QString(tr("* %1 is using modes %2")).arg(strNick, strUserModes);
+        Message::instance()->showMessageActive(strMessage, MessageInfo);
+    }
+    else
+    {
+        QString strHost = strMessage;
+        strHost.remove("was connecting from ");
+
+        QString strMessage = QString(tr("* %1 was connecting from %2")).arg(strNick, strHost);
+        Message::instance()->showMessageActive(strMessage, MessageInfo);
+    }
 }
 
 // OPER

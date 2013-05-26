@@ -2836,6 +2836,14 @@
         <translation>* %1 jest połączony z %2 %3</translation>
     </message>
     <message>
+        <source>* %1 is using modes %2</source>
+        <translation>* %1 posiada flagi %2</translation>
+    </message>
+    <message>
+        <source>* %1 was connecting from %2</source>
+        <translation>* %1 był połączony z %2</translation>
+    </message>
+    <message>
         <source>* You are now an IRC operator of type NetAdmin</source>
         <translation>* Jesteś teraz administratorem czata</translation>
     </message>
