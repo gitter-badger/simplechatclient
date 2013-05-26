@@ -939,8 +939,6 @@ void OnetKernel::raw_invite()
         Channel::instance()->setAlternativeName(strChannel, strNick);
 
     QString strUuid = QUuid::createUuid().toString();
-    strUuid.remove("{"); strUuid.remove("}");
-
     qint64 iDateTime = QDateTime::currentMSecsSinceEpoch();
 
     // add invite notification
@@ -4147,15 +4145,15 @@ void OnetKernel::raw_819()
             if (flag1)
                 bChannelRecommended = true;
 
-            OnetChannelList add;
-            add.name = strChannelName;
-            add.people = iChannelPeople;
-            add.cat = iChannelCat;
-            add.type = iChannelType;
-            add.moderated = bChannelModerated;
-            add.recommended = bChannelRecommended;
+            OnetChannelList oChannelList;
+            oChannelList.name = strChannelName;
+            oChannelList.people = iChannelPeople;
+            oChannelList.cat = iChannelCat;
+            oChannelList.type = iChannelType;
+            oChannelList.moderated = bChannelModerated;
+            oChannelList.recommended = bChannelRecommended;
 
-            ChannelList::instance()->add(add);
+            ChannelList::instance()->add(oChannelList);
         }
     }
 }

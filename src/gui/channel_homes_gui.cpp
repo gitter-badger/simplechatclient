@@ -86,9 +86,9 @@ void ChannelHomesGui::refresh()
     {
         it.next();
         QString strChannel = it.key();
-        OnetChannelHomes onetChannelHomes = it.value();
+        OnetChannelHomes oChannelHomes = it.value();
 
-        QString strAvatar = onetChannelHomes.avatar;
+        QString strAvatar = oChannelHomes.avatar;
         if (!strAvatar.isEmpty())
         {
             strAvatar = Avatar::instance()->getAvatarPath(strAvatar);

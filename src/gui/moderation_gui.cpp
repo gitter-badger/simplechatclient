@@ -68,12 +68,12 @@ void ModerationGui::refreshMessages()
 
     for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); ++i)
     {
-        OnetModerateMessage omessage = lModerateMessages.at(i);
+        OnetModerateMessage oModerateMessage = lModerateMessages.at(i);
 
-        QString strID = omessage.id;
-        qint64 iTime = omessage.datetime;
-        QString strNick = omessage.nick;
-        QString strMessage = omessage.message;
+        QString strID = oModerateMessage.id;
+        qint64 iTime = oModerateMessage.datetime;
+        QString strNick = oModerateMessage.nick;
+        QString strMessage = oModerateMessage.message;
 
         QString strData = QString("[%1] <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("hh:mm:ss"), strNick, strMessage);
 

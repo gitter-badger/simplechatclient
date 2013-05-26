@@ -61,11 +61,11 @@ void OfflineMessageGui::refreshMessages()
 
     for (int i = listWidgetCount; i < listWidgetCount + (moderateMessagesCount - listWidgetCount); ++i)
     {
-        OnetOfflineMessage omessage = lOfflineMessages.at(i);
+        OnetOfflineMessage oOfflineMessage = lOfflineMessages.at(i);
 
-        qint64 iTime = omessage.datetime;
-        QString strType = omessage.type;
-        QString strMessage = omessage.message;
+        qint64 iTime = oOfflineMessage.datetime;
+        QString strType = oOfflineMessage.type;
+        QString strMessage = oOfflineMessage.message;
 
         QDateTime dDateTime = QDateTime::fromMSecsSinceEpoch(iTime);
         QString strDate = dDateTime.toString("dd MMM yyyy");

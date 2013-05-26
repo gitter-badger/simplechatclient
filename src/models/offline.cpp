@@ -48,12 +48,12 @@ void Offline::init()
 
 void Offline::addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage)
 {
-    OnetOfflineMessage omessage;
-    omessage.datetime = iTime;
-    omessage.type = strType;
-    omessage.message = strMessage;
+    OnetOfflineMessage oOfflineMessage;
+    oOfflineMessage.datetime = iTime;
+    oOfflineMessage.type = strType;
+    oOfflineMessage.message = strMessage;
 
-    lOfflineMessages.insert(strNick, omessage);
+    lOfflineMessages.insert(strNick, oOfflineMessage);
 }
 
 void Offline::removeMessage(const QString &strNick)

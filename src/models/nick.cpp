@@ -61,13 +61,13 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
     }
     else
     {
-        OnetNick nick;
-        nick.avatar = QString::null;
-        nick.channels.append(strChannel);
-        nick.channel_modes[strChannel] = strModes;
-        nick.channel_max_modes[strChannel] = iMaxModes;
+        OnetNick oNick;
+        oNick.avatar = QString::null;
+        oNick.channels.append(strChannel);
+        oNick.channel_modes[strChannel] = strModes;
+        oNick.channel_max_modes[strChannel] = iMaxModes;
 
-        lNicks[strNick] = nick;
+        lNicks[strNick] = oNick;
 
         NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, QString::null);
     }

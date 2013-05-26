@@ -518,10 +518,10 @@ void ChannelSettingsGui::refreshChannelStats()
             QList<int> lIWords;
 
             int iWords = 0;
-            for (int i = 0; i < lWords.size(); ++i)
+            foreach (const QString &lWord, lWords)
             {
                 bool ok;
-                int iWord = lWords.value(i, 0).toInt(&ok, 16);
+                int iWord = lWord.toInt(&ok, 16);
 
                 // add to list
                 lIWords.append(iWord);

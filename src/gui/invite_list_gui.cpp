@@ -73,15 +73,13 @@ void InviteListGui::createSignals()
 
 void InviteListGui::createList()
 {
-    QListIterator<OnetInvite> it(Invite::instance()->get());
-    while (it.hasNext())
+    QList<OnetInvite> lOnetInvite = Invite::instance()->get();
+    foreach (const OnetInvite &oInvite, lOnetInvite)
     {
-        OnetInvite oinvite = it.next();
-
-        QString strId = oinvite.id;
-        qint64 iDateTime = oinvite.datetime;
-        QString strNick = oinvite.nick;
-        QString strChannel = oinvite.channel;
+        QString strId = oInvite.id;
+        qint64 iDateTime = oInvite.datetime;
+        QString strNick = oInvite.nick;
+        QString strChannel = oInvite.channel;
 
         QListWidgetItem *item = new QListWidgetItem;
         item->setData(InviteIdRole, strId);

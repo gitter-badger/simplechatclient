@@ -258,14 +258,14 @@ void ChannelListGui::createList()
     int iRegionalCount = 0;
 
     QList<OnetChannelList> list1 = ChannelList::instance()->getAll();
-    foreach (const OnetChannelList &channel, list1)
+    foreach (const OnetChannelList &oChannelList, list1)
     {
-        QString strName = channel.name;
-        int iPeople = channel.people;
-        int iCat = channel.cat;
-        int iType = channel.type;
-        bool bModerated = channel.moderated;
-        bool bRecommended = channel.recommended;
+        QString strName = oChannelList.name;
+        int iPeople = oChannelList.people;
+        int iCat = oChannelList.cat;
+        int iType = oChannelList.type;
+        bool bModerated = oChannelList.moderated;
+        bool bRecommended = oChannelList.recommended;
 
         bool bShow = showChannel(strName, iPeople, iCat, iType, bModerated, bRecommended);
 
@@ -301,14 +301,14 @@ void ChannelListGui::createList()
     int iRegionalRow = 0;
 
     QList<OnetChannelList> list2 = ChannelList::instance()->getAll();
-    foreach (const OnetChannelList &channel, list2)
+    foreach (const OnetChannelList &oChannelList, list2)
     {
-        QString strName = channel.name;
-        int iPeople = channel.people;
-        int iCat = channel.cat;
-        int iType = channel.type;
-        bool bModerated = channel.moderated;
-        bool bRecommended = channel.recommended;
+        QString strName = oChannelList.name;
+        int iPeople = oChannelList.people;
+        int iCat = oChannelList.cat;
+        int iType = oChannelList.type;
+        bool bModerated = oChannelList.moderated;
+        bool bRecommended = oChannelList.recommended;
 
         bool bShow = showChannel(strName, iPeople, iCat, iType, bModerated, bRecommended);
 

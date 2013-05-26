@@ -47,13 +47,13 @@ void Invite::init()
 
 void Invite::add(const QString &id, qint64 datetime, const QString &nick, const QString &channel)
 {
-    OnetInvite add;
-    add.id = id;
-    add.datetime = datetime;
-    add.nick = nick;
-    add.channel = channel;
+    OnetInvite oInvite;
+    oInvite.id = id;
+    oInvite.datetime = datetime;
+    oInvite.nick = nick;
+    oInvite.channel = channel;
 
-    lInvite.append(add);
+    lInvite.append(oInvite);
     Notification::instance()->refreshInvite();
 }
 
@@ -62,8 +62,8 @@ void Invite::remove(const QString &id)
     QMutableListIterator<OnetInvite> it(lInvite);
     while (it.hasNext())
     {
-        OnetInvite oinvite = it.next();
-        if (oinvite.id == id)
+        OnetInvite oInvite = it.next();
+        if (oInvite.id == id)
             it.remove();
     }
 

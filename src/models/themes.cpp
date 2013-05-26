@@ -48,11 +48,11 @@ void Themes::init()
 
 void Themes::add(const QString &name, ThemeFlags::Flags flags)
 {
-    Theme add;
-    add.name = name;
-    add.flags = flags;
+    Theme newTheme;
+    newTheme.name = name;
+    newTheme.flags = flags;
 
-    lThemes.append(add);
+    lThemes.append(newTheme);
 }
 
 Theme Themes::get()

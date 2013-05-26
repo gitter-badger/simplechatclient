@@ -252,13 +252,13 @@ QList<OnetModerateMessage> Channel::getModerateMessages(const QString &channel)
 
 void Channel::addModerateMessage(const QString &channel, qint64 time, const QString &nick, const QString &message)
 {
-    OnetModerateMessage omessage;
-    omessage.id = QUuid::createUuid().toString();
-    omessage.datetime = time;
-    omessage.nick = nick;
-    omessage.message = message;
+    OnetModerateMessage oModerateMessage;
+    oModerateMessage.id = QUuid::createUuid().toString();
+    oModerateMessage.datetime = time;
+    oModerateMessage.nick = nick;
+    oModerateMessage.message = message;
 
-    lChannels[channel].moderateMessages.append(omessage);
+    lChannels[channel].moderateMessages.append(oModerateMessage);
 }
 
 void Channel::removeModerateMessage(const QString &channel, const QString &id)
@@ -269,8 +269,8 @@ void Channel::removeModerateMessage(const QString &channel, const QString &id)
     QMutableListIterator<OnetModerateMessage> it(lChannels[channel].moderateMessages);
     while (it.hasNext())
     {
-        OnetModerateMessage omessage = it.next();
-        if (omessage.id == id)
+        OnetModerateMessage oModerateMessage = it.next();
+        if (oModerateMessage.id == id)
             it.remove();
     }
 }

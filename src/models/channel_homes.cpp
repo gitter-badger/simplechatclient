@@ -47,11 +47,11 @@ void ChannelHomes::add(const QString &channel, const QString &flag)
 {
     if (!lChannelHomes.contains(channel))
     {
-        OnetChannelHomes onetChannel;
-        onetChannel.avatar = QString::null;
-        onetChannel.flag = flag;
+        OnetChannelHomes oChannelHomes;
+        oChannelHomes.avatar = QString::null;
+        oChannelHomes.flag = flag;
 
-        lChannelHomes[channel] = onetChannel;
+        lChannelHomes[channel] = oChannelHomes;
     }
 }
 

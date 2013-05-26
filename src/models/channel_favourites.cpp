@@ -65,10 +65,10 @@ void ChannelFavourites::add(const QString &channel)
 {
     if (!favourites.contains(channel))
     {
-        OnetChannelFavourites onetChannel;
-        onetChannel.avatar = QString::null;
+        OnetChannelFavourites oChannelFavourites;
+        oChannelFavourites.avatar = QString::null;
 
-        favourites[channel] = onetChannel;
+        favourites[channel] = oChannelFavourites;
     }
 }
 
