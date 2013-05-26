@@ -33,8 +33,10 @@ private:
     Ui::uiInviteList ui;   
     enum InviteRoles
     {
-        InviteNickRole = Qt::UserRole,
-        InviteChannelRole = Qt::UserRole+1
+        InviteIdRole = Qt::UserRole,
+        InviteDateTimeRole = Qt::UserRole+1,
+        InviteNickRole = Qt::UserRole+2,
+        InviteChannelRole = Qt::UserRole+3
     };
 
     void createGui();

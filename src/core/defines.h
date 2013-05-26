@@ -153,6 +153,14 @@ struct OnetOfflineMessage
     QString message;
 };
 
+struct OnetInvite
+{
+    QString id;
+    qint64 datetime;
+    QString nick;
+    QString channel;
+};
+
 namespace ThemeFlags
 {
     enum Flag {

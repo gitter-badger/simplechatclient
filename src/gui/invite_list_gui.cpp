@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDateTime>
 #include <QDesktopWidget>
 #include <QMenu>
 #include "core.h"
@@ -72,21 +73,26 @@ void InviteListGui::createSignals()
 
 void InviteListGui::createList()
 {
-    QHashIterator<QString, QString> i(Invite::instance()->get());
+    QListIterator<OnetInvite> i(Invite::instance()->get());
     while (i.hasNext())
     {
-        i.next();
-        QString strNick = i.key();
-        QString strChannel = i.value();
+        OnetInvite oinvite = i.next();
+
+        QString strId = oinvite.id;
+        qint64 iDateTime = oinvite.datetime;
+        QString strNick = oinvite.nick;
+        QString strChannel = oinvite.channel;
 
         QListWidgetItem *item = new QListWidgetItem;
+        item->setData(InviteIdRole, strId);
+        item->setData(InviteDateTimeRole, iDateTime);
         item->setData(InviteNickRole, strNick);
         item->setData(InviteChannelRole, strChannel);
 
         if (strChannel.at(0) == '^')
-            item->setText(QString(tr("%1 invites you to priv")).arg(strNick));
+            item->setText(QString(tr("%1 %2 invites you to priv")).arg(QDateTime::fromMSecsSinceEpoch(iDateTime).toString("[hh:mm:ss]"), strNick));
         else
-            item->setText(QString(tr("%1 invites you to channel %2")).arg(strNick, strChannel));
+            item->setText(QString(tr("%1 %2 invites you to channel %3")).arg(QDateTime::fromMSecsSinceEpoch(iDateTime).toString("[hh:mm:ss]"), strNick, strChannel));
 
         ui.listWidget->addItem(item);
     }
@@ -113,12 +119,12 @@ void InviteListGui::buttonAccept()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
-    QString strNick = item->data(InviteNickRole).toString();
+    QString strId = item->data(InviteIdRole).toString();
     QString strChannel = item->data(InviteChannelRole).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Invite::instance()->remove(strId);
 }
 
 void InviteListGui::buttonReject()
@@ -127,12 +133,13 @@ void InviteListGui::buttonReject()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
+    QString strId = item->data(InviteIdRole).toString();
     QString strNick = item->data(InviteNickRole).toString();
     QString strChannel = item->data(InviteChannelRole).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
     Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Invite::instance()->remove(strId);
 }
 
 void InviteListGui::buttonIgnore()
@@ -141,12 +148,13 @@ void InviteListGui::buttonIgnore()
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
+    QString strId = item->data(InviteIdRole).toString();
     QString strNick = item->data(InviteNickRole).toString();
     QString strChannel = item->data(InviteChannelRole).toString();
     ui.listWidget->takeItem(ui.listWidget->row(item));
 
     Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Invite::instance()->remove(strId);
 }
 
 void InviteListGui::whois()

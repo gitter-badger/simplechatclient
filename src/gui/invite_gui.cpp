@@ -23,7 +23,7 @@
 #include "invite.h"
 #include "invite_gui.h"
 
-InviteGui::InviteGui(const QString &_strNick, const QString &_strChannel, QWidget *parent) : QDialog(parent), strNick(_strNick), strChannel(_strChannel)
+InviteGui::InviteGui(const QString &_strId, qint64 _iDateTime, const QString &_strNick, const QString &_strChannel, QWidget *parent) : QDialog(parent), strId(_strId), iDateTime(_iDateTime), strNick(_strNick), strChannel(_strChannel)
 {
     ui.setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose); // require by show method - prevent hangup!
@@ -72,21 +72,21 @@ void InviteGui::createSignals()
 void InviteGui::buttonAccept()
 {
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Invite::instance()->remove(strId);
     this->close();
 }
 
 void InviteGui::buttonReject()
 {
     Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Invite::instance()->remove(strId);
     this->close();
 }
 
 void InviteGui::buttonIgnore()
 {
     Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
-    Invite::instance()->remove(strNick, strChannel);
+    Invite::instance()->remove(strId);
     this->close();
 }
 

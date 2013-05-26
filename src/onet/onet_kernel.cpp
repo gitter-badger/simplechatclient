@@ -19,6 +19,7 @@
 
 #include <QDateTime>
 #include <QMessageBox> // raw 433
+#include <QUuid> // raw invite
 #include "autoaway.h"
 #include "avatar.h"
 #include "away.h"
@@ -937,13 +938,18 @@ void OnetKernel::raw_invite()
     if (strChannel.at(0) == '^')
         Channel::instance()->setAlternativeName(strChannel, strNick);
 
+    QString strUuid = QUuid::createUuid().toString();
+    strUuid.remove("{"); strUuid.remove("}");
+
+    qint64 iDateTime = QDateTime::currentMSecsSinceEpoch();
+
     // add invite notification
-    Invite::instance()->add(strNick, strChannel);
+    Invite::instance()->add(strUuid, iDateTime, strNick, strChannel);
 
     // is active window
     if (Core::instance()->mainWindow()->isActiveWindow())
     {
-        (new InviteGui(strNick, strChannel))->show(); // should be show - prevent hangup!
+        (new InviteGui(strUuid, iDateTime, strNick, strChannel))->show(); // should be show - prevent hangup!
     }
 
     // sound

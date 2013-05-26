@@ -27,10 +27,12 @@ class InviteGui : public QDialog
 {
     Q_OBJECT
 public:
-    InviteGui(const QString &_strNick, const QString &_strChannel, QWidget *parent = 0);
+    InviteGui(const QString &_strId, qint64 _iDateTime, const QString &_strNick, const QString &_strChannel, QWidget *parent = 0);
 
 private:
     Ui::uiInvite ui;
+    QString strId;
+    qint64 iDateTime;
     QString strNick;
     QString strChannel;
 

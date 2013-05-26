@@ -20,7 +20,7 @@
 #ifndef INVITE_H
 #define INVITE_H
 
-#include <QMultiHash>
+#include "defines.h"
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
@@ -36,17 +36,17 @@ public:
     static Invite *instance();
 
     Invite();
-    void add(const QString &nick, const QString &channel);
-    void remove(const QString &nick, const QString &channel);
+    void add(const QString &id, qint64 datetime, const QString &nick, const QString &channel);
+    void remove(const QString &id);
     void clear();
     bool isEmpty();
     int count();
-    QMultiHash<QString,QString> get();
+    QList<OnetInvite> get();
 
     QAction *inviteAction;
 
 private:
-    QMultiHash<QString,QString> lInvite;
+    QList<OnetInvite> lInvite;
 
     void init();
 };

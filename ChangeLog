@@ -3,11 +3,14 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added time to invite list
+* Fixed animated icon
 * Changed default emoticons,sounds dir
 * Added nick option in context menu
 * Fixed avatar display
 * Fixed sound
 * Fixed offline messages
+* Many bugfixes
 
 Version 1.7.3 (07.04.2013)
 ================================

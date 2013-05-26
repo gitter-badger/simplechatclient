@@ -1137,12 +1137,12 @@
         <translation>Zaproszenia</translation>
     </message>
     <message>
-        <source>%1 invites you to channel %2</source>
-        <translation>%1 zaprasza do pokoju %2</translation>
+        <source>%1 %2 invites you to channel %3</source>
+        <translation>%1 %2 zaprasza do pokoju %3</translation>
     </message>
     <message>
-        <source>%1 invites you to priv</source>
-        <translation>%1 zaprasza do rozmowy prywatnej</translation>
+        <source>%1 %2 invites you to priv</source>
+        <translation>%1 %2 zaprasza do rozmowy prywatnej</translation>
     </message>
     <message>
         <source>Accept</source>

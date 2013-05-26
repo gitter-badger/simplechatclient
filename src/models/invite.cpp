@@ -45,15 +45,28 @@ void Invite::init()
     lInvite.clear();
 }
 
-void Invite::add(const QString &nick, const QString &channel)
+void Invite::add(const QString &id, qint64 datetime, const QString &nick, const QString &channel)
 {
-    lInvite.insert(nick, channel);
+    OnetInvite add;
+    add.id = id;
+    add.datetime = datetime;
+    add.nick = nick;
+    add.channel = channel;
+
+    lInvite.append(add);
     Notification::instance()->refreshInvite();
 }
 
-void Invite::remove(const QString &nick, const QString &channel)
+void Invite::remove(const QString &id)
 {
-    lInvite.remove(nick, channel);
+    QMutableListIterator<OnetInvite> i(lInvite);
+    while (i.hasNext())
+    {
+        OnetInvite oinvite = i.next();
+        if (oinvite.id == id)
+            i.remove();
+    }
+
     Notification::instance()->refreshInvite();
 }
 
@@ -73,7 +86,7 @@ int Invite::count()
     return lInvite.size();
 }
 
-QMultiHash<QString,QString> Invite::get()
+QList<OnetInvite> Invite::get()
 {
     return lInvite;
 }
