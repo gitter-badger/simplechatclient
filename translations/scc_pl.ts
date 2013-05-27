@@ -193,8 +193,8 @@
         <translation>* Dostępne komendy:</translation>
     </message>
     <message>
-        <source>/all [text] - send message to all opened channels</source>
-        <translation>/all [tekst] - wysłanie wiadomości do wszystkich otwartych pokoi</translation>
+        <source>/amsg [text] or /all [text] - send message to all opened channels</source>
+        <translation>/amsg [tekst] lub /all [tekst] - wysłanie wiadomości do wszystkich otwartych pokoi</translation>
     </message>
     <message>
         <source>/away [text] - mark/unmark as being away</source>

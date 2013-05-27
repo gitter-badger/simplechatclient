@@ -40,7 +40,7 @@ private:
     QString strData;
     QStringList strDataList;
 
-    QString cmdAll();
+    QString cmdAmsg();
     QString cmdAway();
     QString cmdBan();
     QString cmdBanip();

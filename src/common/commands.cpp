@@ -45,8 +45,8 @@ QString Commands::execute()
 
     QString strCmd = strDataList.at(0).toLower();
 
-    if (strCmd == "all")
-        return cmdAll();
+    if ((strCmd == "amsg") || (strCmd == "all"))
+        return cmdAmsg();
     else if (strCmd == "away")
         return cmdAway();
     else if (strCmd == "busy")
@@ -109,7 +109,7 @@ QString Commands::execute()
     return strData;
 }
 
-QString Commands::cmdAll()
+QString Commands::cmdAmsg()
 {
     if (strDataList.value(1).isEmpty()) return QString::null;
 
@@ -250,7 +250,7 @@ QString Commands::cmdHelp()
     QString strHelp;
 
     strHelp = (tr("* Available commands:")+";");
-    strHelp.append(tr("/all [text] - send message to all opened channels")+";");
+    strHelp.append(tr("/amsg [text] or /all [text] - send message to all opened channels")+";");
     strHelp.append(tr("/away [text] - mark/unmark as being away")+";");
     strHelp.append(tr("/ban [nick] or /ban -[nick] - ban or unban nick on current channel")+";");
     strHelp.append(tr("/banip [nick] or /banip -[nick] - ban user ip or unban user ip on current channel")+";");

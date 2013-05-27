@@ -831,12 +831,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             return;
     }
 
-    if (strCommand == "raw")
-    {
-        Core::instance()->network->send(strText);
-        return;
-    }
-    else if (strCommand == "all")
+    if ((strCommand == "amsg") || (strCommand == "all"))
     {
         Convert::simpleReverseConvert(strText);
         Replace::replaceEmots(strText);
@@ -879,6 +874,11 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
         }
+        return;
+    }
+    else if (strCommand == "raw")
+    {
+        Core::instance()->network->send(strText);
         return;
     }
     else if (!strCommand.isEmpty())
