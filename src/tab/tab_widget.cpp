@@ -130,7 +130,7 @@ void TabWidget::showEvent(QShowEvent *)
 
     int width = this->width();
 
-    if (!pNickListWidget->isHidden())
+    if (pNickListWidget->isVisible())
     {
         if (width > 250)
         {
