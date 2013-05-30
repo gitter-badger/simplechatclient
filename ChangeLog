@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added hide nicklist option
 * Added /clear command
 * Added time to invite list
 * Fixed animated icon

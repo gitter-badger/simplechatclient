@@ -1345,6 +1345,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_nicklist">
+         <property name="text">
+          <string>Hide nicklist</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

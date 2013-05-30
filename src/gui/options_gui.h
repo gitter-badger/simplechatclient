@@ -64,6 +64,7 @@ private slots:
     void hideJoinPart200(bool bValue);
     void disableEmots(bool bValue);
     void disableReplaces(bool bValue);
+    void hideNicklist(bool bValue);
     void reverseColors();
     void restoreDefaultColors();
     void setBackgroundColor();

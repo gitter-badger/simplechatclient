@@ -22,6 +22,7 @@
 #include <QVBoxLayout>
 #include "nicklist_delegate.h"
 #include "nicklist_widget.h"
+#include "settings.h"
 #include "tab_widget.h"
 
 TabWidget::TabWidget(const QString &_strName) : strName(_strName)
@@ -88,6 +89,19 @@ void TabWidget::createGui()
 
 void TabWidget::setDefaultValues()
 {
+    // settings
+    if (Settings::instance()->get("hide_nicklist") == "true")
+    {
+        users->hide();
+        pNickListWidget->hide();
+    }
+    else
+    {
+        users->show();
+        pNickListWidget->show();
+    }
+
+    // channel type
     if (strName.at(0) == '^')
         topic->hide();
     if ((strName.at(0) != '^') && (strName.at(0) != '#'))
@@ -100,9 +114,24 @@ void TabWidget::setDefaultValues()
 
 void TabWidget::showEvent(QShowEvent *)
 {
+    if ((strName.at(0) == '^') || (strName.at(0) == '#'))
+    {
+        if ((Settings::instance()->get("hide_nicklist") == "true") && (!pNickListWidget->isHidden()))
+        {
+            users->hide();
+            pNickListWidget->hide();
+        }
+        else if ((Settings::instance()->get("hide_nicklist") == "false") && (pNickListWidget->isHidden()))
+        {
+            users->show();
+            pNickListWidget->show();
+        }
+    }
+
+    int width = this->width();
+
     if (!pNickListWidget->isHidden())
     {
-        int width = this->width();
         if (width > 250)
         {
             QList<int> currentSizes = splitter->sizes();
@@ -112,5 +141,12 @@ void TabWidget::showEvent(QShowEvent *)
 
             splitter->setSizes(currentSizes);
         }
+    }
+    else
+    {
+        QList<int> currentSizes = splitter->sizes();
+        currentSizes[0] = width;
+        currentSizes[1] = 0;
+        splitter->setSizes(currentSizes);
     }
 }

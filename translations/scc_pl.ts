@@ -1488,6 +1488,10 @@
         <translation>Wyłącz zamianę emotikon</translation>
     </message>
     <message>
+        <source>Hide nicklist</source>
+        <translation>Ukryj liste nicków</translation>
+    </message>
+    <message>
         <source>Colors</source>
         <translation>Kolory</translation>
     </message>

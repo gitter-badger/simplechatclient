@@ -96,6 +96,7 @@ void OptionsGui::createGui()
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
     ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
     ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
+    ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
 
     // page colors
     ui.pushButton_reverse_colors->setText(tr("Reverse colors"));
@@ -274,6 +275,7 @@ void OptionsGui::setDefaultValues()
     QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
     QString strDisableEmots = Settings::instance()->get("disable_emots");
     QString strDisableReplaces = Settings::instance()->get("disable_replaces");
+    QString strHideNicklist = Settings::instance()->get("hide_nicklist");
 
     QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
     QString strDisableLogs = Settings::instance()->get("disable_logs");
@@ -352,6 +354,12 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_disable_replaces->setChecked(false);
 
+    // hide nicklist
+    if (strHideNicklist == "true")
+        ui.checkBox_hide_nicklist->setChecked(true);
+    else
+        ui.checkBox_hide_nicklist->setChecked(false);
+
     // save logs by date
     if (strSaveLogsByDate == "true")
         ui.checkBox_save_logs_by_date->setChecked(true);
@@ -425,6 +433,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
     connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
     connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
+    connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
     connect(ui.pushButton_reverse_colors, SIGNAL(clicked()), this, SLOT(reverseColors()));
     connect(ui.pushButton_restore_default_colors, SIGNAL(clicked()), this, SLOT(restoreDefaultColors()));
     connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
@@ -742,6 +751,17 @@ void OptionsGui::disableReplaces(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("disable_replaces", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::hideNicklist(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("hide_nicklist", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("hide_nicklist", strValue);
     delete pConfig;
 }
 

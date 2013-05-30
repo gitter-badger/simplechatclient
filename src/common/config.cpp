@@ -158,6 +158,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("hide_join_part_200", "true");
         lDefaultValues.insert("disable_emots", "false");
         lDefaultValues.insert("disable_replaces", "false");
+        lDefaultValues.insert("hide_nicklist", "false");
 
         lDefaultValues.insert("background_color", "#ffffff");
         lDefaultValues.insert("my_bold", "false");
