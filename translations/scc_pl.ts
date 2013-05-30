@@ -1352,40 +1352,8 @@
         <translation>Opcje programu</translation>
     </message>
     <message>
-        <source>On</source>
-        <translation>Włączony</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Wyłączony</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Dodaj</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>Reverse colors</source>
-        <translation>Odwróć kolory</translation>
-    </message>
-    <message>
-        <source>Restore default</source>
-        <translation>Przywróć domyślne</translation>
-    </message>
-    <message>
         <source>Basic</source>
         <translation>Ogólne</translation>
-    </message>
-    <message>
-        <source>Highlight</source>
-        <translation>Podświetlanie</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Zaawansowane</translation>
     </message>
     <message>
         <source>Restart program to apply the changes.</source>
@@ -1414,6 +1382,10 @@
     <message>
         <source>Polish</source>
         <translation>Polski</translation>
+    </message>
+    <message>
+        <source>Highlight</source>
+        <translation>Podświetlanie</translation>
     </message>
     <message>
         <source>Highlight text</source>
@@ -1446,50 +1418,6 @@
     <message>
         <source>Remove punish reason:</source>
         <translation>Usuń powód wyrzucenia:</translation>
-    </message>
-    <message>
-        <source>Busy mode after you log in to chat</source>
-        <translation>Oznaczenie jako zajęty po zalogowaniu</translation>
-    </message>
-    <message>
-        <source>Disable autojoin favourite channels</source>
-        <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
-    </message>
-    <message>
-        <source>Auto away on idle</source>
-        <translation>Automatyczne oznaczenie jako nieobecny</translation>
-    </message>
-    <message>
-        <source>Minimize to tray</source>
-        <translation>Minimalizacja do zasobnika</translation>
-    </message>
-    <message>
-        <source>Show ZUO and IP</source>
-        <translation>Pokaż numer ZUO oraz IP</translation>
-    </message>
-    <message>
-        <source>Disable font size, color...</source>
-        <translation>Wyłącz wielkość, kolor czcionek...</translation>
-    </message>
-    <message>
-        <source>Hide join/part</source>
-        <translation>Ukryj wejścia/wyjścia</translation>
-    </message>
-    <message>
-        <source>Hide join/part on big channels</source>
-        <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
-    </message>
-    <message>
-        <source>Disable emoticons</source>
-        <translation>Wyłącz obrazki</translation>
-    </message>
-    <message>
-        <source>Disable replaces</source>
-        <translation>Wyłącz zamianę emotikon</translation>
-    </message>
-    <message>
-        <source>Hide nicklist</source>
-        <translation>Ukryj liste nicków</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -1636,6 +1564,34 @@
         <translation>Wyłącz tapetę</translation>
     </message>
     <message>
+        <source>View</source>
+        <translation>Wygląd</translation>
+    </message>
+    <message>
+        <source>Disable font size, color...</source>
+        <translation>Wyłącz wielkość, kolor czcionek...</translation>
+    </message>
+    <message>
+        <source>Hide join/part</source>
+        <translation>Ukryj wejścia/wyjścia</translation>
+    </message>
+    <message>
+        <source>Hide join/part on big channels</source>
+        <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
+    </message>
+    <message>
+        <source>Disable emoticons</source>
+        <translation>Wyłącz obrazki</translation>
+    </message>
+    <message>
+        <source>Disable replaces</source>
+        <translation>Wyłącz zamianę emotikon</translation>
+    </message>
+    <message>
+        <source>Hide nicklist</source>
+        <translation>Ukryj liste nicków</translation>
+    </message>
+    <message>
         <source>Winamp</source>
         <translation>Winamp</translation>
     </message>
@@ -1674,6 +1630,54 @@
     <message>
         <source>Show tray notification</source>
         <translation>Pokaż powiadomienia w zasobniku (dymki)</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Zaawansowane</translation>
+    </message>
+    <message>
+        <source>Busy mode after you log in to chat</source>
+        <translation>Oznaczenie jako zajęty po zalogowaniu</translation>
+    </message>
+    <message>
+        <source>Disable autojoin favourite channels</source>
+        <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
+    </message>
+    <message>
+        <source>Auto away on idle</source>
+        <translation>Automatyczne oznaczenie jako nieobecny</translation>
+    </message>
+    <message>
+        <source>Minimize to tray</source>
+        <translation>Minimalizacja do zasobnika</translation>
+    </message>
+    <message>
+        <source>Show ZUO and IP</source>
+        <translation>Pokaż numer ZUO oraz IP</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Włączony</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Wyłączony</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Reverse colors</source>
+        <translation>Odwróć kolory</translation>
+    </message>
+    <message>
+        <source>Restore default</source>
+        <translation>Przywróć domyślne</translation>
     </message>
 </context>
 <context>

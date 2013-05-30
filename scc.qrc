@@ -48,7 +48,6 @@
         <file>images/oxygen/16x16/dialog-warning.png</file>
         <file>images/oxygen/16x16/view-media-artist.png</file>
         <file>images/oxygen/16x16/format-text-color.png</file>
-        <file>images/oxygen/16x16/view-media-visualization.png</file>
         <file>images/oxygen/16x16/edit-undo.png</file>
         <file>images/oxygen/16x16/story-editor.png</file>
         <file>images/oxygen/16x16/media-playback-start.png</file>
@@ -126,5 +125,7 @@
         <file>images/theme_alhena.png</file>
         <file>images/theme_origin.png</file>
         <file>images/theme_standard.png</file>
+        <file>images/oxygen/16x16/preferences-desktop-display-color.png</file>
+        <file>images/oxygen/16x16/project-development.png</file>
     </qresource>
 </RCC>

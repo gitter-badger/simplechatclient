@@ -510,6 +510,12 @@
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="pushButton_background_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -530,6 +536,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="pushButton_default_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -550,6 +562,12 @@
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="pushButton_channel_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -570,6 +588,12 @@
            </item>
            <item row="3" column="1">
             <widget class="QPushButton" name="pushButton_join_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -590,6 +614,12 @@
            </item>
            <item row="4" column="1">
             <widget class="QPushButton" name="pushButton_part_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -610,6 +640,12 @@
            </item>
            <item row="5" column="1">
             <widget class="QPushButton" name="pushButton_quit_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -637,6 +673,12 @@
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="pushButton_kick_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -657,6 +699,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="pushButton_mode_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -677,6 +725,12 @@
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="pushButton_notice_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -697,6 +751,12 @@
            </item>
            <item row="3" column="1">
             <widget class="QPushButton" name="pushButton_info_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -717,6 +777,12 @@
            </item>
            <item row="5" column="1">
             <widget class="QPushButton" name="pushButton_error_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -737,6 +803,12 @@
            </item>
            <item row="4" column="1">
             <widget class="QPushButton" name="pushButton_me_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -781,6 +853,12 @@
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="pushButton_nicklist_nick_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -801,6 +879,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="pushButton_nicklist_selected_nick_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -821,6 +905,12 @@
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="pushButton_nicklist_busy_nick_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -848,6 +938,12 @@
            </item>
            <item row="0" column="1">
             <widget class="QPushButton" name="pushButton_nicklist_gradient_1_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -868,6 +964,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="pushButton_nicklist_gradient_2_color">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -939,6 +1041,12 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLabel" name="label_sound_beep">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="text">
              <string>Beep</string>
             </property>
@@ -971,6 +1079,12 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="label_sound_query">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="text">
              <string>Query</string>
             </property>
@@ -1135,6 +1249,62 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_view">
+     <widget class="QWidget" name="verticalLayoutWidget_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>421</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_formating">
+         <property name="text">
+          <string>Disable formatting messages</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_join_part">
+         <property name="text">
+          <string>Hide join/part</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_join_part_200">
+         <property name="text">
+          <string>Hide join/part when number of nicks &gt; 200</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_emots">
+         <property name="text">
+          <string>Disable emoticons</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_disable_replaces">
+         <property name="text">
+          <string>Disable replaces</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_hide_nicklist">
+         <property name="text">
+          <string>Hide nicklist</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_winamp">
      <widget class="QGroupBox" name="groupBox_winamp">
       <property name="geometry">
@@ -1269,9 +1439,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>431</width>
-        <height>351</height>
+        <y>0</y>
+        <width>421</width>
+        <height>361</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1297,13 +1467,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_minimize_to_tray">
-         <property name="text">
-          <string>Minimize to tray</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
          <property name="text">
           <string>Show ZUO and IP</string>
@@ -1311,44 +1474,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_hide_formating">
+        <widget class="QCheckBox" name="checkBox_minimize_to_tray">
          <property name="text">
-          <string>Disable formatting messages</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_join_part">
-         <property name="text">
-          <string>Hide join/part</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_join_part_200">
-         <property name="text">
-          <string>Hide join/part when number of nicks &gt; 200</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_emots">
-         <property name="text">
-          <string>Disable emoticons</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_replaces">
-         <property name="text">
-          <string>Disable replaces</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_nicklist">
-         <property name="text">
-          <string>Hide nicklist</string>
+          <string>Minimize to tray</string>
          </property>
         </widget>
        </item>

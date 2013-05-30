@@ -85,19 +85,6 @@ void OptionsGui::createGui()
     ui.pushButton_punish_reason_add->setText(tr("Add"));
     ui.pushButton_punish_reason_remove->setText(tr("Remove"));
 
-    // page adv
-    ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
-    ui.checkBox_auto_away->setText(tr("Auto away on idle"));
-    ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
-    ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
-    ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
-    ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
-    ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
-    ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
-    ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
-    ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
-    ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
-
     // page colors
     ui.pushButton_reverse_colors->setText(tr("Reverse colors"));
     ui.pushButton_restore_default_colors->setText(tr("Restore default"));
@@ -144,6 +131,14 @@ void OptionsGui::createGui()
     ui.pushButton_set_background_image->setText(tr("Set"));
     ui.checkBox_disable_background_image->setText(tr("Disable background image"));
 
+    // page view
+    ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
+    ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
+    ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
+    ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
+    ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
+    ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
+
     // page winamp
     ui.groupBox_winamp->setTitle(tr("Winamp"));
     ui.label_winamp_text->setText(tr("Displayed text:"));
@@ -156,6 +151,13 @@ void OptionsGui::createGui()
     // page notification
     ui.groupBox_notification->setTitle(tr("Notification"));
     ui.checkBox_tray_message->setText(tr("Show tray notification"));
+
+    // page adv
+    ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
+    ui.checkBox_auto_away->setText(tr("Auto away on idle"));
+    ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
+    ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
+    ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
 
     // options list
     QListWidgetItem *basic = new QListWidgetItem(ui.listWidget_options);
@@ -174,7 +176,7 @@ void OptionsGui::createGui()
     punish_reason->setToolTip(tr("Punish reason"));
 
     QListWidgetItem *colors = new QListWidgetItem(ui.listWidget_options);
-    colors->setIcon(QIcon(":/images/oxygen/16x16/view-media-visualization.png"));
+    colors->setIcon(QIcon(":/images/oxygen/16x16/preferences-desktop-display-color.png"));
     colors->setText(tr("Colors"));
     colors->setToolTip(tr("Colors"));
 
@@ -192,6 +194,11 @@ void OptionsGui::createGui()
     background_image->setIcon(QIcon(":/images/oxygen/16x16/games-config-background.png"));
     background_image->setText(tr("Background image"));
     background_image->setToolTip(tr("Background image"));
+
+    QListWidgetItem *view = new QListWidgetItem(ui.listWidget_options);
+    view->setIcon(QIcon(":/images/oxygen/16x16/project-development.png"));
+    view->setText(tr("View"));
+    view->setToolTip(tr("View"));
 
     QListWidgetItem *winamp = new QListWidgetItem(ui.listWidget_options);
     winamp->setIcon(QIcon(":/images/winamp.png"));
@@ -253,7 +260,6 @@ void OptionsGui::setDefaultValues()
 
     strLogsPath += "profiles/"+strCurrentProfile+"/log/";
 
-    // create dir if not exist
     if (!QDir().exists(strLogsPath))
         QDir().mkpath(strLogsPath);
 
@@ -265,11 +271,13 @@ void OptionsGui::setDefaultValues()
     // default values
     QString strLanguage = Settings::instance()->get("language");
 
-    QString strAutoBusy = Settings::instance()->get("auto_busy");
-    QString strAutoAway = Settings::instance()->get("auto_away");
-    QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
-    QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
-    QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
+    QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
+    QString strDisableLogs = Settings::instance()->get("disable_logs");
+
+    QString strDisableSounds = Settings::instance()->get("disable_sounds");
+
+    QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
+
     QString strHideFormating = Settings::instance()->get("hide_formating");
     QString strHideJoinPart = Settings::instance()->get("hide_join_part");
     QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
@@ -277,14 +285,15 @@ void OptionsGui::setDefaultValues()
     QString strDisableReplaces = Settings::instance()->get("disable_replaces");
     QString strHideNicklist = Settings::instance()->get("hide_nicklist");
 
-    QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
-    QString strDisableLogs = Settings::instance()->get("disable_logs");
-    QString strDisableSounds = Settings::instance()->get("disable_sounds");
-    QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
-
     QString strWinamp = Settings::instance()->get("winamp");
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
+
+    QString strAutoBusy = Settings::instance()->get("auto_busy");
+    QString strAutoAway = Settings::instance()->get("auto_away");
+    QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
+    QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
+    QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
 
     // language
     if (strLanguage == "en")
@@ -294,35 +303,29 @@ void OptionsGui::setDefaultValues()
     else
         ui.comboBox_language->setCurrentIndex(1);
 
-    // auto busy
-    if (strAutoBusy == "true")
-        ui.checkBox_auto_busy->setChecked(true);
+    // save logs by date
+    if (strSaveLogsByDate == "true")
+        ui.checkBox_save_logs_by_date->setChecked(true);
     else
-        ui.checkBox_auto_busy->setChecked(false);
+        ui.checkBox_save_logs_by_date->setChecked(false);
 
-    // auto away
-    if (strAutoAway == "true")
-        ui.checkBox_auto_away->setChecked(true);
+    // disable logs
+    if (strDisableLogs == "true")
+        ui.checkBox_disable_logs->setChecked(true);
     else
-        ui.checkBox_auto_away->setChecked(false);
+        ui.checkBox_disable_logs->setChecked(false);
 
-    // auto join favourites
-    if (strDisableAutojoinFavourites == "true")
-        ui.checkBox_disable_autojoin_favourites->setChecked(true);
+    // disable sounds
+    if (strDisableSounds == "true")
+        ui.checkBox_disable_sounds->setChecked(true);
     else
-        ui.checkBox_disable_autojoin_favourites->setChecked(false);
+        ui.checkBox_disable_sounds->setChecked(false);
 
-    // minimize to tray
-    if (strMinimizeToTray == "true")
-        ui.checkBox_minimize_to_tray->setChecked(true);
+    // disable background image
+    if (strDisableBackgroundImage == "true")
+        ui.checkBox_disable_background_image->setChecked(true);
     else
-        ui.checkBox_minimize_to_tray->setChecked(false);
-
-    // show zuo
-    if (strShowZuoAndIp == "true")
-        ui.checkBox_show_zuo_and_ip->setChecked(true);
-    else
-        ui.checkBox_show_zuo_and_ip->setChecked(false);
+        ui.checkBox_disable_background_image->setChecked(false);
 
     // hide formating
     if (strHideFormating == "true")
@@ -360,30 +363,6 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_hide_nicklist->setChecked(false);
 
-    // save logs by date
-    if (strSaveLogsByDate == "true")
-        ui.checkBox_save_logs_by_date->setChecked(true);
-    else
-        ui.checkBox_save_logs_by_date->setChecked(false);
-
-    // disable logs
-    if (strDisableLogs == "true")
-        ui.checkBox_disable_logs->setChecked(true);
-    else
-        ui.checkBox_disable_logs->setChecked(false);
-
-    // disable sounds
-    if (strDisableSounds == "true")
-        ui.checkBox_disable_sounds->setChecked(true);
-    else
-        ui.checkBox_disable_sounds->setChecked(false);
-
-    // disable background image
-    if (strDisableBackgroundImage == "true")
-        ui.checkBox_disable_background_image->setChecked(true);
-    else
-        ui.checkBox_disable_background_image->setChecked(false);
-
     // winamp
     ui.lineEdit_winamp->setText(strWinamp);
 
@@ -392,6 +371,36 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_tray_message->setChecked(true);
     else
         ui.checkBox_tray_message->setChecked(false);
+
+    // auto busy
+    if (strAutoBusy == "true")
+        ui.checkBox_auto_busy->setChecked(true);
+    else
+        ui.checkBox_auto_busy->setChecked(false);
+
+    // auto away
+    if (strAutoAway == "true")
+        ui.checkBox_auto_away->setChecked(true);
+    else
+        ui.checkBox_auto_away->setChecked(false);
+
+    // auto join favourites
+    if (strDisableAutojoinFavourites == "true")
+        ui.checkBox_disable_autojoin_favourites->setChecked(true);
+    else
+        ui.checkBox_disable_autojoin_favourites->setChecked(false);
+
+    // minimize to tray
+    if (strMinimizeToTray == "true")
+        ui.checkBox_minimize_to_tray->setChecked(true);
+    else
+        ui.checkBox_minimize_to_tray->setChecked(false);
+
+    // show zuo
+    if (strShowZuoAndIp == "true")
+        ui.checkBox_show_zuo_and_ip->setChecked(true);
+    else
+        ui.checkBox_show_zuo_and_ip->setChecked(false);
 
     // set mainwindow colors
     setMainwindowColors();
@@ -415,25 +424,18 @@ void OptionsGui::setDefaultValues()
 void OptionsGui::createSignals()
 {
     connect(ui.listWidget_options, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+
     connect(ui.comboBox_profiles, SIGNAL(activated(int)), this, SLOT(currentProfileChanged(int)));
     connect(ui.pushButton_profiles, SIGNAL(clicked()), this, SLOT(buttonProfiles()));
     connect(ui.pushButton_themes, SIGNAL(clicked()), this, SLOT(buttonThemes()));
     connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
+
     connect(ui.pushButton_highlight_add, SIGNAL(clicked()), this, SLOT(highlightAdd()));
     connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
+
     connect(ui.pushButton_punish_reason_add, SIGNAL(clicked()), this, SLOT(punishReasonAdd()));
     connect(ui.pushButton_punish_reason_remove, SIGNAL(clicked()), this, SLOT(punishReasonRemove()));
-    connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
-    connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
-    connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
-    connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
-    connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
-    connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
-    connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
-    connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
-    connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
-    connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
-    connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
+
     connect(ui.pushButton_reverse_colors, SIGNAL(clicked()), this, SLOT(reverseColors()));
     connect(ui.pushButton_restore_default_colors, SIGNAL(clicked()), this, SLOT(restoreDefaultColors()));
     connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
@@ -453,18 +455,37 @@ void OptionsGui::createSignals()
     connect(ui.pushButton_nicklist_busy_nick_color, SIGNAL(clicked()), this, SLOT(setNicklistBusyNickColor()));
     connect(ui.pushButton_nicklist_gradient_1_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient1Color()));
     connect(ui.pushButton_nicklist_gradient_2_color, SIGNAL(clicked()), this, SLOT(setNicklistGradient2Color()));
+
     connect(ui.pushButton_play_beep, SIGNAL(clicked()), this, SLOT(tryPlayBeep()));
     connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(tryPlayQuery()));
     connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(setSoundBeep()));
     connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(setSoundQuery()));
     connect(ui.checkBox_disable_sounds, SIGNAL(clicked(bool)), this, SLOT(disableSounds(bool)));
+
     connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(openLogsFolder()));
     connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setSaveLogsByDate(bool)));
     connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disableLogs(bool)));
+
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
     connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
+
+    connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
+    connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
+    connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
+    connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
+    connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
+    connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
+
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
+
     connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(trayMessage(bool)));
+
+    connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
+    connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
+    connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
+    connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
+    connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
+
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
 
@@ -642,127 +663,6 @@ void OptionsGui::punishReasonRemove()
         foreach (QListWidgetItem *item, items)
             ui.listWidget_punish_reason->takeItem(ui.listWidget_punish_reason->row(item));
     }
-}
-
-void OptionsGui::autoBusy(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("auto_busy", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("auto_busy", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::autoAway(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("auto_away", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("auto_away", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::disableAutojoinFavourites(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("disable_autojoin_favourites", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("disable_autojoin_favourites", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::minimizeToTray(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("minimize_to_tray", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("minimize_to_tray", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::showZuoAndIp(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("show_zuo_and_ip", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("show_zuo_and_ip", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::hideFormating(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("hide_formating", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("hide_formating", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::hideJoinPart(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("hide_join_part", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("hide_join_part", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::hideJoinPart200(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("hide_join_part_200", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("hide_join_part_200", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::disableEmots(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("disable_emots", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("disable_emots", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::disableReplaces(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("disable_replaces", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("disable_replaces", strValue);
-    delete pConfig;
-}
-
-void OptionsGui::hideNicklist(bool bValue)
-{
-    QString strValue = (bValue ? "true" : "false");
-
-    Settings::instance()->set("hide_nicklist", strValue);
-
-    Config *pConfig = new Config();
-    pConfig->set("hide_nicklist", strValue);
-    delete pConfig;
 }
 
 void OptionsGui::setBackgroundColor()
@@ -1143,6 +1043,72 @@ void OptionsGui::disableBackgroundImage(bool bValue)
     Core::instance()->mainWindow()->refreshCSS();
 }
 
+void OptionsGui::hideFormating(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("hide_formating", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("hide_formating", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::hideJoinPart(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("hide_join_part", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("hide_join_part", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::hideJoinPart200(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("hide_join_part_200", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("hide_join_part_200", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::disableEmots(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("disable_emots", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("disable_emots", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::disableReplaces(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("disable_replaces", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("disable_replaces", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::hideNicklist(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("hide_nicklist", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("hide_nicklist", strValue);
+    delete pConfig;
+}
+
 void OptionsGui::setWinamp()
 {
     QString strValue = ui.lineEdit_winamp->text();
@@ -1162,6 +1128,61 @@ void OptionsGui::trayMessage(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("tray_message", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::autoBusy(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("auto_busy", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("auto_busy", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::autoAway(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("auto_away", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("auto_away", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::disableAutojoinFavourites(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("disable_autojoin_favourites", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("disable_autojoin_favourites", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::minimizeToTray(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("minimize_to_tray", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("minimize_to_tray", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::showZuoAndIp(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("show_zuo_and_ip", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("show_zuo_and_ip", strValue);
     delete pConfig;
 }
 

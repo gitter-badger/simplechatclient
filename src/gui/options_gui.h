@@ -47,24 +47,17 @@ private:
 private slots:
     void changePage(QModelIndex index);
     void currentProfileChanged(int row);
+
     void buttonProfiles();
     void buttonThemes();
     void languageChanged(int index);
+
     void highlightAdd();
     void highlightRemove();
+
     void punishReasonAdd();
     void punishReasonRemove();
-    void autoBusy(bool bValue);
-    void autoAway(bool bValue);
-    void disableAutojoinFavourites(bool bValue);
-    void minimizeToTray(bool bValue);
-    void showZuoAndIp(bool bValue);
-    void hideFormating(bool bValue);
-    void hideJoinPart(bool bValue);
-    void hideJoinPart200(bool bValue);
-    void disableEmots(bool bValue);
-    void disableReplaces(bool bValue);
-    void hideNicklist(bool bValue);
+
     void reverseColors();
     void restoreDefaultColors();
     void setBackgroundColor();
@@ -84,18 +77,35 @@ private slots:
     void setNicklistBusyNickColor();
     void setNicklistGradient1Color();
     void setNicklistGradient2Color();
+
     void tryPlayBeep();
     void tryPlayQuery();
     void setSoundBeep();
     void setSoundQuery();
     void setSaveLogsByDate(bool bValue);
     void disableSounds(bool bValue);
+
     void openLogsFolder();
     void disableLogs(bool bValue);
+
     void setBackgroundImage();
     void disableBackgroundImage(bool bValue);
+
+    void hideFormating(bool bValue);
+    void hideJoinPart(bool bValue);
+    void hideJoinPart200(bool bValue);
+    void disableEmots(bool bValue);
+    void disableReplaces(bool bValue);
+    void hideNicklist(bool bValue);
+
     void setWinamp();
     void trayMessage(bool);
+
+    void autoBusy(bool bValue);
+    void autoAway(bool bValue);
+    void disableAutojoinFavourites(bool bValue);
+    void minimizeToTray(bool bValue);
+    void showZuoAndIp(bool bValue);
 };
 
 #endif // OPTIONS_GUI_H

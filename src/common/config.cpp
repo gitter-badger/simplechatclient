@@ -203,4 +203,3 @@ QHash<QString,QString> Config::getDefaultValues()
 
     return lDefaultValues;
 }
-
