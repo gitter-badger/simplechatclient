@@ -1589,7 +1589,7 @@
     </message>
     <message>
         <source>Hide nicklist</source>
-        <translation>Ukryj liste nicków</translation>
+        <translation>Ukryj listę nicków</translation>
     </message>
     <message>
         <source>Winamp</source>
@@ -1634,6 +1634,10 @@
     <message>
         <source>Advanced</source>
         <translation>Zaawansowane</translation>
+    </message>
+    <message>
+        <source>Connect on start up</source>
+        <translation>Połącz po uruchomieniu programu</translation>
     </message>
     <message>
         <source>Busy mode after you log in to chat</source>

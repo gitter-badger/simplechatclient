@@ -1446,6 +1446,13 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_11">
        <item>
+        <widget class="QCheckBox" name="checkBox_auto_connect">
+         <property name="text">
+          <string>Connect on start up</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="checkBox_auto_busy">
          <property name="text">
           <string>Busy mode after you log in to chat</string>

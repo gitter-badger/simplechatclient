@@ -101,6 +101,7 @@ private slots:
     void setWinamp();
     void trayMessage(bool);
 
+    void autoConnect(bool bValue);
     void autoBusy(bool bValue);
     void autoAway(bool bValue);
     void disableAutojoinFavourites(bool bValue);

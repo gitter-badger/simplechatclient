@@ -153,6 +153,7 @@ void OptionsGui::createGui()
     ui.checkBox_tray_message->setText(tr("Show tray notification"));
 
     // page adv
+    ui.checkBox_auto_connect->setText(tr("Connect on start up"));
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_auto_away->setText(tr("Auto away on idle"));
     ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
@@ -289,6 +290,7 @@ void OptionsGui::setDefaultValues()
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
 
+    QString strAutoConnect = Settings::instance()->get("auto_connect");
     QString strAutoBusy = Settings::instance()->get("auto_busy");
     QString strAutoAway = Settings::instance()->get("auto_away");
     QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
@@ -371,6 +373,12 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_tray_message->setChecked(true);
     else
         ui.checkBox_tray_message->setChecked(false);
+
+    // auto connect
+    if (strAutoConnect == "true")
+        ui.checkBox_auto_connect->setChecked(true);
+    else
+        ui.checkBox_auto_connect->setChecked(false);
 
     // auto busy
     if (strAutoBusy == "true")
@@ -480,6 +488,7 @@ void OptionsGui::createSignals()
 
     connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(trayMessage(bool)));
 
+    connect(ui.checkBox_auto_connect, SIGNAL(clicked(bool)), this, SLOT(autoConnect(bool)));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
     connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
@@ -1128,6 +1137,17 @@ void OptionsGui::trayMessage(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("tray_message", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::autoConnect(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("auto_connect", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("auto_connect", strValue);
     delete pConfig;
 }
 

@@ -139,6 +139,8 @@ QHash<QString,QString> Config::getDefaultValues()
     }
     else
     {
+        lDefaultValues.insert("always_quit", "false");
+
         lDefaultValues.insert("nick", "~test");
         lDefaultValues.insert("pass", QString::null);
         lDefaultValues.insert("themes", "Standard");
@@ -147,18 +149,6 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("highlight", QString::null);
 
         lDefaultValues.insert("punish_reason", strPunishReason);
-
-        lDefaultValues.insert("auto_busy", "false");
-        lDefaultValues.insert("auto_away", "true");
-        lDefaultValues.insert("minimize_to_tray", "false");
-        lDefaultValues.insert("disable_autojoin_favourites", "false");
-        lDefaultValues.insert("show_zuo_and_ip", "false");
-        lDefaultValues.insert("hide_formating", "false");
-        lDefaultValues.insert("hide_join_part", "false");
-        lDefaultValues.insert("hide_join_part_200", "true");
-        lDefaultValues.insert("disable_emots", "false");
-        lDefaultValues.insert("disable_replaces", "false");
-        lDefaultValues.insert("hide_nicklist", "false");
 
         lDefaultValues.insert("background_color", "#ffffff");
         lDefaultValues.insert("my_bold", "false");
@@ -194,11 +184,23 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("background_image", strBackgroundImage);
         lDefaultValues.insert("disable_background_image", "false");
 
+        lDefaultValues.insert("hide_formating", "false");
+        lDefaultValues.insert("hide_join_part", "false");
+        lDefaultValues.insert("hide_join_part_200", "true");
+        lDefaultValues.insert("disable_emots", "false");
+        lDefaultValues.insert("disable_replaces", "false");
+        lDefaultValues.insert("hide_nicklist", "false");
+
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
 
         lDefaultValues.insert("tray_message", "true");
 
-        lDefaultValues.insert("always_quit", "false");
+        lDefaultValues.insert("auto_connect", "false");
+        lDefaultValues.insert("auto_busy", "false");
+        lDefaultValues.insert("auto_away", "true");
+        lDefaultValues.insert("minimize_to_tray", "false");
+        lDefaultValues.insert("disable_autojoin_favourites", "false");
+        lDefaultValues.insert("show_zuo_and_ip", "false");
     }
 
     return lDefaultValues;

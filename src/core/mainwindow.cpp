@@ -334,6 +334,10 @@ void MainWindow::init()
 
     // first run - show options if config not exist
     firstRun();
+
+    // auto connect
+    if (Settings::instance()->get("auto_connect") == "true")
+        buttonConnect();
 }
 
 void MainWindow::addDefaultTabs()
