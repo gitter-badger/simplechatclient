@@ -1644,8 +1644,8 @@
         <translation>Oznaczenie jako zajęty po zalogowaniu</translation>
     </message>
     <message>
-        <source>Disable autojoin favourite channels</source>
-        <translation>Wyłącz automatyczne wchodzenie do ulubionych pokoi</translation>
+        <source>Autojoin favourite channels</source>
+        <translation>Automatyczne wchodzenie do ulubionych pokoi</translation>
     </message>
     <message>
         <source>Auto away on idle</source>

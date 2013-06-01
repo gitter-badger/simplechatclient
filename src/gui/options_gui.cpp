@@ -156,7 +156,7 @@ void OptionsGui::createGui()
     ui.checkBox_auto_connect->setText(tr("Connect on start up"));
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_auto_away->setText(tr("Auto away on idle"));
-    ui.checkBox_disable_autojoin_favourites->setText(tr("Disable autojoin favourite channels"));
+    ui.checkBox_autojoin_favourites->setText(tr("Autojoin favourite channels"));
     ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
     ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
 
@@ -293,7 +293,7 @@ void OptionsGui::setDefaultValues()
     QString strAutoConnect = Settings::instance()->get("auto_connect");
     QString strAutoBusy = Settings::instance()->get("auto_busy");
     QString strAutoAway = Settings::instance()->get("auto_away");
-    QString strDisableAutojoinFavourites = Settings::instance()->get("disable_autojoin_favourites");
+    QString strAutojoinFavourites = Settings::instance()->get("autojoin_favourites");
     QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
     QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
 
@@ -393,10 +393,10 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_auto_away->setChecked(false);
 
     // auto join favourites
-    if (strDisableAutojoinFavourites == "true")
-        ui.checkBox_disable_autojoin_favourites->setChecked(true);
+    if (strAutojoinFavourites == "true")
+        ui.checkBox_autojoin_favourites->setChecked(true);
     else
-        ui.checkBox_disable_autojoin_favourites->setChecked(false);
+        ui.checkBox_autojoin_favourites->setChecked(false);
 
     // minimize to tray
     if (strMinimizeToTray == "true")
@@ -491,7 +491,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_auto_connect, SIGNAL(clicked(bool)), this, SLOT(autoConnect(bool)));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
     connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
-    connect(ui.checkBox_disable_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(disableAutojoinFavourites(bool)));
+    connect(ui.checkBox_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(autojoinFavourites(bool)));
     connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
     connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
 
@@ -1173,14 +1173,14 @@ void OptionsGui::autoAway(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::disableAutojoinFavourites(bool bValue)
+void OptionsGui::autojoinFavourites(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("disable_autojoin_favourites", strValue);
+    Settings::instance()->set("autojoin_favourites", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("disable_autojoin_favourites", strValue);
+    pConfig->set("autojoin_favourites", strValue);
     delete pConfig;
 }
 

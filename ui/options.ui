@@ -1467,9 +1467,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_disable_autojoin_favourites">
+        <widget class="QCheckBox" name="checkBox_autojoin_favourites">
          <property name="text">
-          <string>Disable autojoin favourite channels</string>
+          <string>Autojoin favourite channels</string>
          </property>
         </widget>
        </item>

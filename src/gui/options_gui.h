@@ -104,7 +104,7 @@ private slots:
     void autoConnect(bool bValue);
     void autoBusy(bool bValue);
     void autoAway(bool bValue);
-    void disableAutojoinFavourites(bool bValue);
+    void autojoinFavourites(bool bValue);
     void minimizeToTray(bool bValue);
     void showZuoAndIp(bool bValue);
 };

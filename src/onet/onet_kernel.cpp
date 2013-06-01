@@ -1175,10 +1175,10 @@ void OnetKernel::raw_001()
         Core::instance()->network->send("BUSY 1");
 
     // ignore favourites
-    if (Settings::instance()->get("disable_autojoin_favourites") == "true")
-        Settings::instance()->set("ignore_favourites", "true");
-    else
+    if (Settings::instance()->get("autojoin_favourites") == "true")
         Settings::instance()->set("ignore_favourites", "false");
+    else
+        Settings::instance()->set("ignore_favourites", "true");
 
     // override off
     Settings::instance()->set("override", "false");
