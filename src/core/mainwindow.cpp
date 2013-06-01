@@ -333,7 +333,8 @@ void MainWindow::init()
     showWelcome();
 
     // first run - show options if config not exist
-    firstRun();
+    if (Settings::instance()->get("first_run") == "true")
+        firstRun();
 
     // auto connect
     if (Settings::instance()->get("auto_connect") == "true")
@@ -358,17 +359,12 @@ void MainWindow::showWelcome()
 
 void MainWindow::firstRun()
 {
-    QString strFirstRun = Settings::instance()->get("first_run");
+    Config *pConfig = new Config(false);
+    pConfig->set("first_run", "false");
+    Settings::instance()->set("first_run", "false");
+    delete pConfig;
 
-    if (strFirstRun == "true")
-    {
-        Config *pConfig = new Config(false);
-        pConfig->set("first_run", "false");
-        Settings::instance()->set("first_run", "false");
-        delete pConfig;
-
-        QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
-    }
+    QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
 }
 
 void MainWindow::setTrayMenuVisible(bool visible)
