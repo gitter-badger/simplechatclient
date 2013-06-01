@@ -135,7 +135,7 @@ void OptionsGui::createGui()
     ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
-    ui.checkBox_disable_emots->setText(tr("Disable emoticons"));
+    ui.checkBox_hide_emoticons->setText(tr("Hide emoticons"));
     ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
     ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
 
@@ -282,7 +282,7 @@ void OptionsGui::setDefaultValues()
     QString strHideFormating = Settings::instance()->get("hide_formating");
     QString strHideJoinPart = Settings::instance()->get("hide_join_part");
     QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
-    QString strDisableEmots = Settings::instance()->get("disable_emots");
+    QString strHideEmoticons = Settings::instance()->get("hide_emoticons");
     QString strDisableReplaces = Settings::instance()->get("disable_replaces");
     QString strHideNicklist = Settings::instance()->get("hide_nicklist");
 
@@ -347,11 +347,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_hide_join_part_200->setChecked(false);
 
-    // disable emots
-    if (strDisableEmots == "true")
-        ui.checkBox_disable_emots->setChecked(true);
+    // hide emoticons
+    if (strHideEmoticons == "true")
+        ui.checkBox_hide_emoticons->setChecked(true);
     else
-        ui.checkBox_disable_emots->setChecked(false);
+        ui.checkBox_hide_emoticons->setChecked(false);
 
     // disable replaces
     if (strDisableReplaces == "true")
@@ -480,7 +480,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
     connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
     connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
-    connect(ui.checkBox_disable_emots, SIGNAL(clicked(bool)), this, SLOT(disableEmots(bool)));
+    connect(ui.checkBox_hide_emoticons, SIGNAL(clicked(bool)), this, SLOT(hideEmoticons(bool)));
     connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
     connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
 
@@ -1085,14 +1085,14 @@ void OptionsGui::hideJoinPart200(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::disableEmots(bool bValue)
+void OptionsGui::hideEmoticons(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("disable_emots", strValue);
+    Settings::instance()->set("hide_emoticons", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("disable_emots", strValue);
+    pConfig->set("hide_emoticons", strValue);
     delete pConfig;
 }
 

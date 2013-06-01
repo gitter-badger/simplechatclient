@@ -1580,12 +1580,12 @@
         <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
     </message>
     <message>
-        <source>Disable emoticons</source>
-        <translation>Wyłącz obrazki</translation>
+        <source>Hide emoticons</source>
+        <translation>Nie pokazuj emotikon</translation>
     </message>
     <message>
         <source>Disable replaces</source>
-        <translation>Wyłącz zamianę emotikon</translation>
+        <translation>Nie zamieniaj emotikon na graficzne</translation>
     </message>
     <message>
         <source>Hide nicklist</source>

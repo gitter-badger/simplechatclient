@@ -1282,9 +1282,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_disable_emots">
+        <widget class="QCheckBox" name="checkBox_hide_emoticons">
          <property name="text">
-          <string>Disable emoticons</string>
+          <string>Hide emoticons</string>
          </property>
         </widget>
        </item>
