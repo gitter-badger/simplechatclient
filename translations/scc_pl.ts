@@ -34,6 +34,41 @@
     </message>
 </context>
 <context>
+    <name>AvatarListWidget</name>
+    <message>
+        <source>My avatars</source>
+        <translation>Moje awatary</translation>
+    </message>
+    <message>
+        <source>Collection of avatars</source>
+        <translation>Kolekcje awatarów</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edycja</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <source>Apply empty</source>
+        <translation>Ustaw pusty</translation>
+    </message>
+    <message>
+        <source>Apply avatar</source>
+        <translation>Ustaw awatar</translation>
+    </message>
+    <message>
+        <source>No photo available</source>
+        <translation>Brak zdjęcia</translation>
+    </message>
+</context>
+<context>
     <name>Busy</name>
     <message>
         <source>Mark as busy</source>
@@ -1215,41 +1250,6 @@
     </message>
 </context>
 <context>
-    <name>AvatarListWidget</name>
-    <message>
-        <source>My avatars</source>
-        <translation>Moje awatary</translation>
-    </message>
-    <message>
-        <source>Collection of avatars</source>
-        <translation>Kolekcje awatarów</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Dodaj</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>Edycja</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>Apply empty</source>
-        <translation>Ustaw pusty</translation>
-    </message>
-    <message>
-        <source>Apply avatar</source>
-        <translation>Ustaw awatar</translation>
-    </message>
-    <message>
-        <source>No photo available</source>
-        <translation>Brak zdjęcia</translation>
-    </message>
-</context>
-<context>
     <name>MyProfileGui</name>
     <message>
         <source>My profile</source>
@@ -1339,7 +1339,7 @@
     <message>
         <source>Reject</source>
         <translation>Odrzuć</translation>
-    </message>	
+    </message>
 </context>
 <context>
     <name>OfflineMessageGui</name>
@@ -3316,6 +3316,13 @@
     <message>
         <source>Warning: AES and Blowfish is not supported!</source>
         <translation>Ostrzeżenie: AES oraz Blowfish nie są obsługiwane!</translation>
+    </message>
+</context>
+<context>
+    <name>TabManager</name>
+    <message>
+        <source>Join channel</source>
+        <translation>Otwórz pokój</translation>
     </message>
 </context>
 <context>
