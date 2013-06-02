@@ -1170,6 +1170,21 @@
     </message>
 </context>
 <context>
+    <name>JoinChannelGui</name>
+    <message>
+        <source>Join channel</source>
+        <translation>Wejdź do pokoju</translation>
+    </message>
+    <message>
+        <source>Channel name:</source>
+        <translation>Nazwa pokoju:</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Wejdź</translation>
+    </message>
+</context>
+<context>
     <name>ModerationGui</name>
     <message>
         <source>Moderation</source>

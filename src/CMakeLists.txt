@@ -22,6 +22,7 @@ set (scc_UIS
 	../ui/ignore.ui
 	../ui/invite.ui
 	../ui/invite_list.ui
+	../ui/join_channel.ui
 	../ui/moderation.ui
 	../ui/my_avatar.ui
 	../ui/my_profile.ui
@@ -71,6 +72,7 @@ set (scc_SRCS
 	gui/ignore_gui.cpp
 	gui/invite_gui.cpp
 	gui/invite_list_gui.cpp
+	gui/join_channel_gui.cpp
 	gui/moderation_gui.cpp
 	gui/my_avatar_gui.cpp
 	gui/my_profile_gui.cpp
@@ -171,6 +173,7 @@ set (scc_MOC_HDRS
 	gui/ignore_gui.h
 	gui/invite_gui.h
 	gui/invite_list_gui.h
+	gui/join_channel_gui.h
 	gui/moderation_gui.h
 	gui/my_avatar_gui.h
 	gui/my_profile_gui.h

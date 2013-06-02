@@ -17,42 +17,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TAB_MANAGER_H
-#define TAB_MANAGER_H
+#ifndef JOIN_CHANNEL_GUI_H
+#define JOIN_CHANNEL_GUI_H
 
-#include "defines.h"
-#include <QTabWidget>
+#include <QDialog>
+#include "ui_join_channel.h"
 
-QT_BEGIN_NAMESPACE
-class QTabBar;
-QT_END_NAMESPACE
-
-/**
- * TabBar with highlight support
- */
-class TabManager : public QTabWidget
+class JoinChannelGui : public QDialog
 {
     Q_OBJECT
 public:
-    TabManager(QWidget *parent = 0);
-    void setAlert(const QString &channel, ChannelColor c);
-    void setColor(int index, QColor color);
-    void updateIcon(int index, const QString &avatar);
+    JoinChannelGui(QWidget *parent = 0);
 
 private:
-    QTabBar *tab;
-    QColor cRed;
-    QColor cGreen;
-    QColor cHighlight;
+    Ui::uiJoinChannel ui;
 
-    void hideCloseButton(int index);
+    void createGui();
+    void createSignals();
+    void createCompleter();
 
 private slots:
-    void tabMovedSlot(int from, int to);
-    void joinChannelClicked();
-
-protected:
-    virtual void tabInserted(int index);
+    void buttonJoin();
 };
 
-#endif // TAB_MANAGER_H
+#endif // JOIN_CHANNEL_GUI_H

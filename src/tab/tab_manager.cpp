@@ -18,8 +18,10 @@
  */
 
 #include <QTabBar>
+#include <QToolButton>
 #include "channel.h"
 #include "defines.h"
+#include "join_channel_gui.h"
 #include "tab_manager.h"
 
 TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
@@ -33,7 +35,14 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     cGreen = QColor(0, 147, 0, 255);
     cHighlight = QColor(138, 0, 184, 255);
 
+    QToolButton *bJoinChannel = new QToolButton(this);
+    bJoinChannel->setAutoRaise(true);
+    bJoinChannel->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    bJoinChannel->setIconSize(QSize(22,22));
+    this->setCornerWidget(bJoinChannel, Qt::TopRightCorner);
+
     connect(tab, SIGNAL(tabMoved(int,int)), this, SLOT(tabMovedSlot(int, int)));
+    connect(bJoinChannel, SIGNAL(clicked()), this, SLOT(joinChannelClicked()));
 }
 
 void TabManager::setAlert(const QString &channel, ChannelColor c)
@@ -106,4 +115,9 @@ void TabManager::tabInserted(int index)
 void TabManager::tabMovedSlot(int from, int to)
 {
     Channel::instance()->move(from, to);
+}
+
+void TabManager::joinChannelClicked()
+{
+    JoinChannelGui(this).exec();
 }

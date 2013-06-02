@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added join channel button
 * Added updates in options
 * Added auto connect in options
 * Added hide nicklist in options
