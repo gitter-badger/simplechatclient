@@ -359,9 +359,10 @@ void MainWindow::showWelcome()
 
 void MainWindow::firstRun()
 {
-    Config *pConfig = new Config(false);
-    pConfig->set("first_run", "false");
     Settings::instance()->set("first_run", "false");
+
+    Config *pConfig = new Config(SettingsConfig);
+    pConfig->set("first_run", "false");
     delete pConfig;
 
     QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec

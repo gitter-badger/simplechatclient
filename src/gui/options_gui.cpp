@@ -551,7 +551,7 @@ void OptionsGui::currentProfileChanged(int row)
 
     Settings::instance()->set("current_profile", profileName); // must be before config !
 
-    Config *pConfig = new Config(false);
+    Config *pConfig = new Config(SettingsConfig);
     pConfig->set("current_profile", profileName);
     delete pConfig;
 

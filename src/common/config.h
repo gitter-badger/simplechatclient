@@ -28,14 +28,13 @@ QT_BEGIN_NAMESPACE
 class QDomElement;
 QT_END_NAMESPACE
 
-/**
- * Class for config read/write
- */
+enum ConfigCategory {ProfileConfig, SettingsConfig};
+
 class Config : public QObject
 {
     Q_OBJECT
 public:
-    Config(bool _bProfileConfig = true, QString _strForceProfile = QString::null);
+    Config(ConfigCategory _eConfigCategory = ProfileConfig, QString _strProfileName = QString::null);
     virtual ~Config();
 
     QString get(const QString &strKey);
@@ -44,9 +43,9 @@ public:
     QHash<QString,QString> read();
 
 private:
+    ConfigCategory eConfigCategory;
+    QString strProfile;
     QString strConfigFile;
-    bool bProfileConfig;
-    QString strForceProfile;
     QHash<QString,QString> lDefaultValues;
     Xml *xml;
 

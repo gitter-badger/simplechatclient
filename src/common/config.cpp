@@ -30,7 +30,7 @@
     #include "scc-config.h"
 #endif
 
-Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(_bProfileConfig), strForceProfile(_strForceProfile)
+Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCategory(_eConfigCategory), strProfile(_strProfile)
 {
     QString path;
 #ifdef Q_WS_WIN
@@ -40,9 +40,9 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
     path = QDir::homePath()+"/.scc/";
 #endif
 
-    if (bProfileConfig)
+    if (eConfigCategory == ProfileConfig)
     {
-        QString user = (strForceProfile.isEmpty() ? Settings::instance()->get("current_profile") : strForceProfile);
+        QString user = (strProfile.isEmpty() ? Settings::instance()->get("current_profile") : strProfile);
         if (user.isEmpty()) user = "~test";
 
         path += "profiles/"+user+"/";
@@ -56,7 +56,7 @@ Config::Config(bool _bProfileConfig, QString _strForceProfile) : bProfileConfig(
         QDir().mkpath(path);
 
     // root name
-    QString strRootName = (bProfileConfig  == true ? "profile" : "settings");
+    QString strRootName = (eConfigCategory == ProfileConfig ? "profile" : "settings");
 
     // default values
     lDefaultValues = getDefaultValues();
@@ -131,7 +131,7 @@ QHash<QString,QString> Config::getDefaultValues()
 
     QHash<QString,QString> lDefaultValues;
 
-    if (!bProfileConfig)
+    if (eConfigCategory == SettingsConfig)
     {
         lDefaultValues.insert("first_run", "true");
         lDefaultValues.insert("current_profile", "~test");

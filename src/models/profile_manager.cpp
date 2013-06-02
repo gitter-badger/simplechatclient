@@ -86,7 +86,7 @@ bool ProfileManager::removeProfileDirectory(const QString &strDir)
 void ProfileManager::renameProfile(const QString &strProfile, const QString &strNewProfile)
 {
     // current profile
-    Config *pConfig = new Config(false);
+    Config *pConfig = new Config(SettingsConfig);
     pConfig->set("current_profile", strNewProfile);
     delete pConfig;
     Settings::instance()->set("current_profile", strNewProfile);

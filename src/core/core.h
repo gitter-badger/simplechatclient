@@ -64,7 +64,7 @@ private:
     void init();
     void createSettings();
     // reload config
-    void configValues();
+    void configSettingsValues();
     void configProfileValues();
     // fix settings
     void fixSettings();

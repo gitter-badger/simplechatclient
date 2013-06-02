@@ -166,7 +166,7 @@ void ProfileAddGui::buttonOk()
     }
 
     // save
-    Config *pConfig = new Config(true, strNick);
+    Config *pConfig = new Config(ProfileConfig, strNick);
     pConfig->set("nick", strNick);
     pConfig->set("pass", strPassword);
     delete pConfig;

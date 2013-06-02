@@ -49,7 +49,7 @@ void ProfileEditGui::createGui()
 
 void ProfileEditGui::setDefaultValues()
 {
-    Config *pConfig = new Config(true, strNick);
+    Config *pConfig = new Config(ProfileConfig, strNick);
     QString strPassword = pConfig->get("pass");
     delete pConfig;
 
@@ -87,7 +87,7 @@ void ProfileEditGui::buttonOk()
     strPassword = pSimpleCrypt->encrypt(strNick, strPassword);
     delete pSimpleCrypt;
 
-    Config *pConfig = new Config(true, strNick);
+    Config *pConfig = new Config(ProfileConfig, strNick);
     pConfig->set("pass", strPassword);
     delete pConfig;
 

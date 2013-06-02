@@ -123,8 +123,8 @@ void Core::createSettings()
 
 void Core::reloadSettings()
 {
-    // read config
-    configValues();
+    // read config settings
+    configSettingsValues();
 
     // read config profile
     configProfileValues();
@@ -136,10 +136,10 @@ void Core::reloadSettings()
     Themes::instance()->refreshCurrent();
 }
 
-void Core::configValues()
+void Core::configSettingsValues()
 {
     // config values
-    Config *pConfig = new Config(false);
+    Config *pConfig = new Config(SettingsConfig);
     QHash<QString,QString> lConfigValues = pConfig->read();
     delete pConfig;
 

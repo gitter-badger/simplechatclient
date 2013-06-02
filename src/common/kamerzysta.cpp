@@ -37,7 +37,7 @@
 
 Kamerzysta::Kamerzysta(QTcpSocket *_socket) : socket(_socket)
 {
-    log("Like constructor");
+    log("Constructor");
 
     timerGetPort = new QTimer();
     timerGetPort->setInterval(500);
@@ -51,7 +51,7 @@ Kamerzysta::Kamerzysta(QTcpSocket *_socket) : socket(_socket)
 
 void Kamerzysta::close()
 {
-    log("Like destructor");
+    log("Destructor");
 
     QObject::disconnect(timerGetPort, SIGNAL(timeout()), this, SLOT(getPort()));
     QObject::disconnect(socket, SIGNAL(readyRead()), this, SLOT(networkRead()));
