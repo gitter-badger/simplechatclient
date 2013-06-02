@@ -99,7 +99,10 @@ private slots:
     void hideNicklist(bool bValue);
 
     void setWinamp();
+
     void trayMessage(bool);
+
+    void updates(bool);
 
     void autoConnect(bool bValue);
     void autoBusy(bool bValue);

@@ -1632,6 +1632,14 @@
         <translation>Pokaż powiadomienia w zasobniku (dymki)</translation>
     </message>
     <message>
+        <source>Updates</source>
+        <translation>Aktualizacje</translation>
+    </message>
+    <message>
+        <source>Check updates on start up</source>
+        <translation>Sprawdzaj dostępność aktualizacji po uruchomieniu programu</translation>
+    </message>
+    <message>
         <source>Advanced</source>
         <translation>Zaawansowane</translation>
     </message>

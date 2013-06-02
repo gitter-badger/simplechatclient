@@ -152,6 +152,10 @@ void OptionsGui::createGui()
     ui.groupBox_notification->setTitle(tr("Notification"));
     ui.checkBox_tray_message->setText(tr("Show tray notification"));
 
+    // page updates
+    ui.groupBox_updates->setTitle(tr("Updates"));
+    ui.checkBox_updates->setText(tr("Check updates on start up"));
+
     // page adv
     ui.checkBox_auto_connect->setText(tr("Connect on start up"));
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
@@ -197,7 +201,7 @@ void OptionsGui::createGui()
     background_image->setToolTip(tr("Background image"));
 
     QListWidgetItem *view = new QListWidgetItem(ui.listWidget_options);
-    view->setIcon(QIcon(":/images/oxygen/16x16/project-development.png"));
+    view->setIcon(QIcon(":/images/oxygen/16x16/view-time-schedule.png"));
     view->setText(tr("View"));
     view->setToolTip(tr("View"));
 
@@ -210,6 +214,11 @@ void OptionsGui::createGui()
     notification->setIcon(QIcon(":/images/oxygen/16x16/help-hint.png"));
     notification->setText(tr("Notification"));
     notification->setToolTip(tr("Notification"));
+
+    QListWidgetItem *updates = new QListWidgetItem(ui.listWidget_options);
+    updates->setIcon(QIcon(":/images/oxygen/16x16/system-software-update.png"));
+    updates->setText(tr("Updates"));
+    updates->setToolTip(tr("Updates"));
 
     QListWidgetItem *adv = new QListWidgetItem(ui.listWidget_options);
     adv->setIcon(QIcon(":/images/oxygen/16x16/dialog-warning.png"));
@@ -289,6 +298,8 @@ void OptionsGui::setDefaultValues()
     QString strWinamp = Settings::instance()->get("winamp");
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
+
+    QString strUpdates = Settings::instance()->get("updates");
 
     QString strAutoConnect = Settings::instance()->get("auto_connect");
     QString strAutoBusy = Settings::instance()->get("auto_busy");
@@ -373,6 +384,12 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_tray_message->setChecked(true);
     else
         ui.checkBox_tray_message->setChecked(false);
+
+    // updates
+    if (strUpdates == "true")
+        ui.checkBox_updates->setChecked(true);
+    else
+        ui.checkBox_updates->setChecked(false);
 
     // auto connect
     if (strAutoConnect == "true")
@@ -487,6 +504,8 @@ void OptionsGui::createSignals()
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
 
     connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(trayMessage(bool)));
+
+    connect(ui.checkBox_updates, SIGNAL(clicked(bool)), this, SLOT(updates(bool)));
 
     connect(ui.checkBox_auto_connect, SIGNAL(clicked(bool)), this, SLOT(autoConnect(bool)));
     connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
@@ -1137,6 +1156,17 @@ void OptionsGui::trayMessage(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("tray_message", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::updates(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("updates", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("updates", strValue);
     delete pConfig;
 }
 

@@ -1434,6 +1434,34 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_updates">
+     <widget class="QGroupBox" name="groupBox_updates">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Updates</string>
+      </property>
+      <widget class="QCheckBox" name="checkBox_updates">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>421</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Check updates on start up</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_adv">
      <widget class="QWidget" name="verticalLayoutWidget_11">
       <property name="geometry">

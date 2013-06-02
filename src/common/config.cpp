@@ -195,6 +195,8 @@ QHash<QString,QString> Config::getDefaultValues()
 
         lDefaultValues.insert("tray_message", "true");
 
+        lDefaultValues.insert("updates", "true");
+
         lDefaultValues.insert("auto_connect", "false");
         lDefaultValues.insert("auto_busy", "false");
         lDefaultValues.insert("auto_away", "true");

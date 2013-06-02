@@ -126,6 +126,7 @@
         <file>images/theme_origin.png</file>
         <file>images/theme_standard.png</file>
         <file>images/oxygen/16x16/preferences-desktop-display-color.png</file>
-        <file>images/oxygen/16x16/project-development.png</file>
+        <file>images/oxygen/16x16/view-time-schedule.png</file>
+        <file>images/oxygen/16x16/system-software-update.png</file>
     </qresource>
 </RCC>
