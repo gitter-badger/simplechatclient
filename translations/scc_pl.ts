@@ -1177,7 +1177,7 @@
     </message>
     <message>
         <source>Channel name:</source>
-        <translation>Nazwa pokoju:</translation>
+        <translation>Podaj nazwę pokoju:</translation>
     </message>
     <message>
         <source>Join</source>
