@@ -61,7 +61,10 @@ Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCa
                     user = list.first().fileName();
 
                 Settings::instance()->set("current_profile", user);
-                // TODO save this !
+
+                Config *pConfig = new Config(SettingsConfig);
+                pConfig->set("current_profile", user);
+                delete pConfig;
             }
             else
                 user = strCurrentUser;
