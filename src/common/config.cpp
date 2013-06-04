@@ -40,6 +40,13 @@ Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCa
     path = QDir::homePath()+"/.scc/";
 #endif
 
+    // default values
+    lDefaultValues = getDefaultValues();
+
+    // root name
+    QString strRootName = (eConfigCategory == ProfileConfig ? "profile" : "settings");
+
+    // config
     if (eConfigCategory == ProfileConfig)
     {
         path += "profiles/";
@@ -55,10 +62,13 @@ Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCa
                 dir.setSorting(QDir::Name | QDir::IgnoreCase);
 
                 QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-                if (list.isEmpty())
-                    user = "~test";
-                else
+                if (!list.isEmpty())
                     user = list.first().fileName();
+                else
+                {
+                    int randomValue = qrand() % 999;
+                    user = "~nick_tymczasowy"+QString::number(randomValue);
+                }
 
                 Settings::instance()->set("current_profile", user);
 
@@ -85,12 +95,6 @@ Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCa
     // create dir if not exist
     if (!QDir().exists(path))
         QDir().mkpath(path);
-
-    // root name
-    QString strRootName = (eConfigCategory == ProfileConfig ? "profile" : "settings");
-
-    // default values
-    lDefaultValues = getDefaultValues();
 
     // open
     xml = new Xml(strConfigFile, strRootName, lDefaultValues);
@@ -134,10 +138,9 @@ void Config::fix()
         QString strDefaultValue = it.value();
 
         QString strValue = xml->get(strDefaultKey);
-        if (strValue.isEmpty())
+        if ((strValue.isEmpty()) && (strDefaultKey != "pass") && (strDefaultKey != "highlight") && (strDefaultKey != "punish_reason")) // ignore pass, highlight, punish_reason
         {
-            if (strDefaultKey != "pass") // ignore pass
-                xml->set(strDefaultKey, strDefaultValue);
+            xml->set(strDefaultKey, strDefaultValue);
         }
     }
 }
@@ -165,14 +168,14 @@ QHash<QString,QString> Config::getDefaultValues()
     if (eConfigCategory == SettingsConfig)
     {
         lDefaultValues.insert("first_run", "true");
-        lDefaultValues.insert("current_profile", "~test");
+        lDefaultValues.insert("current_profile", QString::null);
         lDefaultValues.insert("unique_id", uuidStr);
     }
     else
     {
         lDefaultValues.insert("always_quit", "false");
 
-        lDefaultValues.insert("nick", "~test");
+        lDefaultValues.insert("nick", QString::null);
         lDefaultValues.insert("pass", QString::null);
         lDefaultValues.insert("themes", "Standard");
         lDefaultValues.insert("language", "pl");
