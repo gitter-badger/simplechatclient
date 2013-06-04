@@ -70,7 +70,6 @@ Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCa
             user = strProfile;
 
         // prevent override
-        lDefaultValues["current_profile"] = user;
         lDefaultValues["nick"] = user;
 
         // select nick
