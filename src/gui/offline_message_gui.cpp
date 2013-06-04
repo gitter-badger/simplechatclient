@@ -122,7 +122,7 @@ void OfflineMessageGui::refreshMessages()
 
 void OfflineMessageGui::buttonReply()
 {
-    QString strMessage = ui.lineEdit->text();
+    QString strMessage = ui.lineEdit->text().trimmed();
     if (strMessage.isEmpty())
         return;
 

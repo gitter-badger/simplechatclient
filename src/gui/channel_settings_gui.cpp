@@ -640,7 +640,7 @@ void ChannelSettingsGui::removeChannelClicked()
 
 void ChannelSettingsGui::wwwChanged()
 {
-    Core::instance()->network->send(QString("CS SET %1 WWW %2").arg(strChannel, ui.lineEdit_website->text()));
+    Core::instance()->network->send(QString("CS SET %1 WWW %2").arg(strChannel, ui.lineEdit_website->text().trimmed()));
 
     refreshAll();
 }

@@ -59,7 +59,7 @@ void FindTextGui::createSignals()
 
 void FindTextGui::buttonFindNext()
 {
-    QString strText = ui.lineEdit_find->text();
+    QString strText = ui.lineEdit_find->text().trimmed();
     bool bHighlightAllOccurrences = ui.checkBox_highlight_all_occurrences->isChecked();
     bool bMatchCase = ui.checkBox_match_case->isChecked();
     bool bDirectionUp = ui.radioButton_direction_up->isChecked();

@@ -95,7 +95,7 @@ void JoinChannelGui::createCompleter()
 
 void JoinChannelGui::buttonJoin()
 {
-    QString strChannel = ui.lineEdit_channel->text();
+    QString strChannel = ui.lineEdit_channel->text().trimmed();
 
     if (strChannel.isEmpty())
         return;

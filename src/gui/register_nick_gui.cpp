@@ -120,11 +120,11 @@ void RegisterNickGui::gotImg(const QByteArray &bData)
 
 void RegisterNickGui::registerNick()
 {
-    QString strNick = ui.lineEdit_nick->text();
+    QString strNick = ui.lineEdit_nick->text().trimmed();
     QString strNickLength = QString::number(strNick.length());
     QString strPassword = ui.lineEdit_password->text();
     QString strPasswordLength = QString::number(strPassword.length());
-    QString strCode = ui.lineEdit_code->text();
+    QString strCode = ui.lineEdit_code->text().trimmed();
     QString strCodeLength = QString::number(strCode.length());
 
     if ((strNick.isEmpty()) || (strPassword.isEmpty()) || (strCode.isEmpty()))
@@ -173,7 +173,7 @@ void RegisterNickGui::parseResult(const QString &strResult)
     if (iErrCode == 1)
     {
         // encrypt pass
-        QString strNick = ui.lineEdit_nick->text();
+        QString strNick = ui.lineEdit_nick->text().trimmed();
         QString strPassword = ui.lineEdit_password->text();
 
         pProfileAddGui->setNickPass(strNick, strPassword);

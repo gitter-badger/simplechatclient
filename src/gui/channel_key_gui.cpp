@@ -51,7 +51,7 @@ void ChannelKeyGui::createSignals()
 
 void ChannelKeyGui::buttonOk()
 {
-    QString strKey = ui.lineEdit_key->text();
+    QString strKey = ui.lineEdit_key->text().trimmed();
     if (!strKey.isEmpty())
     {
         Core::instance()->network->send(QString("JOIN %1 %2").arg(strChannel, strKey));

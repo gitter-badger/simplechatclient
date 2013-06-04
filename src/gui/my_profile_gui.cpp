@@ -301,7 +301,7 @@ void MyProfileGui::buttonOk()
         Core::instance()->network->send(QString("NS SET birthdate %1").arg(strBirthdate));
 
     // set city
-    QString strCity = ui.lineEdit_city->text();
+    QString strCity = ui.lineEdit_city->text().trimmed();
     if (strCity != MyProfile::instance()->get("city"))
         Core::instance()->network->send(QString("NS SET city %1").arg(strCity));
 
@@ -317,7 +317,7 @@ void MyProfileGui::buttonOk()
         Core::instance()->network->send(QString("NS SET longDesc %1").arg(strHobby));
 
     // set www
-    QString strWWW = ui.lineEdit_www->text();
+    QString strWWW = ui.lineEdit_www->text().trimmed();
     if (strWWW != MyProfile::instance()->get("www"))
         Core::instance()->network->send(QString("NS SET www %1").arg(strWWW));
 

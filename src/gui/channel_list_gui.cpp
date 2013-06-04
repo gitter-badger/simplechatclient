@@ -374,7 +374,7 @@ void ChannelListGui::createList()
 void ChannelListGui::getOptions()
 {
     // search
-    strSearch = ui.lineEdit_search->text();
+    strSearch = ui.lineEdit_search->text().trimmed();
 
     // teen
     if (ui.checkBox_teen->isChecked())

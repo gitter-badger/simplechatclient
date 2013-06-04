@@ -93,6 +93,6 @@ void CaptchaGui::networkFinished(QNetworkReply *reply)
 
 void CaptchaGui::buttonOk()
 {
-    (*strCaptcha) = ui.lineEdit_code->text();
+    (*strCaptcha) = ui.lineEdit_code->text().trimmed();
     this->close();
 }

@@ -956,7 +956,7 @@ void OptionsGui::setSoundBeep()
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
                                      tr("Select Audio File"),
-                                     ui.lineEdit_sound_beep->text(),
+                                     ui.lineEdit_sound_beep->text().trimmed(),
                                      tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
                                      &selectedFilter,
                                      0);
@@ -977,7 +977,7 @@ void OptionsGui::setSoundQuery()
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
                                      tr("Select Audio File"),
-                                     ui.lineEdit_sound_query->text(),
+                                     ui.lineEdit_sound_query->text().trimmed(),
                                      tr("All Files (*);;Mp3 Files (*.mp3);;Wave Files (*.wav)"),
                                      &selectedFilter,
                                      0);
@@ -1006,7 +1006,7 @@ void OptionsGui::disableSounds(bool bValue)
 
 void OptionsGui::openLogsFolder()
 {
-    QString strLogsPath = QDir::toNativeSeparators(ui.lineEdit_logs_folder->text());
+    QString strLogsPath = QDir::toNativeSeparators(ui.lineEdit_logs_folder->text().trimmed());
 
     QDesktopServices::openUrl(QUrl::fromLocalFile(strLogsPath));
 }
@@ -1038,7 +1038,7 @@ void OptionsGui::setBackgroundImage()
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
                                      tr("Select Image File"),
-                                     ui.lineEdit_background_image->text(),
+                                     ui.lineEdit_background_image->text().trimmed(),
                                      tr("All Files (*);;JPG Files (*.jpg);;PNG Files (*.png);;Bitmap Files (*.bmp)"),
                                      &selectedFilter,
                                      0);
@@ -1139,7 +1139,7 @@ void OptionsGui::hideNicklist(bool bValue)
 
 void OptionsGui::setWinamp()
 {
-    QString strValue = ui.lineEdit_winamp->text();
+    QString strValue = ui.lineEdit_winamp->text().trimmed();
 
     Settings::instance()->set("winamp", strValue);
 

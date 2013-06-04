@@ -99,7 +99,7 @@ void FindNickGui::buttonFind()
 
     FindNick::instance()->clear();
 
-    QString search = ui.lineEdit_search->text();
+    QString search = ui.lineEdit_search->text().trimmed();
     if (!search.isEmpty())
     {
         Core::instance()->network->send(QString("NS LIST %1 20").arg(search));

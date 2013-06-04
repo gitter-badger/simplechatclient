@@ -83,7 +83,7 @@ void ProfileAddGui::hidePass()
     ui.label_password->hide();
     ui.lineEdit_password->hide();
 
-    QString strNick = ui.lineEdit_nick->text();
+    QString strNick = ui.lineEdit_nick->text().trimmed();
 
     // fix nick
     if ((!strNick.isEmpty()) && (strNick.at(0) != '~'))
@@ -97,7 +97,7 @@ void ProfileAddGui::showPass()
     ui.label_password->show();
     ui.lineEdit_password->show();
 
-    QString strNick = ui.lineEdit_nick->text();
+    QString strNick = ui.lineEdit_nick->text().trimmed();
 
     // fix nick
     if ((!strNick.isEmpty()) && (strNick.at(0) == '~'))
@@ -113,7 +113,7 @@ void ProfileAddGui::buttonRegisterNick()
 
 void ProfileAddGui::buttonOk()
 {
-    QString strNick = ui.lineEdit_nick->text();
+    QString strNick = ui.lineEdit_nick->text().trimmed();
     QString strPassword = ui.lineEdit_password->text();
 
     // empty
