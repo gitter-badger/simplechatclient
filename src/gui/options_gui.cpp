@@ -537,7 +537,7 @@ void OptionsGui::refreshProfilesList()
         QDir().mkpath(path);
 
     QDir dir(path);
-    dir.setSorting(QDir::Name);
+    dir.setSorting(QDir::Name | QDir::IgnoreCase);
 
     QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
     foreach (const QFileInfo &info, list)

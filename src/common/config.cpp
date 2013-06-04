@@ -42,10 +42,38 @@ Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCa
 
     if (eConfigCategory == ProfileConfig)
     {
-        QString user = (strProfile.isEmpty() ? Settings::instance()->get("current_profile") : strProfile);
-        if (user.isEmpty()) user = "~test";
+        path += "profiles/";
 
-        path += "profiles/"+user+"/";
+        QString user = QString::null;
+
+        if (strProfile.isEmpty())
+        {
+            QString strCurrentUser = Settings::instance()->get("current_profile");
+            if (!QDir().exists(path+strCurrentUser))
+            {
+                QDir dir(path);
+                dir.setSorting(QDir::Name | QDir::IgnoreCase);
+
+                QFileInfoList list = dir.entryInfoList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+                if (list.isEmpty())
+                    user = "~test";
+                else
+                    user = list.first().fileName();
+
+                Settings::instance()->set("current_profile", user);
+            }
+            else
+                user = strCurrentUser;
+        }
+        else
+            user = strProfile;
+
+        // prevent override
+        lDefaultValues["current_profile"] = user;
+        lDefaultValues["nick"] = user;
+
+        // select nick
+        path += user+"/";
         strConfigFile = path+"profile.xml";
     }
     else
