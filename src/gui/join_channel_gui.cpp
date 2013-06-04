@@ -97,13 +97,13 @@ void JoinChannelGui::buttonJoin()
 {
     QString strChannel = ui.lineEdit_channel->text();
 
-    if (!strChannel.isEmpty())
-    {
-        if ((strChannel.at(0) != '#') && (strChannel.at(0) != '^'))
-            strChannel = "#"+strChannel;
+    if (strChannel.isEmpty())
+        return;
 
-        Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    }
+    if ((strChannel.at(0) != '#') && (strChannel.at(0) != '^'))
+        strChannel = "#"+strChannel;
+
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 
     this->close();
 }
