@@ -155,7 +155,7 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
-        QString strText = this->text().simplified();
+        QString strText = this->text().trimmed();
 
         if (!strText.isEmpty())
         {
