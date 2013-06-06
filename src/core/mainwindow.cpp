@@ -365,7 +365,7 @@ void MainWindow::firstRun()
     pConfig->set("first_run", "false");
     delete pConfig;
 
-    QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
+    //QTimer::singleShot(1000*1, this, SLOT(openOptions())); // 1 sec
 }
 
 void MainWindow::setTrayMenuVisible(bool visible)
