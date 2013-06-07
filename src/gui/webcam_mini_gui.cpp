@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopWidget>
 #include "webcam_mini_gui.h"
 
 WebcamMiniGui::WebcamMiniGui(QString nick)
@@ -25,6 +26,10 @@ WebcamMiniGui::WebcamMiniGui(QString nick)
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(nick);
+    // move
+    int x = QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(this)).topRight().x() - rect().width() - 50;
+    int y = QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(this)).topRight().y() + 30;
+    move(x,y);
 }
 
 void WebcamMiniGui::updateImage(const QByteArray &data)
