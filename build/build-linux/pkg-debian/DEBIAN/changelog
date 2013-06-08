@@ -1,5 +1,15 @@
-Version 1.7.3 (07.04.2013)
+Version 1.8.0 (08.06.2013)
 ================================
-* Fixed replace emoticons
-* Fixed logs
-* Fixed commands
+* Added join channel button
+* Added updates in options
+* Added auto connect in options
+* Added hide nicklist in options
+* Added /clear command
+* Added time to invite list
+* Fixed animated icon
+* Changed default emoticons,sounds dir
+* Added nick option in context menu
+* Fixed avatar display
+* Fixed sound
+* Fixed offline messages
+* Many bugfixes

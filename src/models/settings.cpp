@@ -40,7 +40,7 @@ void Settings::init()
 {
     clear();
 
-    set("version", "1.7.3.0");
+    set("version", "1.8.0.0");
 }
 
 void Settings::clear()
