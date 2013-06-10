@@ -1,6 +1,9 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version dev (unknown)
+* Fixed invite focus
+
 Version 1.8.0 (08.06.2013)
 ================================
 * Added join channel button
