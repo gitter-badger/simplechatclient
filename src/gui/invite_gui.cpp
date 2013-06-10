@@ -39,6 +39,10 @@ InviteGui::InviteGui(const QString &_strId, qint64 _iDateTime, const QString &_s
         ui.label_msg->setText(QString(tr("%1 invites you to priv")).arg(strNick));
     else
         ui.label_msg->setText(QString(tr("%1 invites you to channel %2")).arg(strNick, strChannel));
+
+    // focus
+    ui.buttonBox->setFocus();
+    ui.buttonBox->setFocusPolicy(Qt::StrongFocus);
 }
 
 void InviteGui::createGui()
