@@ -21,7 +21,6 @@
 #include <QDesktopWidget>
 #include <QTimer>
 #include "core.h"
-#include "convert.h"
 #include "offline.h"
 #include "settings.h"
 #include "offline_message_gui.h"
@@ -70,8 +69,6 @@ void OfflineMessageGui::refreshMessages()
         QDateTime dDateTime = QDateTime::fromMSecsSinceEpoch(iTime);
         QString strDate = dDateTime.toString("dd MMM yyyy");
         QString strTime = dDateTime.toString("[hh:mm:ss]");
-
-        Convert::simpleConvert(strMessage);
 
         QListWidgetItem *item = new QListWidgetItem();
         item->setToolTip(strDate);

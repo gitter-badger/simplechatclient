@@ -18,7 +18,11 @@
  */
 
 #include <QAction>
+#include <QDateTime>
+#include "convert.h"
+#include "log.h"
 #include "notification.h"
+#include "settings.h"
 #include "offline.h"
 
 Offline * Offline::Instance = 0;
@@ -48,10 +52,22 @@ void Offline::init()
 
 void Offline::addMessage(qint64 iTime, const QString &strType, const QString &strNick, const QString &strMessage)
 {
+    QString strOfflineMessage = strMessage;
+
+    Convert::simpleConvert(strOfflineMessage);
+
+    // save offlinelog
+    if (Settings::instance()->get("disable_logs") == "false")
+    {
+        QString strOfflineMessageLog = QString("%1 <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strNick, strOfflineMessage);
+        Log::save("offlinelog", strOfflineMessageLog);
+    }
+
+    // add
     OnetOfflineMessage oOfflineMessage;
     oOfflineMessage.datetime = iTime;
     oOfflineMessage.type = strType;
-    oOfflineMessage.message = strMessage;
+    oOfflineMessage.message = strOfflineMessage;
 
     lOfflineMessages.insert(strNick, oOfflineMessage);
 }
