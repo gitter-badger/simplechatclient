@@ -17,14 +17,14 @@ set QTDIR=%QT_DIR%
 
 if not exist %CMAKE_DIR%\bin\cmake.exe (
 if not exist %CMAKE32_DIR%\bin\cmake.exe (
-echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.10.2-win32-x86.exe
+echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.11.2-win32-x86.exe
 pause
 exit
 )
 )
 
 if not exist %QT_DIR%\bin\qtvars.bat (
-echo Download Qt 4.8.4 for MinGW from http://qt-project.org/downloads#qt-lib
+echo Download Qt 4.8.5 for MinGW from http://qt-project.org/downloads#qt-lib
 pause
 exit
 )

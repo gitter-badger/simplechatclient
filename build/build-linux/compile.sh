@@ -10,5 +10,5 @@ cd pkg-debian
 find . -type f ! -regex '.*\.hg.*' ! -regex '.*?debian-binary.*' ! -regex '.*?DEBIAN.*' -printf '%P ' | xargs md5sum > DEBIAN/md5sums 
 cd ..
 
-fakeroot dpkg -b pkg-debian/ scc-1.8.0.0.deb
-fakeroot alien -c -k -r scc-1.8.0.0.deb
+fakeroot dpkg -b pkg-debian/ scc-1.8.1.0.deb
+fakeroot alien -c -k -r scc-1.8.1.0.deb
