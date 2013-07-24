@@ -61,6 +61,9 @@ void Offline::addMessage(qint64 iTime, const QString &strType, const QString &st
     {
         QString strOfflineMessageLog = QString("%1 <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strNick, strOfflineMessage);
         Log::save("offlinelog", strOfflineMessageLog);
+
+        //QString strSaveData = QString("%1 <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strNick, strOfflineMessage);
+        //Log::save(strNick, strSaveData);
     }
 
     // add
