@@ -169,7 +169,7 @@ void MainWindow::createActions()
     myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
     myAvatarAction = new QAction(QIcon(":/images/oxygen/16x16/edit-image-face-show.png"),tr("My avatar"), this);
 
-    camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Cams"), this);
+    camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Webcams"), this);
     notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
     aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
 

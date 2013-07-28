@@ -2083,7 +2083,7 @@
         <translation>Znajdź nick</translation>
     </message>
     <message>
-        <source>Cams</source>
+        <source>Webcams</source>
         <translation>Kamerki</translation>
     </message>
     <message>
