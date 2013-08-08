@@ -362,14 +362,19 @@ void ToolWidget::setDefaultValues()
 
     color->setCurrentIndex(iMyColor);
 
-    // refresh input widget
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // input widget
+    QString strInputHeight = Settings::instance()->get("font_size");
+    strInputHeight.remove("px");
+    int iInputHeight = strInputHeight.toInt();
+
+    pInputLine->setFont(QFont(strMyFontFamily, iInputHeight, iWeight, bMyItalic));
+    pInputLine->setMinimumHeight(iInputHeight*2);
 
     // refresh input line text color
     if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
-        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; }"));
+        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; font-size: %1px;}").arg(strInputHeight));
     else
-        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
+        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strInputHeight));
 
     // moderation default hidden
     showModeration(false);
@@ -465,8 +470,10 @@ void ToolWidget::boldClicked()
         delete pConfig;
     }
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setBold(bMyBold);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::italicClicked()
@@ -496,8 +503,10 @@ void ToolWidget::italicClicked()
         delete pConfig;
     }
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setItalic(bMyItalic);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::arialTriggered()
@@ -509,8 +518,10 @@ void ToolWidget::arialTriggered()
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setFamily(strMyFontFamily);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::timesTriggered()
@@ -522,8 +533,10 @@ void ToolWidget::timesTriggered()
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setFamily(strMyFontFamily);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::verdanaTriggered()
@@ -535,8 +548,10 @@ void ToolWidget::verdanaTriggered()
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setFamily(strMyFontFamily);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::tahomaTriggered()
@@ -548,8 +563,10 @@ void ToolWidget::tahomaTriggered()
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setFamily(strMyFontFamily);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::courierTriggered()
@@ -561,8 +578,10 @@ void ToolWidget::courierTriggered()
     pConfig->set("my_font", strMyFontFamily);
     delete pConfig;
 
-    int iWeight = (bMyBold ? 75 : 50);
-    pInputLine->setFont(QFont(strMyFontFamily, -1, iWeight, bMyItalic));
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setFamily(strMyFontFamily);
+    pInputLine->setFont(fInputLine);
 }
 
 void ToolWidget::size8Triggered()
@@ -575,6 +594,13 @@ void ToolWidget::size8Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(8);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(8*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size9Triggered()
@@ -587,6 +613,13 @@ void ToolWidget::size9Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(9);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(9*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size10Triggered()
@@ -599,6 +632,13 @@ void ToolWidget::size10Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(10);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(10*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size11Triggered()
@@ -611,6 +651,13 @@ void ToolWidget::size11Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(11);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(11*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size12Triggered()
@@ -623,6 +670,13 @@ void ToolWidget::size12Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(12);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(12*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size14Triggered()
@@ -635,6 +689,13 @@ void ToolWidget::size14Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(14);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(14*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size16Triggered()
@@ -647,6 +708,13 @@ void ToolWidget::size16Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(16);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(16*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size18Triggered()
@@ -659,6 +727,13 @@ void ToolWidget::size18Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(18);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(18*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size20Triggered()
@@ -671,6 +746,13 @@ void ToolWidget::size20Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(20);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(20*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::size24Triggered()
@@ -683,6 +765,13 @@ void ToolWidget::size24Triggered()
     delete pConfig;
 
     Core::instance()->mainWindow()->refreshCSS();
+
+    // refresh font
+    QFont fInputLine = pInputLine->font();
+    fInputLine.setPointSize(24);
+    pInputLine->setFont(fInputLine);
+    pInputLine->setMinimumHeight(24*2);
+    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strValue));
 }
 
 void ToolWidget::colorClicked(int index)
