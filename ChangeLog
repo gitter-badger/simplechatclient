@@ -1,6 +1,10 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
+Version dev (unknown)
+================================
+* Dynamic font height in inputline
+
 Version 1.8.1 (24.07.2013)
 ================================
 * Fixed offline messages
