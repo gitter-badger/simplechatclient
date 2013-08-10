@@ -596,9 +596,6 @@ void ToolWidget::size8Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(8);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(8*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 8px;}").arg(strCurrentColor));
 }
@@ -615,9 +612,6 @@ void ToolWidget::size9Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(9);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(9*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 9px;}").arg(strCurrentColor));
 }
@@ -634,9 +628,6 @@ void ToolWidget::size10Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(10);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(10*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 10px;}").arg(strCurrentColor));
 }
@@ -653,9 +644,6 @@ void ToolWidget::size11Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(11);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(11*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 11px;}").arg(strCurrentColor));
 }
@@ -672,9 +660,6 @@ void ToolWidget::size12Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(12);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(12*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 12px;}").arg(strCurrentColor));
 }
@@ -691,9 +676,6 @@ void ToolWidget::size14Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(14);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(14*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 14px;}").arg(strCurrentColor));
 }
@@ -710,9 +692,6 @@ void ToolWidget::size16Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(16);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(16*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 16px;}").arg(strCurrentColor));
 }
@@ -729,9 +708,6 @@ void ToolWidget::size18Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(18);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(18*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 18px;}").arg(strCurrentColor));
 }
@@ -748,9 +724,6 @@ void ToolWidget::size20Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(20);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(20*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 20px;}").arg(strCurrentColor));
 }
@@ -767,9 +740,6 @@ void ToolWidget::size24Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    //QFont fInputLine = pInputLine->font();
-    //fInputLine.setPointSize(24);
-    //pInputLine->setFont(fInputLine);
     pInputLine->setMinimumHeight(24*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 24px;}").arg(strCurrentColor));
 }
