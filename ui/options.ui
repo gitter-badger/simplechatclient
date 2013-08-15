@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>407</height>
+    <width>652</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>634</width>
-    <height>407</height>
+    <width>652</width>
+    <height>422</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>652</width>
+    <height>422</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -26,8 +32,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>7</x>
-     <y>380</y>
+     <x>10</x>
+     <y>390</y>
      <width>621</width>
      <height>25</height>
     </rect>
@@ -39,8 +45,8 @@
   <widget class="QSplitter" name="splitter">
    <property name="geometry">
     <rect>
-     <x>5</x>
-     <y>5</y>
+     <x>10</x>
+     <y>10</y>
      <width>631</width>
      <height>371</height>
     </rect>

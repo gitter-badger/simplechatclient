@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>773</width>
-    <height>576</height>
+    <width>790</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,8 +32,8 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>10</x>
+     <y>10</y>
      <width>771</width>
      <height>571</height>
     </rect>
@@ -45,13 +45,13 @@
        <widget class="QWidget" name="widget" native="true">
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>210</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>200</width>
+          <width>210</width>
           <height>16777215</height>
          </size>
         </property>
@@ -60,7 +60,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>191</width>
+           <width>201</width>
            <height>151</height>
           </rect>
          </property>
@@ -130,7 +130,7 @@
           <rect>
            <x>0</x>
            <y>160</y>
-           <width>191</width>
+           <width>201</width>
            <height>171</height>
           </rect>
          </property>
@@ -142,7 +142,7 @@
            <rect>
             <x>10</x>
             <y>22</y>
-            <width>171</width>
+            <width>181</width>
             <height>136</height>
            </rect>
           </property>
@@ -190,7 +190,7 @@
           <rect>
            <x>0</x>
            <y>340</y>
-           <width>191</width>
+           <width>201</width>
            <height>191</height>
           </rect>
          </property>
@@ -202,7 +202,7 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>171</width>
+            <width>181</width>
             <height>164</height>
            </rect>
           </property>

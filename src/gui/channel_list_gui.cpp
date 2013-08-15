@@ -572,14 +572,14 @@ void ChannelListGui::showAdvOptions()
 
 void ChannelListGui::resizeEvent(QResizeEvent *)
 {
-    ui.verticalLayoutWidget->setGeometry(QRect(0, 0, this->width(), this->height()));
-    ui.tabWidget->setGeometry(QRect(205, 1, this->width()-205, this->height()-30));
-    ui.tableWidget_all->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
-    ui.tableWidget_teen->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
-    ui.tableWidget_common->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
-    ui.tableWidget_erotic->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
-    ui.tableWidget_thematic->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
-    ui.tableWidget_regional->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-30));
+    ui.verticalLayoutWidget->setGeometry(QRect(10, 10, this->width()-20, this->height()-20));
+    ui.tabWidget->setGeometry(QRect(215, 0, this->width()-235, this->height()-50));
+    ui.tableWidget_all->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-35));
+    ui.tableWidget_teen->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-35));
+    ui.tableWidget_common->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-35));
+    ui.tableWidget_erotic->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-35));
+    ui.tableWidget_thematic->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-35));
+    ui.tableWidget_regional->setGeometry(QRect(0, 0, ui.tabWidget->width()-10, ui.tabWidget->height()-35));
 }
 
 void ChannelListGui::keyPressEvent(QKeyEvent *event)

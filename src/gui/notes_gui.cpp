@@ -76,7 +76,7 @@ void NotesGui::resizeEvent(QResizeEvent *)
 {
     int iWidth = this->width();
     int iHeight = this->height();
-    ui.plainTextEdit->setMinimumSize(QSize(iWidth, iHeight-30));
-    ui.plainTextEdit->setMaximumSize(QSize(iWidth, iHeight-30));
-    ui.buttonBox->setGeometry(0, iHeight-30, iWidth, 30);
+    ui.plainTextEdit->setMinimumSize(QSize(iWidth-20, iHeight-50));
+    ui.plainTextEdit->setMaximumSize(QSize(iWidth-20, iHeight-50));
+    ui.buttonBox->setGeometry(10, iHeight-40, iWidth-20, 40);
 }
