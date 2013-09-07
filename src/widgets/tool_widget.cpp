@@ -768,11 +768,13 @@ void ToolWidget::colorClicked(int index)
     pConfig->set("my_color", strCurrentColor);
     delete pConfig;
 
+    QString strFontSize = Settings::instance()->get("font_size");
+
     // refresh input line text color
     if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
-        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; }"));
+        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; font-size: %1; }").arg(strFontSize));
     else
-        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; }").arg(strCurrentColor));
+        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2; }").arg(strCurrentColor, strFontSize));
 }
 
 void ToolWidget::emoticonsClicked()
