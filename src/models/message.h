@@ -37,7 +37,7 @@ public:
     void showMessageActive(const QString &strData, MessageCategory eMessageCategory);
 
 private:
-    void saveMessage(const QString &strChannel, const QString &strData, qint64 iTime, QString strNick = QString::null);
+    void saveMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
     bool isHideJoinPart(const QString &strChannel, MessageCategory eMessageCategory);
     bool isHighlightMessage(const QString &strMessage);
 };

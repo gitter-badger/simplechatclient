@@ -70,13 +70,16 @@ bool Message::isHighlightMessage(const QString &strMessage)
     return false;
 }
 
-void Message::saveMessage(const QString &strChannel, const QString &strData, qint64 iTime, QString strNick)
+void Message::saveMessage(const QString &strChannel, const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
 {
     QString strSaveData;
     if (!strNick.isEmpty())
         strSaveData = QString("%1 <%2> %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strNick, strData);
     else
         strSaveData = QString("%1 %2").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strData);
+
+    if (eMessageCategory == MessageInfo)
+        strSaveData.replace(QRegExp("#[&!=+%@`]([\\w]+)\\b"), "#\\1"); //remove channel prefix from whois line
 
     // fix /me
     Convert::fixMeAction(strSaveData);
@@ -141,7 +144,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
 
     // save message
     if (Settings::instance()->get("disable_logs") == "false")
-        saveMessage(strChannel, strData, iTime, strNick);
+        saveMessage(strChannel, strData, eMessageCategory, iTime, strNick);
 
     // display
     Channel::instance()->getChatView(strChannel)->displayMessage(strData, eMessageCategory, iTime, strNick);
