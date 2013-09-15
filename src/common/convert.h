@@ -37,6 +37,7 @@ namespace Convert
     void simpleConvert(QString &strData);
     void removeStyles(QString &strData);
     void convertText(QString &strData, bool bInsertWidthHeight = false);
+    void convertPrefix(QString &strData);
 
     bool isBold(const QString &strData);
     bool isItalic(const QString &strData);

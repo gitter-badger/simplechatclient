@@ -2609,7 +2609,13 @@ void OnetKernel::raw_319()
         if (i != 4) strChannels += " ";
         QString strChannel = strDataList.at(i);
         if (strChannel.at(0) == ':') strChannel.remove(0,1);
-        if ((strChannel.at(0) != '#') && (strChannel.at(0) != '^')) strChannel.remove(0,1);
+        if ((strChannel.at(0) != '#') && (strChannel.at(0) != '^'))
+        {
+            // move prefix `#scc => #`scc
+            QChar prefix = strChannel.at(0);
+            strChannel.remove(0, 1);
+            strChannel.insert(1, prefix);
+        }
         strChannels += strChannel;
     }
 

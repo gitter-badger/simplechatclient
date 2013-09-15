@@ -43,6 +43,9 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         if (strWord.at(0) == '#')
         {
             Convert::removeStyles(strWord);
+            if (eMessageCategory == MessageInfo)
+                Convert::convertPrefix(strWord);
+
             strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" style=\"text-decoration:none;\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);
         }
 
