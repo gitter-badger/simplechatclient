@@ -304,7 +304,7 @@ void ChatView::watchVideo()
 
 void ChatView::openWebbrowser()
 {
-    QDesktopServices::openUrl(QUrl(strWebsite));
+    QDesktopServices::openUrl(QUrl::fromUserInput(strWebsite));
 }
 
 void ChatView::sendToNotes()
