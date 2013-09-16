@@ -5,7 +5,9 @@ set (QT_MIN_VERSION "4.8.0")
 find_package (Qt4 REQUIRED)
 
 # optimization
-set(CMAKE_BUILD_TYPE Release)
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo." FORCE)
+endif (NOT CMAKE_BUILD_TYPE)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 # warnings
@@ -28,11 +30,15 @@ if (MINGW)
 	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
 
 	# disable console on windows mingw
-	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+	if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
+	endif (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif (MINGW)
 
 # set
-set (CMAKE_INSTALL_PREFIX /usr)
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set (CMAKE_INSTALL_PREFIX /usr)
+endif (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 set (SCC_BIN_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 set (SCC_SHARE_DIR ${CMAKE_INSTALL_PREFIX}/share)
 set (SCC_DATA_DIR ${CMAKE_INSTALL_PREFIX}/share/scc)
@@ -47,6 +53,11 @@ add_subdirectory (translations)
 
 # configure
 configure_file (${CMAKE_SOURCE_DIR}/scc-config.h.cmake ${CMAKE_BINARY_DIR}/scc-config.h)
+
+if (UNIX AND NOT APPLE)
+	message (STATUS " * install prefix: ${CMAKE_INSTALL_PREFIX}")
+endif (UNIX AND NOT APPLE)
+message (STATUS " * build type: ${CMAKE_BUILD_TYPE}")
 
 # install
 if (UNIX AND NOT APPLE)
