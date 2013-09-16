@@ -11,8 +11,8 @@ endif (NOT CMAKE_BUILD_TYPE)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 # warnings
-#set (CMAKE_C_FLAGS "-W -Wall -Wextra ${CMAKE_C_FLAGS}")
-#set (CMAKE_CXX_FLAGS "-W -Wall -Wextra ${CMAKE_CXX_FLAGS}")
+set (CMAKE_C_FLAGS "-W -Wall -Wextra ${CMAKE_C_FLAGS}")
+set (CMAKE_CXX_FLAGS "-W -Wall -Wextra ${CMAKE_CXX_FLAGS}")
 
 # debug
 #if (UNIX)
@@ -30,9 +30,9 @@ if (MINGW)
 	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
 
 	# disable console on windows mingw
-	if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+	if (CMAKE_BUILD_TYPE STREQUAL "Release")
 		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -mwindows")
-	endif (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+	endif (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif (MINGW)
 
 # set
