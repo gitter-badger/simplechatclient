@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Fixed join/rejoin speed
 * Dynamic font height in inputline
 * Added whois icons
 
