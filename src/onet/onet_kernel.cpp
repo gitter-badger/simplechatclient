@@ -1188,12 +1188,18 @@ void OnetKernel::raw_001()
 
     // auto rejoin
     QList<CaseIgnoreString> lChannelsCaseIgnore = Channel::instance()->getListClearedSorted();
-
-    //foreach (const QString &strChannel, lChannelsCaseIgnore)
-        //pTabC->removeTab(strChannel);
-
-    foreach (const QString &strChannel, lChannelsCaseIgnore)
-        Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
+    if (!lChannelsCaseIgnore.isEmpty())
+    {
+        QString strMassRejoin;
+        foreach (const QString &strChannel, lChannelsCaseIgnore)
+        {
+            if (strMassRejoin.isEmpty())
+                strMassRejoin += "JOIN "+strChannel;
+            else
+                strMassRejoin += ","+strChannel;
+        }
+        Core::instance()->network->send(strMassRejoin);
+    }
 
     // channel list
     Core::instance()->network->send("SLIST  R- 0 0 100 null");
@@ -1454,11 +1460,21 @@ void OnetKernel::raw_142n()
         Settings::instance()->set("ignore_favourites", "true");
 
         QList<CaseIgnoreString> lChannelsCaseIgnore = ChannelFavourites::instance()->getAllCaseIgnoreSorted();
+        if (lChannelsCaseIgnore.isEmpty())
+            return;
+
+        QString strMassJoin;
         foreach (const QString &strChannel, lChannelsCaseIgnore)
         {
             if (!Channel::instance()->contains(strChannel))
-                Core::instance()->network->sendQueue(QString("JOIN %1").arg(strChannel));
+            {
+                if (strMassJoin.isEmpty())
+                    strMassJoin += "JOIN "+strChannel;
+                else
+                    strMassJoin += ","+strChannel;
+            }
         }
+        Core::instance()->network->send(strMassJoin);
     }
 }
 
