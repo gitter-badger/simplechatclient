@@ -100,7 +100,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     }
 
     // convert emoticons, font
-    Convert::convertText(strData, true);
+    Convert::convertText(strData, true, true);
 
     // fix utf8
     strData = Convert::fixUtf8Chars(strData);
