@@ -409,6 +409,8 @@ QString Commands::cmdKick()
 
 QString Commands::cmdMe()
 {
+    if (strDataList.value(1).isEmpty()) return QString::null;
+
     QString strChannel = strChan;
 
     QString strMessage;
@@ -601,6 +603,8 @@ QString Commands::cmdSop()
 
 QString Commands::cmdTopic()
 {
+    //if (strDataList.value(1).isEmpty()) return QString::null;
+
     QString strChannel = strChan;
 
     QString strMessage;
