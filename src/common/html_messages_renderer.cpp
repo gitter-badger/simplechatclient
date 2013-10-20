@@ -223,7 +223,7 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageMe = Settings::instance()->get("message_me_color");
     QString strMessageError = Settings::instance()->get("message_error_color");
 
-    QString strHeadCSS = "div{margin-bottom: 2px;}";
+    QString strHeadCSS = "div{margin-bottom: 2px;white-space:pre-wrap;}";
     strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
     strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultColor));
     strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
