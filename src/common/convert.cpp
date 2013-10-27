@@ -95,7 +95,9 @@ void convertFont(QString &strData)
             QString strFontName = rx.cap(2);
 
             if (strFontStyle.contains("b")) strAtributes += "font-weight:bold;";
+            else strAtributes += "font-weight:normal;";
             if (strFontStyle.contains("i")) strAtributes += "font-style:italic;";
+            else strAtributes += "font-style:normal;";
 
             if (strFontName == "arial") strAtributes += "font-family:Arial;";
             else if (strFontName == "times") strAtributes += "font-family:Times New Roman;";
