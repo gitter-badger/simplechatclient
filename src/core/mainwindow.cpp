@@ -324,6 +324,7 @@ void MainWindow::createSignals()
 void MainWindow::init()
 {
     // focus
+    setTabOrder(pTabM, pToolWidget);
     pToolWidget->setFocus();
 
     // add default tabs

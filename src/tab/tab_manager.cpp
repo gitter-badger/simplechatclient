@@ -40,6 +40,7 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     bJoinChannel->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     bJoinChannel->setIconSize(QSize(22,22));
     bJoinChannel->setToolTip(tr("Join channel"));
+    bJoinChannel->setFocusPolicy(Qt::NoFocus);
     this->setCornerWidget(bJoinChannel, Qt::TopRightCorner);
 
     connect(tab, SIGNAL(tabMoved(int,int)), this, SLOT(tabMovedSlot(int, int)));
