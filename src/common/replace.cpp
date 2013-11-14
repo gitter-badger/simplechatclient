@@ -78,7 +78,6 @@ void Replace::replaceEmots(QString &strData)
     lEmoticons["]:->"] = "%Ixdiabel%";
     lEmoticons["];->"] = "%Ixdiabel%";
     lEmoticons[";?"] = "%Ixco%";
-    lEmoticons["?!"] = "%Ipytanie%%Iwykrzyknik%";
 
     QHashIterator<QString, QString> it(lEmoticons);
     while (it.hasNext())
