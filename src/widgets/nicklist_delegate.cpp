@@ -51,7 +51,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QColor cGradient1 = QColor(strNicklistGradient1Color);
     QColor cGradient2 = QColor(strNicklistGradient2Color);
 
-    int marginLeft = 5;
+    int marginLeft = 3;
     int marginRight = 3;
 
     bool selected;
