@@ -165,7 +165,7 @@ void AvatarListWidget::getCollectionsReady(const QByteArray &content)
         QDomNode pEntries = el.firstChild();
 
         QString name;
-        int id;
+        int id = 0;
         while (!pEntries.isNull())
         {
             QDomElement eData = pEntries.toElement();
@@ -178,7 +178,9 @@ void AvatarListWidget::getCollectionsReady(const QByteArray &content)
 
             pEntries = pEntries.nextSibling();
         }
-        collections.insert(name, id);
+
+        if ((!name.isEmpty()) && (id != 0))
+            collections.insert(name, id);
     }
 
     ui.listWidget_list_collections->clear();
