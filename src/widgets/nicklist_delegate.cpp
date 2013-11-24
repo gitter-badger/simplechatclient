@@ -51,6 +51,9 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QColor cGradient1 = QColor(strNicklistGradient1Color);
     QColor cGradient2 = QColor(strNicklistGradient2Color);
 
+    int marginLeft = 5;
+    int marginRight = 3;
+
     bool selected;
     if (option.state & QStyle::State_Selected)
     {
@@ -118,6 +121,8 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // nick
     if (Themes::instance()->isCurrentWithNicklistAvatar())
     {
+        QRect rect = option.rect;
+
         // with avatars
         if ((busy) && (!selected)) painter->setPen(busyPen); // gray
 
@@ -126,12 +131,14 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         font.setItalic(busy ? true : false);
         painter->setFont(font);
 
-        QRect rect = option.rect;
-        if (nick.at(0) != '~') rect.setX(rect.x()+40);
+        if (nick.at(0) != '~') rect.setX(rect.x()+35+5);
         painter->drawText(rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
     }
     else
     {
+        QRect rect = option.rect;
+        rect.setX(rect.x() + marginLeft);
+
         // without avatars
         if ((busy) && (!selected)) painter->setPen(busyPen); // gray
 
@@ -140,14 +147,14 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         font.setItalic(busy ? true : false);
         painter->setFont(font);
 
-        painter->drawText(option.rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
+        painter->drawText(rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
     }
 
     // status icons
     if (statusIcons)
     {
         QRect rect = option.rect;
-        rect.setX(rect.right());
+        rect.setX(rect.right() - marginRight);
 
         foreach (const QIcon &icon, icons)
         {
