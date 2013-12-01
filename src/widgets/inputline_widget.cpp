@@ -159,10 +159,13 @@ bool InputLineWidget::event(QEvent *e)
 
         if (!strText.isEmpty())
         {
-            if (lLastMessages.size() >= iLastMessageLimit)
-                lLastMessages.removeLast();
+            if (!lLastMessages.contains(strText))
+            {
+                if (lLastMessages.size() >= iLastMessageLimit)
+                    lLastMessages.removeLast();
 
-            lLastMessages.push_front(strText);
+                lLastMessages.push_front(strText);
+            }
 
             iLastMessage = -1;
 
@@ -173,6 +176,18 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if (k->key() == Qt::Key_Up)
     {
+        QString strText = this->text().trimmed();
+
+        if ((!strText.isEmpty()) && (!lLastMessages.contains(strText)))
+        {
+            if (lLastMessages.size() >= iLastMessageLimit)
+                lLastMessages.removeLast();
+
+            lLastMessages.push_front(strText);
+
+            iLastMessage++;
+        }
+
         iLastMessage++;
         if (iLastMessage > iLastMessageLimit)
             iLastMessage = iLastMessageLimit;
@@ -192,6 +207,18 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if (k->key() == Qt::Key_Down)
     {
+        QString strText = this->text().trimmed();
+
+        if ((!strText.isEmpty()) && (!lLastMessages.contains(strText)))
+        {
+            if (lLastMessages.size() >= iLastMessageLimit)
+                lLastMessages.removeLast();
+
+            lLastMessages.push_front(strText);
+
+            iLastMessage--;
+        }
+
         iLastMessage--;
         if (iLastMessage < -1)
             iLastMessage = -1;
