@@ -32,7 +32,7 @@
 #endif
 
 #define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.xml"
-#define UPDATE_URL_2 "http://simplechatclient.github.com/update.xml"
+#define UPDATE_URL_2 "http://simplechatclient.github.io/update.xml"
 
 Update * Update::Instance = 0;
 
