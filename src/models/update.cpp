@@ -67,6 +67,11 @@ void Update::checkUpdate()
         QNetworkRequest request;
         request.setUrl(QUrl(strUrl));
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        #if (QT_VERSION >= 0x050000)
+            request.setHeader(QNetworkRequest::UserAgentHeader, "SimpleChatClientUpdateAgent");
+        #else
+            request.setRawHeader("User-Agent", "SimpleChatClientUpdateAgent");
+        #endif
         QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
         pReply->setProperty("update_url", "1");
     }
