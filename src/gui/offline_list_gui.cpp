@@ -84,7 +84,7 @@ void OfflineListGui::refresh()
 
 void OfflineListGui::buttonRead()
 {
-    if (ui.listWidget->selectedItems().isEmpty())
+    if (ui.listWidget->selectedItems().size() == 0)
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
@@ -101,7 +101,7 @@ void OfflineListGui::buttonRead()
 
 void OfflineListGui::buttonReject()
 {
-    if (ui.listWidget->selectedItems().isEmpty())
+    if (ui.listWidget->selectedItems().size() == 0)
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);

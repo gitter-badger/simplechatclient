@@ -321,6 +321,8 @@ void WebcamEngine::raw_403b(const QByteArray &data)
 
 void WebcamEngine::textKernel(const QString &strData)
 {
+    if (strData.isEmpty()) return;
+
     if (Settings::instance()->get("debug") == "true")
         qDebug() << "CAM <- " << strData;
 

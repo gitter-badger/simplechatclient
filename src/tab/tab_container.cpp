@@ -37,7 +37,7 @@ TabContainer::~TabContainer()
 
 void TabContainer::addTab(const QString &strChannel)
 {
-    if (Channel::instance()->contains(strChannel))
+    if ((strChannel.isEmpty()) || (Channel::instance()->contains(strChannel)))
         return;
 
     Channel::instance()->add(strChannel);
@@ -72,7 +72,7 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
 
     if (index >= 0 && index <= pTabM->count())
     {
-        if (pTabM->tabText(index).at(0) == '^')
+        if ((pTabM->tabText(index).size() != 0) && (pTabM->tabText(index).at(0) == '^'))
         {
             pTabM->setTabText(index, strNewName);
 

@@ -755,14 +755,14 @@ void AvatarListWidget::setEmptyAvatarClicked()
 
 void AvatarListWidget::setCollectionAvatarClicked()
 {
-    if (!ui.listWidget_collections->selectedItems().isEmpty())
-    {
-        QString avatarUrl = ui.listWidget_collections->selectedItems().at(0)->data(AvatarUrlRole).toString();
+    if (ui.listWidget_collections->selectedItems().size() == 0)
+        return;
 
-        if (!avatarUrl.isEmpty())
-        {
-            emit avatarSelected(avatarUrl);
-        }
+    QString avatarUrl = ui.listWidget_collections->selectedItems().at(0)->data(AvatarUrlRole).toString();
+
+    if (!avatarUrl.isEmpty())
+    {
+        emit avatarSelected(avatarUrl);
     }
 }
 

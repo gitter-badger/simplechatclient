@@ -52,7 +52,7 @@ void Channel::clear()
 
 void Channel::add(const QString &channel)
 {
-    if (lChannels.contains(channel))
+    if ((channel.isEmpty()) || (lChannels.contains(channel)))
         return;
 
     OnetChannel ochannel;

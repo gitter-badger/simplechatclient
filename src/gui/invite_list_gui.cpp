@@ -113,7 +113,7 @@ void InviteListGui::itemClicked(QListWidgetItem *)
 
 void InviteListGui::buttonAccept()
 {
-    if (ui.listWidget->selectedItems().isEmpty())
+    if (ui.listWidget->selectedItems().size() == 0)
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
@@ -127,7 +127,7 @@ void InviteListGui::buttonAccept()
 
 void InviteListGui::buttonReject()
 {
-    if (ui.listWidget->selectedItems().isEmpty())
+    if (ui.listWidget->selectedItems().size() == 0)
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
@@ -142,7 +142,7 @@ void InviteListGui::buttonReject()
 
 void InviteListGui::buttonIgnore()
 {
-    if (ui.listWidget->selectedItems().isEmpty())
+    if (ui.listWidget->selectedItems().size() == 0)
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);
@@ -157,7 +157,7 @@ void InviteListGui::buttonIgnore()
 
 void InviteListGui::whois()
 {
-    if (ui.listWidget->selectedItems().isEmpty())
+    if (ui.listWidget->selectedItems().size() == 0)
         return;
 
     QListWidgetItem *item = ui.listWidget->selectedItems().at(0);

@@ -143,19 +143,18 @@ void ChannelHomesGui::buttonRemove()
 
 void ChannelHomesGui::join()
 {
-    if (ui.listWidget_channels->selectedItems().size() != 0)
-    {
-        QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
-        Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    }
+    if (ui.listWidget_channels->selectedItems().size() == 0)
+        return;
+
+    QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }
 
 void ChannelHomesGui::settings()
 {
-    if (ui.listWidget_channels->selectedItems().size() != 0)
-    {
-        QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+    if (ui.listWidget_channels->selectedItems().size() == 0)
+        return;
 
-        ChannelSettingsGui(strChannel).exec();
-    }
+    QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+    ChannelSettingsGui(strChannel).exec();
 }

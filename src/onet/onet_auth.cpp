@@ -59,6 +59,9 @@ OnetAuth::~OnetAuth()
 
 void OnetAuth::authorize(QString _strNick, QString _strPass)
 {
+    if (_strNick.isEmpty())
+        return; // empty nick
+
     if (Settings::instance()->get("logged") == "true")
         return; // already logged
 

@@ -48,6 +48,8 @@ void Tray::init()
 
 void Tray::showMessage(const QString &strTitle, const QString &strMessage)
 {
+    if ((strTitle.isEmpty()) || (strMessage.isEmpty()))
+        return;
     if ((Core::instance()->mainWindow()->isActiveWindow()) || (Settings::instance()->get("tray_message") == "false"))
         return;
 

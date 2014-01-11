@@ -134,6 +134,9 @@ void ProfileManagerGui::refreshProfilesList()
 
 void ProfileManagerGui::itemClicked()
 {
+    if (ui.listWidget->selectedItems().size() == 0)
+        return;
+
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
 
     if (strNick.at(0) != '~')
@@ -151,6 +154,9 @@ void ProfileManagerGui::addProfile()
 
 void ProfileManagerGui::editProfile()
 {
+    if (ui.listWidget->selectedItems().size() == 0)
+        return;
+
     QString strNick = ui.listWidget->selectedItems().at(0)->text();
     ProfileEditGui(strNick).exec();
 }
@@ -162,6 +168,9 @@ void ProfileManagerGui::removeProfile()
         QMessageBox::critical(0, QString::null, tr("Cannot remove last profile"));
         return;
     }
+
+    if (ui.listWidget->selectedItems().size() == 0)
+        return;
 
     QString profileName = ui.listWidget->selectedItems().at(0)->text();
 

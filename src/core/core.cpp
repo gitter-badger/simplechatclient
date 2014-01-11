@@ -96,7 +96,7 @@ void Core::createAndShowGui()
 void Core::createSettings()
 {
     // default settings
-    Settings::instance()->set("available_version", QString::null);
+    Settings::instance()->set("available_version", "0.0.0.0");
     Settings::instance()->set("whats_new", QString::null);
     Settings::instance()->set("motd", QString::null);
     Settings::instance()->set("version_status", "unknown");

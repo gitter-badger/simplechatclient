@@ -156,35 +156,35 @@ void FindNickGui::itemClicked(QListWidgetItem *)
 
 void FindNickGui::priv()
 {
-    if (ui.listWidget_nicks->selectedItems().size() != 0)
-    {
-        QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+    if (ui.listWidget_nicks->selectedItems().size() == 0)
+        return;
 
-        Core::instance()->network->send(QString("PRIV %1").arg(strNick));
-    }
+    QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+
+    Core::instance()->network->send(QString("PRIV %1").arg(strNick));
 }
 
 void FindNickGui::whois()
 {
-    if (ui.listWidget_nicks->selectedItems().size() != 0)
-    {
-        QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+    if (ui.listWidget_nicks->selectedItems().size() == 0)
+        return;
 
-        Core::instance()->network->send(QString("WHOIS %1 :%1").arg(strNick));
-    }
+    QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+
+    Core::instance()->network->send(QString("WHOIS %1 :%1").arg(strNick));
 }
 
 void FindNickGui::invite()
 {
-    if (ui.listWidget_nicks->selectedItems().size() != 0)
-    {
-        QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+    if (ui.listWidget_nicks->selectedItems().size() == 0)
+        return;
 
-        QAction *action = qobject_cast<QAction *>(sender());
-        if (action)
-        {
-            QString strInviteChannel = action->data().toString();
-            Core::instance()->network->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
-        }
+    QString strNick = ui.listWidget_nicks->selectedItems().at(0)->text();
+
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+    {
+        QString strInviteChannel = action->data().toString();
+        Core::instance()->network->send(QString("INVITE %1 %2").arg(strNick, strInviteChannel));
     }
 }

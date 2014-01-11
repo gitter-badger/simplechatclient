@@ -46,6 +46,7 @@ void Log::logClosed(const QString &strChannel)
 void Log::save(const QString &strChannel, const QString &strMessage)
 {
     if (Settings::instance()->get("disable_logs") == "true") return;
+    if ((strChannel.isEmpty()) || (strMessage.isEmpty())) return;
 
     QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;

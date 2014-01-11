@@ -52,6 +52,9 @@ void Awaylog::init()
 
 void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strData)
 {
+    if ((strChannel.isEmpty()) || (strData.isEmpty()))
+        return;
+
     // channel
     QString strAwayLogChannel = strChannel;
 

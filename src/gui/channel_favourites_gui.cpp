@@ -132,9 +132,9 @@ void ChannelFavouritesGui::buttonRemove()
 
 void ChannelFavouritesGui::join()
 {
-    if (ui.listWidget_channels->selectedItems().size() != 0)
-    {
-        QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
-        Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
-    }
+    if (ui.listWidget_channels->selectedItems().size() == 0)
+        return;
+
+    QString strChannel = ui.listWidget_channels->selectedItems().at(0)->text();
+    Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
 }

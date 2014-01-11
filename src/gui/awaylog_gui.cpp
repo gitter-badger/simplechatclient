@@ -74,13 +74,13 @@ void AwaylogGui::buttonClear()
 
 void AwaylogGui::buttonCopy()
 {
-    if (ui.listWidget->selectedItems().size() != 0)
-    {
-        QString strText = ui.listWidget->selectedItems().at(0)->text();
+    if (ui.listWidget->selectedItems().size() == 0)
+        return;
 
-        QApplication::clipboard()->setText(strText, QClipboard::Selection);
-        QApplication::clipboard()->setText(strText, QClipboard::Clipboard);
-    }
+    QString strText = ui.listWidget->selectedItems().at(0)->text();
+
+    QApplication::clipboard()->setText(strText, QClipboard::Selection);
+    QApplication::clipboard()->setText(strText, QClipboard::Clipboard);
 }
 
 void AwaylogGui::itemClicked(QListWidgetItem *)

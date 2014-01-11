@@ -58,6 +58,7 @@ void NickList::clearUsers()
 
 void NickList::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
 {
+    if ((strNick.isEmpty()) || (strChannel.isEmpty())) return;
     if (!Channel::instance()->contains(strChannel)) return;
 
     if (strChannel.at(0) == '^')

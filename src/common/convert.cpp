@@ -393,7 +393,7 @@ QHash<char, QString> createPrefixHash()
 
 void Convert::convertPrefix(QString &strData)
 {
-    Q_ASSERT(strData.length() > 1);
+    if (strData.isEmpty()) return;
 
     static const QHash<char, QString> m = createPrefixHash();
 

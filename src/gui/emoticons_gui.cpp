@@ -197,14 +197,14 @@ void EmoticonsGui::buttonInsert()
 
     EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->currentWidget();
 
-    if (!tab->listWidget->selectedItems().isEmpty())
-    {
-        QString strEmoticon = tab->listWidget->selectedItems().at(0)->data(EmoticonNameRole).toString();
+    if (tab->listWidget->selectedItems().size() == 0)
+        return;
 
-        // insert
-        pInputLineWidget->insertText("//"+strEmoticon);
+    QString strEmoticon = tab->listWidget->selectedItems().at(0)->data(EmoticonNameRole).toString();
 
-        // close
-        this->close();
-    }
+    // insert
+    pInputLineWidget->insertText("//"+strEmoticon);
+
+    // close
+    this->close();
 }

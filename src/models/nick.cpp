@@ -134,6 +134,8 @@ void Nick::quit(const QString &strNick, const QString &strDisplay)
 
 void Nick::changeFlag(const QString &strNick, const QString &strChannel, QString strFlag)
 {
+    if ((strNick.isEmpty()) || (strChannel.isEmpty()) || (strFlag.isEmpty()))
+        return;
     if (!lNicks.contains(strNick)) return;
 
     QString strModes = lNicks[strNick].channel_modes.value(strChannel, QString::null);

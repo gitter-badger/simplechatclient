@@ -970,20 +970,20 @@ void ChannelSettingsGui::refreshPermissionList()
         else if (strKey == PERMISSION_BAN)
         {
             QStringList strDataList = strValue.split(";");
-            QString strNick = strDataList.at(0);
-            QString strWho = strDataList.at(1);
-            QString strDT = strDataList.at(2);
-            QString strIPNick = strDataList.at(3);
+            QString strNick = strDataList.value(0, QString::null);
+            QString strWho = strDataList.value(1, QString::null);
+            QString strDT = strDataList.value(2, QString::null);
+            QString strIPNick = strDataList.value(3, QString::null);
 
             addBan(strNick, strWho, strDT, strIPNick);
         }
         else if (strKey == PERMISSION_INVITE)
         {
             QStringList strDataList = strValue.split(";");
-            QString strNick = strDataList.at(0);
-            QString strWho = strDataList.at(1);
-            QString strDT = strDataList.at(2);
-            QString strIPNick = strDataList.at(3);
+            QString strNick = strDataList.value(0, QString::null);
+            QString strWho = strDataList.value(1, QString::null);
+            QString strDT = strDataList.value(2, QString::null);
+            QString strIPNick = strDataList.value(3, QString::null);
             Q_UNUSED (strIPNick)
 
             addInvite(strNick, strWho, strDT);

@@ -679,6 +679,8 @@ QAction *MainWindow::getNotificationAction()
 
 void MainWindow::refreshToolButtons(const QString &strChannel)
 {
+    if (strChannel.isEmpty()) return;
+
     QString strMe = Settings::instance()->get("nick");
 
     // hide/show settings on non channel
