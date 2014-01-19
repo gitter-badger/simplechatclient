@@ -219,6 +219,21 @@ void ChannelSettingsGui::setDefaultValues()
         pixmap.fill(QColor("#"+strColor));
         ui.comboBox_color->addItem(QIcon(pixmap), QString::null);
     }
+
+    // permisssions
+    QString strMe = Settings::instance()->get("nick");
+    int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
+
+    if ((iSelfMaxModes <= FLAG_HALFOP_INT) && (ui.pushButton_permission_add->isEnabled()) && (ui.pushButton_permission_remove->isEnabled()))
+    {
+        ui.pushButton_permission_add->setEnabled(false);
+        ui.pushButton_permission_remove->setEnabled(false);
+    }
+    else
+    {
+        ui.pushButton_permission_add->setEnabled(true);
+        ui.pushButton_permission_remove->setEnabled(true);
+    }
 }
 
 void ChannelSettingsGui::createSignals()
@@ -249,6 +264,8 @@ void ChannelSettingsGui::createSignals()
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
 
     connect(ui.listWidget_channel_settings, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+
+    connect(ui.tabWidget_permissions, SIGNAL(currentChanged(int)), this, SLOT(tabChangePage(int)));
 }
 
 void ChannelSettingsGui::changePage(QModelIndex modelIndex)
@@ -267,6 +284,23 @@ void ChannelSettingsGui::changePage(QModelIndex modelIndex)
             // lazy initialization
             ui.avatarListWidget->initialize(onetAvatar);
         }
+    }
+}
+
+void ChannelSettingsGui::tabChangePage(int index)
+{
+    QString strMe = Settings::instance()->get("nick");
+    int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
+
+    if ((index == 0) && (iSelfMaxModes <= FLAG_HALFOP_INT) && (ui.pushButton_permission_add->isEnabled()) && (ui.pushButton_permission_remove->isEnabled()))
+    {
+        ui.pushButton_permission_add->setEnabled(false);
+        ui.pushButton_permission_remove->setEnabled(false);
+    }
+    else
+    {
+        ui.pushButton_permission_add->setEnabled(true);
+        ui.pushButton_permission_remove->setEnabled(true);
     }
 }
 

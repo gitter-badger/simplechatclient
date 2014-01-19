@@ -60,6 +60,7 @@ private:
 
 private slots:
     void changePage(QModelIndex modelIndex);
+    void tabChangePage(int index);
     void refreshChannelInfo();
     void refreshChannelStats();
     void ownerChanged();
