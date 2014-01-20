@@ -224,7 +224,7 @@ void ChannelSettingsGui::setDefaultValues()
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
-    if ((iSelfMaxModes <= FLAG_HALFOP_INT) && !((iSelfMaxModes == FLAG_UNKNOWN_INT) && (ChannelHomes::instance()->contains(strChannel))))
+    if ((iSelfMaxModes < FLAG_OP_INT) && !((iSelfMaxModes == FLAG_UNKNOWN_INT) && (ChannelHomes::instance()->contains(strChannel))))
     {
         ui.pushButton_permission_add->setEnabled(false);
         ui.pushButton_permission_remove->setEnabled(false);
@@ -292,7 +292,7 @@ void ChannelSettingsGui::tabChangePage(int index)
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
-    if ((index == 0) && (iSelfMaxModes <= FLAG_HALFOP_INT) && !((iSelfMaxModes == FLAG_UNKNOWN_INT) && (ChannelHomes::instance()->contains(strChannel))))
+    if (((index == 0) || (index == 1)) && (iSelfMaxModes < FLAG_OP_INT) && !((iSelfMaxModes == FLAG_UNKNOWN_INT) && (ChannelHomes::instance()->contains(strChannel))))
     {
         ui.pushButton_permission_add->setEnabled(false);
         ui.pushButton_permission_remove->setEnabled(false);
