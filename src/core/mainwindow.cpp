@@ -629,7 +629,7 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-void MainWindow::inputLineKeyEvent(QKeyEvent *k)
+bool MainWindow::inputLineKeyEvent(QKeyEvent *k)
 {
     // ctrl+tab pressed in inputline
     // alt+right pressed in inputline
@@ -641,6 +641,7 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
             pTabM->setCurrentIndex(index+1);
         else
             pTabM->setCurrentIndex(0);
+        return true;
     }
     // ctrl+shift+tab pressed in inputline
     // alt+left pressed in inputline
@@ -652,13 +653,87 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
             pTabM->setCurrentIndex(index-1);
         else
             pTabM->setCurrentIndex(pTabM->count()-1);
+        return true;
     }
-    // ctrl F
+    // ctrl+F
     else if ((k->key() == Qt::Key_F) && (k->modifiers() == Qt::ControlModifier))
     {
         QString strChannel = Channel::instance()->getCurrentName();
         Channel::instance()->getChatView(strChannel)->search();
+        return true;
     }
+    // alt+1
+    else if ((k->key() == Qt::Key_1) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 1)
+            pTabM->setCurrentIndex(0);
+        return true;
+    }
+    // alt+2
+    else if ((k->key() == Qt::Key_2) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 2)
+            pTabM->setCurrentIndex(1);
+        return true;
+    }
+    // alt+3
+    else if ((k->key() == Qt::Key_3) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 3)
+            pTabM->setCurrentIndex(2);
+        return true;
+    }
+    // alt+4
+    else if ((k->key() == Qt::Key_4) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 4)
+            pTabM->setCurrentIndex(3);
+        return true;
+    }
+    // alt+5
+    else if ((k->key() == Qt::Key_5) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 5)
+            pTabM->setCurrentIndex(4);
+        return true;
+    }
+    // alt+6
+    else if ((k->key() == Qt::Key_6) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 6)
+            pTabM->setCurrentIndex(5);
+        return true;
+    }
+    // alt+7
+    else if ((k->key() == Qt::Key_7) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 7)
+            pTabM->setCurrentIndex(6);
+        return true;
+    }
+    // alt+8
+    else if ((k->key() == Qt::Key_8) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 8)
+            pTabM->setCurrentIndex(7);
+        return true;
+    }
+    // alt+9
+    else if ((k->key() == Qt::Key_9) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 9)
+            pTabM->setCurrentIndex(8);
+        return true;
+    }
+    // alt+0
+    else if ((k->key() == Qt::Key_0) && (k->modifiers() == Qt::AltModifier))
+    {
+        if (pTabM->count() >= 10)
+            pTabM->setCurrentIndex(9);
+        return true;
+    }
+
+    return false;
 }
 
 int MainWindow::getCurrentTabIndex()

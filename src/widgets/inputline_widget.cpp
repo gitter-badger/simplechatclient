@@ -103,7 +103,9 @@ bool InputLineWidget::event(QEvent *e)
     QKeyEvent *k = static_cast<QKeyEvent*>(e);
 
     // key event to main window
-    Core::instance()->mainWindow()->inputLineKeyEvent(k);
+    bool bAlreadyUsed = Core::instance()->mainWindow()->inputLineKeyEvent(k);
+    if (bAlreadyUsed)
+        return true;
 
     // key event
     if (k->key() == Qt::Key_Tab)

@@ -58,7 +58,7 @@ public:
     QSystemTrayIcon *getTrayIcon();
     QToolButton *getNotificationToolButton();
     QAction *getNotificationAction();
-    void inputLineKeyEvent(QKeyEvent *k);
+    bool inputLineKeyEvent(QKeyEvent *k);
     void insertTextToInputLine(const QString &strText);
 
 public slots:
