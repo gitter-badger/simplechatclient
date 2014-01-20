@@ -632,7 +632,9 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::inputLineKeyEvent(QKeyEvent *k)
 {
     // ctrl+tab pressed in inputline
-    if ((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::ControlModifier))
+    // alt+right pressed in inputline
+    if (((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::ControlModifier)) ||
+        ((k->key() == Qt::Key_Right) && (k->modifiers() == Qt::AltModifier)))
     {
         int index = pTabM->currentIndex();
         if (pTabM->count()-1 != index)
@@ -641,7 +643,9 @@ void MainWindow::inputLineKeyEvent(QKeyEvent *k)
             pTabM->setCurrentIndex(0);
     }
     // ctrl+shift+tab pressed in inputline
-    else if ((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier)))
+    // alt+left pressed in inputline
+    else if (((k->key() == Qt::Key_Backtab) && (k->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier))) ||
+            ((k->key() == Qt::Key_Left) && (k->modifiers() == Qt::AltModifier)))
     {
         int index = pTabM->currentIndex();
         if (index != 0)
