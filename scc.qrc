@@ -128,5 +128,7 @@
         <file>images/oxygen/16x16/preferences-desktop-display-color.png</file>
         <file>images/oxygen/16x16/view-time-schedule.png</file>
         <file>images/oxygen/16x16/system-software-update.png</file>
+        <file>images/oxygen/16x16/tab-detach.png</file>
+        <file>images/oxygen/16x16/tab-new-background.png</file>
     </qresource>
 </RCC>

@@ -24,7 +24,9 @@
 #include <QTabWidget>
 
 QT_BEGIN_NAMESPACE
+class QPushButton;
 class QTabBar;
+class QToolButton;
 QT_END_NAMESPACE
 
 /**
@@ -41,6 +43,8 @@ public:
 
 private:
     QTabBar *tab;
+    QToolButton *bChannelsList;
+    QPushButton *openChannelsButtons[MAX_OPEN_CHANNELS];
     QColor cRed;
     QColor cGreen;
     QColor cHighlight;
@@ -50,6 +54,8 @@ private:
 private slots:
     void tabMovedSlot(int from, int to);
     void joinChannelClicked();
+    void channelsListClicked();
+    void switchChannel();
 
 protected:
     virtual void tabInserted(int index);

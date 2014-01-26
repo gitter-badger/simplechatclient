@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2014 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QHBoxLayout>
+#include <QMenu>
+#include <QLabel>
+#include <QPushButton>
 #include <QTabBar>
 #include <QToolButton>
+#include <QWidgetAction>
 #include "channel.h"
 #include "defines.h"
 #include "join_channel_gui.h"
@@ -37,14 +42,33 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 
     QToolButton *bJoinChannel = new QToolButton(this);
     bJoinChannel->setAutoRaise(true);
-    bJoinChannel->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    bJoinChannel->setIcon(QIcon(":/images/oxygen/16x16/tab-new-background.png"));
     bJoinChannel->setIconSize(QSize(22,22));
     bJoinChannel->setToolTip(tr("Join channel"));
     bJoinChannel->setFocusPolicy(Qt::NoFocus);
-    this->setCornerWidget(bJoinChannel, Qt::TopRightCorner);
+    bJoinChannel->show();
+
+    bChannelsList = new QToolButton(this);
+    bChannelsList->setAutoRaise(true);
+    bChannelsList->setIcon(QIcon(":/images/oxygen/16x16/tab-detach.png"));
+    bChannelsList->setIconSize(QSize(22,22));
+    bChannelsList->setToolTip(tr("Channels list"));
+    bChannelsList->setFocusPolicy(Qt::NoFocus);
+
+    QHBoxLayout *cornerLayout = new QHBoxLayout();
+    cornerLayout->setMargin(0);
+    cornerLayout->addWidget(bJoinChannel);
+    cornerLayout->addWidget(bChannelsList);
+
+    QWidget *cornerWidget = new QWidget(this);
+    cornerWidget->setLayout(cornerLayout);
+    cornerWidget->show();
+
+    this->setCornerWidget(cornerWidget, Qt::TopRightCorner);
 
     connect(tab, SIGNAL(tabMoved(int,int)), this, SLOT(tabMovedSlot(int, int)));
     connect(bJoinChannel, SIGNAL(clicked()), this, SLOT(joinChannelClicked()));
+    connect(bChannelsList, SIGNAL(clicked()), this, SLOT(channelsListClicked()));
 }
 
 void TabManager::setAlert(const QString &channel, ChannelColor c)
@@ -122,4 +146,51 @@ void TabManager::tabMovedSlot(int from, int to)
 void TabManager::joinChannelClicked()
 {
     JoinChannelGui(this).exec();
+}
+
+void TabManager::switchChannel()
+{
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
+    if (button)
+    {
+        int index = button->property("index").toInt();
+        if ((index >= 0) && (index < count()))
+            tab->setCurrentIndex(index);
+    }
+}
+
+void TabManager::channelsListClicked()
+{
+    QMenu *mChannelsList = new QMenu(tr("Channels list"));
+
+    int iChannelsCount = tab->count();
+    for (int i = 0; i < iChannelsCount; ++i)
+    {
+        QString strChannel = Channel::instance()->getNameFromIndex(i);
+        if (strChannel.at(0) == '^')
+            strChannel = Channel::instance()->getAlternativeName(strChannel);
+
+        openChannelsButtons[i] = new QPushButton(strChannel);
+        openChannelsButtons[i]->setFlat(true);
+        openChannelsButtons[i]->setIcon(tab->tabIcon(i));
+        openChannelsButtons[i]->setIconSize(QSize(22,22));
+        openChannelsButtons[i]->setProperty("index", i);
+
+        QColor currentColor = tab->tabTextColor(i);
+        if (currentColor == cRed)
+            openChannelsButtons[i]->setStyleSheet("color: rgb(255, 0, 0); text-align: left;");
+        else if (currentColor == cGreen)
+            openChannelsButtons[i]->setStyleSheet("color: rgb(0, 147, 0); text-align: left;");
+        else if (currentColor == cHighlight)
+            openChannelsButtons[i]->setStyleSheet("color: rgb(138, 0, 184); text-align: left;");
+        else
+            openChannelsButtons[i]->setStyleSheet("text-align: left;");
+
+        QWidgetAction *openChannelsActs = new QWidgetAction(this);
+        openChannelsActs->setDefaultWidget(openChannelsButtons[i]);
+
+        connect(openChannelsButtons[i], SIGNAL(clicked()), this, SLOT(switchChannel()));
+        mChannelsList->addAction(openChannelsActs);
+    }
+    mChannelsList->exec(bChannelsList->mapToGlobal(QPoint(0, bChannelsList->height())));
 }

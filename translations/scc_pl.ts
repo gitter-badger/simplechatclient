@@ -3324,6 +3324,10 @@
         <source>Join channel</source>
         <translation>Otwórz pokój</translation>
     </message>
+    <message>
+        <source>Channels list</source>
+        <translation>Lista otwartych pokoi</translation>
+    </message>
 </context>
 <context>
     <name>ToolWidget</name>
