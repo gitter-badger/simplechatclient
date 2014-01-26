@@ -24,6 +24,7 @@
 #include <QTabWidget>
 
 QT_BEGIN_NAMESPACE
+class QMenu;
 class QPushButton;
 class QTabBar;
 class QToolButton;
@@ -43,6 +44,7 @@ public:
 
 private:
     QTabBar *tab;
+    QMenu *mChannelsList;
     QToolButton *bChannelsList;
     QPushButton *openChannelsButtons[MAX_OPEN_CHANNELS];
     QColor cRed;

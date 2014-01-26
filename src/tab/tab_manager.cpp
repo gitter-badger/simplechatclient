@@ -66,6 +66,9 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 
     this->setCornerWidget(cornerWidget, Qt::TopRightCorner);
 
+    mChannelsList = new QMenu(tr("Channels list"));
+    mChannelsList->hide();
+
     connect(tab, SIGNAL(tabMoved(int,int)), this, SLOT(tabMovedSlot(int, int)));
     connect(bJoinChannel, SIGNAL(clicked()), this, SLOT(joinChannelClicked()));
     connect(bChannelsList, SIGNAL(clicked()), this, SLOT(channelsListClicked()));
@@ -157,11 +160,12 @@ void TabManager::switchChannel()
         if ((index >= 0) && (index < count()))
             tab->setCurrentIndex(index);
     }
+    mChannelsList->hide();
 }
 
 void TabManager::channelsListClicked()
 {
-    QMenu *mChannelsList = new QMenu(tr("Channels list"));
+    mChannelsList->clear();
 
     int iChannelsCount = tab->count();
     for (int i = 0; i < iChannelsCount; ++i)
@@ -192,5 +196,7 @@ void TabManager::channelsListClicked()
         connect(openChannelsButtons[i], SIGNAL(clicked()), this, SLOT(switchChannel()));
         mChannelsList->addAction(openChannelsActs);
     }
+
+    mChannelsList->show();
     mChannelsList->exec(bChannelsList->mapToGlobal(QPoint(0, bChannelsList->height())));
 }
