@@ -18,9 +18,11 @@
  */
 
 #include <QSplitter>
+#include "avatar.h"
 #include "core.h"
 #include "channel.h"
 #include "log.h"
+#include "nick.h"
 #include "nicklist_widget.h"
 #include "settings.h"
 #include "tab_manager.h"
@@ -44,7 +46,11 @@ void TabContainer::addTab(const QString &strChannel)
 
     // create tab
     pTabM->addTab(Channel::instance()->getTw(strChannel), strChannel);
-    pTabM->setCurrentIndex(pTabM->count()-1);
+
+    int index = pTabM->count()-1;
+    pTabM->setCurrentIndex(index);
+
+    QString strDefaultAvatar;
 
     // if priv
     if (strChannel.at(0) == '^')
@@ -53,9 +59,17 @@ void TabContainer::addTab(const QString &strChannel)
 
         if (!strAlternativeName.isEmpty())
         {
-            pTabM->setTabText(pTabM->count()-1, strAlternativeName);
+            pTabM->setTabText(index, strAlternativeName);
         }
+        strDefaultAvatar = Avatar::instance()->getEmptyUserAvatar();
     }
+    else
+    {
+        strDefaultAvatar = ":/images/channel_avatar.png";
+    }
+
+    // set default avatar
+    pTabM->setTabIcon(index, QIcon(strDefaultAvatar));
 }
 
 void TabContainer::removeTab(const QString &strChannel)
@@ -74,7 +88,17 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
     {
         if ((pTabM->tabText(index).size() != 0) && (pTabM->tabText(index).at(0) == '^'))
         {
+            // text
             pTabM->setTabText(index, strNewName);
+
+            // avatar
+            QString strAvatar = Nick::instance()->getAvatar(strNewName);
+            if (strAvatar.isEmpty())
+                strAvatar = Avatar::instance()->getEmptyUserAvatar();
+            else
+                strAvatar = Avatar::instance()->getAvatarPath(strAvatar);
+
+            pTabM->setTabIcon(index, QIcon(strAvatar));
 
             // log
             Log::logOpened(strChannel);
