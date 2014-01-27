@@ -69,7 +69,8 @@ void TabContainer::addTab(const QString &strChannel)
     }
 
     // set default avatar
-    pTabM->setTabIcon(index, QIcon(strDefaultAvatar));
+    if (pTabM->tabIcon(index).isNull())
+        pTabM->setTabIcon(index, QIcon(strDefaultAvatar));
 }
 
 void TabContainer::removeTab(const QString &strChannel)
