@@ -21,7 +21,6 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include "channel.h"
-#include "channel_list.h"
 #include "convert.h"
 #include "message.h"
 #include "replace.h"
