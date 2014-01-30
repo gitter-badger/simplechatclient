@@ -34,6 +34,7 @@ class Commands : public QObject
 public:
     Commands(const QString &_strChan, const QString &_strData);
     QString execute();
+    QList<QString> getList();
 
 private:
     QString strChan;
