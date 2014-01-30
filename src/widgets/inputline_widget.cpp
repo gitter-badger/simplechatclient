@@ -20,6 +20,7 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include "channel.h"
+#include "commands.h"
 #include "core.h"
 #include "mainwindow.h"
 #include "nick.h"
@@ -113,28 +114,52 @@ bool InputLineWidget::event(QEvent *e)
         iLastMessage = -1;
 
         QString strChannel = Channel::instance()->getCurrentName();
-        QList<CaseIgnoreString> usersList = Nick::instance()->getFromChannel(strChannel);
-
-        if (usersList.size() == 0)
-            return true;
-
         QString strWord = getWord();
 
         if (strWord.isEmpty())
             return true;
 
-        if (strLastWord.isEmpty())
+        if ((strWord.at(0) == '/') && (strWord.at(1) != '/'))
         {
-            find.clear();
-            foreach (const QString &strUser, usersList)
-            {
-                if (strUser.startsWith(strWord, Qt::CaseInsensitive))
-                    find.append(strUser);
-                if (strUser.startsWith("~"+strWord, Qt::CaseInsensitive))
-                    find.append(strUser);
-            }
+            Commands *pCommands = new Commands();
+            QList<QString> lCommands = pCommands->getList();
+            delete pCommands;
 
-            strLastWord = strWord;
+            if (lCommands.size() == 0)
+                return true;
+
+            if (strLastWord.isEmpty())
+            {
+                find.clear();
+                foreach (const QString &strCommand, lCommands)
+                {
+                    if (strCommand.startsWith(strWord, Qt::CaseInsensitive))
+                        find.append(strCommand);
+                }
+
+                strLastWord = strWord;
+            }
+        }
+        else
+        {
+            QList<CaseIgnoreString> usersList = Nick::instance()->getFromChannel(strChannel);
+
+            if (usersList.size() == 0)
+                return true;
+
+            if (strLastWord.isEmpty())
+            {
+                find.clear();
+                foreach (const QString &strUser, usersList)
+                {
+                    if (strUser.startsWith(strWord, Qt::CaseInsensitive))
+                        find.append(strUser);
+                    if (strUser.startsWith("~"+strWord, Qt::CaseInsensitive))
+                        find.append(strUser);
+                }
+
+                strLastWord = strWord;
+            }
         }
 
         if (!find.isEmpty())

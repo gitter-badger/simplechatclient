@@ -32,7 +32,7 @@ class Commands : public QObject
 {
     Q_OBJECT
 public:
-    Commands(const QString &_strChan, const QString &_strData);
+    Commands(const QString &_strChan = QString::null, const QString &_strData = QString::null);
     QString execute();
     QList<QString> getList();
 

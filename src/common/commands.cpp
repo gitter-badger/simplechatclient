@@ -34,7 +34,8 @@
 
 Commands::Commands(const QString &_strChan, const QString &_strData) : strChan(_strChan), strData(_strData)
 {
-    strDataList = strData.split(" ");
+    if (!strData.isEmpty())
+        strDataList = strData.split(" ");
 }
 
 QString Commands::execute()
@@ -112,42 +113,42 @@ QList<QString> Commands::getList()
 {
     QList<QString> lCommands;
 
-    lCommands.append("all");
-    lCommands.append("amsg");
-    lCommands.append("away");
-    lCommands.append("ban");
-    lCommands.append("banip");
-    lCommands.append("busy");
-    lCommands.append("clear");
-    lCommands.append("cycle");
-    lCommands.append("friend");
-    lCommands.append("help");
-    lCommands.append("hop");
-    lCommands.append("ignore");
-    lCommands.append("invite");
-    lCommands.append("join");
-    lCommands.append("kban");
-    lCommands.append("kbanip");
-    lCommands.append("kick");
-    lCommands.append("logout");
-    lCommands.append("me");
-    lCommands.append("moder");
-    lCommands.append("moderator");
-    lCommands.append("mp3");
-    lCommands.append("offmsg");
-    lCommands.append("op");
-    lCommands.append("part");
-    lCommands.append("priv");
-    lCommands.append("query");
-    lCommands.append("quit");
-    lCommands.append("quote");
-    lCommands.append("raw");
-    lCommands.append("sop");
-    lCommands.append("topic");
-    lCommands.append("vip");
-    lCommands.append("whereis");
-    lCommands.append("whois");
-    lCommands.append("winamp");
+    lCommands.append("/all");
+    lCommands.append("/amsg");
+    lCommands.append("/away");
+    lCommands.append("/ban");
+    lCommands.append("/banip");
+    lCommands.append("/busy");
+    lCommands.append("/clear");
+    lCommands.append("/cycle");
+    lCommands.append("/friend");
+    lCommands.append("/help");
+    lCommands.append("/hop");
+    lCommands.append("/ignore");
+    lCommands.append("/invite");
+    lCommands.append("/join");
+    lCommands.append("/kban");
+    lCommands.append("/kbanip");
+    lCommands.append("/kick");
+    lCommands.append("/logout");
+    lCommands.append("/me");
+    lCommands.append("/moder");
+    lCommands.append("/moderator");
+    lCommands.append("/mp3");
+    lCommands.append("/offmsg");
+    lCommands.append("/op");
+    lCommands.append("/part");
+    lCommands.append("/priv");
+    lCommands.append("/query");
+    lCommands.append("/quit");
+    lCommands.append("/quote");
+    lCommands.append("/raw");
+    lCommands.append("/sop");
+    lCommands.append("/topic");
+    lCommands.append("/vip");
+    lCommands.append("/whereis");
+    lCommands.append("/whois");
+    lCommands.append("/winamp");
 
     return lCommands;
 }
