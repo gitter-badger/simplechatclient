@@ -56,12 +56,18 @@ void TabContainer::addTab(const QString &strChannel)
     if (strChannel.at(0) == '^')
     {
         QString strAlternativeName = Channel::instance()->getAlternativeName(strChannel);
+        strDefaultAvatar = Avatar::instance()->getEmptyUserAvatar();
 
         if (!strAlternativeName.isEmpty())
         {
+            // new text
             pTabM->setTabText(index, strAlternativeName);
+
+            // new avatar
+            QString strUserAvatar = Nick::instance()->getAvatar(strAlternativeName);
+            if (!strUserAvatar.isEmpty())
+                strDefaultAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
         }
-        strDefaultAvatar = Avatar::instance()->getEmptyUserAvatar();
     }
     else
     {
@@ -89,10 +95,10 @@ void TabContainer::renameTab(const QString &strChannel, const QString &strNewNam
     {
         if ((pTabM->tabText(index).size() != 0) && (pTabM->tabText(index).at(0) == '^'))
         {
-            // text
+            // new text
             pTabM->setTabText(index, strNewName);
 
-            // avatar
+            // new avatar
             QString strAvatar = Nick::instance()->getAvatar(strNewName);
             if (strAvatar.isEmpty())
                 strAvatar = Avatar::instance()->getEmptyUserAvatar();
