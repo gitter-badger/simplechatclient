@@ -187,6 +187,7 @@ void Nick::setAvatar(const QString &strNick, const QString &strAvatar)
     if (!lNicks.contains(strNick)) return;
 
     NickList::instance()->setUserAvatar(strNick, lNicks[strNick].channels, strAvatar);
+    // TODO channels priv avatars
 
     lNicks[strNick].avatar = strAvatar;
 }
