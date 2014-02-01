@@ -418,6 +418,27 @@ void Convert::fixTopicUrl(QString &strData)
             Convert::removeStyles(strWord);
             strDataList[i] = QString("<a style=\"text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
         }
+        else if (((strWord.contains("http:")) && (!strWord.startsWith("http:"))) || ((strWord.contains("https:")) && (!strWord.startsWith("https:"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
+        {
+            if ((strWord.contains("http:")) || (strWord.contains("https:")))
+            {
+                strWord.replace("http:", " http:");
+                strWord.replace("https:", " https:");
+            }
+            else
+                strWord.replace("www.", " www.");
+
+            QStringList strWords = strWord.split(" ");
+            if (strWords.size() == 2)
+            {
+                QString strBeforeLink = strWords.at(0);
+                QString strAfterLink = strWords.at(1);
+
+                Convert::removeStyles(strAfterLink);
+                strAfterLink = QString("<a  style=\"text-decoration:none;\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
+                strDataList[i] = strBeforeLink+strAfterLink;
+            }
+        }
     }
 
     strData = strDataList.join(" ");
