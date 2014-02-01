@@ -26,7 +26,6 @@
  */
 
 #include <QString>
-#include "defines.h"
 
 namespace Convert
 {
@@ -39,7 +38,6 @@ namespace Convert
     void removeStyles(QString &strData);
     void convertText(QString &strData, bool bInsertWidthHeight = false, bool qWebViewContext = false);
     void convertPrefix(QString &strData);
-    QList<CaseIgnoreString> listEmoticons();
 
     bool isBold(const QString &strData);
     bool isItalic(const QString &strData);

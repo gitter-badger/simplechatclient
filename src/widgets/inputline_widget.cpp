@@ -22,7 +22,7 @@
 #include "channel.h"
 #include "commands.h"
 #include "core.h"
-#include "convert.h"
+#include "emoticons.h"
 #include "mainwindow.h"
 #include "nick.h"
 #include "inputline_widget.h"
@@ -143,7 +143,7 @@ bool InputLineWidget::event(QEvent *e)
         }
         else if ((strWord.at(0) == '/') && (strWord.at(1) == '/'))
         {
-            QList<CaseIgnoreString> lEmoticons = Convert::listEmoticons();
+            QList<CaseIgnoreString> lEmoticons = Emoticons::instance()->listEmoticons();
 
             if (lEmoticons.size() == 0)
                 return true;

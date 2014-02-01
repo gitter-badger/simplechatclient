@@ -101,6 +101,7 @@ set (scc_SRCS
 	models/channel_homes.cpp
 	models/channel_list.cpp
 	models/channel_settings.cpp
+	models/emoticons.cpp
 	models/find_nick.cpp
 	models/friends.cpp
 	models/highlight.cpp
@@ -202,6 +203,7 @@ set (scc_MOC_HDRS
 	models/channel_homes.h
 	models/channel_list.h
 	models/channel_settings.h
+	models/emoticons.h
 	models/find_nick.h
 	models/friends.h
 	models/highlight.h

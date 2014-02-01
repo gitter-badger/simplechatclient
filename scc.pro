@@ -70,6 +70,7 @@ SOURCES += src/common/commands.cpp \
     src/models/channel_homes.cpp \
     src/models/channel_list.cpp \
     src/models/channel_settings.cpp \
+    src/models/emoticons.cpp \
     src/models/find_nick.cpp \
     src/models/friends.cpp \
     src/models/highlight.cpp \
@@ -97,7 +98,7 @@ SOURCES += src/common/commands.cpp \
     src/onet/onet_auth.cpp \
     src/onet/onet_avatar.cpp \
     src/onet/onet_kernel.cpp \
-    src/onet/onet_utils.cpp \	
+    src/onet/onet_utils.cpp \
     src/tab/tab_container.cpp \
     src/tab/tab_manager.cpp \
     src/tab/tab_widget.cpp \
@@ -175,6 +176,7 @@ HEADERS += src/common/commands.h \
     src/models/channel_homes.h \
     src/models/channel_list.h \
     src/models/channel_settings.h \
+    src/models/emoticons.h \
     src/models/find_nick.h \
     src/models/friends.h \
     src/models/highlight.h \

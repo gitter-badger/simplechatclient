@@ -56,37 +56,6 @@ QString findEmoticon(const QString &strEmoticon)
     return QString::null;
 }
 
-QList<CaseIgnoreString> Convert::listEmoticons()
-{
-    QString path;
-#ifdef Q_WS_WIN
-    path = QCoreApplication::applicationDirPath();
-#else
-    path = SCC_DATA_DIR;
-#endif
-
-    QDir dAllEmoticonsDirs = path+"/emoticons/";
-    QStringList lDirs = dAllEmoticonsDirs.entryList(QStringList("*"), QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-
-    QStringList lSupportedEmoticons;
-    lSupportedEmoticons << "*.gif" << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp";
-
-    QList<CaseIgnoreString> lEmoticonsList;
-    foreach (const QString &strDir, lDirs)
-    {
-        QDir dEmoticonDir = QString("%1/emoticons/%2/").arg(path, strDir);
-        QFileInfoList lEmoticons = dEmoticonDir.entryInfoList(lSupportedEmoticons, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
-
-        foreach (const QFileInfo &fEmoticon, lEmoticons)
-            lEmoticonsList.append("//"+fEmoticon.baseName());
-    }
-
-    // sort
-    qSort(lEmoticonsList.begin(), lEmoticonsList.end());
-
-    return lEmoticonsList;
-}
-
 void convertColor(QString &strData)
 {
     QList<QString> lColors = Utils::instance()->getColors();
