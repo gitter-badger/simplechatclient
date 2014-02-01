@@ -22,6 +22,7 @@
 #include "channel.h"
 #include "commands.h"
 #include "core.h"
+#include "convert.h"
 #include "mainwindow.h"
 #include "nick.h"
 #include "inputline_widget.h"
@@ -135,6 +136,25 @@ bool InputLineWidget::event(QEvent *e)
                 {
                     if (strCommand.startsWith(strWord, Qt::CaseInsensitive))
                         find.append(strCommand);
+                }
+
+                strLastWord = strWord;
+            }
+        }
+        else if ((strWord.at(0) == '/') && (strWord.at(1) == '/'))
+        {
+            QList<CaseIgnoreString> lEmoticons = Convert::listEmoticons();
+
+            if (lEmoticons.size() == 0)
+                return true;
+
+            if (strLastWord.isEmpty())
+            {
+                find.clear();
+                foreach (const QString &strEmoticon, lEmoticons)
+                {
+                    if (strEmoticon.startsWith(strWord, Qt::CaseInsensitive))
+                        find.append(strEmoticon);
                 }
 
                 strLastWord = strWord;
