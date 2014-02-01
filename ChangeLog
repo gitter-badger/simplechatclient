@@ -3,7 +3,18 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added emoticons hint
+* Added commands hint
+* Added new default avatars
+* Added extra channels list button
+* Added alt+1..0 key modifier
+* Added alt+left and alt+right key modifier
+* Fixed updates
+* Fixed nicklist margins
+* Fixed tab order
+* Fixed white space characeters
 * Fixed join/rejoin speed
+* Fixed opening url
 * Dynamic font height in inputline
 * Added whois icons
 
