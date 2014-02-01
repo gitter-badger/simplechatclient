@@ -66,6 +66,7 @@ public:
     // avatar
     QString getAvatar(const QString &channel);
     void setAvatar(const QString &channel, const QString &avatar);
+    void setPrivAvatar(const QString &nick, const QString &avatar);
     // offline
     void setOffline(const QString &channel, bool offline);
     bool getOffline(const QString &channel);

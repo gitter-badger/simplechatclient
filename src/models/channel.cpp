@@ -222,6 +222,19 @@ void Channel::setAvatar(const QString &channel, const QString &avatar)
     }
 }
 
+void Channel::setPrivAvatar(const QString &nick, const QString &avatar)
+{
+    QList<QString> lPrivChannels = lChannelAlternativeName.keys(nick);
+    foreach (const QString &strChannel, lPrivChannels)
+    {
+        lChannels[strChannel].avatar = avatar;
+
+        int index = lChannels[strChannel].index;
+
+        Core::instance()->mainWindow()->updateChannelIcon(index, Avatar::instance()->getAvatarPath(avatar));
+    }
+}
+
 // offline
 void Channel::setOffline(const QString &channel, bool offline)
 {

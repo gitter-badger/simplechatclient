@@ -115,6 +115,7 @@ void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrCh
     if (strCategory == "nick")
     {
         Nick::instance()->setAvatar(strNickOrChannel, strAvatarFile);
+        Channel::instance()->setPrivAvatar(strNickOrChannel, strAvatarFile);
     }
     else if (strCategory == "channel")
     {
