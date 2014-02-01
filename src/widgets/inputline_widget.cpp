@@ -206,13 +206,10 @@ bool InputLineWidget::event(QEvent *e)
 
         if (!strText.isEmpty())
         {
-            if (!lLastMessages.contains(strText))
-            {
-                if (lLastMessages.size() >= iLastMessageLimit)
-                    lLastMessages.removeLast();
+            if (lLastMessages.size() >= iLastMessageLimit)
+                lLastMessages.removeLast();
 
-                lLastMessages.push_front(strText);
-            }
+            lLastMessages.push_front(strText);
 
             iLastMessage = -1;
 
@@ -225,7 +222,7 @@ bool InputLineWidget::event(QEvent *e)
     {
         QString strText = this->text().trimmed();
 
-        if ((!strText.isEmpty()) && (!lLastMessages.contains(strText)))
+        if (!strText.isEmpty())
         {
             if (lLastMessages.size() >= iLastMessageLimit)
                 lLastMessages.removeLast();
@@ -256,7 +253,7 @@ bool InputLineWidget::event(QEvent *e)
     {
         QString strText = this->text().trimmed();
 
-        if ((!strText.isEmpty()) && (!lLastMessages.contains(strText)))
+        if (!strText.isEmpty())
         {
             if (lLastMessages.size() >= iLastMessageLimit)
                 lLastMessages.removeLast();
