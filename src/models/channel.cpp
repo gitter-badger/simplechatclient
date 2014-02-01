@@ -354,6 +354,7 @@ void Channel::setTopic(const QString &strChannel, const QString &strTopicContent
 
     // convert emoticons, font
     Convert::fixHtmlChars(strTopic);
+    Convert::fixTopicUrl(strTopic);
     Convert::convertText(strTopic);
 
     // fix length bug

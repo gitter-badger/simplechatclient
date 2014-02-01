@@ -41,6 +41,7 @@ void TabWidget::createGui()
 {
     topic = new QLabel(this);
     topic->setWordWrap(true);
+    topic->setOpenExternalLinks(true);
     topic->setMinimumHeight(20);
     topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     topic->show();

@@ -404,3 +404,21 @@ void Convert::convertPrefix(QString &strData)
         strData.prepend(QString("<img src=\"qrc:///images/%1.png\" alt=\"%1\"/>").arg(title));
     }
 }
+
+void Convert::fixTopicUrl(QString &strData)
+{
+    QStringList strDataList = strData.split(" ");
+
+    for (int i = 0; i < strDataList.size(); ++i)
+    {
+        QString strWord = strDataList.at(i);
+
+        if ((strWord.startsWith("http:")) || (strWord.startsWith("https:")) || (strWord.startsWith("www.")))
+        {
+            Convert::removeStyles(strWord);
+            strDataList[i] = QString("<a style=\"text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
+        }
+    }
+
+    strData = strDataList.join(" ");
+}

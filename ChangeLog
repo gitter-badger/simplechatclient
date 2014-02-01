@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added topic url clickable
 * Added emoticons hint
 * Added commands hint
 * Added new default avatars
