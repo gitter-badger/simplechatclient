@@ -77,5 +77,6 @@ void Tray::messageClicked()
     Core::instance()->mainWindow()->activateWindow();
 
     int index = Channel::instance()->getIndexFromName(strLastMessageTitle);
-    Core::instance()->mainWindow()->changeCurrentTab(index);
+    if (index >= 0)
+        Core::instance()->mainWindow()->changeCurrentTab(index);
 }

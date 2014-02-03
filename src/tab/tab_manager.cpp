@@ -96,6 +96,9 @@ void TabManager::setAlert(const QString &channel, ChannelColor c)
     }
 
     int index = Channel::instance()->getIndexFromName(channel);
+    if ((index < 0) || (index >= count()))
+        return;
+
     QColor currentColor = tab->tabTextColor(index);
     int currentPriority = 0;
 
@@ -108,7 +111,7 @@ void TabManager::setAlert(const QString &channel, ChannelColor c)
 
     if (colorPriority > currentPriority)
     {
-        if ((index >= 0) && (index < count()) && (index != currentIndex()))
+        if (index != currentIndex())
             tab->setTabTextColor(index, color);
     }
 }

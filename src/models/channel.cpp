@@ -142,7 +142,7 @@ int Channel::getIndexFromName(const QString &channel)
     if (lChannels.contains(channel))
         return lChannels[channel].index;
     else
-        return 0;
+        return -1;
 }
 
 QString Channel::getCurrentName()
