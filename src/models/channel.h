@@ -76,6 +76,7 @@ public:
     void removeModerateMessage(const QString &channel, const QString &id);
     // priv
     void setAlternativeName(const QString &channel, const QString &name);
+    void removeAlternativeName(const QString &channel);
     QString getAlternativeName(const QString &channel);
     bool containsAlternativeName(const QString &channel);
     // tw

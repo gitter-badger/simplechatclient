@@ -90,6 +90,10 @@ void Channel::remove(const QString &channel)
     // log
     Log::logClosed(channel);
 
+    // remove alternative name
+    if (channel.at(0) == '^')
+        removeAlternativeName(channel);
+
     // fix index
     foreach (const OnetChannel &ochannel, lChannels)
     {
@@ -297,6 +301,11 @@ void Channel::setAlternativeName(const QString &channel, const QString &name)
 QString Channel::getAlternativeName(const QString &channel)
 {
     return lChannelAlternativeName.value(channel, QString::null);
+}
+
+void Channel::removeAlternativeName(const QString &channel)
+{
+    lChannelAlternativeName.remove(channel);
 }
 
 bool Channel::containsAlternativeName(const QString &channel)
