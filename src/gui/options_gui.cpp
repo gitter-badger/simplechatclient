@@ -93,6 +93,7 @@ void OptionsGui::createGui()
 
     ui.label_background_color->setText(tr("Background color:"));
     ui.label_default_color->setText(tr("Default font color:"));
+    ui.label_time_color->setText(tr("Time color:"));
     ui.label_join_color->setText(tr("Join color:"));
     ui.label_part_color->setText(tr("Part color:"));
     ui.label_quit_color->setText(tr("Quit color:"));
@@ -465,6 +466,7 @@ void OptionsGui::createSignals()
     connect(ui.pushButton_restore_default_colors, SIGNAL(clicked()), this, SLOT(restoreDefaultColors()));
     connect(ui.pushButton_background_color, SIGNAL(clicked()), this, SLOT(setBackgroundColor()));
     connect(ui.pushButton_default_color, SIGNAL(clicked()), this, SLOT(setDefaultColor()));
+    connect(ui.pushButton_time_color, SIGNAL(clicked()), this, SLOT(setTimeColor()));
     connect(ui.pushButton_join_color, SIGNAL(clicked()), this, SLOT(setJoinColor()));
     connect(ui.pushButton_part_color, SIGNAL(clicked()), this, SLOT(setPartColor()));
     connect(ui.pushButton_quit_color, SIGNAL(clicked()), this, SLOT(setQuitColor()));
@@ -703,6 +705,11 @@ void OptionsGui::setDefaultColor()
     setColor("default_color");
 }
 
+void OptionsGui::setTimeColor()
+{
+    setColor("time_color");
+}
+
 void OptionsGui::setJoinColor()
 {
     setColor("message_join_color");
@@ -764,6 +771,10 @@ void OptionsGui::reverseColors()
     QString rDefaultColor = reverseColor(Settings::instance()->get("default_color"));
     pConfig->set("default_color", rDefaultColor);
     Settings::instance()->set("default_color", rDefaultColor);
+
+    QString rTimeColor = reverseColor(Settings::instance()->get("time_color"));
+    pConfig->set("time_color", rTimeColor);
+    Settings::instance()->set("time_color", rTimeColor);
 
     QString rMessageJoinColor = reverseColor(Settings::instance()->get("message_join_color"));
     pConfig->set("message_join_color", rMessageJoinColor);
@@ -852,6 +863,9 @@ void OptionsGui::restoreDefaultColors()
 
     pConfig->set("default_color", "#000000");
     Settings::instance()->set("default_color", "#000000");
+
+    pConfig->set("time_color", "#666666");
+    Settings::instance()->set("time_color", "#666666");
 
     pConfig->set("message_join_color", "#009300");
     Settings::instance()->set("message_join_color", "#009300");
@@ -1266,6 +1280,8 @@ void OptionsGui::setColor(const QString &strKey)
             ui.pushButton_background_color->setIcon(QIcon(color));
         else if (strKey == "default_color")
             ui.pushButton_default_color->setIcon(QIcon(color));
+        else if (strKey == "time_color")
+            ui.pushButton_time_color->setIcon(QIcon(color));
         else if (strKey == "message_join_color")
             ui.pushButton_join_color->setIcon(QIcon(color));
         else if (strKey == "message_part_color")
@@ -1312,6 +1328,7 @@ void OptionsGui::setMainwindowColors()
 {
     QString strBackgroundColor = Settings::instance()->get("background_color");
     QString strDefaultColor = Settings::instance()->get("default_color");
+    QString strTimeColor = Settings::instance()->get("time_color");
     QString strJoinColor = Settings::instance()->get("message_join_color");
     QString strPartColor = Settings::instance()->get("message_part_color");
     QString strQuitColor = Settings::instance()->get("message_quit_color");
@@ -1332,6 +1349,11 @@ void OptionsGui::setMainwindowColors()
     QPixmap dfcolor(50,15);
     dfcolor.fill(QColor(strDefaultColor));
     ui.pushButton_default_color->setIcon(QIcon(dfcolor));
+
+    // set time font color
+    QPixmap tcolor(50,15);
+    tcolor.fill(QColor(strTimeColor));
+    ui.pushButton_time_color->setIcon(QIcon(tcolor));
 
     // set join font color
     QPixmap jfcolor(50,15);

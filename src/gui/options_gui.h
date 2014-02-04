@@ -62,6 +62,7 @@ private slots:
     void restoreDefaultColors();
     void setBackgroundColor();
     void setDefaultColor();
+    void setTimeColor();
     void setJoinColor();
     void setPartColor();
     void setQuitColor();

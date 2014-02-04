@@ -177,9 +177,9 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else
     {
         if (!strNick.isEmpty())
-            return QString("<span class=\"DefaultColor\">%1 %2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 <span class=\"%5\" %6>%7</span></span>").arg(dt.toString("[hh:mm:ss]"), strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData);
+            return QString("<span class=\"time\">%1</span> <span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 <span class=\"%5\" %6>%7</span></span>").arg(dt.toString("[hh:mm:ss]"), strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData);
         else
-            return QString("<span class=\"DefaultColor\">%1 <span class=\"%2\">%3</span></span>").arg(dt.toString("[hh:mm:ss]"), strFontClass, strData);
+            return QString("<span class=\"time\">%1</span> <span class=\"DefaultColor\"><span class=\"%2\">%3</span></span>").arg(dt.toString("[hh:mm:ss]"), strFontClass, strData);
     }
 }
 
@@ -209,8 +209,11 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, qint64 iTime)
 
 QString HtmlMessagesRenderer::headCSS()
 {
+    QString strThemes = Settings::instance()->get("themes");
+
     QString strDefaultColor = Settings::instance()->get("default_color");
     QString strChannelColor = Settings::instance()->get("channel_color");
+    QString strTimeColor = Settings::instance()->get("time_color");
     QString strFontSize = Settings::instance()->get("font_size");
 
     QString strMessageJoin = Settings::instance()->get("message_join_color");
@@ -225,8 +228,13 @@ QString HtmlMessagesRenderer::headCSS()
 
     QString strHeadCSS = "div{margin-bottom: 2px;white-space:pre-wrap;}";
     strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
-    strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strDefaultColor));
     strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
+
+    if (strThemes == "Origin") {
+        strHeadCSS.append(QString(".time{font-size:0.95em; color:%1;}").arg(strTimeColor));
+    } else {
+        strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strTimeColor));
+    }
 
     strHeadCSS.append(QString(".DefaultColor{color:%1;}").arg(strDefaultColor));
     strHeadCSS.append(QString(".ChannelColor{color:%1;}").arg(strChannelColor));

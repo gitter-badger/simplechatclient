@@ -191,6 +191,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("my_color", "#000000");
         lDefaultValues.insert("font_size", "11px");
         lDefaultValues.insert("default_color", "#000000");
+        lDefaultValues.insert("time_color", "#666666");
         lDefaultValues.insert("message_join_color", "#009300");
         lDefaultValues.insert("message_part_color", "#4733FF");
         lDefaultValues.insert("message_quit_color", "#00007F");

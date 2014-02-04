@@ -1451,6 +1451,10 @@
         <translation>Domyślny kolor czcionki:</translation>
     </message>
     <message>
+        <source>Time color:</source>
+        <translation>Kolor czasu:</translation>
+    </message>
+    <message>
         <source>Join color:</source>
         <translation>Kolor Join:</translation>
     </message>
