@@ -139,6 +139,7 @@ void OptionsGui::createGui()
     ui.checkBox_hide_emoticons->setText(tr("Hide emoticons"));
     ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
     ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
+    ui.label_time_format->setText(tr("Time format:"));
 
     // page winamp
     ui.groupBox_winamp->setTitle(tr("Winamp"));
@@ -279,6 +280,10 @@ void OptionsGui::setDefaultValues()
     // background image
     ui.lineEdit_background_image->setText(QDir::toNativeSeparators(Settings::instance()->get("background_image")));
 
+    // time format
+    ui.comboBox_time_format->addItem("hh:mm:ss");
+    ui.comboBox_time_format->addItem("hh:mm");
+
     // default values
     QString strLanguage = Settings::instance()->get("language");
 
@@ -295,6 +300,7 @@ void OptionsGui::setDefaultValues()
     QString strHideEmoticons = Settings::instance()->get("hide_emoticons");
     QString strDisableReplaces = Settings::instance()->get("disable_replaces");
     QString strHideNicklist = Settings::instance()->get("hide_nicklist");
+    QString strTimeFormat = Settings::instance()->get("time_format");
 
     QString strWinamp = Settings::instance()->get("winamp");
 
@@ -376,6 +382,14 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_hide_nicklist->setChecked(true);
     else
         ui.checkBox_hide_nicklist->setChecked(false);
+
+    // time format
+    int index = ui.comboBox_time_format->findText(strTimeFormat);
+    if (index != -1)
+        ui.comboBox_time_format->setCurrentIndex(index);
+    else
+        ui.comboBox_time_format->setCurrentIndex(0);
+    //ui.comboBox_time_format->setItemText(ui.comboBox_time_format->currentIndex(), strTimeFormat);
 
     // winamp
     ui.lineEdit_winamp->setText(strWinamp);
@@ -502,6 +516,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_hide_emoticons, SIGNAL(clicked(bool)), this, SLOT(hideEmoticons(bool)));
     connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
     connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
+    connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(timeFormatChanged(int)));
 
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
 
@@ -1148,6 +1163,18 @@ void OptionsGui::hideNicklist(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("hide_nicklist", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::timeFormatChanged(int index)
+{
+    Q_UNUSED(index);
+
+    QString strTimeFormat = ui.comboBox_time_format->currentText();
+    Settings::instance()->set("time_format", strTimeFormat);
+
+    Config *pConfig = new Config();
+    pConfig->set("time_format", strTimeFormat);
     delete pConfig;
 }
 

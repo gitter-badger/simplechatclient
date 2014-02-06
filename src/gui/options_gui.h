@@ -98,6 +98,7 @@ private slots:
     void hideEmoticons(bool bValue);
     void disableReplaces(bool bValue);
     void hideNicklist(bool bValue);
+    void timeFormatChanged(int index);
 
     void setWinamp();
 

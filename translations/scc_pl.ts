@@ -1611,6 +1611,10 @@
         <translation>Ukryj listę nicków</translation>
     </message>
     <message>
+        <source>Time format:</source>
+        <translation>Format czasu:</translation>
+    </message>
+    <message>
         <source>Winamp</source>
         <translation>Winamp</translation>
     </message>

@@ -225,6 +225,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("hide_emoticons", "false");
         lDefaultValues.insert("disable_replaces", "false");
         lDefaultValues.insert("hide_nicklist", "false");
+        lDefaultValues.insert("time_format", "hh:mm:ss");
 
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
 

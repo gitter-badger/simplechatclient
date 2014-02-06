@@ -1288,7 +1288,7 @@
         <x>10</x>
         <y>0</y>
         <width>421</width>
-        <height>361</height>
+        <height>341</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1336,6 +1336,36 @@
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="label_time_format">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>346</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Time Format:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_time_format">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>345</y>
+        <width>131</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <zorder>verticalLayoutWidget_12</zorder>
+     <zorder>buttonBox</zorder>
+     <zorder>label_time_format</zorder>
+     <zorder>comboBox_time_format</zorder>
     </widget>
     <widget class="QWidget" name="page_winamp">
      <widget class="QGroupBox" name="groupBox_winamp">
