@@ -1075,12 +1075,15 @@
            <widget class="QLabel" name="label_sound_beep">
             <property name="minimumSize">
              <size>
-              <width>70</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
             <property name="text">
-             <string>Beep</string>
+             <string>Beep:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -1113,12 +1116,15 @@
            <widget class="QLabel" name="label_sound_query">
             <property name="minimumSize">
              <size>
-              <width>70</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
             <property name="text">
-             <string>Query</string>
+             <string>Query:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -1163,7 +1169,7 @@
         <x>0</x>
         <y>20</y>
         <width>441</width>
-        <height>171</height>
+        <height>161</height>
        </rect>
       </property>
       <property name="title">
@@ -1175,7 +1181,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>121</height>
+         <height>111</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1229,7 +1235,7 @@
         <x>0</x>
         <y>20</y>
         <width>441</width>
-        <height>151</height>
+        <height>131</height>
        </rect>
       </property>
       <property name="title">
@@ -1241,7 +1247,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>101</height>
+         <height>82</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -1282,90 +1288,94 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page_view">
-     <widget class="QWidget" name="verticalLayoutWidget_12">
+     <widget class="QGroupBox" name="groupBox_view">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>421</width>
-        <height>341</height>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>241</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_12">
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_formating">
-         <property name="text">
-          <string>Disable formatting messages</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_join_part">
-         <property name="text">
-          <string>Hide join/part</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_join_part_200">
-         <property name="text">
-          <string>Hide join/part when number of nicks &gt; 200</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_emoticons">
-         <property name="text">
-          <string>Hide emoticons</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_disable_replaces">
-         <property name="text">
-          <string>Disable replaces</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_hide_nicklist">
-         <property name="text">
-          <string>Hide nicklist</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="title">
+       <string>General</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>191</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <item>
+         <widget class="QCheckBox" name="checkBox_hide_formating">
+          <property name="text">
+           <string>Disable formatting messages</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_hide_join_part">
+          <property name="text">
+           <string>Hide join/part</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_hide_join_part_200">
+          <property name="text">
+           <string>Hide join/part when number of nicks &gt; 200</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_hide_emoticons">
+          <property name="text">
+           <string>Hide emoticons</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_disable_replaces">
+          <property name="text">
+           <string>Disable replaces</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_hide_nicklist">
+          <property name="text">
+           <string>Hide nicklist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QLabel" name="label_time_format">
+            <property name="text">
+             <string>Time Format:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_time_format">
+            <property name="editable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
-     <widget class="QLabel" name="label_time_format">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>346</y>
-        <width>101</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Time Format:</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBox_time_format">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>345</y>
-        <width>131</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="editable">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <zorder>verticalLayoutWidget_12</zorder>
-     <zorder>buttonBox</zorder>
-     <zorder>label_time_format</zorder>
-     <zorder>comboBox_time_format</zorder>
     </widget>
     <widget class="QWidget" name="page_winamp">
      <widget class="QGroupBox" name="groupBox_winamp">
@@ -1475,24 +1485,30 @@
         <x>0</x>
         <y>20</y>
         <width>441</width>
-        <height>111</height>
+        <height>71</height>
        </rect>
       </property>
       <property name="title">
        <string>Notification</string>
       </property>
-      <widget class="QCheckBox" name="checkBox_tray_message">
+      <widget class="QWidget" name="verticalLayoutWidget_9">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>30</y>
          <width>421</width>
-         <height>20</height>
+         <height>22</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Show tray notification</string>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QCheckBox" name="checkBox_tray_message">
+          <property name="text">
+           <string>Show tray notification</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </widget>
@@ -1503,81 +1519,100 @@
         <x>0</x>
         <y>20</y>
         <width>441</width>
-        <height>111</height>
+        <height>71</height>
        </rect>
       </property>
       <property name="title">
        <string>Updates</string>
       </property>
-      <widget class="QCheckBox" name="checkBox_updates">
+      <widget class="QWidget" name="verticalLayoutWidget_14">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>50</y>
+         <y>30</y>
          <width>421</width>
-         <height>20</height>
+         <height>22</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Check updates on start up</string>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="QCheckBox" name="checkBox_updates">
+          <property name="text">
+           <string>Check updates on start up</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="page_adv">
-     <widget class="QWidget" name="verticalLayoutWidget_11">
+     <widget class="QGroupBox" name="groupBox_adv">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>421</width>
-        <height>361</height>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>211</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_11">
-       <item>
-        <widget class="QCheckBox" name="checkBox_auto_connect">
-         <property name="text">
-          <string>Connect on start up</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_auto_busy">
-         <property name="text">
-          <string>Busy mode after you log in to chat</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_auto_away">
-         <property name="text">
-          <string>Auto away on idle</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_autojoin_favourites">
-         <property name="text">
-          <string>Autojoin favourite channels</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
-         <property name="text">
-          <string>Show ZUO and IP</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBox_minimize_to_tray">
-         <property name="text">
-          <string>Minimize to tray</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <property name="title">
+       <string>General</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_11">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>161</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="QCheckBox" name="checkBox_auto_connect">
+          <property name="text">
+           <string>Connect on start up</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_auto_busy">
+          <property name="text">
+           <string>Busy mode after you log in to chat</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_auto_away">
+          <property name="text">
+           <string>Auto away on idle</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_autojoin_favourites">
+          <property name="text">
+           <string>Autojoin favourite channels</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_show_zuo_and_ip">
+          <property name="text">
+           <string>Show ZUO and IP</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBox_minimize_to_tray">
+          <property name="text">
+           <string>Minimize to tray</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </widget>

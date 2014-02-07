@@ -1527,12 +1527,12 @@
         <translation>Dźwięki</translation>
     </message>
     <message>
-        <source>Beep</source>
-        <translation>Beep</translation>
+        <source>Beep:</source>
+        <translation>Beep:</translation>
     </message>
     <message>
-        <source>Query</source>
-        <translation>Zaproszenia</translation>
+        <source>Query:</source>
+        <translation>Zaproszenie:</translation>
     </message>
     <message>
         <source>Change</source>

@@ -113,8 +113,8 @@ void OptionsGui::createGui()
 
     // page sounds
     ui.groupBox_sounds->setTitle(tr("Sounds"));
-    ui.label_sound_beep->setText(tr("Beep"));
-    ui.label_sound_query->setText(tr("Query"));
+    ui.label_sound_beep->setText(tr("Beep:"));
+    ui.label_sound_query->setText(tr("Query:"));
     ui.pushButton_sound_beep_change->setText(tr("Change"));
     ui.pushButton_sound_query_change->setText(tr("Change"));
     ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
@@ -133,6 +133,7 @@ void OptionsGui::createGui()
     ui.checkBox_disable_background_image->setText(tr("Disable background image"));
 
     // page view
+    ui.groupBox_view->setTitle(tr("View"));
     ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
@@ -159,6 +160,7 @@ void OptionsGui::createGui()
     ui.checkBox_updates->setText(tr("Check updates on start up"));
 
     // page adv
+    ui.groupBox_adv->setTitle(tr("Advanced"));
     ui.checkBox_auto_connect->setText(tr("Connect on start up"));
     ui.checkBox_auto_busy->setText(tr("Busy mode after you log in to chat"));
     ui.checkBox_auto_away->setText(tr("Auto away on idle"));
