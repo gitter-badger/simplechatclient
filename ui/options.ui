@@ -1075,7 +1075,7 @@
            <widget class="QLabel" name="label_sound_beep">
             <property name="minimumSize">
              <size>
-              <width>80</width>
+              <width>90</width>
               <height>0</height>
              </size>
             </property>
@@ -1116,7 +1116,7 @@
            <widget class="QLabel" name="label_sound_query">
             <property name="minimumSize">
              <size>
-              <width>80</width>
+              <width>90</width>
               <height>0</height>
              </size>
             </property>
@@ -1306,7 +1306,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>191</height>
+         <height>199</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1478,6 +1478,92 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_mpris">
+     <widget class="QGroupBox" name="groupBox_mpris">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>MPRIS</string>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_15">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="QLabel" name="label_mpris_format">
+          <property name="text">
+           <string>Displayed text:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLineEdit" name="lineEdit_mpris_format"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_set_mpris_format">
+            <property name="text">
+             <string>Set</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_mpris_syntax">
+          <property name="text">
+           <string>Syntax:
+%t - song title,
+%a - album,
+%r - artist,
+%f - file name,
+%l - song length (MM:SS),
+%c - current song position (MM:SS),
+%p - percents of played song,
+%n - player name,
+%v - player version
+</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_16">
+          <item>
+           <widget class="QLabel" name="label_mpris_player">
+            <property name="text">
+             <string>Select Player:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_mpris_player">
+            <property name="editable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_tray_notification">
      <widget class="QGroupBox" name="groupBox_notification">
       <property name="geometry">
@@ -1497,7 +1583,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>22</height>
+         <height>24</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1531,7 +1617,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>22</height>
+         <height>24</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1565,7 +1651,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>161</height>
+         <height>164</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_11">

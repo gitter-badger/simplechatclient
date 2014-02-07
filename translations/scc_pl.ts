@@ -372,16 +372,16 @@
         <translation>Wchodzę</translation>
     </message>
     <message>
-        <source>Winamp is paused</source>
-        <translation>Winamp jest wstrzymany</translation>
+        <source>%1 is paused</source>
+        <translation>%1 jest wstrzymany</translation>
     </message>
     <message>
-        <source>Winamp is not playing</source>
-        <translation>Winamp aktualnie nie odtwarza muzyki</translation>
+        <source>%1 is not playing</source>
+        <translation>%1 aktualnie nie odtwarza muzyki</translation>
     </message>
     <message>
-        <source>Winamp is not running</source>
-        <translation>Winamp nie jest uruchomiony</translation>
+        <source>%1 is not running</source>
+        <translation>%1 nie jest uruchomiony</translation>
     </message>
 </context>
 <context>
@@ -1637,6 +1637,42 @@
     <message>
         <source>$length - length</source>
         <translation>$length - długość</translation>
+    </message>
+    <message>
+        <source>MPRIS</source>
+        <translation>MPRIS</translation>
+    </message>
+    <message>
+        <source>MPRIS Player</source>
+        <translation>Odtwarzacz zgodny ze standardem MPRIS</translation>
+    </message>
+    <message>
+        <source>Syntax:
+%t - song title,
+%a - album,
+%r - artist,
+%f - file name,
+%l - song length (MM:SS),
+%c - current song position (MM:SS),
+%p - percents of played song,
+%n - player name,
+%v - player version
+</source>
+        <translation>Składnia:
+%t - tytuł,
+%a - album,
+%r - wykonawca,
+%f - nazwa pliku,
+%l - długość utworu (MM:SS),
+%c - pozycja odtwarzania (MM:SS),
+%p - procent odtwarzania,
+%n - nazwa odtwarzacza,
+%v - wersja odtwarzacza
+</translation>
+    </message>
+    <message>
+        <source>Select Player:</source>
+        <translation>Wybierz odtwarzacz:</translation>
     </message>
     <message>
         <source>Active</source>

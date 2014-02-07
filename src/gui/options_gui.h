@@ -102,6 +102,9 @@ private slots:
 
     void setWinamp();
 
+    void setMprisFormat();
+    void mprisPlayerChanged(int index);
+
     void trayMessage(bool);
 
     void updates(bool);

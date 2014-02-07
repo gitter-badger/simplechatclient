@@ -65,6 +65,7 @@ void OptionsGui::createGui()
     ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/folder-txt.png"));
     ui.pushButton_set_background_image->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
     ui.pushButton_set_winamp->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_mpris_format->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     // page basic
@@ -151,6 +152,15 @@ void OptionsGui::createGui()
     ui.label_winamp_length->setText(tr("$length - length"));
     ui.pushButton_set_winamp->setText(tr("Set"));
 
+    // page mpris
+    ui.groupBox_mpris->setTitle(tr("MPRIS Player"));
+    ui.label_mpris_format->setText(tr("Displayed text:"));
+    ui.label_mpris_syntax->setText(tr("Syntax:\n%t - song title,\n%a - album,\n%r - artist,\n%f - file name,\n"
+                                      "%l - song length (MM:SS),\n%c - current song position (MM:SS),\n"
+                                      "%p - percents of played song,\n%n - player name,\n%v - player version\n"));
+    ui.pushButton_set_mpris_format->setText(tr("Set"));
+    ui.label_mpris_player->setText(tr("Select Player:"));
+
     // page notification
     ui.groupBox_notification->setTitle(tr("Notification"));
     ui.checkBox_tray_message->setText(tr("Show tray notification"));
@@ -213,6 +223,17 @@ void OptionsGui::createGui()
     winamp->setIcon(QIcon(":/images/winamp.png"));
     winamp->setText(tr("Winamp"));
     winamp->setToolTip(tr("Winamp"));
+
+    QListWidgetItem *mpris = new QListWidgetItem(ui.listWidget_options);
+    mpris->setIcon(QIcon(":/images/mpris.png"));
+    mpris->setText(tr("MPRIS"));
+    mpris->setToolTip(tr("MPRIS"));
+
+#ifdef Q_WS_WIN
+    mpris->setHidden(true);
+#else
+    winamp->setHidden(true);
+#endif
 
     QListWidgetItem *notification = new QListWidgetItem(ui.listWidget_options);
     notification->setIcon(QIcon(":/images/oxygen/16x16/help-hint.png"));
@@ -286,6 +307,16 @@ void OptionsGui::setDefaultValues()
     ui.comboBox_time_format->addItem("hh:mm:ss");
     ui.comboBox_time_format->addItem("hh:mm");
 
+    // mpris player
+    ui.comboBox_mpris_player->addItem("Amarok", "org.kde.amarok");
+    ui.comboBox_mpris_player->addItem("Audacious", "org.mpris.audacious");
+    ui.comboBox_mpris_player->addItem("BMPx", "org.mpris.bmp");
+    ui.comboBox_mpris_player->addItem("Clementine", "org.mpris.clementine");
+    ui.comboBox_mpris_player->addItem("Dragon Player", "org.kde.dragon.player");
+    ui.comboBox_mpris_player->addItem("Rhythmbox", "org.mpris.MediaPlayer2.rhythmbox");
+    ui.comboBox_mpris_player->addItem("VLC", "org.mpris.vlc");
+    ui.comboBox_mpris_player->addItem("XMMS2", "org.mpris.xmms2");
+
     // default values
     QString strLanguage = Settings::instance()->get("language");
 
@@ -305,6 +336,9 @@ void OptionsGui::setDefaultValues()
     QString strTimeFormat = Settings::instance()->get("time_format");
 
     QString strWinamp = Settings::instance()->get("winamp");
+
+    QString strMprisFormat = Settings::instance()->get("mpris_format");
+    QString strMprisPlayer = Settings::instance()->get("mpris_player");
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
 
@@ -395,6 +429,10 @@ void OptionsGui::setDefaultValues()
 
     // winamp
     ui.lineEdit_winamp->setText(strWinamp);
+
+    // mpris
+    ui.lineEdit_mpris_format->setText(strMprisFormat);
+    ui.comboBox_mpris_player->setCurrentIndex(ui.comboBox_mpris_player->findText(strMprisPlayer));
 
     // tray message
     if (strTrayMessage == "true")
@@ -521,6 +559,9 @@ void OptionsGui::createSignals()
     connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(timeFormatChanged(int)));
 
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
+
+    connect(ui.pushButton_set_mpris_format, SIGNAL(clicked()), this, SLOT(setMprisFormat()));
+    connect(ui.comboBox_mpris_player, SIGNAL(activated(int)), this, SLOT(mprisPlayerChanged(int)));
 
     connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(trayMessage(bool)));
 
@@ -1188,6 +1229,28 @@ void OptionsGui::setWinamp()
 
     Config *pConfig = new Config();
     pConfig->set("winamp", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::setMprisFormat()
+{
+    QString strValue = ui.lineEdit_mpris_format->text().trimmed();
+
+    Settings::instance()->set("mpris_format", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("mpris_format", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::mprisPlayerChanged(int index)
+{
+    Settings::instance()->set("mpris_player", ui.comboBox_mpris_player->itemText(index));
+    Settings::instance()->set("mpris_service", ui.comboBox_mpris_player->itemData(index).toString());
+
+    Config *pConfig = new Config();
+    pConfig->set("mpris_player", ui.comboBox_mpris_player->itemText(index));
+    pConfig->set("mpris_service", ui.comboBox_mpris_player->itemData(index).toString());
     delete pConfig;
 }
 

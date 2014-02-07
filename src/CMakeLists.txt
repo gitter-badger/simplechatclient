@@ -295,6 +295,14 @@ if (WIN32)
 	LIST (APPEND scc_SRCS
 		common/winamp.cpp
 	)
+else (WIN32)
+	LIST (APPEND scc_MOC_HDRS
+		common/mpris_player.h
+	)
+
+	LIST (APPEND scc_SRCS
+		common/mpris_player.cpp
+	)
 endif (WIN32)
 
 # qca2

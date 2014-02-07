@@ -19,6 +19,7 @@ SOURCES += src/common/commands.cpp \
     src/common/webcam_engine.cpp \
     src/common/webcam_network.cpp \
     src/common/winamp.cpp \
+    src/common/mpris_player.cpp \
     src/common/xml.cpp \
     src/core/core.cpp \
     src/core/main.cpp \
@@ -124,6 +125,7 @@ HEADERS += src/common/commands.h \
     src/common/webcam_engine.h \
     src/common/webcam_network.h \
     src/common/winamp.h \
+    src/common/mpris_player.h \
     src/common/xml.h \
     src/core/core.h \
     src/core/defines.h \

@@ -30,6 +30,8 @@
 
 #ifdef Q_WS_WIN
     #include "winamp.h"
+#else
+    #include "mpris_player.h"
 #endif
 
 Commands::Commands(const QString &_strChan, const QString &_strData) : strChan(_strChan), strData(_strData)
@@ -494,6 +496,7 @@ QString Commands::cmdMp3()
     QString strMessage = QString::null;
 
 #ifdef Q_WS_WIN
+    const QString strPlayer = "Winamp";
     Winamp *pWinamp = new Winamp();
     bool bIsRunning = pWinamp->isRunning();
     int iState = pWinamp->state();
@@ -520,16 +523,21 @@ QString Commands::cmdMp3()
             strMessage = strWinamp;
         }
         else if (iState == 3)
-            strMessage = tr("Winamp is paused");
+            strMessage = tr("%1 is paused").arg(strPlayer);
         else if (iState == 0)
-            strMessage = tr("Winamp is not playing");
+            strMessage = tr("%1 is not playing").arg(strPlayer);
         else
-            strMessage = tr("Winamp is not running");
+            strMessage = tr("%1 is not running").arg(strPlayer);
     }
     else
-        strMessage = tr("Winamp is not running");
+        strMessage = tr("%1 is not running").arg(strPlayer);
 #else
-    strMessage = QString::null;
+    const QString strPlayer = Settings::instance()->get("mpris_player");
+    const QString strService = Settings::instance()->get("mpris_service");
+    const QString strFormat = Settings::instance()->get("mpris_format");
+
+    MprisPlayer mprisPlayer;
+    strMessage = mprisPlayer.trackInfo(strPlayer, strService, strFormat);
 #endif
 
     return strMessage;

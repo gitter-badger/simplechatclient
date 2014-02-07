@@ -229,6 +229,8 @@ QHash<QString,QString> Config::getDefaultValues()
 
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
 
+        lDefaultValues.insert("mpris_format", "%t [%c/%l] //muzyka");
+
         lDefaultValues.insert("tray_message", "true");
 
         lDefaultValues.insert("updates", "true");
