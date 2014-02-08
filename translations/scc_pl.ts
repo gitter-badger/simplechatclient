@@ -1383,12 +1383,20 @@
         <translation>Profile</translation>
     </message>
     <message>
+        <source>Current theme:</source>
+        <translation>Aktualna kompozycja:</translation>
+    </message>
+    <message>
         <source>Themes</source>
         <translation>Kompozycje</translation>
     </message>
     <message>
         <source>Language</source>
         <translation>Język</translation>
+    </message>
+    <message>
+        <source>Select language:</source>
+        <translation>Wybierz język:</translation>
     </message>
     <message>
         <source>English</source>

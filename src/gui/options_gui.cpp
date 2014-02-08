@@ -69,12 +69,12 @@ void OptionsGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     // page basic
-    ui.groupBox_profiles->setTitle(tr("Profiles"));
+    ui.groupBox_basic->setTitle(tr("Basic"));
     ui.label_profile->setText(tr("Current profile:"));
     ui.pushButton_profiles->setText(tr("Profiles"));
-    ui.groupBox_themes->setTitle(tr("Themes"));
+    ui.label_theme->setText(tr("Current theme:"));
     ui.pushButton_themes->setText(tr("Themes"));
-    ui.groupBox_language->setTitle(tr("Language"));
+    ui.label_language->setText(tr("Select language:"));
 
     // page highlight
     ui.groupBox_highlight->setTitle(tr("Highlight text"));
@@ -348,6 +348,9 @@ void OptionsGui::setDefaultValues()
     QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
     QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
 
+    // theme
+    ui.lineEdit_theme->setText(Settings::instance()->get("themes"));
+
     // language
     if (strLanguage == "en")
         ui.comboBox_language->setCurrentIndex(0);
@@ -488,13 +491,15 @@ void OptionsGui::setDefaultValues()
     // disable change nick if connected
     if (Settings::instance()->get("logged") == "true")
     {
-        ui.groupBox_profiles->setDisabled(true);
-        ui.groupBox_themes->setDisabled(true);
+        ui.comboBox_profiles->setDisabled(true);
+        ui.pushButton_profiles->setDisabled(true);
+        ui.pushButton_themes->setDisabled(true);
     }
     else
     {
-        ui.groupBox_profiles->setDisabled(false);
-        ui.groupBox_themes->setDisabled(false);
+        ui.comboBox_profiles->setDisabled(false);
+        ui.pushButton_profiles->setDisabled(false);
+        ui.pushButton_themes->setDisabled(false);
     }
 }
 
@@ -655,6 +660,7 @@ void OptionsGui::buttonProfiles()
 void OptionsGui::buttonThemes()
 {
     ThemesGui(this).exec();
+    ui.lineEdit_theme->setText(Settings::instance()->get("themes"));
 }
 
 void OptionsGui::languageChanged(int index)
