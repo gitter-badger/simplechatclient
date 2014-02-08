@@ -308,14 +308,11 @@ void OptionsGui::setDefaultValues()
     ui.comboBox_time_format->addItem("hh:mm");
 
     // mpris player
-    ui.comboBox_mpris_player->addItem("Amarok", "org.kde.amarok");
-    ui.comboBox_mpris_player->addItem("Audacious", "org.mpris.audacious");
-    ui.comboBox_mpris_player->addItem("BMPx", "org.mpris.bmp");
-    ui.comboBox_mpris_player->addItem("Clementine", "org.mpris.clementine");
-    ui.comboBox_mpris_player->addItem("Dragon Player", "org.kde.dragon.player");
+    ui.comboBox_mpris_player->addItem("Amarok", "org.mpris.MediaPlayer2.amarok");
+    ui.comboBox_mpris_player->addItem("Audacious", "org.mpris.MediaPlayer2.audacious");
+    ui.comboBox_mpris_player->addItem("Clementine", "org.mpris.MediaPlayer2.clementine");
     ui.comboBox_mpris_player->addItem("Rhythmbox", "org.mpris.MediaPlayer2.rhythmbox");
-    ui.comboBox_mpris_player->addItem("VLC", "org.mpris.vlc");
-    ui.comboBox_mpris_player->addItem("XMMS2", "org.mpris.xmms2");
+    ui.comboBox_mpris_player->addItem("VLC", "org.mpris.MediaPlayer2.vlc");
 
     // default values
     QString strLanguage = Settings::instance()->get("language");
