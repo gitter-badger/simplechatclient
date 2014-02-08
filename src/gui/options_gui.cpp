@@ -819,77 +819,12 @@ void OptionsGui::reverseColors()
 {
     Config *pConfig = new Config();
 
-    QString rBackgroundColor = reverseColor(Settings::instance()->get("background_color"));
-    pConfig->set("background_color", rBackgroundColor);
-    Settings::instance()->set("background_color", rBackgroundColor);
-
-    QString rDefaultColor = reverseColor(Settings::instance()->get("default_color"));
-    pConfig->set("default_color", rDefaultColor);
-    Settings::instance()->set("default_color", rDefaultColor);
-
-    QString rTimeColor = reverseColor(Settings::instance()->get("time_color"));
-    pConfig->set("time_color", rTimeColor);
-    Settings::instance()->set("time_color", rTimeColor);
-
-    QString rMessageJoinColor = reverseColor(Settings::instance()->get("message_join_color"));
-    pConfig->set("message_join_color", rMessageJoinColor);
-    Settings::instance()->set("message_join_color", rMessageJoinColor);
-
-    QString rMessagePartColor = reverseColor(Settings::instance()->get("message_part_color"));
-    pConfig->set("message_part_color", rMessagePartColor);
-    Settings::instance()->set("message_part_color", rMessagePartColor);
-
-    QString rMessageQuitColor = reverseColor(Settings::instance()->get("message_quit_color"));
-    pConfig->set("message_quit_color", rMessageQuitColor);
-    Settings::instance()->set("message_quit_color", rMessageQuitColor);
-
-    QString rMessageKickColor = reverseColor(Settings::instance()->get("message_kick_color"));
-    pConfig->set("message_kick_color", rMessageKickColor);
-    Settings::instance()->set("message_kick_color", rMessageKickColor);
-
-    QString rMessageModeColor = reverseColor(Settings::instance()->get("message_mode_color"));
-    pConfig->set("message_mode_color", rMessageModeColor);
-    Settings::instance()->set("message_mode_color", rMessageModeColor);
-
-    QString rMessageNoticeColor = reverseColor(Settings::instance()->get("message_notice_color"));
-    pConfig->set("message_notice_color", rMessageNoticeColor);
-    Settings::instance()->set("message_notice_color", rMessageNoticeColor);
-
-    QString rMessageInfoColor = reverseColor(Settings::instance()->get("message_info_color"));
-    pConfig->set("message_info_color", rMessageInfoColor);
-    Settings::instance()->set("message_info_color", rMessageInfoColor);
-
-    QString rMessageMeColor = reverseColor(Settings::instance()->get("message_me_color"));
-    pConfig->set("message_me_color", rMessageMeColor);
-    Settings::instance()->set("message_me_color", rMessageMeColor);
-
-    QString rMessageErrorColor = reverseColor(Settings::instance()->get("message_error_color"));
-    pConfig->set("message_error_color", rMessageErrorColor);
-    Settings::instance()->set("message_error_color", rMessageErrorColor);
-
-    QString rChannelColor = reverseColor(Settings::instance()->get("channel_color"));
-    pConfig->set("channel_color", rChannelColor);
-    Settings::instance()->set("channel_color", rChannelColor);
-
-    QString rNicklistNickColor = reverseColor(Settings::instance()->get("nicklist_nick_color"));
-    pConfig->set("nicklist_nick_color", rNicklistNickColor);
-    Settings::instance()->set("nicklist_nick_color", rNicklistNickColor);
-
-    QString rNicklistSelectedNickColor = reverseColor(Settings::instance()->get("nicklist_selected_nick_color"));
-    pConfig->set("nicklist_selected_nick_color", rNicklistSelectedNickColor);
-    Settings::instance()->set("nicklist_selected_nick_color", rNicklistSelectedNickColor);
-
-    QString rNicklistBusyNickColor = reverseColor(Settings::instance()->get("nicklist_busy_nick_color"));
-    pConfig->set("nicklist_busy_nick_color", rNicklistBusyNickColor);
-    Settings::instance()->set("nicklist_busy_nick_color", rNicklistBusyNickColor);
-
-    QString rNicklistGradient1Color = reverseColor(Settings::instance()->get("nicklist_gradient_1_color"));
-    pConfig->set("nicklist_gradient_1_color", rNicklistGradient1Color);
-    Settings::instance()->set("nicklist_gradient_1_color", rNicklistGradient1Color);
-
-    QString rNicklistGradient2Color = reverseColor(Settings::instance()->get("nicklist_gradient_2_color"));
-    pConfig->set("nicklist_gradient_2_color", rNicklistGradient2Color);
-    Settings::instance()->set("nicklist_gradient_2_color", rNicklistGradient2Color);
+    foreach (const QString &key, getColors())
+    {
+         QString rColor = reverseColor(Settings::instance()->get(key));
+         pConfig->set(key, rColor);
+         Settings::instance()->set(key, rColor);
+    }
 
     delete pConfig;
 
@@ -913,59 +848,11 @@ void OptionsGui::restoreDefaultColors()
 {
     Config *pConfig = new Config();
 
-    pConfig->set("background_color", "#ffffff");
-    Settings::instance()->set("background_color", "#ffffff");
-
-    pConfig->set("default_color", "#000000");
-    Settings::instance()->set("default_color", "#000000");
-
-    pConfig->set("time_color", "#666666");
-    Settings::instance()->set("time_color", "#666666");
-
-    pConfig->set("message_join_color", "#009300");
-    Settings::instance()->set("message_join_color", "#009300");
-
-    pConfig->set("message_part_color", "#4733FF");
-    Settings::instance()->set("message_part_color", "#4733FF");
-
-    pConfig->set("message_quit_color", "#00007F");
-    Settings::instance()->set("message_quit_color", "#00007F");
-
-    pConfig->set("message_kick_color", "#00007F");
-    Settings::instance()->set("message_kick_color", "#00007F");
-
-    pConfig->set("message_mode_color", "#009300");
-    Settings::instance()->set("message_mode_color", "#009300");
-
-    pConfig->set("message_notice_color", "#0066FF");
-    Settings::instance()->set("message_notice_color", "#0066FF");
-
-    pConfig->set("message_info_color", "#666666");
-    Settings::instance()->set("message_info_color", "#666666");
-
-    pConfig->set("message_me_color", "#800080");
-    Settings::instance()->set("message_me_color", "#800080");
-
-    pConfig->set("message_error_color", "#ff0000");
-    Settings::instance()->set("message_error_color", "#ff0000");
-
-    pConfig->set("channel_color", "#0000ff");
-    Settings::instance()->set("channel_color", "#0000ff");
-
-    pConfig->set("nicklist_nick_color", "#333333");
-    Settings::instance()->set("nicklist_nick_color", "#333333");
-
-    pConfig->set("nicklist_selected_nick_color", "#ffffff");
-    Settings::instance()->set("nicklist_selected_nick_color", "#ffffff");
-
-    pConfig->set("nicklist_busy_nick_color", "#a0a0a4");
-    Settings::instance()->set("nicklist_busy_nick_color", "#a0a0a4");
-
-    pConfig->set("nicklist_gradient_1_color", "#77d5f7");
-    Settings::instance()->set("nicklist_gradient_1_color", "#77d5f7");
-
-    pConfig->set("nicklist_gradient_2_color", "#1b86b7");
-    Settings::instance()->set("nicklist_gradient_2_color", "#1b86b7");
+    foreach (const QString &key, getColors())
+    {
+         pConfig->setDefault(key);
+         Settings::instance()->set(key, pConfig->get(key));
+    }
 
     delete pConfig;
 
@@ -983,6 +870,19 @@ void OptionsGui::restoreDefaultColors()
 
     // refresh tool widget values
     Core::instance()->mainWindow()->refreshToolWidgetValues();
+}
+
+QStringList OptionsGui::getColors()
+{
+    QStringList colors;
+    colors << "background_color" << "default_color" << "time_color" << "message_join_color"
+           << "message_part_color" << "message_quit_color" << "message_kick_color"
+           << "message_mode_color" << "message_notice_color" << "message_info_color"
+           << "message_me_color" << "message_error_color" << "channel_color"
+           << "nicklist_nick_color" << "nicklist_selected_nick_color"
+           << "nicklist_busy_nick_color" << "nicklist_gradient_1_color"
+           << "nicklist_gradient_2_color";
+    return colors;
 }
 
 void OptionsGui::setNicklistNickColor()

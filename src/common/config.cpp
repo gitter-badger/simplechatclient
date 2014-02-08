@@ -118,6 +118,11 @@ void Config::set(const QString &strKey, const QString &strValue)
     xml->set(strKey, strValue);
 }
 
+void Config::setDefault(const QString &strKey)
+{
+    set(strKey, lDefaultValues.value(strKey));
+}
+
 void Config::remove(const QString &strKey)
 {
     xml->remove(strKey);

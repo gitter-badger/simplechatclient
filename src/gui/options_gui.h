@@ -60,6 +60,7 @@ private slots:
 
     void reverseColors();
     void restoreDefaultColors();
+    QStringList getColors();
     void setBackgroundColor();
     void setDefaultColor();
     void setTimeColor();

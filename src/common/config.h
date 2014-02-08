@@ -39,6 +39,7 @@ public:
 
     QString get(const QString &strKey);
     void set(const QString &strKey, const QString &strValue);
+    void setDefault(const QString &strKey);
     void remove(const QString &strKey);
     QHash<QString,QString> read();
 
