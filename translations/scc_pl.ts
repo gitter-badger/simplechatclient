@@ -1248,6 +1248,10 @@
         <source>Current avatar:</source>
         <translation>Aktualny awatar:</translation>
     </message>
+    <message>
+        <source>No photo available</source>
+        <translation>Brak zdjęcia</translation>
+    </message>
 </context>
 <context>
     <name>MyProfileGui</name>
