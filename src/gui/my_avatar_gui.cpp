@@ -78,6 +78,8 @@ void MyAvatarGui::getAvatarReady(const QByteArray &content, const QString &avata
     {
         if (Settings::instance()->get("debug") == "true")
             qWarning() << "Unable to load image from " << avatarUrl;
+
+        ui.label_my_avatar->setText(tr("No photo available"));
         return;
     }
 
