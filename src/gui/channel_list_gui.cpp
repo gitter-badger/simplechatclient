@@ -205,30 +205,16 @@ void ChannelListGui::clearFields()
 
 void ChannelListGui::clearLists()
 {
-    // clear
-    ui.tableWidget_all->clear();
-    ui.tableWidget_all->setRowCount(0);
-    ui.tableWidget_teen->clear();
-    ui.tableWidget_teen->setRowCount(0);
-    ui.tableWidget_common->clear();
-    ui.tableWidget_common->setRowCount(0);
-    ui.tableWidget_erotic->clear();
-    ui.tableWidget_erotic->setRowCount(0);
-    ui.tableWidget_thematic->clear();
-    ui.tableWidget_thematic->setRowCount(0);
-    ui.tableWidget_regional->clear();
-    ui.tableWidget_regional->setRowCount(0);
-
-    // set labels
     QStringList lLabels;
     lLabels << tr("Channel name") << tr("Number of persons") << tr("Category") << tr("Type");
 
-    ui.tableWidget_all->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_teen->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_common->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_erotic->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_thematic->setHorizontalHeaderLabels(lLabels);
-    ui.tableWidget_regional->setHorizontalHeaderLabels(lLabels);
+    QList<QTableWidget *> tables = ui.tabWidget->findChildren<QTableWidget *>();
+    foreach (QTableWidget *table, tables) {
+        table->clear();
+        table->setRowCount(0);
+        table->setColumnWidth(0, 200);
+        table->setHorizontalHeaderLabels(lLabels);
+    }
 }
 
 void ChannelListGui::createList()
@@ -248,6 +234,11 @@ void ChannelListGui::createList()
 
     // clear lists
     clearLists();
+
+    QList<QTableWidget *> tables = ui.tabWidget->findChildren<QTableWidget *>();
+    foreach (QTableWidget *table, tables) {
+        table->setSortingEnabled(false);
+    }
 
     // count rows
     int iAllCount = 0;
@@ -314,61 +305,65 @@ void ChannelListGui::createList()
 
         if (bShow)
         {
-            ui.tableWidget_all->setItem(iAllRow, 0, new SortedChannelListTableWidgetItem(strName));
-            ui.tableWidget_all->setItem(iAllRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-            ui.tableWidget_all->setItem(iAllRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
-            ui.tableWidget_all->setItem(iAllRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
+            ui.tableWidget_all->setItem(iAllRow, 0, new QTableWidgetItem(strName));
+            ui.tableWidget_all->setItem(iAllRow, 1, new QTableWidgetItem());
+            ui.tableWidget_all->item(iAllRow, 1)->setData(Qt::DisplayRole, iPeople);
+            ui.tableWidget_all->setItem(iAllRow, 2, new QTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+            ui.tableWidget_all->setItem(iAllRow, 3, new QTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
             iAllRow++;
 
             if (iType == 1)
             {
-                ui.tableWidget_teen->setItem(iTeenRow, 0, new SortedChannelListTableWidgetItem(strName));
-                ui.tableWidget_teen->setItem(iTeenRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_teen->setItem(iTeenRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_teen->setItem(iTeenRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
+                ui.tableWidget_teen->setItem(iTeenRow, 0, new QTableWidgetItem(strName));
+                ui.tableWidget_teen->setItem(iTeenRow, 1, new QTableWidgetItem());
+                ui.tableWidget_teen->item(iTeenRow, 1)->setData(Qt::DisplayRole, iPeople);
+                ui.tableWidget_teen->setItem(iTeenRow, 2, new QTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_teen->setItem(iTeenRow, 3, new QTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iTeenRow++;
             }
             else if (iType == 2)
             {
-                ui.tableWidget_common->setItem(iCommonRow, 0, new SortedChannelListTableWidgetItem(strName));
-                ui.tableWidget_common->setItem(iCommonRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_common->setItem(iCommonRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_common->setItem(iCommonRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
+                ui.tableWidget_common->setItem(iCommonRow, 0, new QTableWidgetItem(strName));
+                ui.tableWidget_common->setItem(iCommonRow, 1, new QTableWidgetItem());
+                ui.tableWidget_common->item(iCommonRow, 1)->setData(Qt::DisplayRole, iPeople);
+                ui.tableWidget_common->setItem(iCommonRow, 2, new QTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_common->setItem(iCommonRow, 3, new QTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iCommonRow++;
             }
             else if (iType == 3)
             {
-                ui.tableWidget_erotic->setItem(iEroticRow, 0, new SortedChannelListTableWidgetItem(strName));
-                ui.tableWidget_erotic->setItem(iEroticRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_erotic->setItem(iEroticRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_erotic->setItem(iEroticRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
+                ui.tableWidget_erotic->setItem(iEroticRow, 0, new QTableWidgetItem(strName));
+                ui.tableWidget_erotic->setItem(iEroticRow, 1, new QTableWidgetItem());
+                ui.tableWidget_erotic->item(iEroticRow, 1)->setData(Qt::DisplayRole, iPeople);
+                ui.tableWidget_erotic->setItem(iEroticRow, 2, new QTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_erotic->setItem(iEroticRow, 3, new QTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iEroticRow++;
             }
             else if (iType == 4)
             {
-                ui.tableWidget_thematic->setItem(iThematicRow, 0, new SortedChannelListTableWidgetItem(strName));
-                ui.tableWidget_thematic->setItem(iThematicRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_thematic->setItem(iThematicRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_thematic->setItem(iThematicRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
+                ui.tableWidget_thematic->setItem(iThematicRow, 0, new QTableWidgetItem(strName));
+                ui.tableWidget_thematic->setItem(iThematicRow, 1, new QTableWidgetItem());
+                ui.tableWidget_thematic->item(iThematicRow, 1)->setData(Qt::DisplayRole, iPeople);
+                ui.tableWidget_thematic->setItem(iThematicRow, 2, new QTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_thematic->setItem(iThematicRow, 3, new QTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iThematicRow++;
             }
             else if (iType == 5)
             {
-                ui.tableWidget_regional->setItem(iRegionalRow, 0, new SortedChannelListTableWidgetItem(strName));
-                ui.tableWidget_regional->setItem(iRegionalRow, 1, new SortedChannelListTableWidgetItem(QString::number(iPeople)));
-                ui.tableWidget_regional->setItem(iRegionalRow, 2, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
-                ui.tableWidget_regional->setItem(iRegionalRow, 3, new SortedChannelListTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
+                ui.tableWidget_regional->setItem(iRegionalRow, 0, new QTableWidgetItem(strName));
+                ui.tableWidget_regional->setItem(iRegionalRow, 1, new QTableWidgetItem());
+                ui.tableWidget_regional->item(iRegionalRow, 1)->setData(Qt::DisplayRole, iPeople);
+                ui.tableWidget_regional->setItem(iRegionalRow, 2, new QTableWidgetItem(Utils::instance()->convertChannelCatToString(iCat, bModerated, bRecommended)));
+                ui.tableWidget_regional->setItem(iRegionalRow, 3, new QTableWidgetItem(Utils::instance()->convertChannelTypeToString(iType)));
                 iRegionalRow++;
             }
         }
     }
 
-    ui.tableWidget_all->sortByColumn(1);
-    ui.tableWidget_teen->sortByColumn(1);
-    ui.tableWidget_common->sortByColumn(1);
-    ui.tableWidget_erotic->sortByColumn(1);
-    ui.tableWidget_thematic->sortByColumn(1);
-    ui.tableWidget_regional->sortByColumn(1);
+    foreach (QTableWidget *table, tables) {
+        table->sortByColumn(1, Qt::DescendingOrder);
+        table->setSortingEnabled(true);
+    }
 }
 
 void ChannelListGui::getOptions()
@@ -377,76 +372,40 @@ void ChannelListGui::getOptions()
     strSearch = ui.lineEdit_search->text().trimmed();
 
     // teen
-    if (ui.checkBox_teen->isChecked())
-        bShowTeen = true;
-    else
-        bShowTeen = false;
+    bShowTeen = ui.checkBox_teen->isChecked();
 
     // common
-    if (ui.checkBox_common->isChecked())
-        bShowCommon = true;
-    else
-        bShowCommon = false;
+    bShowCommon = ui.checkBox_common->isChecked();
 
     // erotic
-    if (ui.checkBox_erotic->isChecked())
-        bShowErotic = true;
-    else
-        bShowErotic = false;
+    bShowErotic = ui.checkBox_erotic->isChecked();
 
     // thematic
-    if (ui.checkBox_thematic->isChecked())
-        bShowThematic = true;
-    else
-        bShowThematic = false;
+    bShowThematic = ui.checkBox_thematic->isChecked();
 
     // regional
-    if (ui.checkBox_regional->isChecked())
-        bShowRegional = true;
-    else
-        bShowRegional = false;
+    bShowRegional = ui.checkBox_regional->isChecked();
 
     // wild
-    if (ui.checkBox_wild->isChecked())
-        bShowWild = true;
-    else
-        bShowWild = false;
+    bShowWild = ui.checkBox_wild->isChecked();
 
     // tame
-    if (ui.checkBox_tame->isChecked())
-        bShowTame = true;
-    else
-        bShowTame = false;
+    bShowTame = ui.checkBox_tame->isChecked();
 
     // with class
-    if (ui.checkBox_with_class->isChecked())
-        bShowWithClass = true;
-    else
-        bShowWithClass = false;
+    bShowWithClass = ui.checkBox_with_class->isChecked();
 
     // cult
-    if (ui.checkBox_cult->isChecked())
-        bShowCult = true;
-    else
-        bShowCult = false;
+    bShowCult = ui.checkBox_cult->isChecked();
 
     // moderated
-    if (ui.checkBox_moderated->isChecked())
-        bShowModerated = true;
-    else
-        bShowModerated = false;
+    bShowModerated = ui.checkBox_moderated->isChecked();
 
     // recommended
-    if (ui.checkBox_recommended->isChecked())
-        bShowRecommended = true;
-    else
-        bShowRecommended = false;
+    bShowRecommended = ui.checkBox_recommended->isChecked();
 
     // hide empty
-    if (ui.checkBox_hide_empty_channels->isChecked())
-        bHideEmpty = true;
-    else
-        bHideEmpty = false;
+    bHideEmpty = ui.checkBox_hide_empty_channels->isChecked();
 }
 
 void ChannelListGui::allCellDoubleClicked(int row, int column)
