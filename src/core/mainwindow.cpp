@@ -806,6 +806,8 @@ void MainWindow::toolButtonFix(QWidget *widget)
                           "margin: 2px 0 0 2px;"
                           "border: 1px solid #000000;"
                           "}");
+#else
+    Q_UNUSED(widget);
 #endif
 }
 
