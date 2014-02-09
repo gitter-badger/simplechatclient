@@ -25,8 +25,10 @@
 #include <QToolButton>
 #include <QWidgetAction>
 #include "channel.h"
+#include "core.h"
 #include "defines.h"
 #include "join_channel_gui.h"
+#include "mainwindow.h"
 #include "tab_manager.h"
 
 TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
@@ -65,6 +67,7 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
     cornerWidget->show();
 
     this->setCornerWidget(cornerWidget, Qt::TopRightCorner);
+    Core::instance()->mainWindow()->toolButtonFix(this);
 
     mChannelsList = new QMenu(tr("Channels list"));
     mChannelsList->hide();

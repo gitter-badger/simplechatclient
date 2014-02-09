@@ -24,6 +24,7 @@
 #include <QTimer>
 #include "core.h"
 #include "channel_list.h"
+#include "mainwindow.h"
 #include "settings.h"
 #include "utils.h"
 #include "channel_list_gui.h"
@@ -85,6 +86,8 @@ void ChannelListGui::createGui()
     ui.tabWidget->setTabIcon(3, QIcon(":/images/oxygen/16x16/emblem-favorite.png"));
     ui.tabWidget->setTabIcon(4, QIcon(":/images/oxygen/16x16/karbon.png"));
     ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
+
+    Core::instance()->mainWindow()->toolButtonFix(ui.tabWidget);
 }
 
 void ChannelListGui::setDefaultValues()

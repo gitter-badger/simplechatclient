@@ -112,20 +112,6 @@ int main(int argc, char *argv[])
         }
     }
 
-#ifdef Q_WS_WIN
-    // workaround for QTBUG-21808
-    app.setStyleSheet("QTabBar QToolButton {"
-                      "background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f2f2f2, stop:0.5 #ebebeb, stop:0.51 #dddddd, stop:1 #cfcfcf);"
-                      "margin: 1px;"
-                      "border: 1px solid #707070;"
-                      "border-radius: 2px;"
-                      "}"
-                      "QTabBar QToolButton:pressed {"
-                      "margin: 2px 0 0 2px;"
-                      "border: 1px solid #000000;"
-                      "}");
-#endif
-
     // core
     Core::instance()->createAndShowGui();
 

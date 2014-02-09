@@ -32,6 +32,7 @@ class TabManager;
 class ToolWidget;
 #include <QSystemTrayIcon>
 #include <QMainWindow>
+#include <QWidget>
 
 /**
  * Main window
@@ -60,6 +61,7 @@ public:
     QAction *getNotificationAction();
     bool inputLineKeyEvent(QKeyEvent *k);
     void insertTextToInputLine(const QString &strText);
+    void toolButtonFix(QWidget *widget);
 
 public slots:
     void updateNick(const QString &strNick);
