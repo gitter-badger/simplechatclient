@@ -149,11 +149,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButton_profiles">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>0</height>
+             </size>
             </property>
             <property name="text">
              <string>Profiles</string>
@@ -189,11 +189,11 @@
             <property name="enabled">
              <bool>true</bool>
             </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>0</height>
+             </size>
             </property>
             <property name="text">
              <string>Themes</string>
@@ -1436,7 +1436,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>281</height>
+         <height>282</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_15">

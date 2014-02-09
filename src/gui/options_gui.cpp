@@ -493,12 +493,14 @@ void OptionsGui::setDefaultValues()
     {
         ui.comboBox_profiles->setDisabled(true);
         ui.pushButton_profiles->setDisabled(true);
+        ui.lineEdit_theme->setDisabled(true);
         ui.pushButton_themes->setDisabled(true);
     }
     else
     {
         ui.comboBox_profiles->setDisabled(false);
         ui.pushButton_profiles->setDisabled(false);
+        ui.lineEdit_theme->setDisabled(false);
         ui.pushButton_themes->setDisabled(false);
     }
 }
