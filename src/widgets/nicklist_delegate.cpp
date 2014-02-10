@@ -123,7 +123,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // sex
-    if (Themes::instance()->isCurrentWithNicklistAvatar())
+    if ((nick.at(0) != '~') && (Themes::instance()->isCurrentWithNicklistAvatar()))
     {
         QColor cSexColor;
 
