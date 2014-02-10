@@ -1349,6 +1349,13 @@ void OnetKernel::raw_111n()
         else
             Nick::instance()->setAvatar(strNick, strAvatar);
     }
+
+    // get sex
+    if ((strKey == "sex") && (!strValue.isEmpty()))
+    {
+        QChar cSex = strValue.at(0);
+        Nick::instance()->setSex(strNick, cSex);
+    }
 }
 
 // NS INFO aleksa7

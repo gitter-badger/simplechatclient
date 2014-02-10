@@ -66,6 +66,7 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
         oNick.channels.append(strChannel);
         oNick.channel_modes[strChannel] = strModes;
         oNick.channel_max_modes[strChannel] = iMaxModes;
+        oNick.sex = USER_SEX_UNKNOWN;
 
         lNicks[strNick] = oNick;
 
@@ -196,6 +197,22 @@ QString Nick::getAvatar(const QString &strNick)
     if (!lNicks.contains(strNick)) return QString::null;
 
     return lNicks[strNick].avatar;
+}
+
+void Nick::setSex(const QString &strNick, const QChar &cSex)
+{
+    if (!lNicks.contains(strNick)) return;
+
+    NickList::instance()->setUserSex(strNick, lNicks[strNick].channels, cSex);
+
+    lNicks[strNick].sex = cSex;
+}
+
+QChar Nick::getSex(const QString &strNick)
+{
+    if (!lNicks.contains(strNick)) return USER_SEX_UNKNOWN;
+
+    return lNicks[strNick].sex;
 }
 
 QString Nick::getModes(const QString &strNick, const QString &strChannel)

@@ -36,7 +36,8 @@ private:
     enum NickListRoles
     {
         NickListModesRole = Qt::UserRole+20,
-        NickListAvatarUrlRole = Qt::UserRole+21
+        NickListAvatarUrlRole = Qt::UserRole+21,
+        NickListSexRole = Qt::UserRole+22
     };
 };
 

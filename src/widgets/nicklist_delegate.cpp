@@ -48,6 +48,9 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QPen fontPen(QColor(strNicklistNickColor), 1, Qt::SolidLine);
     QPen selectedFontPen(QColor(strNicklistSelectedNickColor), 1, Qt::SolidLine);
     QPen busyPen(QColor(strNicklistBusyNickColor), 1, Qt::SolidLine);
+    QColor cUserSexMale = QColor("#71A3FF");
+    QColor cUserSexFemale = QColor("#FF49BF");
+    QColor cUserSexUnknown = QColor("#999999");
     QColor cGradient1 = QColor(strNicklistGradient1Color);
     QColor cGradient2 = QColor(strNicklistGradient2Color);
 
@@ -83,6 +86,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QString nick = index.data(Qt::DisplayRole).toString();
     QString modes = index.data(NickListModesRole).toString();
     QString userAvatar = index.data(NickListAvatarUrlRole).toString();
+    QChar userSex = index.data(NickListSexRole).toChar();
 
     bool busy = false;
     bool statusIcons = true;
@@ -118,6 +122,25 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         avatar.paint(painter, x, y, w, h);
     }
 
+    // sex
+    if (Themes::instance()->isCurrentWithNicklistAvatar())
+    {
+        QColor cSexColor;
+
+        if (userSex == USER_SEX_MALE) cSexColor = cUserSexMale;
+        else if (userSex == USER_SEX_FEMALE) cSexColor = cUserSexFemale;
+        else cSexColor = cUserSexUnknown;
+
+        QRect rect = option.rect;
+
+        int x = rect.x()+35+2;
+        int y = rect.top()+2;
+        int w = 2;
+        int h = 35-4;
+
+        painter->fillRect(x, y, w, h, cSexColor);
+    }
+
     // nick
     if (Themes::instance()->isCurrentWithNicklistAvatar())
     {
@@ -131,7 +154,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         font.setItalic(busy ? true : false);
         painter->setFont(font);
 
-        if (nick.at(0) != '~') rect.setX(rect.x()+35+5);
+        if (nick.at(0) != '~') rect.setX(rect.x()+35+6+5);
         painter->drawText(rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
     }
     else

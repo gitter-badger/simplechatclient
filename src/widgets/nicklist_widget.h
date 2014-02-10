@@ -32,6 +32,7 @@ public:
     void delUser(const QString &strNick);
     void renameUser(const QString &strNick, const QString &strNewNick);
     void setUserAvatar(const QString &strNick, const QString &strValue);
+    void setUserSex(const QString &strNick, const QChar &cValue);
     void setUserModes(const QString &strNick, const QString &strModes, int iMaxModes);
 
 private:
@@ -44,7 +45,8 @@ private:
     enum NickListRoles
     {
         NickListModesRole = Qt::UserRole+20,
-        NickListAvatarUrlRole = Qt::UserRole+21
+        NickListAvatarUrlRole = Qt::UserRole+21,
+        NickListSexRole = Qt::UserRole+22
     };
 
     bool existUser(const QString &strNick);

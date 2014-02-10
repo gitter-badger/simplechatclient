@@ -105,6 +105,10 @@ const int FLAG_UNKNOWN_INT = -1;
 #define PERMISSION_BAN "b"
 #define PERMISSION_INVITE "I"
 
+#define USER_SEX_MALE 'M'
+#define USER_SEX_FEMALE 'F'
+#define USER_SEX_UNKNOWN 'U'
+
 // struct Theme
 
 // struct OnetChannel
@@ -115,6 +119,7 @@ struct OnetNick
     QList<QString> channels;
     QHash<QString,QString> channel_modes;
     QHash<QString,int> channel_max_modes;
+    QChar sex;
 };
 
 struct OnetChannelList

@@ -37,6 +37,7 @@ public:
     void renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay);
     void quitUser(const QString &strNick, const QList<QString> &lChannels, const QString &strDisplay);
     void setUserModes(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes);
+    void setUserSex(const QString &strNick, const QList<QString> &lChannels, const QChar &cSex);
     void setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar);
 };
 

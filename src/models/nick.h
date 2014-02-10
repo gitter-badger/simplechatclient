@@ -44,6 +44,9 @@ public:
     void setAvatar(const QString &strNick, const QString &strAvatar);
     QString getAvatar(const QString &strNick);
 
+    void setSex(const QString &strNick, const QChar &cSex);
+    QChar getSex(const QString &strNick);
+
     QString getModes(const QString &strNick, const QString &strChannel);
     int getMaxModes(const QString &strNick, const QString &strChannel);
 

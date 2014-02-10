@@ -55,6 +55,7 @@ void NickListWidget::addUser(const QString &strNick, const QString &strModes, in
     item->setData(SortedListWidgetStatusRole, iMaxModes); // max modes
     item->setData(NickListModesRole, strModes); // modes
     item->setData(NickListAvatarUrlRole, strAvatar); // avatar url
+    item->setData(NickListSexRole, USER_SEX_UNKNOWN); // sex
 
     this->addItem(item);
 }
@@ -78,6 +79,13 @@ void NickListWidget::setUserAvatar(const QString &strNick, const QString &strVal
     QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
     foreach (QListWidgetItem *item, items)
         item->setData(NickListAvatarUrlRole, strValue);
+}
+
+void NickListWidget::setUserSex(const QString &strNick, const QChar &cValue)
+{
+    QList<QListWidgetItem*> items = this->findItems(strNick, Qt::MatchExactly);
+    foreach (QListWidgetItem *item, items)
+        item->setData(NickListSexRole, cValue);
 }
 
 void NickListWidget::setUserModes(const QString &strNick, const QString &strModes, int iMaxModes)

@@ -122,6 +122,14 @@ void NickList::setUserModes(const QString &strNick, const QString &strChannel, c
         Core::instance()->mainWindow()->refreshToolButtons(strChannel);
 }
 
+void NickList::setUserSex(const QString &strNick, const QList<QString> &lChannels, const QChar &cSex)
+{
+    foreach (const QString &strChannel, lChannels)
+    {
+        Channel::instance()->getNickListWidget(strChannel)->setUserSex(strNick, cSex);
+    }
+}
+
 void NickList::setUserAvatar(const QString &strNick, const QList<QString> &lChannels, const QString &strAvatar)
 {
     foreach (const QString &strChannel, lChannels)
