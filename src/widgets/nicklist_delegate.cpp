@@ -134,11 +134,12 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         QRect rect = option.rect;
 
         int x = rect.x()+35+2;
-        int y = rect.top()+2;
+        int y = rect.top()+1;
         int w = 2;
-        int h = 35-4;
+        int h = 35-2;
 
-        painter->fillRect(x, y, w, h, cSexColor);
+        if (userSex == USER_SEX_MALE || userSex == USER_SEX_FEMALE)
+            painter->fillRect(x, y, w, h, cSexColor);
     }
 
     // nick
@@ -154,7 +155,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         font.setItalic(busy ? true : false);
         painter->setFont(font);
 
-        if (nick.at(0) != '~') rect.setX(rect.x()+35+6+5);
+        if (nick.at(0) != '~') rect.setX(rect.x()+35+5+5);
         painter->drawText(rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
     }
     else
@@ -197,7 +198,7 @@ QSize NickListDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     if (Themes::instance()->isCurrentWithNicklistAvatar()) // with avatars
     {
         int w = 200;
-        int h = 35;
+        int h = 35+1;
         return QSize(w, h);
     }
     else // without avatars
