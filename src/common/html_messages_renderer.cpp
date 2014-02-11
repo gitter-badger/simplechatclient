@@ -151,10 +151,15 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             QString strUserAvatar = Nick::instance()->getAvatar(strNick);
 
             // is valid avatar
-            if (!strUserAvatar.isEmpty())
-                strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
+            if (strUserAvatar.isEmpty())
+            {
+                if (strNick.at(0) == '~')
+                    strUserAvatar = Avatar::instance()->getEmptyUnregisteredUserAvatar();
+                else
+                    strUserAvatar = Avatar::instance()->getEmptyRegisteredUserAvatar();
+            }
             else
-                strUserAvatar = Avatar::instance()->getEmptyUserAvatar();
+                strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
 
 #ifndef Q_WS_WIN
             strUserAvatar = "file://"+strUserAvatar;

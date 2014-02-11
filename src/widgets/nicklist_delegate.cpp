@@ -105,13 +105,18 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains(FLAG_DEV)) { icons << QIcon(":/images/dev.png"); }
 
     // avatar
-    if ((nick.at(0) != '~') && (Themes::instance()->isCurrentWithNicklistAvatar()))
+    if (Themes::instance()->isCurrentWithNicklistAvatar())
     {
         // is valid avatar
-        if (!userAvatar.isEmpty())
-            userAvatar = Avatar::instance()->getAvatarPath(userAvatar);
+        if (userAvatar.isEmpty())
+        {
+            if (nick.at(0) == '~')
+                userAvatar = Avatar::instance()->getEmptyUnregisteredUserAvatar();
+            else
+                userAvatar = Avatar::instance()->getEmptyRegisteredUserAvatar();
+        }
         else
-            userAvatar = Avatar::instance()->getEmptyUserAvatar();
+            userAvatar = Avatar::instance()->getAvatarPath(userAvatar);
 
         QIcon avatar(userAvatar);
 
@@ -156,6 +161,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         painter->setFont(font);
 
         if (nick.at(0) != '~') rect.setX(rect.x()+35+5+5);
+        else rect.setX(rect.x()+35+5);
         painter->drawText(rect, Qt::AlignVCenter | Qt::AlignLeft, nick);
     }
     else

@@ -39,7 +39,8 @@ public:
     virtual ~Avatar();
     void get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl);
     QString getAvatarPath(const QString &strAvatar);
-    QString getEmptyUserAvatar();
+    QString getEmptyRegisteredUserAvatar();
+    QString getEmptyUnregisteredUserAvatar();
 
 private:
     QNetworkAccessManager *accessManager;

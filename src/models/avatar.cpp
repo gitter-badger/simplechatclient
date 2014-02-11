@@ -160,7 +160,7 @@ QString Avatar::getAvatarPath(const QString &strAvatar)
     return path+strAvatar;
 }
 
-QString Avatar::getEmptyUserAvatar()
+QString Avatar::getEmptyRegisteredUserAvatar()
 {
     QString path;
 #ifdef Q_WS_WIN
@@ -169,5 +169,17 @@ QString Avatar::getEmptyUserAvatar()
     path = SCC_DATA_DIR;
 #endif
 
-    return path+"/images/user_avatar.png";
+    return path+"/images/registered_user_avatar.png";
+}
+
+QString Avatar::getEmptyUnregisteredUserAvatar()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    return path+"/images/unregistered_user_avatar.png";
 }
