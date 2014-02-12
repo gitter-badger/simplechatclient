@@ -433,12 +433,30 @@ void OnetKernel::raw_join()
     Nick::instance()->add(strNick, strChannel, strSuffix);
 
     // nick avatar
-    if ((strNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strNick).isEmpty()))
+    QString strMe = Settings::instance()->get("nick");
+    if ((strNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar())
+            && (Nick::instance()->getAvatar(strNick).isEmpty()))
     {
-        Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
+        if (strNick == strMe)
+        {
+            QString strAvatar = MyProfile::instance()->get("avatar");
+            if (!strAvatar.isEmpty())
+                Avatar::instance()->get(strNick, "nick", strAvatar);
+        }
+        else
+        {
+            Core::instance()->network->send(QString("NS INFO %1 s").arg(strNick));
+        }
     }
 
-    QString strMe = Settings::instance()->get("nick");
+    // my nick sex
+    if (strNick == strMe && strNick.at(0) != '~' && Themes::instance()->isCurrentWithAvatar())
+    {
+        QString strSex = MyProfile::instance()->get("sex");
+        if (strSex.size() == 1)
+            Nick::instance()->setSex(strNick, strSex.at(0));
+    }
+
     if ((strNick == strMe) && (strChannel.at(0) != '^'))
         Core::instance()->network->send(QString("CS INFO %1 i").arg(strChannel));
 }
@@ -792,11 +810,11 @@ void OnetKernel::raw_mode()
             // registered nick
             if ((strNick == Settings::instance()->get("nick")) && (strFlag == "+r"))
             {
-                // get my stats
-                Core::instance()->network->send(QString("RS INFO %1").arg(Settings::instance()->get("nick")));
-
                 // channel homes
                 Core::instance()->network->send("CS HOMES");
+
+                // get my stats
+                Core::instance()->network->send(QString("RS INFO %1").arg(Settings::instance()->get("nick")));
             }
         }
     }
@@ -2791,9 +2809,20 @@ void OnetKernel::raw_353()
             Nick::instance()->add(strCleanNick, strChannel, strModes);
 
             // nick avatar
-            if ((strCleanNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar()) && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
+            if ((strCleanNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar())
+                    && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
             {
-                Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
+                QString strMe = Settings::instance()->get("nick");
+                if (strCleanNick == strMe)
+                {
+                    QString strAvatar = MyProfile::instance()->get("avatar");
+                    if (!strAvatar.isEmpty())
+                        Avatar::instance()->get(strCleanNick, "nick", strAvatar);
+                }
+                else
+                {
+                    Core::instance()->network->send(QString("NS INFO %1 s").arg(strCleanNick));
+                }
             }
         }
     }
