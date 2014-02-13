@@ -196,38 +196,37 @@ void MainWindow::createActions()
 void MainWindow::createMenus()
 {
     // main menu
-    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu = menuBar()->addMenu(tr("SCC"));
     fileMenu->addAction(connectAction);
     fileMenu->addSeparator();
+    fileMenu->addAction(aboutAction);
     fileMenu->addAction(quitAction);
-
-    // options menu
-    optionsMenu = menuBar()->addMenu(tr("&Settings"));
-    optionsMenu->addAction(optionsAction);
 
     // onet menu
     chatMenu = menuBar()->addMenu(tr("&Chat"));
     chatMenu->addAction(channelListAction);
-    chatMenu->addAction(channelHomesAction);
-    chatMenu->addAction(channelFavouritesAction);
-    chatMenu->addAction(friendsAction);
-    chatMenu->addAction(ignoreAction);
     chatMenu->addAction(findNickAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
-    chatMenu->addAction(Busy::instance()->busyAction);
-    chatMenu->addAction(Away::instance()->awayAction);
+    chatMenu->addAction(Lag::instance()->lagAction);
 
     // onet my menu
     myMenu = menuBar()->addMenu(tr("&My"));
     myMenu->addAction(myStatsAction);
     myMenu->addAction(myProfileAction);
     myMenu->addAction(myAvatarAction);
+    myMenu->addAction(channelHomesAction);
+    myMenu->addAction(channelFavouritesAction);
+    myMenu->addAction(friendsAction);
+    myMenu->addAction(ignoreAction);
     myMenu->addAction(notesAction);
+    myMenu->addSeparator();
+    myMenu->addAction(Busy::instance()->busyAction);
+    myMenu->addAction(Away::instance()->awayAction);
 
-    // help menu
-    helpMenu = menuBar()->addMenu(tr("He&lp"));
-    helpMenu->addAction(aboutAction);
+    // options menu
+    optionsMenu = menuBar()->addMenu(tr("&Settings"));
+    optionsMenu->addAction(optionsAction);
 
     // notification
     notificationToolButton = new QToolButton(this);
@@ -243,15 +242,13 @@ void MainWindow::createMenus()
     toolBar->setIconSize(QSize(16,16));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolBar->addAction(connectAction);
-    toolBar->addAction(optionsAction);
     toolBar->addAction(channelListAction);
     toolBar->addAction(channelHomesAction);
     toolBar->addAction(friendsAction);
+    toolBar->addAction(ignoreAction);
     toolBar->addAction(camsAction);
     toolBar->addAction(notesAction);
     notificationAction = toolBar->addWidget(notificationToolButton);
-    toolBar->addSeparator();
-    toolBar->addAction(Lag::instance()->lagAction);
 
     // tray menu
     trayIconMenu = new QMenu();

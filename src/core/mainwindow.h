@@ -75,7 +75,6 @@ private:
 
     QAction *notificationAction;
     QToolButton *notificationToolButton;
-    QMenu *helpMenu;
     QAction *sccAction;
     QAction *connectAction;
     QAction *optionsAction;

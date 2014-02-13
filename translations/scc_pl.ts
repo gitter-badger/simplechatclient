@@ -2167,8 +2167,8 @@
         <translation>O programie SCC...</translation>
     </message>
     <message>
-        <source>&amp;File</source>
-        <translation>&amp;Plik</translation>
+        <source>SCC</source>
+        <translation>SCC</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -2181,10 +2181,6 @@
     <message>
         <source>&amp;My</source>
         <translation>&amp;Moje</translation>
-    </message>
-    <message>
-        <source>He&amp;lp</source>
-        <translation>Pomo&amp;c</translation>
     </message>
     <message>
         <source>Welcome to the Simple Chat Client</source>
