@@ -26,7 +26,6 @@ class InputLineWidget;
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
-class QLabel;
 class QFrame;
 class QMenu;
 class QToolButton;
@@ -45,7 +44,6 @@ public:
 
 public slots:
     void showModeration(bool bShow);
-    void updateNick(const QString &strNick);
 
 private:
     bool bShowFontButtons;
@@ -66,7 +64,6 @@ private:
     QFrame *separator2;
     QToolButton *channel_settings;
     QToolButton *moderation;
-    QLabel *nickLabel;
     InputLineWidget *pInputLine;
     QToolButton *sendButton;
     QToolButton *moderSendButton;

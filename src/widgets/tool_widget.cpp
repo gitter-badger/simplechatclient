@@ -197,11 +197,6 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
 
-    nickLabel = new QLabel(parent);
-    nickLabel->setText(tr("(Unregistered)"));
-    nickLabel->setStyleSheet("font-weight:bold;margin-left:1px;");
-    nickLabel->show();
-
     pInputLine = new InputLineWidget(this);
     pInputLine->setMinimumWidth(350);
     pInputLine->show();
@@ -234,7 +229,6 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     QHBoxLayout *bottomLayout = new QHBoxLayout;
     bottomLayout->setMargin(0);
     bottomLayout->setAlignment(Qt::AlignLeft);
-    bottomLayout->addWidget(nickLabel);
     bottomLayout->addWidget(pInputLine);
     bottomLayout->addWidget(sendButton);
     bottomLayout->addWidget(moderSendButton);
@@ -410,11 +404,6 @@ void ToolWidget::showChannelSettings(bool bShow)
         channel_settings->show();
     else
         channel_settings->hide();
-}
-
-void ToolWidget::updateNick(const QString &strNick)
-{
-    nickLabel->setText(strNick);
 }
 
 void ToolWidget::showFontButtonsClicked()
