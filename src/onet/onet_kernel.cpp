@@ -434,8 +434,9 @@ void OnetKernel::raw_join()
 
     // nick avatar
     QString strMe = Settings::instance()->get("nick");
-    if ((strNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar())
-            && (Nick::instance()->getAvatar(strNick).isEmpty()))
+    if (strNick.at(0) != '~' && !strSuffix.contains(FLAG_BOT)
+            && Themes::instance()->isCurrentWithAvatar()
+            && Nick::instance()->getAvatar(strNick).isEmpty())
     {
         if (strNick == strMe)
         {
@@ -2809,8 +2810,9 @@ void OnetKernel::raw_353()
             Nick::instance()->add(strCleanNick, strChannel, strModes);
 
             // nick avatar
-            if ((strCleanNick.at(0) != '~') && (Themes::instance()->isCurrentWithAvatar())
-                    && (Nick::instance()->getAvatar(strCleanNick).isEmpty()))
+            if (strCleanNick.at(0) != '~' && !strSuffix.contains(FLAG_BOT)
+                    && Themes::instance()->isCurrentWithAvatar()
+                    && Nick::instance()->getAvatar(strCleanNick).isEmpty())
             {
                 QString strMe = Settings::instance()->get("nick");
                 if (strCleanNick == strMe)
