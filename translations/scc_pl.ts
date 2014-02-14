@@ -2171,10 +2171,6 @@
         <translation>SCC</translation>
     </message>
     <message>
-        <source>&amp;Settings</source>
-        <translation>&amp;Ustawienia</translation>
-    </message>
-    <message>
         <source>&amp;Chat</source>
         <translation>&amp;Czat</translation>
     </message>

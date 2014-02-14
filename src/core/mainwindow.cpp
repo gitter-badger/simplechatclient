@@ -198,6 +198,7 @@ void MainWindow::createMenus()
     // main menu
     fileMenu = menuBar()->addMenu(tr("SCC"));
     fileMenu->addAction(connectAction);
+    fileMenu->addAction(optionsAction);
     fileMenu->addSeparator();
     fileMenu->addAction(aboutAction);
     fileMenu->addAction(quitAction);
@@ -223,10 +224,6 @@ void MainWindow::createMenus()
     myMenu->addSeparator();
     myMenu->addAction(Busy::instance()->busyAction);
     myMenu->addAction(Away::instance()->awayAction);
-
-    // options menu
-    optionsMenu = menuBar()->addMenu(tr("&Settings"));
-    optionsMenu->addAction(optionsAction);
 
     // notification
     notificationToolButton = new QToolButton(this);
