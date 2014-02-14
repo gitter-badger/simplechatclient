@@ -98,6 +98,7 @@ const int FLAG_UNKNOWN_INT = -1;
 #define FLAG_OWNER "`"
 #define FLAG_ADMIN "o"
 #define FLAG_DEV "O"
+#define FLAG_BOT "B"
 
 #define PERMISSION_OWNER "q"
 #define PERMISSION_OP "o"

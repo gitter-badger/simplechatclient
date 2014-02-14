@@ -101,8 +101,10 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     if (modes.contains(FLAG_HALFOP)) { icons << QIcon(":/images/halfop.png"); }
     if (modes.contains(FLAG_OP)) { icons << QIcon(":/images/op.png"); }
     if (modes.contains(FLAG_OWNER)) { icons << QIcon(":/images/owner.png"); }
-    if (modes.contains(FLAG_ADMIN)) { icons << QIcon(":/images/admin.png"); }
+
     if (modes.contains(FLAG_DEV)) { icons << QIcon(":/images/dev.png"); }
+    else if (modes.contains(FLAG_BOT)) { icons << QIcon(":/images/bot.png"); }
+    else if (modes.contains(FLAG_ADMIN)) { icons << QIcon(":/images/admin.png"); }
 
     // avatar
     if (Themes::instance()->isCurrentWithNicklistAvatar())
