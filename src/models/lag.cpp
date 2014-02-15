@@ -37,6 +37,7 @@ Lag::Lag()
 {
     lagAction = new QAction(this);
     lagAction->setEnabled(false);
+    lagAction->setText("Lag: -");
 }
 
 void Lag::update(qint64 iLag)
@@ -47,7 +48,7 @@ void Lag::update(qint64 iLag)
 
 void Lag::reset()
 {
-    update(0);
+    lagAction->setText("Lag: -");
 }
 
 QString Lag::createLagText(qint64 iLag)

@@ -198,7 +198,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     moderation->show();
 
     pInputLine = new InputLineWidget(this);
-    pInputLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //pInputLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pInputLine->setMinimumWidth(350);
     pInputLine->show();
 
