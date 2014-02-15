@@ -2393,6 +2393,10 @@
         <source>Offline messages (%1)</source>
         <translation>Wiadomości offline (%1)</translation>
     </message>
+    <message>
+        <source>Updates (%1)</source>
+        <translation>Aktualizacje (%1)</translation>
+    </message>
 </context>
 <context>
     <name>Offline</name>
@@ -3426,6 +3430,10 @@
 </context>
 <context>
     <name>Updates</name>
+    <message>
+        <source>Updates</source>
+        <translation>Aktualizacje</translation>
+    </message>
     <message>
         <source>Message Of The Day:</source>
         <translation>Wiadomość dnia:</translation>

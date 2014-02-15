@@ -59,6 +59,8 @@
 #include "settings.h"
 #include "tab_container.h"
 #include "tab_manager.h"
+#include "update.h"
+#include "update_gui.h"
 #include "tool_widget.h"
 
 #if WITH_KAMERZYSTA
@@ -291,6 +293,7 @@ void MainWindow::createSignals()
     connect(Awaylog::instance()->awaylogAction, SIGNAL(triggered()), this, SLOT(openAwaylog()));
     connect(Invite::instance()->inviteAction, SIGNAL(triggered()), this, SLOT(openInviteList()));
     connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
+    connect(Update::instance()->updateAction, SIGNAL(triggered()), this, SLOT(openUpdate()));
 
     connect(movieTrayIcon, SIGNAL(frameChanged(int)), this, SLOT(updateTrayIcon()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -583,6 +586,11 @@ void MainWindow::openOfflineMessages()
 {
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
         OfflineListGui(this).exec();
+}
+
+void MainWindow::openUpdate()
+{
+    UpdateGui(this).exec();
 }
 
 // animated tray icon

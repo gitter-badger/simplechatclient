@@ -19,6 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
+#include "defines.h"
 #include "settings.h"
 #include "about_gui.h"
 
@@ -48,11 +49,11 @@ void AboutGui::setDefaultValues()
     QString strVersionStatus = Settings::instance()->get("version_status");
 
     QString strVersion;
-    if (strVersionStatus == "uptodate")
+    if (strVersionStatus == UPDATE_STATUS_UPTODATE)
         strVersion = tr("Up-to-date version");
-    else if (strVersionStatus == "beta")
+    else if (strVersionStatus == UPDATE_STATUS_BETA)
         strVersion = tr("Unstable version");
-    else if (strVersionStatus == "outofdate")
+    else if (strVersionStatus == UPDATE_STATUS_OUTOFDATE)
          strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
     else
     {

@@ -37,7 +37,6 @@
 UpdateGui::UpdateGui(QWidget *parent) : QDialog(parent)
 {
     ui.setupUi(this);
-    setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowTitle(tr("Update"));
     // center screen

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2014 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QAction>
 #include <QDomDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -24,6 +25,7 @@
 #include "core.h"
 #include "update_gui.h"
 #include "message.h"
+#include "notification.h"
 #include "settings.h"
 #include "update.h"
 
@@ -48,6 +50,9 @@ Update * Update::instance()
 
 Update::Update()
 {
+    updateAction = new QAction(QIcon(":/images/oxygen/16x16/download.png") , tr("Updates"), this);
+    updateAction->setVisible(false);
+
     accessManager = new QNetworkAccessManager;
     connect(accessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(updateFinished(QNetworkReply*)));
 }
@@ -100,13 +105,13 @@ void Update::compareVersion()
 
     QString strVersionStatus;
     if (iAvailableVersion == iCurrentVersion)
-        strVersionStatus = "uptodate";
+        strVersionStatus = UPDATE_STATUS_UPTODATE;
     else if (iAvailableVersion < iCurrentVersion)
-        strVersionStatus = "beta";
+        strVersionStatus = UPDATE_STATUS_BETA;
     else if (iAvailableVersion > iCurrentVersion)
-        strVersionStatus = "outofdate";
+        strVersionStatus = UPDATE_STATUS_OUTOFDATE;
     else
-        strVersionStatus = "unknown";
+        strVersionStatus = UPDATE_STATUS_UNKNOWN;
 
     // save status
     Settings::instance()->set("version_status", strVersionStatus);
@@ -132,26 +137,6 @@ void Update::saveSettings(QString strUpdateXml)
 
     if (!strAvailableVersion.isEmpty())
         Settings::instance()->set("available_version", strAvailableVersion);
-}
-
-void Update::readSettings()
-{
-    QString strMOTD = Settings::instance()->get("motd");
-    QString strAvailableVersion = Settings::instance()->get("available_version");
-
-    if (!strMOTD.isEmpty())
-    {
-        QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
-        Message::instance()->showMessage(STATUS_WINDOW, strMessageOfTheDay, MessageDefault);
-    }
-
-    if (!strAvailableVersion.isEmpty())
-    {
-        compareVersion();
-
-        if (Settings::instance()->get("version_status") == "outofdate")
-            UpdateGui().exec();
-    }
 }
 
 void Update::updateFinished(QNetworkReply *reply)
@@ -182,7 +167,19 @@ void Update::updateFinished(QNetworkReply *reply)
     if (!strUpdateXml.isEmpty())
     {
         saveSettings(strUpdateXml);
-        readSettings();
+
+        if (!Settings::instance()->get("motd").isEmpty())
+        {
+            QString strMOTD = Settings::instance()->get("motd");
+            QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
+            Message::instance()->showMessage(STATUS_WINDOW, strMessageOfTheDay, MessageDefault);
+        }
+
+        if (Settings::instance()->get("available_version") != "0.0.0.0")
+        {
+            compareVersion();
+            Notification::instance()->refreshUpdate();
+        }
     }
 }
 

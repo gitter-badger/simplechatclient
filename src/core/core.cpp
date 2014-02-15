@@ -99,7 +99,7 @@ void Core::createSettings()
     Settings::instance()->set("available_version", "0.0.0.0");
     Settings::instance()->set("whats_new", QString::null);
     Settings::instance()->set("motd", QString::null);
-    Settings::instance()->set("version_status", "unknown");
+    Settings::instance()->set("version_status", UPDATE_STATUS_UNKNOWN);
 
     Settings::instance()->set("logged", "false");
     Settings::instance()->set("busy", "false");

@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2009-2013 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2009-2014 Piotr Łuczko <piotr.luczko@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <QObject>
 
 QT_BEGIN_NAMESPACE
+class QAction;
 class QNetworkAccessManager;
 class QNetworkReply;
 QT_END_NAMESPACE
@@ -39,12 +40,13 @@ public:
     virtual ~Update();
     void checkUpdate();
 
+    QAction *updateAction;
+
 private:
     QNetworkAccessManager *accessManager;
 
     void compareVersion();
     void saveSettings(QString strUpdateXml);
-    void readSettings();
     QString statsContent();
 
 private slots:

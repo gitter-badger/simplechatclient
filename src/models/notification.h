@@ -39,6 +39,7 @@ public:
     void refreshAwaylog();
     void refreshInvite();
     void refreshOffline();
+    void refreshUpdate();
     void refreshMenu();
 
 private:

@@ -142,6 +142,7 @@ private slots:
     void openAwaylog();
     void openInviteList();
     void openOfflineMessages();
+    void openUpdate();
 
     void updateButtons();
     void tabCloseRequested(int index);

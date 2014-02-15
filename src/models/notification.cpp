@@ -24,6 +24,8 @@
 #include "invite.h"
 #include "mainwindow.h"
 #include "offline.h"
+#include "settings.h"
+#include "update.h"
 #include "notification.h"
 
 Notification * Notification::Instance = 0;
@@ -44,6 +46,7 @@ Notification::Notification()
     notificationMenu->addAction(Awaylog::instance()->awaylogAction);
     notificationMenu->addAction(Invite::instance()->inviteAction);
     notificationMenu->addAction(Offline::instance()->offlineMessagesAction);
+    notificationMenu->addAction(Update::instance()->updateAction);
 }
 
 QMenu *Notification::getNotificationMenu()
@@ -81,18 +84,30 @@ void Notification::refreshOffline()
         Offline::instance()->offlineMessagesAction->setVisible(true);
 }
 
+void Notification::refreshUpdate()
+{
+    refreshMenu();
+
+    if (Settings::instance()->get("version_status") == UPDATE_STATUS_OUTOFDATE)
+        Update::instance()->updateAction->setVisible(true);
+    else
+        Update::instance()->updateAction->setVisible(false);
+}
+
 void Notification::refreshMenu()
 {
-    if ((!Awaylog::instance()->isEmpty()) || (!Invite::instance()->isEmpty()) || (!Offline::instance()->isEmptyNicks()))
+    if ((!Awaylog::instance()->isEmpty()) || (!Invite::instance()->isEmpty()) || (!Offline::instance()->isEmptyNicks()) || (Settings::instance()->get("version_status") == UPDATE_STATUS_OUTOFDATE))
     {
         int iAwayCount = Awaylog::instance()->count();
         int iInviteCount = Invite::instance()->count();
         int iOfflineMessagesCount = Offline::instance()->countNicks();
-        int iNotificationCount = iAwayCount + iInviteCount + iOfflineMessagesCount;
+        int iUpdateCount = Settings::instance()->get("version_status") == UPDATE_STATUS_OUTOFDATE ? 1 : 0;
+        int iNotificationCount = iAwayCount + iInviteCount + iOfflineMessagesCount + iUpdateCount;
 
         Awaylog::instance()->awaylogAction->setText(tr("Awaylog (%1)").arg(iAwayCount));
         Invite::instance()->inviteAction->setText(tr("Invite (%1)").arg(iInviteCount));
         Offline::instance()->offlineMessagesAction->setText(tr("Offline messages (%1)").arg(iOfflineMessagesCount));
+        Update::instance()->updateAction->setText(tr("Updates (%1)").arg(iUpdateCount));
 
         Core::instance()->mainWindow()->getNotificationToolButton()->setText(tr("N&otification (%1)").arg(iNotificationCount));
         Core::instance()->mainWindow()->getNotificationAction()->setVisible(true);

@@ -110,6 +110,11 @@ const int FLAG_UNKNOWN_INT = -1;
 #define USER_SEX_FEMALE 'F'
 #define USER_SEX_UNKNOWN 'U'
 
+#define UPDATE_STATUS_BETA "beta"
+#define UPDATE_STATUS_UPTODATE "uptodate"
+#define UPDATE_STATUS_OUTOFDATE "outofdate"
+#define UPDATE_STATUS_UNKNOWN "unknown"
+
 // struct Theme
 
 // struct OnetChannel
