@@ -28,7 +28,7 @@ class NickListWidget : public QListWidget
     Q_OBJECT
 public:
     NickListWidget(const QString &_strChannel);
-    void addUser(const QString &strNick, const QString &strModes, int iMaxModes, const QString &strAvatar);
+    void addUser(const QString &strNick, const QString &strModes, int iMaxModes, const QString &strAvatar, QChar &cSex);
     void delUser(const QString &strNick);
     void renameUser(const QString &strNick, const QString &strNewNick);
     void setUserAvatar(const QString &strNick, const QString &strValue);

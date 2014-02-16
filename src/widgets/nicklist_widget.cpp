@@ -45,7 +45,7 @@ NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChan
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void NickListWidget::addUser(const QString &strNick, const QString &strModes, int iMaxModes, const QString &strAvatar)
+void NickListWidget::addUser(const QString &strNick, const QString &strModes, int iMaxModes, const QString &strAvatar, QChar &cSex)
 {
     if (existUser(strNick)) return;
 
@@ -55,7 +55,7 @@ void NickListWidget::addUser(const QString &strNick, const QString &strModes, in
     item->setData(SortedListWidgetStatusRole, iMaxModes); // max modes
     item->setData(NickListModesRole, strModes); // modes
     item->setData(NickListAvatarUrlRole, strAvatar); // avatar url
-    item->setData(NickListSexRole, USER_SEX_UNKNOWN); // sex
+    item->setData(NickListSexRole, cSex); // sex
 
     this->addItem(item);
 }

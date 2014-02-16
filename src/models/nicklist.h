@@ -32,7 +32,7 @@ public:
 
     NickList();
     void clearUsers();
-    void addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar);
+    void addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar, QChar &cSex);
     void delUser(const QString &strNick, const QString &strChannel);
     void renameUser(const QString &strNick, const QString &strNewNick, const QList<QString> &lChannels, const QString &strDisplay);
     void quitUser(const QString &strNick, const QList<QString> &lChannels, const QString &strDisplay);

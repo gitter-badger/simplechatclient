@@ -56,7 +56,7 @@ void NickList::clearUsers()
     }
 }
 
-void NickList::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar)
+void NickList::addUser(const QString &strNick, const QString &strChannel, const QString &strModes, int iMaxModes, const QString &strAvatar, QChar &cSex)
 {
     if ((strNick.isEmpty()) || (strChannel.isEmpty())) return;
     if (!Channel::instance()->contains(strChannel)) return;
@@ -64,7 +64,7 @@ void NickList::addUser(const QString &strNick, const QString &strChannel, const 
     if (strChannel.at(0) == '^')
         Channel::instance()->setOffline(strChannel, false);
 
-    Channel::instance()->getNickListWidget(strChannel)->addUser(strNick, strModes, iMaxModes, strAvatar);
+    Channel::instance()->getNickListWidget(strChannel)->addUser(strNick, strModes, iMaxModes, strAvatar, cSex);
     int iUsersCount = Channel::instance()->getNickListWidget(strChannel)->count();
     Channel::instance()->getUsers(strChannel)->setText(QString(tr("Users (%1)").arg(iUsersCount)));
 }

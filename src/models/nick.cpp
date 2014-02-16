@@ -48,6 +48,7 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
 {
     if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
     int iMaxModes = createMaxModes(strModes);
+    QChar cSex = USER_SEX_UNKNOWN;
 
     if (lNicks.contains(strNick))
     {
@@ -56,8 +57,9 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
         lNicks[strNick].channels.append(strChannel);
         lNicks[strNick].channel_modes[strChannel] = strModes;
         lNicks[strNick].channel_max_modes[strChannel] = iMaxModes;
+        cSex = lNicks[strNick].sex;
 
-        NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, lNicks[strNick].avatar);
+        NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, lNicks[strNick].avatar, cSex);
     }
     else
     {
@@ -66,11 +68,11 @@ void Nick::add(const QString &strNick, const QString &strChannel, QString strMod
         oNick.channels.append(strChannel);
         oNick.channel_modes[strChannel] = strModes;
         oNick.channel_max_modes[strChannel] = iMaxModes;
-        oNick.sex = USER_SEX_UNKNOWN;
+        oNick.sex = cSex;
 
         lNicks[strNick] = oNick;
 
-        NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, QString::null);
+        NickList::instance()->addUser(strNick, strChannel, strModes, iMaxModes, QString::null, cSex);
     }
 }
 
