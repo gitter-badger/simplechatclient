@@ -197,24 +197,18 @@ void MainWindow::createActions()
 
 void MainWindow::createMenus()
 {
-    // main menu
-    fileMenu = menuBar()->addMenu(tr("SCC"));
-    fileMenu->addAction(connectAction);
-    fileMenu->addAction(optionsAction);
-    fileMenu->addSeparator();
-    fileMenu->addAction(aboutAction);
-    fileMenu->addAction(quitAction);
-
-    // onet menu
-    chatMenu = menuBar()->addMenu(tr("&Chat"));
+    // chat
+    chatMenu = new QMenu(tr("&Chat"));
+    chatMenu->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
     chatMenu->addAction(channelListAction);
     chatMenu->addAction(findNickAction);
     chatMenu->addAction(camsAction);
     chatMenu->addSeparator();
     chatMenu->addAction(Lag::instance()->lagAction);
 
-    // onet my menu
-    myMenu = menuBar()->addMenu(tr("&My"));
+    // my
+    myMenu = new QMenu(tr("&My"));
+    myMenu->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
     myMenu->addAction(myStatsAction);
     myMenu->addAction(myProfileAction);
     myMenu->addAction(myAvatarAction);
@@ -227,6 +221,25 @@ void MainWindow::createMenus()
     myMenu->addAction(Busy::instance()->busyAction);
     myMenu->addAction(Away::instance()->awayAction);
 
+    // main menu
+    sccMenu = new QMenu(tr("SCC"));
+    sccMenu->addAction(connectAction);
+    sccMenu->addSeparator();
+    sccMenu->addMenu(chatMenu);
+    sccMenu->addMenu(myMenu);
+    sccMenu->addSeparator();
+    sccMenu->addAction(optionsAction);
+    sccMenu->addSeparator();
+    sccMenu->addAction(aboutAction);
+    sccMenu->addAction(quitAction);
+
+    mainToolButton = new QToolButton(this);
+    mainToolButton->setIcon(QIcon(":/images/logo16x16.png"));
+    mainToolButton->setText(tr("SCC"));
+    mainToolButton->setMenu(sccMenu);
+    mainToolButton->setPopupMode(QToolButton::InstantPopup);
+    mainToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
     // notification
     notificationToolButton = new QToolButton(this);
     notificationToolButton->setIcon(QIcon(":/images/oxygen/16x16/emblem-important.png"));
@@ -238,8 +251,9 @@ void MainWindow::createMenus()
 
     // toolbar
     toolBar = addToolBar(tr("Navigation bar"));
-    toolBar->setIconSize(QSize(16,16));
+    toolBar->setIconSize(QSize(22,22));
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolBar->addWidget(mainToolButton);
     toolBar->addAction(connectAction);
     toolBar->addAction(channelListAction);
     toolBar->addAction(channelHomesAction);
@@ -637,9 +651,17 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::toolbarOrientationChanged(Qt::Orientation orientation)
 {
     if (orientation == Qt::Horizontal)
+    {
         toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        mainToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        notificationToolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    }
     else
+    {
         toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        mainToolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        notificationToolButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    }
 }
 
 bool MainWindow::inputLineKeyEvent(QKeyEvent *k)

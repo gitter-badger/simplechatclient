@@ -70,11 +70,13 @@ public slots:
 
 private:
     QToolBar *toolBar;
-    QMenu *fileMenu;
+    QToolButton *mainToolButton;
+    QMenu *sccMenu;
 
     QAction *notificationAction;
     QToolButton *notificationToolButton;
     QAction *trayAction;
+
     QAction *connectAction;
     QAction *optionsAction;
     QAction *aboutAction;
