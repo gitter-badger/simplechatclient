@@ -152,9 +152,9 @@ void MainWindow::createGui()
 void MainWindow::createActions()
 {
     // action
-    sccAction = new QAction(QIcon(":/images/logo16x16.png"), "Simple Chat Client", this);
-    sccAction->setFont(QFont(this->font().family(), -1, 75, false));
-    sccAction->setEnabled(false);
+    trayAction = new QAction(QIcon(":/images/logo16x16.png"), "Simple Chat Client", this);
+    trayAction->setFont(QFont(this->font().family(), -1, 75, false));
+    trayAction->setEnabled(false);
 
     connectAction = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
     optionsAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
@@ -251,7 +251,7 @@ void MainWindow::createMenus()
 
     // tray menu
     trayIconMenu = new QMenu();
-    trayIconMenu->addAction(sccAction);
+    trayIconMenu->addAction(trayAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(minimizeAction);
     trayIconMenu->addAction(maximizeAction);
@@ -271,6 +271,9 @@ void MainWindow::createMenus()
 
 void MainWindow::createSignals()
 {
+    // toolbutton
+    connect(toolBar, SIGNAL(orientationChanged(Qt::Orientation)), this, SLOT(toolbarOrientationChanged(Qt::Orientation)));
+
     // signals buttons
     connect(connectAction, SIGNAL(triggered()), this, SLOT(buttonConnect()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(openOptions()));
@@ -629,6 +632,14 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
         default:
             break;
     }
+}
+
+void MainWindow::toolbarOrientationChanged(Qt::Orientation orientation)
+{
+    if (orientation == Qt::Horizontal)
+        toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    else
+        toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 }
 
 bool MainWindow::inputLineKeyEvent(QKeyEvent *k)

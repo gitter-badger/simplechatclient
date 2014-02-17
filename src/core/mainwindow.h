@@ -74,7 +74,7 @@ private:
 
     QAction *notificationAction;
     QToolButton *notificationToolButton;
-    QAction *sccAction;
+    QAction *trayAction;
     QAction *connectAction;
     QAction *optionsAction;
     QAction *aboutAction;
@@ -127,6 +127,7 @@ private slots:
     void openAbout();
     void updateTrayIcon();
     void trayIconActivated(QSystemTrayIcon::ActivationReason activationReason);
+    void toolbarOrientationChanged(Qt::Orientation orientation);
 
     void openChannelList();
     void openChannelHomes();
