@@ -258,7 +258,6 @@ void MainWindow::createMenus()
     toolBar->addAction(channelListAction);
     toolBar->addAction(channelHomesAction);
     toolBar->addAction(friendsAction);
-    toolBar->addAction(ignoreAction);
     toolBar->addAction(camsAction);
     toolBar->addAction(notesAction);
     notificationAction = toolBar->addWidget(notificationToolButton);
