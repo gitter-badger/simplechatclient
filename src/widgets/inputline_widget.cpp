@@ -19,6 +19,7 @@
 
 #include <QEvent>
 #include <QKeyEvent>
+#include <QTextEdit>
 #include "channel.h"
 #include "commands.h"
 #include "core.h"
@@ -27,7 +28,7 @@
 #include "nick.h"
 #include "inputline_widget.h"
 
-InputLineWidget::InputLineWidget(QWidget *parent) : QLineEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(30)
+InputLineWidget::InputLineWidget(QWidget *parent) : QTextEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(30)
 {
 }
 
@@ -39,29 +40,33 @@ InputLineWidget::~InputLineWidget()
 void InputLineWidget::insertText(const QString &strText)
 {
     // pos
-    int iPos = this->cursorPosition();
+    QTextCursor cursor = this->textCursor();
+    int iPos = cursor.position();
 
     // insert text
-    QString strLine = this->text();
+    QString strLine = this->toPlainText();
     strLine.insert(iPos, strText);
-    this->setText(strLine);
+    this->setPlainText(strLine);
+
+    cursor.setPosition(iPos+strText.length());
+    this->setTextCursor(cursor);
 }
 
 QString InputLineWidget::getWord()
 {
-    QString strWord = this->text();
+    QString strWord = this->toPlainText();
     if (!strWord.isEmpty())
     {
         int iLength = 0;
         int iStart = 0;
 
         // if first word -1, if next -2
-        if (this->cursorPosition()-1 == 0)
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        if (this->textCursor().position()-1 == 0)
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-1)+1;
         else
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-2)+1;
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-2)+1;
 
-        iLength = this->cursorPosition()-iStart;
+        iLength = this->textCursor().position()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
         strWord.remove(" ");
@@ -71,36 +76,38 @@ QString InputLineWidget::getWord()
 
 void InputLineWidget::setWord(const QString &strSetWord)
 {
-    QString strWord = this->text();
+    QString strWord = this->toPlainText();
     if (!strWord.isEmpty())
     {
         int iLength = 0;
         int iStart = 0;
 
         // if first word -1, if next -2
-        if (this->cursorPosition()-1 == 0)
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-1)+1;
+        if (this->textCursor().position()-1 == 0)
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-1)+1;
         else
-            iStart = strWord.lastIndexOf(' ', this->cursorPosition()-2)+1;
+            iStart = strWord.lastIndexOf(' ', this->textCursor().position()-2)+1;
 
-        iLength = this->cursorPosition()-iStart;
+        iLength = this->textCursor().position()-iStart;
         strWord = strWord.mid(iStart, iLength);
 
         QString strFixedSetWord = strSetWord+" ";
 
-        QString strNewLine = this->text();
+        QString strNewLine = this->toPlainText();
         strNewLine = strNewLine.replace(iStart, iLength, strFixedSetWord);
-        this->setText(strNewLine);
+        this->setPlainText(strNewLine);
 
         // set cursor
-        this->setCursorPosition(iStart+strFixedSetWord.length());
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(iStart+strFixedSetWord.length());
+        this->setTextCursor(cursor);
     }
 }
 
 bool InputLineWidget::event(QEvent *e)
 {
     if (e->type() != QEvent::KeyPress)
-        return QLineEdit::event(e);
+        return QTextEdit::event(e);
 
     QKeyEvent *k = static_cast<QKeyEvent*>(e);
 
@@ -202,7 +209,7 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
     {
-        QString strText = this->text().trimmed();
+        QString strText = this->toPlainText().trimmed();
 
         if (!strText.isEmpty())
         {
@@ -220,7 +227,7 @@ bool InputLineWidget::event(QEvent *e)
     }
     else if (k->key() == Qt::Key_Up)
     {
-        QString strText = this->text().trimmed();
+        QString strText = this->toPlainText().trimmed();
 
         if (!strText.isEmpty())
         {
@@ -242,16 +249,18 @@ bool InputLineWidget::event(QEvent *e)
         QString strLastMessage = lLastMessages.value(iLastMessage, QString::null);
 
         // text
-        this->setText(strLastMessage);
+        this->setPlainText(strLastMessage);
 
         // cursor
-        this->setCursorPosition(strLastMessage.size());
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(strLastMessage.size());
+        this->setTextCursor(cursor);
 
         return true;
     }
     else if (k->key() == Qt::Key_Down)
     {
-        QString strText = this->text().trimmed();
+        QString strText = this->toPlainText().trimmed();
 
         if (!strText.isEmpty())
         {
@@ -270,10 +279,12 @@ bool InputLineWidget::event(QEvent *e)
         QString strLastMessage = lLastMessages.value(iLastMessage, QString::null);
 
         // text
-        this->setText(strLastMessage);
+        this->setPlainText(strLastMessage);
 
         // cursor
-        this->setCursorPosition(strLastMessage.size());
+        QTextCursor cursor = this->textCursor();
+        cursor.setPosition(strLastMessage.size());
+        this->setTextCursor(cursor);
 
         return true;
     }
@@ -282,6 +293,6 @@ bool InputLineWidget::event(QEvent *e)
         iLastMessage = -1;
         index = 0;
         strLastWord = QString::null;
-        return QLineEdit::event(e);
+        return QTextEdit::event(e);
     }
 }

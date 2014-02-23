@@ -20,9 +20,9 @@
 #ifndef INPUTLINE_WIDGET_H
 #define INPUTLINE_WIDGET_H
 
-#include <QLineEdit>
+#include <QTextEdit>
 
-class InputLineWidget : public QLineEdit
+class InputLineWidget : public QTextEdit
 {
     Q_OBJECT
 public:
