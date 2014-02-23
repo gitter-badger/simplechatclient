@@ -39,17 +39,7 @@ InputLineWidget::~InputLineWidget()
 
 void InputLineWidget::insertText(const QString &strText)
 {
-    // pos
-    QTextCursor cursor = this->textCursor();
-    int iPos = cursor.position();
-
-    // insert text
-    QString strLine = this->toPlainText();
-    strLine.insert(iPos, strText);
-    this->setPlainText(strLine);
-
-    cursor.setPosition(iPos+strText.length());
-    this->setTextCursor(cursor);
+    this->insertPlainText(strText);
 }
 
 QString InputLineWidget::getWord()
@@ -117,7 +107,7 @@ bool InputLineWidget::event(QEvent *e)
         return true;
 
     // key event
-    if (k->key() == Qt::Key_Tab)
+    if ((k->key() == Qt::Key_Tab) && (k->modifiers() == Qt::NoModifier))
     {
         iLastMessage = -1;
 
@@ -207,16 +197,19 @@ bool InputLineWidget::event(QEvent *e)
 
         return true;
     }
-    else if ((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return))
+    else if (((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return)) && (k->modifiers() == Qt::NoModifier))
     {
-        QString strText = this->toPlainText().trimmed();
+        QString strText = this->toPlainText();
 
         if (!strText.isEmpty())
         {
-            if (lLastMessages.size() >= iLastMessageLimit)
-                lLastMessages.removeLast();
+            if (!lLastMessages.contains(strText))
+            {
+                if (lLastMessages.size() >= iLastMessageLimit)
+                    lLastMessages.removeLast();
 
-            lLastMessages.push_front(strText);
+                lLastMessages.push_front(strText);
+            }
 
             iLastMessage = -1;
 
@@ -225,11 +218,11 @@ bool InputLineWidget::event(QEvent *e)
 
         return true;
     }
-    else if (k->key() == Qt::Key_Up)
+    else if ((k->key() == Qt::Key_Up) && (k->modifiers() == Qt::ControlModifier))
     {
-        QString strText = this->toPlainText().trimmed();
+        QString strText = this->toPlainText();
 
-        if (!strText.isEmpty())
+        if ((!strText.isEmpty()) && (!lLastMessages.contains(strText)))
         {
             if (lLastMessages.size() >= iLastMessageLimit)
                 lLastMessages.removeLast();
@@ -250,19 +243,16 @@ bool InputLineWidget::event(QEvent *e)
 
         // text
         this->setPlainText(strLastMessage);
-
         // cursor
-        QTextCursor cursor = this->textCursor();
-        cursor.setPosition(strLastMessage.size());
-        this->setTextCursor(cursor);
+        this->moveCursor(QTextCursor::End);
 
         return true;
     }
-    else if (k->key() == Qt::Key_Down)
+    else if ((k->key() == Qt::Key_Down) && (k->modifiers() == Qt::ControlModifier))
     {
-        QString strText = this->toPlainText().trimmed();
+        QString strText = this->toPlainText();
 
-        if (!strText.isEmpty())
+        if ((!strText.isEmpty()) && (!lLastMessages.contains(strText)))
         {
             if (lLastMessages.size() >= iLastMessageLimit)
                 lLastMessages.removeLast();
@@ -282,9 +272,7 @@ bool InputLineWidget::event(QEvent *e)
         this->setPlainText(strLastMessage);
 
         // cursor
-        QTextCursor cursor = this->textCursor();
-        cursor.setPosition(strLastMessage.size());
-        this->setTextCursor(cursor);
+        this->moveCursor(QTextCursor::End);
 
         return true;
     }
