@@ -203,6 +203,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     pInputLine->setAcceptRichText(false);
     pInputLine->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    pInputLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     pInputLine->show();
 
     sendButton = new QToolButton(this);
