@@ -92,6 +92,7 @@ private:
     void sendMessage(QString strText, bool bModeration);
 
 private slots:
+    void documentSizeChanged(const QSizeF &newSize);
     void showFontButtonsClicked();
     void boldClicked();
     void italicClicked();

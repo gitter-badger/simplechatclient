@@ -198,8 +198,10 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     moderation->show();
 
     pInputLine = new InputLineWidget(this);
-    //pInputLine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
     pInputLine->setMinimumWidth(350);
+    pInputLine->setAcceptRichText(false);
+    pInputLine->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pInputLine->show();
 
     sendButton = new QToolButton(this);
@@ -278,6 +280,8 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     connect(sendButton, SIGNAL(clicked()), this, SLOT(inputlineReturnPressed()));
     connect(pInputLine, SIGNAL(returnPressed()), this, SLOT(inputlineReturnPressed()));
     connect(moderSendButton, SIGNAL(clicked()), this, SLOT(moderButtonClicked()));
+
+    connect(pInputLine->document()->documentLayout(), SIGNAL(documentSizeChanged(const QSizeF &)), this, SLOT(documentSizeChanged(const QSizeF &)));
 }
 
 ToolWidget::~ToolWidget()
@@ -325,8 +329,6 @@ void ToolWidget::setDefaultValues()
         strMyFontStyle = QString::null;
     }
 
-    int iWeight = (bMyBold ? 75 : 50);
-
     // set default font
     QString strMyFont = Settings::instance()->get("my_font");
     fontfamily->setText(strMyFont);
@@ -358,18 +360,17 @@ void ToolWidget::setDefaultValues()
     color->setCurrentIndex(iMyColor);
 
     // input widget
-    QString strInputHeight = Settings::instance()->get("font_size");
-    strInputHeight.remove("px");
-    int iInputHeight = strInputHeight.toInt();
+    QString strFontHeight = Settings::instance()->get("font_size");
+    strFontHeight.remove("px");
+    int iFontHeight = strFontHeight.toInt();
 
-    pInputLine->setFont(QFont(strMyFontFamily, iInputHeight, iWeight, bMyItalic));
-    pInputLine->setMinimumHeight(iInputHeight*2);
+    pInputLine->setFont(QFont(strMyFontFamily, iFontHeight, (bMyBold ? QFont::Bold : QFont::Normal), bMyItalic));
 
     // refresh input line text color
     if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
-        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; font-size: %1px;}").arg(strInputHeight));
+        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; font-size: %1px;}").arg(strFontHeight));
     else
-        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strInputHeight));
+        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strFontHeight));
 
     // moderation default hidden
     showModeration(false);
@@ -383,6 +384,11 @@ void ToolWidget::clearInputLine()
 void ToolWidget::insertTextToInputLine(const QString &strText)
 {
     pInputLine->insertText(strText);
+}
+
+void ToolWidget::documentSizeChanged(const QSizeF & newSize)
+{
+    pInputLine->setMinimumHeight(newSize.height());
 }
 
 void ToolWidget::showModeration(bool bShow)
@@ -586,7 +592,6 @@ void ToolWidget::size8Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(8*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 8px;}").arg(strCurrentColor));
 }
 
@@ -602,7 +607,6 @@ void ToolWidget::size9Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(9*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 9px;}").arg(strCurrentColor));
 }
 
@@ -618,7 +622,6 @@ void ToolWidget::size10Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(10*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 10px;}").arg(strCurrentColor));
 }
 
@@ -634,7 +637,6 @@ void ToolWidget::size11Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(11*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 11px;}").arg(strCurrentColor));
 }
 
@@ -650,7 +652,6 @@ void ToolWidget::size12Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(12*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 12px;}").arg(strCurrentColor));
 }
 
@@ -666,7 +667,6 @@ void ToolWidget::size14Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(14*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 14px;}").arg(strCurrentColor));
 }
 
@@ -682,7 +682,6 @@ void ToolWidget::size16Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(16*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 16px;}").arg(strCurrentColor));
 }
 
@@ -698,7 +697,6 @@ void ToolWidget::size18Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(18*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 18px;}").arg(strCurrentColor));
 }
 
@@ -714,7 +712,6 @@ void ToolWidget::size20Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(20*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 20px;}").arg(strCurrentColor));
 }
 
@@ -730,7 +727,6 @@ void ToolWidget::size24Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setMinimumHeight(24*2);
     pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 24px;}").arg(strCurrentColor));
 }
 
