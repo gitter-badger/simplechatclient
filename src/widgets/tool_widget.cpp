@@ -368,9 +368,9 @@ void ToolWidget::setDefaultValues()
 
     // refresh input line text color
     if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
-        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; font-size: %1px;}").arg(strFontHeight));
+        pInputLine->setStyleSheet(QString("QTextEdit { color:#ffffff; font-size: %1px;}").arg(strFontHeight));
     else
-        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strFontHeight));
+        pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: %2px;}").arg(strCurrentColor, strFontHeight));
 
     // moderation default hidden
     showModeration(false);
@@ -592,7 +592,7 @@ void ToolWidget::size8Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 8px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 8px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size9Triggered()
@@ -607,7 +607,7 @@ void ToolWidget::size9Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 9px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 9px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size10Triggered()
@@ -622,7 +622,7 @@ void ToolWidget::size10Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 10px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 10px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size11Triggered()
@@ -637,7 +637,7 @@ void ToolWidget::size11Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 11px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 11px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size12Triggered()
@@ -652,7 +652,7 @@ void ToolWidget::size12Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 12px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 12px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size14Triggered()
@@ -667,7 +667,7 @@ void ToolWidget::size14Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 14px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 14px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size16Triggered()
@@ -682,7 +682,7 @@ void ToolWidget::size16Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 16px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 16px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size18Triggered()
@@ -697,7 +697,7 @@ void ToolWidget::size18Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 18px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 18px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size20Triggered()
@@ -712,7 +712,7 @@ void ToolWidget::size20Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 20px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 20px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::size24Triggered()
@@ -727,7 +727,7 @@ void ToolWidget::size24Triggered()
     Core::instance()->mainWindow()->refreshCSS();
 
     // refresh font
-    pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: 24px;}").arg(strCurrentColor));
+    pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: 24px;}").arg(strCurrentColor));
 }
 
 void ToolWidget::colorClicked(int index)
@@ -758,9 +758,9 @@ void ToolWidget::colorClicked(int index)
 
     // refresh input line text color
     if ((Settings::instance()->get("background_color") == "#000000") && (strCurrentColor == "#000000"))
-        pInputLine->setStyleSheet(QString("QLineEdit { color:#ffffff; font-size: %1; }").arg(strFontSize));
+        pInputLine->setStyleSheet(QString("QTextEdit { color:#ffffff; font-size: %1; }").arg(strFontSize));
     else
-        pInputLine->setStyleSheet(QString("QLineEdit { color:%1; font-size: %2; }").arg(strCurrentColor, strFontSize));
+        pInputLine->setStyleSheet(QString("QTextEdit { color:%1; font-size: %2; }").arg(strCurrentColor, strFontSize));
 }
 
 void ToolWidget::emoticonsClicked()
