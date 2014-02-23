@@ -199,6 +199,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
 
     pInputLine = new InputLineWidget(this);
     pInputLine->setMinimumWidth(350);
+    pInputLine->setMaximumHeight(25);
     pInputLine->setAcceptRichText(false);
     pInputLine->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -389,6 +390,7 @@ void ToolWidget::insertTextToInputLine(const QString &strText)
 void ToolWidget::documentSizeChanged(const QSizeF & newSize)
 {
     pInputLine->setMinimumHeight(newSize.height());
+    pInputLine->setMaximumHeight(newSize.height());
 }
 
 void ToolWidget::showModeration(bool bShow)
