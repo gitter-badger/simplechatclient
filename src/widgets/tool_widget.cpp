@@ -389,8 +389,14 @@ void ToolWidget::insertTextToInputLine(const QString &strText)
 
 void ToolWidget::documentSizeChanged(const QSizeF & newSize)
 {
-    pInputLine->setMinimumHeight(newSize.height());
-    pInputLine->setMaximumHeight(newSize.height());
+    if (newSize.height() < 200)
+    {
+        pInputLine->setMinimumHeight(newSize.height());
+        pInputLine->setMaximumHeight(newSize.height());
+        pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    }
+    else
+        pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 }
 
 void ToolWidget::showModeration(bool bShow)
