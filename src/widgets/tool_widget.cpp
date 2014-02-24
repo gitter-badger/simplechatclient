@@ -398,6 +398,8 @@ void ToolWidget::documentSizeChanged(const QSizeF & newSize)
     }
     else
         pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+    emit forceScrollToBottom();
 }
 
 void ToolWidget::showModeration(bool bShow)

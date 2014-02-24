@@ -31,6 +31,7 @@ public:
     void clearMessages();
     void displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
     void refreshCSS();
+    void forceScrollToBottom();
 
 private:
     QString strChatViewChannel;
@@ -82,6 +83,7 @@ private slots:
     void openWebbrowser();
     void sendToNotes();
     void clear();
+    void autoScrollToBottom();
     void scrollToBottom();
 
 protected:

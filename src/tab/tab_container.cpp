@@ -167,6 +167,16 @@ void TabContainer::refreshCSS()
     }
 }
 
+void TabContainer::forceScrollToBottom()
+{
+    QList<QString> lChannels = Channel::instance()->getList();
+
+    foreach (const QString &strChannel, lChannels)
+    {
+        Channel::instance()->getChatView(strChannel)->forceScrollToBottom();
+    }
+}
+
 void TabContainer::resizeMainWindow(QSize s)
 {
     QList<QString> lChannels = Channel::instance()->getList();

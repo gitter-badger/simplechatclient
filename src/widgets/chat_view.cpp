@@ -22,6 +22,7 @@
 #include <QFile>
 #include <QInputDialog>
 #include <QMenu>
+#include <QTimer>
 #include <QUrl>
 #include <QtWebKit/QWebFrame>
 #include <QtWebKit/QWebElement>
@@ -61,7 +62,7 @@ ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_str
     settings()->setObjectCacheCapacities(0, 0, 0);
     settings()->setMaximumPagesInCache(0);
 
-    connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(scrollToBottom()));
+    connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(autoScrollToBottom()));
 
     createBody();
     refreshCSS();
@@ -577,8 +578,18 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
     menuStandard(event);
 }
 
-void ChatView::scrollToBottom()
+void ChatView::forceScrollToBottom()
+{
+    QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
+}
+
+void ChatView::autoScrollToBottom()
 {
     if (bAtBottom)
-        page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
+        QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
+}
+
+void ChatView::scrollToBottom()
+{
+    page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }

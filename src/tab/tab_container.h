@@ -39,6 +39,7 @@ public:
 public slots:
     void refreshColors();
     void refreshCSS();
+    void forceScrollToBottom();
 
 private:
     // params

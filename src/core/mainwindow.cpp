@@ -319,6 +319,9 @@ void MainWindow::createSignals()
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(show()));
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 
+    // tool widget
+    connect(pToolWidget, SIGNAL(forceScrollToBottom()), pTabC, SLOT(forceScrollToBottom()));
+
     // signals tab
     connect(pTabM, SIGNAL(tabCloseRequested(int)), this, SLOT(tabCloseRequested(int)));
     connect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));

@@ -120,6 +120,9 @@ private slots:
 
     void inputlineReturnPressed();
     void moderButtonClicked();
+
+signals:
+    void forceScrollToBottom();
 };
 
 #endif // TOOL_WIDGET_H
