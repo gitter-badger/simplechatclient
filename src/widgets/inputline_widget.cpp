@@ -197,7 +197,7 @@ bool InputLineWidget::event(QEvent *e)
 
         return true;
     }
-    else if (((k->key() == Qt::Key_Enter) || (k->key() == Qt::Key_Return)) && (k->modifiers() == Qt::NoModifier))
+    else if (((k->key() == Qt::Key_Return) && (k->modifiers() == Qt::NoModifier)) || ((k->key() == Qt::Key_Enter) && (k->modifiers() == Qt::KeypadModifier)))
     {
         QString strText = this->toPlainText();
 
