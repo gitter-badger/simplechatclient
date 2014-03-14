@@ -202,14 +202,23 @@ QString Update::getPlatform()
         case 0x0001: strPlatform = "Windows 3.1"; break;
         case 0x0002: strPlatform = "Windows 95"; break;
         case 0x0003: strPlatform = "Windows 98"; break;
-        case 0x0004: strPlatform = "Windows me"; break;
-        case 0x0010: strPlatform = "Windows nt"; break;
-        case 0x0020: strPlatform = "Windows 2000"; break;
-        case 0x0030: strPlatform = "Windows xp"; break;
-        case 0x0040: strPlatform = "Windows 2003"; break;
-        case 0x0080: strPlatform = "Windows vista"; break;
-        case 0x0090: strPlatform = "Windows 7"; break;
-        case 0x00a0: strPlatform = "Windows 8"; break;
+        case 0x0004: strPlatform = "Windows Me"; break;
+        case 0x0010: strPlatform = "Windows NT 4.0"; break;
+        case 0x0020: strPlatform = "Windows NT 5.0"; break;
+        case 0x0030: strPlatform = "Windows NT 5.1"; break;
+        case 0x0040: strPlatform = "Windows NT 5.2"; break;
+        case 0x0080: strPlatform = "Windows NT 6.0"; break;
+        case 0x0090: strPlatform = "Windows NT 6.1"; break;
+        case 0x00a0: strPlatform = "Windows NT 6.2"; break;
+        #if (QT_VERSION >= 0x050200)
+        case 0x00b0: strPlatform = "Windows NT 6.3"; break;
+        #endif
+
+        case 0x0100: strPlatform = "Windows CE"; break;
+        case 0x0200: strPlatform = "Windows CE .NET"; break;
+        case 0x0300: strPlatform = "Windows CE 5.x"; break;
+        case 0x0400: strPlatform = "Windows CE 6.x"; break;
+
         default: strPlatform = "Windows"; break;
     }
 #else
