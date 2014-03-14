@@ -64,25 +64,35 @@ Update::~Update()
 
 void Update::checkUpdate()
 {
-    QString strContent = this->statsContent();
     QString strUrl = UPDATE_URL_1;
 
-    if (!strContent.isEmpty())
+    QString strAgentPlatform = this->getPlatform();
+    QString strAgentUrl = "http://simplechatclien.sourceforge.net";
+    QString strAgentProgram = "SimpleChatClient";
+    QString strAgentVersion = Settings::instance()->get("version");
+    QString strUserAgent = QString("Mozilla/5.0 (%1; +%2) %3/%4").arg(strAgentPlatform, strAgentUrl, strAgentProgram, strAgentVersion);
+
+    QNetworkRequest request;
+    request.setUrl(QUrl(strUrl));
+    #if (QT_VERSION >= 0x050000)
+        request.setHeader(QNetworkRequest::UserAgentHeader, strUserAgent.toAscii());
+    #else
+        request.setRawHeader("User-Agent", strUserAgent.toAscii());
+    #endif
+
+    QString strUUID = Settings::instance()->get("unique_id");
+    QRegExp rUUID("^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$");
+    if ((!strUUID.isEmpty()) && (rUUID.exactMatch(strUUID)))
     {
-        QNetworkRequest request;
-        request.setUrl(QUrl(strUrl));
+        QString strContent = QString("{\"id\":\"%1\"}").arg(strUUID);
+
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-        #if (QT_VERSION >= 0x050000)
-            request.setHeader(QNetworkRequest::UserAgentHeader, "SimpleChatClientUpdateAgent");
-        #else
-            request.setRawHeader("User-Agent", "SimpleChatClientUpdateAgent");
-        #endif
         QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
         pReply->setProperty("update_url", "1");
     }
     else
     {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(strUrl)));
+        QNetworkReply *pReply = accessManager->get(request);
         pReply->setProperty("update_url", "1");
     }
 }
@@ -183,35 +193,28 @@ void Update::updateFinished(QNetworkReply *reply)
     }
 }
 
-QString Update::statsContent()
+QString Update::getPlatform()
 {
-    QString strPlatform = "unknown";
+    QString strPlatform = "Unknown OS";
 #ifdef Q_WS_WIN
     switch (QSysInfo::windowsVersion())
     {
-        case 0x0001: strPlatform = "windows 3.1"; break;
-        case 0x0002: strPlatform = "windows 95"; break;
-        case 0x0003: strPlatform = "windows 98"; break;
-        case 0x0004: strPlatform = "windows me"; break;
-        case 0x0010: strPlatform = "windows nt"; break;
-        case 0x0020: strPlatform = "windows 2000"; break;
-        case 0x0030: strPlatform = "windows xp"; break;
-        case 0x0040: strPlatform = "windows 2003"; break;
-        case 0x0080: strPlatform = "windows vista"; break;
-        case 0x0090: strPlatform = "windows 7"; break;
-        case 0x00a0: strPlatform = "windows 8"; break;
-        default: strPlatform = "windows"; break;
+        case 0x0001: strPlatform = "Windows 3.1"; break;
+        case 0x0002: strPlatform = "Windows 95"; break;
+        case 0x0003: strPlatform = "Windows 98"; break;
+        case 0x0004: strPlatform = "Windows me"; break;
+        case 0x0010: strPlatform = "Windows nt"; break;
+        case 0x0020: strPlatform = "Windows 2000"; break;
+        case 0x0030: strPlatform = "Windows xp"; break;
+        case 0x0040: strPlatform = "Windows 2003"; break;
+        case 0x0080: strPlatform = "Windows vista"; break;
+        case 0x0090: strPlatform = "Windows 7"; break;
+        case 0x00a0: strPlatform = "Windows 8"; break;
+        default: strPlatform = "Windows"; break;
     }
 #else
-    strPlatform = "linux";
+    strPlatform = "Linux";
 #endif
 
-    QString strVersion = Settings::instance()->get("version");
-    QString strUUID = Settings::instance()->get("unique_id");
-
-    QRegExp rUUID("^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$");
-    if (rUUID.exactMatch(strUUID))
-        return QString("params={\"id\":\"%1\",\"version\":\"%2\",\"platform\":\"%3\"}").arg(strUUID, strVersion, strPlatform);
-    else
-        return QString::null;
+    return strPlatform;
 }
