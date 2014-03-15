@@ -84,9 +84,9 @@ void Update::checkUpdate()
     QRegExp rUUID("^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$");
     if ((!strUUID.isEmpty()) && (rUUID.exactMatch(strUUID)))
     {
-        QString strContent = QString("{\"id\":\"%1\"}").arg(strUUID);
+        QString strContent = QString("{\"uuid\":\"%1\"}").arg(strUUID);
 
-        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+        request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
         pReply->setProperty("update_url", "1");
     }
