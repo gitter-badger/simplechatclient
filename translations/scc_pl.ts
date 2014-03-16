@@ -2987,12 +2987,12 @@
         <translation>* %1 nie jest teraz zalogowany</translation>
     </message>
     <message>
-        <source>No moderator on the channel!</source>
-        <translation>Brak moderatora na pokoju!</translation>
+        <source>(No moderator on the channel)</source>
+        <translation>(Brak moderatora na pokoju)</translation>
     </message>
     <message>
-        <source>* Unable to send a message to %1: %2</source>
-        <translation>* Nie mozna wysłać wiadomości do %1: %2</translation>
+        <source>* Unable to send a message to %1 %2</source>
+        <translation>* Nie mozna wysłać wiadomości do %1 %2</translation>
     </message>
     <message>
         <source>* %1 :User is not registred</source>
@@ -3207,12 +3207,12 @@
         <translation>* Nieprawidłowe poświadczenia Operatora</translation>
     </message>
     <message>
-        <source>* Can't invite %1 to channel (%2)</source>
-        <translation>* Nie możesz zaprosić %1 do pokoju (%2)</translation>
+        <source>* Can't invite %1 to channel %2</source>
+        <translation>* Nie możesz zaprosić %1 do pokoju %2</translation>
     </message>
     <message>
-        <source>+V set</source>
-        <translation>blokada zaproszeń</translation>
+        <source>(+V set)</source>
+        <translation>(blokada zaproszeń)</translation>
     </message>
     <message>
         <source>* %1 :Only IRC operators may create new channels</source>
