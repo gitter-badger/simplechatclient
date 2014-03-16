@@ -8,16 +8,14 @@ find_package (Qt4 REQUIRED)
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo." FORCE)
 endif (NOT CMAKE_BUILD_TYPE)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
-# warnings
-set (CMAKE_C_FLAGS "-W -Wall -Wextra ${CMAKE_C_FLAGS}")
-set (CMAKE_CXX_FLAGS "-W -Wall -Wextra ${CMAKE_CXX_FLAGS}")
+# standard
+set (CMAKE_C_FLAGS "-Wall -Wextra ${CMAKE_C_FLAGS}")
+set (CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
 
 # debug
-#if (UNIX)
-#	set (CMAKE_CXX_FLAGS "-ggdb -pg ${CMAKE_CXX_FLAGS}")
-#endif (UNIX)
+#set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
+#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++0x -ggdb -pg ${CMAKE_CXX_FLAGS}")
 
 if (MINGW)
 	execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
