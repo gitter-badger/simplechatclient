@@ -40,7 +40,7 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         QString strWord = strDataList.at(i);
 
         // channel
-        if (strWord.at(0) == '#')
+        if ((!strWord.isEmpty()) && (strWord.at(0) == '#'))
         {
             Convert::removeStyles(strWord);
             if (eMessageCategory == MessageInfo)
