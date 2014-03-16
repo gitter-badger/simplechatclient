@@ -228,14 +228,19 @@ void Channel::setAvatar(const QString &channel, const QString &avatar)
 
 void Channel::setPrivAvatar(const QString &nick, const QString &avatar)
 {
-    QList<QString> lPrivChannels = lChannelAlternativeName.keys(nick);
-    foreach (const QString &strChannel, lPrivChannels)
+    foreach (const OnetChannel &ochannel, lChannels)
     {
-        lChannels[strChannel].avatar = avatar;
+        int index = ochannel.index;
+        QString strChannel = ochannel.name;
+        QString strChannelAvatar = ochannel.avatar;
+        QString strChannelAlternativeName = lChannelAlternativeName.value(ochannel.name, QString::null);
 
-        int index = lChannels[strChannel].index;
+        if ((strChannelAlternativeName == nick) && (strChannelAvatar != avatar))
+        {
+            lChannels[strChannel].avatar = avatar;
 
-        Core::instance()->mainWindow()->updateChannelIcon(index, Avatar::instance()->getAvatarPath(avatar));
+            Core::instance()->mainWindow()->updateChannelIcon(index, Avatar::instance()->getAvatarPath(avatar));
+        }
     }
 }
 
