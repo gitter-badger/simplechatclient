@@ -397,7 +397,11 @@ void ToolWidget::documentSizeChanged(const QSizeF & newSize)
         pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     }
     else
+    {
+        pInputLine->setMinimumHeight(200);
+        pInputLine->setMaximumHeight(200);
         pInputLine->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    }
 
     emit forceScrollToBottom();
 }
