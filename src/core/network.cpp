@@ -18,6 +18,7 @@
  */
 
 #include <QDateTime>
+#include <QMutexLocker>
 #include <QTcpSocket>
 #include <QTimer>
 #include "autoaway.h"
@@ -42,8 +43,6 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
     timerPong->setInterval(1000*60*1); // 1 min
     timerPing = new QTimer();
     timerPing->setInterval(1000*30); // 30 sec
-    timerQueue = new QTimer();
-    timerQueue->setInterval(300); // 0.3 sec
 
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -57,7 +56,6 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
 
     QObject::connect(timerPong, SIGNAL(timeout()), this, SLOT(timeoutPong()));
     QObject::connect(timerPing, SIGNAL(timeout()), this, SLOT(timeoutPing()));
-    QObject::connect(timerQueue, SIGNAL(timeout()), this, SLOT(timeoutQueue()));
 
     QObject::connect(timerReconnect, SIGNAL(timeout()), this, SLOT(reconnect()));
 }
@@ -65,7 +63,6 @@ Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer),
 Network::~Network()
 {
     socket->deleteLater();
-    timerQueue->stop();
     timerPing->stop();
     timerPong->stop();
     timerReconnect->stop();
@@ -112,7 +109,6 @@ void Network::clearAll()
     // timer
     timerPong->stop();
     timerPing->stop();
-    timerQueue->stop();
 
     // reconnect
     timerReconnect->stop();
@@ -125,7 +121,6 @@ void Network::clearAll()
 
     // clear queue
     msgSendQueue.clear();
-    msgSendQueueNS.clear();
 
     // authorized
     bAuthorized = false;
@@ -183,7 +178,6 @@ void Network::connected()
     // start timers
     timerPong->start();
     timerPing->start();
-    timerQueue->start();
 
     // display
     QString strDisplay = tr("Connected to server");
@@ -198,7 +192,6 @@ void Network::disconnect()
 {
     // clear queue
     msgSendQueue.clear();
-    msgSendQueueNS.clear();
 
     // send quit
     if ((socket->isValid()) && (socket->state() == QAbstractSocket::ConnectedState))
@@ -281,18 +274,9 @@ void Network::write(const QString &strData)
 
 void Network::send(const QString &strData)
 {
-    if (strData.startsWith("NS INFO"))
-        msgSendQueueNS.append(strData);
-    else
-        write(strData);
-}
+    msgSendQueue.append(strData);
 
-void Network::sendQueue(const QString &strData)
-{
-    if (strData.startsWith("NS INFO"))
-        msgSendQueueNS.append(strData);
-    else
-        msgSendQueue.append(strData);
+    sendQueue();
 }
 
 void Network::recv()
@@ -374,20 +358,91 @@ void Network::timeoutPing()
         emit send(QString("PING :%1").arg(strMSecs));
 }
 
-void Network::timeoutQueue()
+void Network::sendQueue()
 {
+    QMutexLocker locker(&mutex);
+
+    // empty queue
+    if (msgSendQueue.isEmpty())
+        return;
+
+    // check disconnected
     if (socket->state() != QAbstractSocket::ConnectedState)
     {
         msgSendQueue.clear();
-        msgSendQueueNS.clear();
+        msgSendHistory.clear();
         return;
     }
 
-    if (msgSendQueue.size() > 0)
-        write(msgSendQueue.takeFirst());
-    else
+    const int flood = 30;
+    const qint64 threshold = 3;
+    const int recvq = 4096;
+
+    int current_flood = 0;
+    int current_recvq = 0;
+    qint64 current_time = QDateTime::currentMSecsSinceEpoch() / 1000;
+
+    if (!msgSendHistory.isEmpty())
     {
-        if (msgSendQueueNS.size() > 0)
-            write(msgSendQueueNS.takeFirst());
+        for (qint64 i = current_time - threshold; i <= current_time; ++i)
+        {
+            QList<NetworkStats> statistics = msgSendHistory.values(i);
+            if (statistics.isEmpty())
+                continue;
+
+            for (int s = 0; s < statistics.size(); ++s)
+            {
+                NetworkStats statistic = statistics.at(s);
+                current_recvq += statistic.recvq;
+                current_flood += statistic.flood;
+            }
+        }
+    }
+
+    QString message = msgSendQueue.first();
+
+    int add_flood = 1;
+    int add_recvq = message.toAscii().size()+2;
+
+    if (((current_flood < flood) && (current_recvq < recvq)) &&
+        ((current_flood+add_flood < flood) && (current_recvq+add_recvq < recvq)))
+    {
+        // take
+        msgSendQueue.removeFirst();
+
+        // add
+        if (msgSendHistory.contains(current_time))
+        {
+            msgSendHistory[current_time].flood += add_flood;
+            msgSendHistory[current_time].recvq += add_recvq;
+        }
+        else
+        {
+            NetworkStats new_stats;
+            new_stats.flood = add_flood;
+            new_stats.recvq = add_recvq;
+
+            msgSendHistory.insert(current_time, new_stats);
+        }
+
+        // clear
+        int max_history = current_time - (flood*2);
+
+        QMutableHashIterator<qint64, NetworkStats> old_history(msgSendHistory);
+        while (old_history.hasNext())
+        {
+            old_history.next();
+
+            if (old_history.key() < max_history)
+                old_history.remove();
+        }
+
+        // send
+        write(message);
+    }
+
+    if (!msgSendQueue.isEmpty())
+    {
+        QTimer::singleShot(100, this, SLOT(sendQueue()));
     }
 }

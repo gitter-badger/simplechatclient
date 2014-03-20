@@ -24,6 +24,7 @@
 class QTimer;
 class QTcpSocket;
 #include <QAbstractSocket>
+#include <QMutex>
 #include <QThread>
 
 /**
@@ -43,7 +44,6 @@ public slots:
     void connect();
     void disconnect();
     void send(const QString &strData);
-    void sendQueue(const QString &strData);
 
 private:
     QString strServer;
@@ -51,10 +51,10 @@ private:
     QTcpSocket *socket;
     QTimer *timerPong;
     QTimer *timerPing;
-    QTimer *timerQueue;
     qint64 iActive;
     QList<QString> msgSendQueue;
-    QList<QString> msgSendQueueNS;
+    QHash<qint64, NetworkStats> msgSendHistory;
+    QMutex mutex;
     bool bAuthorized;
 
     void authorize();
@@ -70,7 +70,7 @@ private slots:
     void stateChanged(QAbstractSocket::SocketState socketState);
     void timeoutPong();
     void timeoutPing();
-    void timeoutQueue();
+    void sendQueue();
 
 signals:
     void socketStateChanged();
