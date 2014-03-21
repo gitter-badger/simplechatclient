@@ -123,6 +123,7 @@ struct NetworkStats
 {
     int flood;
     int recvq;
+    int sendq;
 };
 
 struct OnetNick

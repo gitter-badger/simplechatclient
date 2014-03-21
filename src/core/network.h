@@ -53,7 +53,7 @@ private:
     QTimer *timerPing;
     qint64 iActive;
     QList<QString> msgSendQueue;
-    QHash<qint64, NetworkStats> msgSendHistory;
+    QHash<int, NetworkStats> msgSendHistory;
     QMutex mutex;
     bool bAuthorized;
 
