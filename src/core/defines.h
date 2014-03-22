@@ -119,12 +119,6 @@ const int FLAG_UNKNOWN_INT = -1;
 
 // struct OnetChannel
 
-struct NetworkStats
-{
-    int flood;
-    int recvq;
-};
-
 struct OnetNick
 {
     QString avatar;
