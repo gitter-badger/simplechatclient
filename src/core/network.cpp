@@ -18,6 +18,7 @@
  */
 
 #include <QDateTime>
+#include <QMutexLocker>
 #include <QTcpSocket>
 #include <QTimer>
 #include "autoaway.h"
@@ -296,7 +297,6 @@ void Network::recv()
 void Network::error(QAbstractSocket::SocketError error)
 {
     if (error == QAbstractSocket::RemoteHostClosedError) return; // supported by disconnected
-qDebug() << "Disconnected from server :" << socket->errorString();
 
     QString strError = QString(tr("Disconnected from server [%1]")).arg(socket->errorString());
     Message::instance()->showMessageAll(strError, MessageError);
@@ -355,69 +355,61 @@ void Network::timeoutPing()
     QString strMSecs = QString::number(QDateTime::currentMSecsSinceEpoch());
 
     if ((isConnected()) && (Settings::instance()->get("logged") == "true"))
-        send(QString("PING :%1").arg(strMSecs));
+        emit send(QString("PING :%1").arg(strMSecs));
 }
-#include <QDebug>
 
 void Network::sendQueue()
 {
+    QMutexLocker locker(&mutex);
+
     // empty queue
     if (msgSendQueue.isEmpty())
         return;
-
-    bool locked = mutex.tryLock();
-    if (!locked) return;
 
     // check disconnected
     if (socket->state() != QAbstractSocket::ConnectedState)
     {
         msgSendQueue.clear();
         msgSendHistory.clear();
-        mutex.unlock();
         return;
     }
 
-    const int flood = 41;
-    const int threshold = 3;
-    const int recvq = 8192;
-    const int sendq = 262144;
+    const int flood = 30;
+    const qint64 threshold = 3;
+    const int recvq = 4096;
 
     int current_flood = 0;
     int current_recvq = 0;
-    int current_sendq = 0;
-    int current_time = QDateTime::currentMSecsSinceEpoch() / 1000;
-qDebug() << "current_time: " << current_time;
+    qint64 current_time = QDateTime::currentMSecsSinceEpoch() / 1000;
+
     if (!msgSendHistory.isEmpty())
     {
-        for (int i = current_time - threshold +1; i <= current_time; ++i)
+        for (qint64 i = current_time - threshold; i <= current_time; ++i)
         {
-qDebug() << "i: " << i;
-            if (msgSendHistory.contains(i))
+            QList<NetworkStats> statistics = msgSendHistory.values(i);
+            if (statistics.isEmpty())
+                continue;
+
+            for (int s = 0; s < statistics.size(); ++s)
             {
-                NetworkStats statistic = msgSendHistory.value(i);
+                NetworkStats statistic = statistics.at(s);
                 current_recvq += statistic.recvq;
                 current_flood += statistic.flood;
-                current_sendq += statistic.sendq;
-qDebug() << "i: " << i << " message: recvq " << statistic.recvq << " flood: " << statistic.flood;
             }
         }
     }
-qDebug() << "history count: " << msgSendHistory.size();
-qDebug() << "current_recv: " << current_recvq;
-qDebug() << "current_flood: " << current_flood;
 
     QString message = msgSendQueue.first();
-qDebug() << "message: " << message;
 
     int add_flood = 1;
-    int add_recvq = message.size()+3;
+    int add_recvq = message.toAscii().size()+2;
 
-qDebug() << "new recv: " << current_recvq+add_recvq;
-qDebug() << "new flood: " << current_flood+add_flood;
-
-    if (((current_flood < flood) && (current_recvq < recvq) && (current_sendq < sendq)) &&
+    if (((current_flood < flood) && (current_recvq < recvq)) &&
         ((current_flood+add_flood < flood) && (current_recvq+add_recvq < recvq)))
     {
+        // take
+        msgSendQueue.removeFirst();
+
         // add
         if (msgSendHistory.contains(current_time))
         {
@@ -429,21 +421,14 @@ qDebug() << "new flood: " << current_flood+add_flood;
             NetworkStats new_stats;
             new_stats.flood = add_flood;
             new_stats.recvq = add_recvq;
-            new_stats.sendq = 0;
 
             msgSendHistory.insert(current_time, new_stats);
         }
 
-        // send
-        write(message);
-
-        // take
-        msgSendQueue.removeFirst();
-
         // clear
         int max_history = current_time - (flood*2);
 
-        QMutableHashIterator<int, NetworkStats> old_history(msgSendHistory);
+        QMutableHashIterator<qint64, NetworkStats> old_history(msgSendHistory);
         while (old_history.hasNext())
         {
             old_history.next();
@@ -451,13 +436,13 @@ qDebug() << "new flood: " << current_flood+add_flood;
             if (old_history.key() < max_history)
                 old_history.remove();
         }
+
+        // send
+        write(message);
     }
-qDebug() << "-------------------------";
 
     if (!msgSendQueue.isEmpty())
     {
         QTimer::singleShot(100, this, SLOT(sendQueue()));
     }
-
-    mutex.unlock();
 }
