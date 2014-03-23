@@ -815,7 +815,7 @@ void MainWindow::refreshToolButtons(const QString &strChannel)
 
 void MainWindow::updateNick(const QString &strNick)
 {
-    setWindowTitle(QString("Simple Chat Client - %1").arg(strNick));
+    setWindowTitle(QString("%1 - Simple Chat Client").arg(strNick));
 }
 
 void MainWindow::updateChannelIcon(int index, const QString &avatar)
