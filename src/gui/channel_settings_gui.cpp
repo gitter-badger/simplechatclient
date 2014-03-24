@@ -221,6 +221,8 @@ void ChannelSettingsGui::setDefaultValues()
     }
 
     // permisssions
+    /// TODO bug #364 #363
+    /*
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
@@ -234,6 +236,7 @@ void ChannelSettingsGui::setDefaultValues()
         ui.pushButton_permission_add->setEnabled(true);
         ui.pushButton_permission_remove->setEnabled(true);
     }
+    */
 }
 
 void ChannelSettingsGui::createSignals()
@@ -289,6 +292,10 @@ void ChannelSettingsGui::changePage(QModelIndex modelIndex)
 
 void ChannelSettingsGui::tabChangePage(int index)
 {
+    Q_UNUSED(index);
+
+    /// TODO bug #364 #363
+    /*
     QString strMe = Settings::instance()->get("nick");
     int iSelfMaxModes = Nick::instance()->getMaxModes(strMe, strChannel);
 
@@ -302,6 +309,7 @@ void ChannelSettingsGui::tabChangePage(int index)
         ui.pushButton_permission_add->setEnabled(true);
         ui.pushButton_permission_remove->setEnabled(true);
     }
+    */
 }
 
 void ChannelSettingsGui::refreshAll()
