@@ -64,7 +64,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
             QString strYoutubeLink;
             if ((strWord.contains(exYoutube_1)) || (strWord.contains(exYoutube_2)) || (strWord.contains(exYoutube_3)))
-                strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/tool-animator.png\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
+                strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" style=\"vertical-align:bottom;\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
 
             strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
         }
@@ -92,7 +92,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
                 QString strYoutubeLink;
                 if ((strAfterLink.contains(exYoutube_1)) || (strAfterLink.contains(exYoutube_2)) || (strAfterLink.contains(exYoutube_3)))
-                    strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/tool-animator.png\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
+                    strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" style=\"vertical-align:bottom;\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
 
                 strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
                 strDataList[i] = strBeforeLink+strAfterLink;
