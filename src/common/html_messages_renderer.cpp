@@ -24,7 +24,11 @@
 #include "settings.h"
 #include "html_messages_renderer.h"
 
-void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
+HtmlMessagesRenderer::HtmlMessagesRenderer()
+{
+}
+
+void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMessageCategory)
 {
     QStringList strDataList = strData.split(" ");
 
@@ -53,7 +57,16 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
         if ((strWord.startsWith("http:")) || (strWord.startsWith("https:")) || (strWord.startsWith("www.")))
         {
             Convert::removeStyles(strWord);
-            strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
+
+            QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
+            QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
+            QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
+
+            QString strYoutubeLink;
+            if ((strWord.contains(exYoutube_1)) || (strWord.contains(exYoutube_2)) || (strWord.contains(exYoutube_3)))
+                strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/tool-animator.png\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
+
+            strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
         }
         else if (((strWord.contains("http:")) && (!strWord.startsWith("http:"))) || ((strWord.contains("https:")) && (!strWord.startsWith("https:"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
         {
@@ -72,7 +85,16 @@ void fixContextMenu(QString &strData, MessageCategory eMessageCategory)
                 QString strAfterLink = strWords.at(1);
 
                 Convert::removeStyles(strAfterLink);
-                strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
+
+                QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
+                QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
+                QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
+
+                QString strYoutubeLink;
+                if ((strAfterLink.contains(exYoutube_1)) || (strAfterLink.contains(exYoutube_2)) || (strAfterLink.contains(exYoutube_3)))
+                    strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/tool-animator.png\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
+
+                strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
                 strDataList[i] = strBeforeLink+strAfterLink;
             }
         }

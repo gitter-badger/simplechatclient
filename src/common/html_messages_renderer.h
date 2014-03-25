@@ -20,15 +20,22 @@
 #ifndef HTML_MESSAGES_RENDERER_H
 #define HTML_MESSAGES_RENDERER_H
 
-#include <QString>
+#include <QObject>
 #include "defines.h"
 
-namespace HtmlMessagesRenderer
+class HtmlMessagesRenderer : public QObject
 {
+    Q_OBJECT
+public:
+    HtmlMessagesRenderer();
+
     QString renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
     QString rendererDebug(QString strData, qint64 iTime);
     QString headCSS();
     QString bodyCSS();
-}
+
+private:
+    void fixContextMenu(QString &strData, MessageCategory eMessageCategory);
+};
 
 #endif // HTML_MESSAGES_RENDERER_H

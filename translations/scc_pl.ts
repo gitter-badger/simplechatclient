@@ -76,6 +76,13 @@
     </message>
 </context>
 <context>
+    <name>HtmlMessagesRenderer</name>
+    <message>
+        <source>Watch video</source>
+        <translation>Podgląd</translation>
+    </message>
+</context>
+<context>
     <name>Channel</name>
     <message>
         <source>Topic:</source>
@@ -207,14 +214,6 @@
     <message>
         <source>Clear</source>
         <translation>Wyczyść</translation>
-    </message>
-    <message>
-        <source>Open link</source>
-        <translation>Otwórz w przeglądarce</translation>
-    </message>
-    <message>
-        <source>Watch video</source>
-        <translation>Zobacz wideo</translation>
     </message>
     <message>
         <source>Find...</source>

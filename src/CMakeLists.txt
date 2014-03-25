@@ -151,6 +151,7 @@ set (scc_SRCS
 set (scc_MOC_HDRS
 	common/commands.h
 	common/config.h
+	common/html_messages_renderer.h
 	common/simple_crypt.h
 	common/xml.h
 
@@ -250,7 +251,6 @@ set (scc_MOC_HDRS
 
 set (scc_HDRS
 	common/convert.h
-	common/html_messages_renderer.cpp
 	common/log.cpp
 	common/replace.h
 	core/defines.h

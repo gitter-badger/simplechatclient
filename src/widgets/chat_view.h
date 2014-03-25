@@ -46,7 +46,6 @@ private:
     void createBody();
     void menuNick(QContextMenuEvent *event);
     void menuChannel(QContextMenuEvent *event);
-    void menuWebsite(QContextMenuEvent *event);
     void menuStandard(QContextMenuEvent *event);
 
 public slots:
@@ -87,6 +86,7 @@ private slots:
     void scrollToBottom();
 
 protected:
+    virtual void mousePressEvent(QMouseEvent *event);
     virtual void contextMenuEvent(QContextMenuEvent *event);
 };
 

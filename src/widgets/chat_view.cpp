@@ -86,12 +86,15 @@ void ChatView::createBody()
 
 void ChatView::refreshCSS()
 {
-    QString strHeadCSS = HtmlMessagesRenderer::headCSS();
+    HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
+    QString strHeadCSS = pHtmlMessagesRenderer->headCSS();
+    QString strBodyCSS = pHtmlMessagesRenderer->bodyCSS();
+    delete pHtmlMessagesRenderer;
+
     QWebElement head = this->page()->mainFrame()->findFirstElement("head");
     QWebElement headStyle = head.findFirst("style");
     headStyle.setPlainText(strHeadCSS);
 
-    QString strBodyCSS = HtmlMessagesRenderer::bodyCSS();
     QWebElement body = this->page()->mainFrame()->findFirstElement("body");
     body.setAttribute("style", strBodyCSS);
 }
@@ -106,10 +109,13 @@ void ChatView::clearMessages()
 void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
 {
     QString strContent;
+
+    HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
     if (strChatViewChannel == DEBUG_WINDOW)
-        strContent = HtmlMessagesRenderer::rendererDebug(strData, iTime);
+        strContent = pHtmlMessagesRenderer->rendererDebug(strData, iTime);
     else
-        strContent = HtmlMessagesRenderer::renderer(strData, eMessageCategory, iTime, strNick);
+        strContent = pHtmlMessagesRenderer->renderer(strData, eMessageCategory, iTime, strNick);
+    delete pHtmlMessagesRenderer;
 
     // scroll
     bAtBottom = (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) >= this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
@@ -477,35 +483,6 @@ void ChatView::menuNick(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
-void ChatView::menuWebsite(QContextMenuEvent *event)
-{
-    QString strShortLink = strWebsite;
-    if (strShortLink.size() > 40) strShortLink = strShortLink.left(20)+"..."+strShortLink.right(20);
-
-    QMenu menu;
-
-    QAction *websiteLinkAct = new QAction(strShortLink, this);
-    websiteLinkAct->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
-    websiteLinkAct->setDisabled(true);
-
-    menu.addAction(websiteLinkAct);
-    menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(openWebbrowser()));
-
-    QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
-    QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
-    QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
-
-    if ((strWebsite.contains(exYoutube_1)) || (strWebsite.contains(exYoutube_2)) || (strWebsite.contains(exYoutube_3)))
-        menu.addAction(QIcon(":/images/oxygen/16x16/tool-animator.png"), tr("Watch video"), this, SLOT(watchVideo()));
-
-    QAction *copyLinkToClipboard = this->pageAction(QWebPage::CopyLinkToClipboard);
-    copyLinkToClipboard->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
-    menu.addAction(copyLinkToClipboard);
-
-    menu.exec(event->globalPos());
-}
-
 void ChatView::menuStandard(QContextMenuEvent *event)
 {
     QMenu menu;
@@ -541,6 +518,36 @@ void ChatView::menuStandard(QContextMenuEvent *event)
     menu.exec(event->globalPos());
 }
 
+void ChatView::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() != Qt::LeftButton)
+        return QWebView::mousePressEvent(event);
+
+    QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
+
+    if (r.linkUrl().isEmpty() == false)
+    {
+        QString strWord = r.linkUrl().toString();
+        QString strCategory = r.linkElement().attribute("name");
+
+        // website
+        if (strCategory == "website")
+        {
+            strWebsite = strWord;
+            openWebbrowser();
+            return;
+        }
+
+        // youtube
+        if (strCategory == "youtube")
+        {
+            strWebsite = strWord;
+            watchVideo();
+            return;
+        }
+    }
+}
+
 void ChatView::contextMenuEvent(QContextMenuEvent *event)
 {
     QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
@@ -549,14 +556,6 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
     {
         QString strWord = r.linkText();
         QString strCategory = r.linkElement().attribute("name");
-
-        // website
-        if (strCategory == "website")
-        {
-            strWebsite = strWord;
-            menuWebsite(event);
-            return;
-        }
 
         // channel
         if (strCategory == "channel")
