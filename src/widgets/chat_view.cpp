@@ -546,6 +546,8 @@ void ChatView::mousePressEvent(QMouseEvent *event)
             return;
         }
     }
+
+    QWebView::mousePressEvent(event);
 }
 
 void ChatView::contextMenuEvent(QContextMenuEvent *event)
