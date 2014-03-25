@@ -550,6 +550,35 @@ void ChatView::mousePressEvent(QMouseEvent *event)
     QWebView::mousePressEvent(event);
 }
 
+void ChatView::menuWebsite(QContextMenuEvent *event)
+{
+    QString strShortLink = strWebsite;
+    if (strShortLink.size() > 40) strShortLink = strShortLink.left(20)+"..."+strShortLink.right(20);
+
+    QMenu menu;
+
+    QAction *websiteLinkAct = new QAction(strShortLink, this);
+    websiteLinkAct->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
+    websiteLinkAct->setDisabled(true);
+
+    menu.addAction(websiteLinkAct);
+    menu.addSeparator();
+    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(openWebbrowser()));
+
+    QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
+    QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
+
+    if ((strWebsite.contains(exYoutube_1)) || (strWebsite.contains(exYoutube_2)) || (strWebsite.contains(exYoutube_3)))
+        menu.addAction(QIcon(":/images/oxygen/16x16/tool-animator.png"), tr("Watch video"), this, SLOT(watchVideo()));
+
+    QAction *copyLinkToClipboard = this->pageAction(QWebPage::CopyLinkToClipboard);
+    copyLinkToClipboard->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
+    menu.addAction(copyLinkToClipboard);
+
+    menu.exec(event->globalPos());
+}
+
 void ChatView::contextMenuEvent(QContextMenuEvent *event)
 {
     QWebHitTestResult r = page()->mainFrame()->hitTestContent(event->pos());
@@ -558,6 +587,14 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
     {
         QString strWord = r.linkText();
         QString strCategory = r.linkElement().attribute("name");
+
+        // website
+        if (strCategory == "website")
+        {
+            strWebsite = strWord;
+            menuWebsite(event);
+            return;
+        }
 
         // channel
         if (strCategory == "channel")

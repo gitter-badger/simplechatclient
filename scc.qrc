@@ -133,5 +133,6 @@
         <file>images/oxygen/16x16/tab-new-background.png</file>
         <file>images/debug_avatar.png</file>
         <file>images/status_avatar.png</file>
+        <file>images/oxygen/16x16/applications-internet.png</file>
     </qresource>
 </RCC>

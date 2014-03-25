@@ -45,6 +45,7 @@ private:
 
     void createBody();
     void menuNick(QContextMenuEvent *event);
+    void menuWebsite(QContextMenuEvent *event);
     void menuChannel(QContextMenuEvent *event);
     void menuStandard(QContextMenuEvent *event);
 

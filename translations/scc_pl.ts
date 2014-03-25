@@ -216,6 +216,14 @@
         <translation>Wyczyść</translation>
     </message>
     <message>
+        <source>Open link</source>
+        <translation>Otwórz w przeglądarce</translation>
+    </message>
+    <message>
+        <source>Watch video</source>
+        <translation>Zobacz wideo</translation>
+    </message>
+    <message>
         <source>Find...</source>
         <translation>Znajdź...</translation>
     </message>
