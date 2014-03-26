@@ -13,4 +13,4 @@ make_install()
 	fi
 }
 
-cmake . && make -j$(echo $(($(grep -i ^processor /proc/cpuinfo | wc -l)+1))) && make_install
+cmake . -DCMAKE_INSTALL_PREFIX=/usr && make -j$(echo $(($(grep -i ^processor /proc/cpuinfo | wc -l)+1))) && make_install
