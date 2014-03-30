@@ -585,13 +585,12 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
 
     if (r.linkUrl().isEmpty() == false)
     {
-        QString strWord = r.linkText();
         QString strCategory = r.linkElement().attribute("name");
 
         // website
         if (strCategory == "website")
         {
-            strWebsite = strWord;
+            strWebsite = r.linkUrl().toString();
             menuWebsite(event);
             return;
         }
@@ -599,7 +598,7 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
         // channel
         if (strCategory == "channel")
         {
-            strChannel = strWord;
+            strChannel = r.linkText();
             menuChannel(event);
             return;
         }
@@ -607,7 +606,7 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
         // nick
         if (strCategory == "nick")
         {
-            strNick = strWord;
+            strNick = r.linkText();
             menuNick(event);
             return;
         }

@@ -1630,6 +1630,10 @@
         <translation>Ukryj listę nicków</translation>
     </message>
     <message>
+        <source>Image thumbnails</source>
+        <translation>Miniatury zdjęć</translation>
+    </message>
+    <message>
         <source>Time format:</source>
         <translation>Format czasu:</translation>
     </message>

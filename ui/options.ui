@@ -1285,6 +1285,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="checkBox_img_thumbs">
+          <property name="text">
+           <string>Image thumbails</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="checkBox_hide_nicklist">
           <property name="text">
            <string>Hide nicklist</string>

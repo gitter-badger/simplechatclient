@@ -141,6 +141,7 @@ void OptionsGui::createGui()
     ui.checkBox_hide_emoticons->setText(tr("Hide emoticons"));
     ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
     ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
+    ui.checkBox_img_thumbs->setText(tr("Image thumbnails"));
     ui.label_time_format->setText(tr("Time format:"));
 
     // page winamp
@@ -330,6 +331,7 @@ void OptionsGui::setDefaultValues()
     QString strHideEmoticons = Settings::instance()->get("hide_emoticons");
     QString strDisableReplaces = Settings::instance()->get("disable_replaces");
     QString strHideNicklist = Settings::instance()->get("hide_nicklist");
+    QString strImgThumbs = Settings::instance()->get("img_thumbs");
     QString strTimeFormat = Settings::instance()->get("time_format");
 
     QString strWinamp = Settings::instance()->get("winamp");
@@ -418,6 +420,12 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_hide_nicklist->setChecked(true);
     else
         ui.checkBox_hide_nicklist->setChecked(false);
+
+    // img thumbs
+    if (strImgThumbs == "true")
+        ui.checkBox_img_thumbs->setChecked(true);
+    else
+        ui.checkBox_img_thumbs->setChecked(false);
 
     // time format
     int index = ui.comboBox_time_format->findText(strTimeFormat);
@@ -560,6 +568,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_hide_emoticons, SIGNAL(clicked(bool)), this, SLOT(hideEmoticons(bool)));
     connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
     connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
+    connect(ui.checkBox_img_thumbs, SIGNAL(clicked(bool)), this, SLOT(imgThumbs(bool)));
     connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(timeFormatChanged(int)));
 
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
@@ -1111,6 +1120,17 @@ void OptionsGui::hideNicklist(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("hide_nicklist", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::imgThumbs(bool bValue)
+{
+    QString strValue = (bValue ? "true" : "false");
+
+    Settings::instance()->set("img_thumbs", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("img_thumbs", strValue);
     delete pConfig;
 }
 

@@ -231,6 +231,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("disable_replaces", "false");
         lDefaultValues.insert("hide_nicklist", "false");
         lDefaultValues.insert("time_format", "hh:mm:ss");
+        lDefaultValues.insert("img_thumbs", "true");
 
         lDefaultValues.insert("winamp", "$song [$position/$length] //muzyka");
 
