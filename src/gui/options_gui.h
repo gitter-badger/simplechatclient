@@ -97,7 +97,7 @@ private slots:
     void hideJoinPart(bool bValue);
     void hideJoinPart200(bool bValue);
     void hideEmoticons(bool bValue);
-    void disableReplaces(bool bValue);
+    void setReplaceEmoticons(bool bValue);
     void hideNicklist(bool bValue);
     void imgThumbs(bool bValue);
     void timeFormatChanged(int index);

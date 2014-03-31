@@ -139,7 +139,7 @@ void OptionsGui::createGui()
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
     ui.checkBox_hide_emoticons->setText(tr("Hide emoticons"));
-    ui.checkBox_disable_replaces->setText(tr("Disable replaces"));
+    ui.checkBox_replace_emoticons->setText(tr("Replace emoticons"));
     ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
     ui.checkBox_img_thumbs->setText(tr("Image thumbnails"));
     ui.label_time_format->setText(tr("Time format:"));
@@ -329,7 +329,7 @@ void OptionsGui::setDefaultValues()
     QString strHideJoinPart = Settings::instance()->get("hide_join_part");
     QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
     QString strHideEmoticons = Settings::instance()->get("hide_emoticons");
-    QString strDisableReplaces = Settings::instance()->get("disable_replaces");
+    QString strReplaceEmoticons = Settings::instance()->get("replace_emoticons");
     QString strHideNicklist = Settings::instance()->get("hide_nicklist");
     QString strImgThumbs = Settings::instance()->get("img_thumbs");
     QString strTimeFormat = Settings::instance()->get("time_format");
@@ -409,11 +409,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_hide_emoticons->setChecked(false);
 
-    // disable replaces
-    if (strDisableReplaces == "true")
-        ui.checkBox_disable_replaces->setChecked(true);
+    // replace emoticons
+    if (strReplaceEmoticons == "true")
+        ui.checkBox_replace_emoticons->setChecked(true);
     else
-        ui.checkBox_disable_replaces->setChecked(false);
+        ui.checkBox_replace_emoticons->setChecked(false);
 
     // hide nicklist
     if (strHideNicklist == "true")
@@ -566,7 +566,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
     connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
     connect(ui.checkBox_hide_emoticons, SIGNAL(clicked(bool)), this, SLOT(hideEmoticons(bool)));
-    connect(ui.checkBox_disable_replaces, SIGNAL(clicked(bool)), this, SLOT(disableReplaces(bool)));
+    connect(ui.checkBox_replace_emoticons, SIGNAL(clicked(bool)), this, SLOT(setReplaceEmoticons(bool)));
     connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
     connect(ui.checkBox_img_thumbs, SIGNAL(clicked(bool)), this, SLOT(imgThumbs(bool)));
     connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(timeFormatChanged(int)));
@@ -1101,14 +1101,14 @@ void OptionsGui::hideEmoticons(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::disableReplaces(bool bValue)
+void OptionsGui::setReplaceEmoticons(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("disable_replaces", strValue);
+    Settings::instance()->set("replace_emoticons", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("disable_replaces", strValue);
+    pConfig->set("replace_emoticons", strValue);
     delete pConfig;
 }
 

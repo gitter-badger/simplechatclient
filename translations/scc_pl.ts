@@ -1622,8 +1622,8 @@
         <translation>Nie pokazuj emotikon</translation>
     </message>
     <message>
-        <source>Disable replaces</source>
-        <translation>Nie zamieniaj emotikon na graficzne</translation>
+        <source>Replace emoticons</source>
+        <translation>Zamieniaj emotikony na graficzne</translation>
     </message>
     <message>
         <source>Hide nicklist</source>

@@ -23,8 +23,7 @@
 
 void Replace::replaceEmots(QString &strData)
 {
-    // return if disable replaces == on
-    if (Settings::instance()->get("disable_replaces") == "true")
+    if (Settings::instance()->get("replace_emoticons") == "false")
         return;
 
     QHash<QString, QString> lEmoticons;

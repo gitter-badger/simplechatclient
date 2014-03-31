@@ -1278,9 +1278,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_disable_replaces">
+         <widget class="QCheckBox" name="checkBox_replace_emoticons">
           <property name="text">
-           <string>Disable replaces</string>
+           <string>Replace emoticons</string>
           </property>
          </widget>
         </item>

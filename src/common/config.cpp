@@ -228,7 +228,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("hide_join_part", "false");
         lDefaultValues.insert("hide_join_part_200", "true");
         lDefaultValues.insert("hide_emoticons", "false");
-        lDefaultValues.insert("disable_replaces", "false");
+        lDefaultValues.insert("replace_emoticons", "true");
         lDefaultValues.insert("hide_nicklist", "false");
         lDefaultValues.insert("time_format", "hh:mm:ss");
         lDefaultValues.insert("img_thumbs", "true");
