@@ -971,7 +971,7 @@ void OnetKernel::raw_invite()
     }
 
     // sound
-    if (Settings::instance()->get("disable_sounds") == "false")
+    if (Settings::instance()->get("sound") == "true")
         SoundNotify::instance()->play(Query);
 }
 

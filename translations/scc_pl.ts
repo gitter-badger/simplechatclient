@@ -1566,8 +1566,8 @@
         <translation>Wszystkie pliki (*);;Pliki Mp3 (*.mp3);;Pliki Wave (*.wav)</translation>
     </message>
     <message>
-        <source>Disable sounds</source>
-        <translation>Wyłącz dźwięki</translation>
+        <source>Sound</source>
+        <translation>Dźwięk</translation>
     </message>
     <message>
         <source>Logs</source>

@@ -85,7 +85,7 @@ private slots:
     void setSoundBeep();
     void setSoundQuery();
     void setSaveLogsByDate(bool bValue);
-    void disableSounds(bool bValue);
+    void setSound(bool bValue);
 
     void openLogsFolder();
     void setLogs(bool bValue);

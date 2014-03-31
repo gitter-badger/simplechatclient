@@ -1091,9 +1091,9 @@
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_disable_sounds">
+         <widget class="QCheckBox" name="checkBox_sound">
           <property name="text">
-           <string>Disable sounds</string>
+           <string>Sound</string>
           </property>
          </widget>
         </item>

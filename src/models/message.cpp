@@ -134,7 +134,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
             Tray::instance()->showMessage(strChannel, strAwaylogData);
 
         // sound
-        if (Settings::instance()->get("disable_sounds") == "false")
+        if (Settings::instance()->get("sound") == "true")
             SoundNotify::instance()->play(Beep);
     }
 

@@ -118,7 +118,7 @@ void OptionsGui::createGui()
     ui.label_sound_query->setText(tr("Query:"));
     ui.pushButton_sound_beep_change->setText(tr("Change"));
     ui.pushButton_sound_query_change->setText(tr("Change"));
-    ui.checkBox_disable_sounds->setText(tr("Disable sounds"));
+    ui.checkBox_sound->setText(tr("Sound"));
 
     // page logs
     ui.groupBox_logs->setTitle(tr("Logs"));
@@ -321,7 +321,7 @@ void OptionsGui::setDefaultValues()
     QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
     QString strLogs = Settings::instance()->get("logs");
 
-    QString strDisableSounds = Settings::instance()->get("disable_sounds");
+    QString strSound = Settings::instance()->get("sound");
 
     QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
 
@@ -373,11 +373,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_logs->setChecked(false);
 
-    // disable sounds
-    if (strDisableSounds == "true")
-        ui.checkBox_disable_sounds->setChecked(true);
+    // sound
+    if (strSound == "true")
+        ui.checkBox_sound->setChecked(true);
     else
-        ui.checkBox_disable_sounds->setChecked(false);
+        ui.checkBox_sound->setChecked(false);
 
     // disable background image
     if (strDisableBackgroundImage == "true")
@@ -553,7 +553,7 @@ void OptionsGui::createSignals()
     connect(ui.pushButton_play_query, SIGNAL(clicked()), this, SLOT(tryPlayQuery()));
     connect(ui.pushButton_sound_beep_change, SIGNAL(clicked()), this, SLOT(setSoundBeep()));
     connect(ui.pushButton_sound_query_change, SIGNAL(clicked()), this, SLOT(setSoundQuery()));
-    connect(ui.checkBox_disable_sounds, SIGNAL(clicked(bool)), this, SLOT(disableSounds(bool)));
+    connect(ui.checkBox_sound, SIGNAL(clicked(bool)), this, SLOT(setSound(bool)));
 
     connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(openLogsFolder()));
     connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setSaveLogsByDate(bool)));
@@ -979,14 +979,14 @@ void OptionsGui::setSoundQuery()
     }
 }
 
-void OptionsGui::disableSounds(bool bValue)
+void OptionsGui::setSound(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("disable_sounds", strValue);
+    Settings::instance()->set("sound", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("disable_sounds", strValue);
+    pConfig->set("sound", strValue);
     delete pConfig;
 }
 

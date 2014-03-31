@@ -219,7 +219,7 @@ QHash<QString,QString> Config::getDefaultValues()
 
         lDefaultValues.insert("sound_beep", strSoundBeep);
         lDefaultValues.insert("sound_query", strSoundQuery);
-        lDefaultValues.insert("disable_sounds", "false");
+        lDefaultValues.insert("sound", "true");
 
         lDefaultValues.insert("background_image", strBackgroundImage);
         lDefaultValues.insert("disable_background_image", "false");
