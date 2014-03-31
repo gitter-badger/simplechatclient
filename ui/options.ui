@@ -1157,9 +1157,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_disable_logs">
+         <widget class="QCheckBox" name="checkBox_logs">
           <property name="text">
-           <string>Disable logs</string>
+           <string>Logs</string>
           </property>
          </widget>
         </item>

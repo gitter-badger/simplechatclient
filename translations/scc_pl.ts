@@ -1586,8 +1586,8 @@
         <translation>Zapisuj logi wg dat</translation>
     </message>
     <message>
-        <source>Disable logs</source>
-        <translation>Wyłącz logi</translation>
+        <source>Save logs</source>
+        <translation>Zapisuj logi</translation>
     </message>
     <message>
         <source>Background image</source>

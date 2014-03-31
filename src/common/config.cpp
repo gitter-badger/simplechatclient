@@ -215,7 +215,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("nicklist_gradient_2_color", "#1b86b7");
 
         lDefaultValues.insert("save_logs_by_date", "true");
-        lDefaultValues.insert("disable_logs", "false");
+        lDefaultValues.insert("logs", "true");
 
         lDefaultValues.insert("sound_beep", strSoundBeep);
         lDefaultValues.insert("sound_query", strSoundQuery);

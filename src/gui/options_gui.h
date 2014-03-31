@@ -88,7 +88,7 @@ private slots:
     void disableSounds(bool bValue);
 
     void openLogsFolder();
-    void disableLogs(bool bValue);
+    void setLogs(bool bValue);
 
     void setBackgroundImage();
     void disableBackgroundImage(bool bValue);

@@ -125,7 +125,7 @@ void OptionsGui::createGui()
     ui.label_logs->setText(tr("Default logs folder:"));
     ui.pushButton_logs_open_folder->setText(tr("Open folder"));
     ui.checkBox_save_logs_by_date->setText(tr("Save logs by date"));
-    ui.checkBox_disable_logs->setText(tr("Disable logs"));
+    ui.checkBox_logs->setText(tr("Save logs"));
 
     // page background image
     ui.groupBox_background_image->setTitle(tr("Background image"));
@@ -319,7 +319,7 @@ void OptionsGui::setDefaultValues()
     QString strLanguage = Settings::instance()->get("language");
 
     QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
-    QString strDisableLogs = Settings::instance()->get("disable_logs");
+    QString strLogs = Settings::instance()->get("logs");
 
     QString strDisableSounds = Settings::instance()->get("disable_sounds");
 
@@ -367,11 +367,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_save_logs_by_date->setChecked(false);
 
-    // disable logs
-    if (strDisableLogs == "true")
-        ui.checkBox_disable_logs->setChecked(true);
+    // logs
+    if (strLogs == "true")
+        ui.checkBox_logs->setChecked(true);
     else
-        ui.checkBox_disable_logs->setChecked(false);
+        ui.checkBox_logs->setChecked(false);
 
     // disable sounds
     if (strDisableSounds == "true")
@@ -557,7 +557,7 @@ void OptionsGui::createSignals()
 
     connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(openLogsFolder()));
     connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setSaveLogsByDate(bool)));
-    connect(ui.checkBox_disable_logs, SIGNAL(clicked(bool)), this, SLOT(disableLogs(bool)));
+    connect(ui.checkBox_logs, SIGNAL(clicked(bool)), this, SLOT(setLogs(bool)));
 
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
     connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
@@ -1008,14 +1008,14 @@ void OptionsGui::setSaveLogsByDate(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::disableLogs(bool bValue)
+void OptionsGui::setLogs(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("disable_logs", strValue);
+    Settings::instance()->set("logs", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("disable_logs", strValue);
+    pConfig->set("logs", strValue);
     delete pConfig;
 }
 

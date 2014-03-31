@@ -143,7 +143,7 @@ void Message::showMessage(const QString &strChannel, const QString &strData, Mes
         Core::instance()->mainWindow()->setTabColor(strChannel, eMessageCategory);
 
     // save message
-    if (Settings::instance()->get("disable_logs") == "false")
+    if (Settings::instance()->get("logs") == "true")
         saveMessage(strChannel, strData, eMessageCategory, iTime, strNick);
 
     // display
