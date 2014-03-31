@@ -1150,7 +1150,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_save_logs_by_date">
+         <widget class="QCheckBox" name="checkBox_logs_by_date">
           <property name="text">
            <string>Save logs by date</string>
           </property>

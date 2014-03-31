@@ -124,7 +124,7 @@ void OptionsGui::createGui()
     ui.groupBox_logs->setTitle(tr("Logs"));
     ui.label_logs->setText(tr("Default logs folder:"));
     ui.pushButton_logs_open_folder->setText(tr("Open folder"));
-    ui.checkBox_save_logs_by_date->setText(tr("Save logs by date"));
+    ui.checkBox_logs_by_date->setText(tr("Save logs by date"));
     ui.checkBox_logs->setText(tr("Save logs"));
 
     // page background image
@@ -318,7 +318,7 @@ void OptionsGui::setDefaultValues()
     // default values
     QString strLanguage = Settings::instance()->get("language");
 
-    QString strSaveLogsByDate = Settings::instance()->get("save_logs_by_date");
+    QString strLogsByDate = Settings::instance()->get("logs_by_date");
     QString strLogs = Settings::instance()->get("logs");
 
     QString strSound = Settings::instance()->get("sound");
@@ -361,11 +361,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.comboBox_language->setCurrentIndex(1);
 
-    // save logs by date
-    if (strSaveLogsByDate == "true")
-        ui.checkBox_save_logs_by_date->setChecked(true);
+    // logs by date
+    if (strLogsByDate == "true")
+        ui.checkBox_logs_by_date->setChecked(true);
     else
-        ui.checkBox_save_logs_by_date->setChecked(false);
+        ui.checkBox_logs_by_date->setChecked(false);
 
     // logs
     if (strLogs == "true")
@@ -556,7 +556,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_sound, SIGNAL(clicked(bool)), this, SLOT(setSound(bool)));
 
     connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(openLogsFolder()));
-    connect(ui.checkBox_save_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setSaveLogsByDate(bool)));
+    connect(ui.checkBox_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setLogsByDate(bool)));
     connect(ui.checkBox_logs, SIGNAL(clicked(bool)), this, SLOT(setLogs(bool)));
 
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
@@ -997,14 +997,14 @@ void OptionsGui::openLogsFolder()
     QDesktopServices::openUrl(QUrl::fromLocalFile(strLogsPath));
 }
 
-void OptionsGui::setSaveLogsByDate(bool bValue)
+void OptionsGui::setLogsByDate(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("save_logs_by_date", strValue);
+    Settings::instance()->set("logs_by_date", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("save_logs_by_date", strValue);
+    pConfig->set("logs_by_date", strValue);
     delete pConfig;
 }
 

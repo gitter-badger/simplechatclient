@@ -60,8 +60,8 @@ void Log::save(const QString &strChannel, const QString &strMessage)
     path += "profiles/"+strCurrentProfile+"/log/";
 
     // save logs by date
-    bool bSaveLogsByDate = Settings::instance()->get("save_logs_by_date") == "true" ? true : false;
-    if (bSaveLogsByDate)
+    bool bLogsByDate = Settings::instance()->get("logs_by_date") == "true" ? true : false;
+    if (bLogsByDate)
     {
         QString strDate = QDate().currentDate().toString("yyyy-MM");
         path += strDate+"/";
