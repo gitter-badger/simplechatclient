@@ -116,7 +116,7 @@ private slots:
     void autoAway(bool bValue);
     void autojoinFavourites(bool bValue);
     void minimizeToTray(bool bValue);
-    void showZuoAndIp(bool bValue);
+    void setZuoAndIp(bool bValue);
 };
 
 #endif // OPTIONS_GUI_H

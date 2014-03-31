@@ -246,7 +246,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("auto_away", "true");
         lDefaultValues.insert("minimize_to_tray", "false");
         lDefaultValues.insert("autojoin_favourites", "true");
-        lDefaultValues.insert("show_zuo_and_ip", "false");
+        lDefaultValues.insert("zuo_and_ip", "false");
     }
 
     return lDefaultValues;

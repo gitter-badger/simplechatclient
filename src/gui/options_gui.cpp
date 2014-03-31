@@ -177,7 +177,7 @@ void OptionsGui::createGui()
     ui.checkBox_auto_away->setText(tr("Auto away on idle"));
     ui.checkBox_autojoin_favourites->setText(tr("Autojoin favourite channels"));
     ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
-    ui.checkBox_show_zuo_and_ip->setText(tr("Show ZUO and IP"));
+    ui.checkBox_zuo_and_ip->setText(tr("Show ZUO and IP"));
 
     // options list
     QListWidgetItem *basic = new QListWidgetItem(ui.listWidget_options);
@@ -348,7 +348,7 @@ void OptionsGui::setDefaultValues()
     QString strAutoAway = Settings::instance()->get("auto_away");
     QString strAutojoinFavourites = Settings::instance()->get("autojoin_favourites");
     QString strMinimizeToTray = Settings::instance()->get("minimize_to_tray");
-    QString strShowZuoAndIp = Settings::instance()->get("show_zuo_and_ip");
+    QString strZuoAndIp = Settings::instance()->get("zuo_and_ip");
 
     // theme
     ui.lineEdit_theme->setText(Settings::instance()->get("themes"));
@@ -484,11 +484,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_minimize_to_tray->setChecked(false);
 
-    // show zuo
-    if (strShowZuoAndIp == "true")
-        ui.checkBox_show_zuo_and_ip->setChecked(true);
+    // zuo & ip
+    if (strZuoAndIp == "true")
+        ui.checkBox_zuo_and_ip->setChecked(true);
     else
-        ui.checkBox_show_zuo_and_ip->setChecked(false);
+        ui.checkBox_zuo_and_ip->setChecked(false);
 
     // set mainwindow colors
     setMainwindowColors();
@@ -585,7 +585,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
     connect(ui.checkBox_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(autojoinFavourites(bool)));
     connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
-    connect(ui.checkBox_show_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(showZuoAndIp(bool)));
+    connect(ui.checkBox_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(setZuoAndIp(bool)));
 
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 }
@@ -1256,14 +1256,14 @@ void OptionsGui::minimizeToTray(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::showZuoAndIp(bool bValue)
+void OptionsGui::setZuoAndIp(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("show_zuo_and_ip", strValue);
+    Settings::instance()->set("zuo_and_ip", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("show_zuo_and_ip", strValue);
+    pConfig->set("zuo_and_ip", strValue);
     delete pConfig;
 }
 

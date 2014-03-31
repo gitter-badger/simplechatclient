@@ -404,14 +404,14 @@ void OnetKernel::raw_join()
 
     if (strChannel.at(0) != '^')
     {
-        if (Settings::instance()->get("show_zuo_and_ip") == "true")
+        if (Settings::instance()->get("zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has joined %4")).arg(strNick, strZUO, strIP, strChannel);
         else
             strDisplay = QString(tr("* %1 has joined %2")).arg(strNick, strChannel);
     }
     else
     {
-        if (Settings::instance()->get("show_zuo_and_ip") == "true")
+        if (Settings::instance()->get("zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has joined priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has joined priv")).arg(strNick);
@@ -491,14 +491,14 @@ void OnetKernel::raw_part()
     {
         if (!strReason.isEmpty())
         {
-            if (Settings::instance()->get("show_zuo_and_ip") == "true")
+            if (Settings::instance()->get("zuo_and_ip") == "true")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4 [%5]")).arg(strNick, strZUO, strIP, strChannel, strReason);
             else
                 strDisplay = QString(tr("* %1 has left %2 [%3]")).arg(strNick, strChannel, strReason);
         }
         else
         {
-            if (Settings::instance()->get("show_zuo_and_ip") == "true")
+            if (Settings::instance()->get("zuo_and_ip") == "true")
                 strDisplay = QString(tr("* %1 [%2@%3] has left %4")).arg(strNick, strZUO, strIP, strChannel);
             else
                 strDisplay = QString(tr("* %1 has left %2")).arg(strNick, strChannel);
@@ -506,7 +506,7 @@ void OnetKernel::raw_part()
     }
     else
     {
-        if (Settings::instance()->get("show_zuo_and_ip") == "true")
+        if (Settings::instance()->get("zuo_and_ip") == "true")
             strDisplay = QString(tr("* %1 [%2@%3] has left priv")).arg(strNick, strZUO, strIP);
         else
             strDisplay = QString(tr("* %1 has left priv")).arg(strNick);
@@ -547,7 +547,7 @@ void OnetKernel::raw_quit()
     if ((!strReason.isEmpty()) && (strReason.at(0) == ':')) strReason.remove(0,1);
 
     QString strDisplay;
-    if (Settings::instance()->get("show_zuo_and_ip") == "true")
+    if (Settings::instance()->get("zuo_and_ip") == "true")
         strDisplay = QString(tr("* %1 [%2@%3] has quit [%4]")).arg(strNick, strZUO, strIP, strReason);
     else
         strDisplay = QString(tr("* %1 has quit [%2]")).arg(strNick, strReason);
