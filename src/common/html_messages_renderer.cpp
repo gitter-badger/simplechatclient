@@ -38,7 +38,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
     if ((strDataList.at(0) == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
     {
         QString strWord = strDataList.at(1); Convert::removeStyles(strWord);
-        strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\" href=\"#\">%1</a>").arg(strWord);
+        strDataList[1] = QString("<a onclick=\"return false\" name=\"nick\" href=\"#\">%1</a>").arg(strWord);
     }
 
     for (int i = 0; i < strDataList.size(); ++i)
@@ -52,7 +52,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
             if (eMessageCategory == MessageInfo)
                 Convert::convertPrefix(strWord);
 
-            strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" style=\"text-decoration:none;\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);
+            strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);
         }
 
         // web
@@ -69,18 +69,18 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
             if ((strWord.contains(exYoutube_1)) || (strWord.contains(exYoutube_2)) || (strWord.contains(exYoutube_3)))
             {
-                QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" style=\"vertical-align:bottom;\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
-                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
+                QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
+                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
             }
             else if (lSupportedImages.contains(QFileInfo(strWord).completeSuffix().toLower()))
             {
                 lImages << strWord;
 
-                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"> %2</a>").arg(strWord, strWord);
+                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"> %2</a>").arg(strWord, strWord);
             }
             else
             {
-                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strWord, strWord);
+                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a>").arg(strWord, strWord);
             }
         }
         else if (((strWord.contains("http:")) && (!strWord.startsWith("http:"))) || ((strWord.contains("https:")) && (!strWord.startsWith("https:"))) || ((strWord.contains("www.")) && (!strWord.startsWith("www."))))
@@ -110,18 +110,18 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
                 if ((strAfterLink.contains(exYoutube_1)) || (strAfterLink.contains(exYoutube_2)) || (strAfterLink.contains(exYoutube_3)))
                 {
-                    QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" style=\"vertical-align:bottom;\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
-                    strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
+                    QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
+                    strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
                 }
                 else if (lSupportedImages.contains(QFileInfo(strAfterLink).completeSuffix().toLower()))
                 {
                     lImages << strAfterLink;
 
-                    strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
+                    strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
                 }
                 else
                 {
-                    strAfterLink = QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
+                    strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
                 }
 
                 strDataList[i] = strBeforeLink+strAfterLink;
@@ -133,7 +133,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
     {
         strDataList << "<br/>";
         foreach (const QString strImage, lImages)
-            strDataList << QString("<a onclick=\"return false\" name=\"website\" style=\"color:inherit;text-decoration:none;\" href=\"%1\"><img style=\"max-width:75px;max-height:75px;\" src=\"%2\" alt=\"image\"></a>").arg(strImage, strImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strImage, strImage);
     }
 
     strData = strDataList.join(" ");
@@ -182,9 +182,9 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     QString strThemes = Settings::instance()->get("themes");
 
     // highlight
-    QString strTextDecoration;
+    QString strExtraClass;
     if (eMessageCategory == MessageHighlight)
-        strTextDecoration = "style=\"text-decoration:underline;\"";
+        strExtraClass = "underline";
 
     // me & modernotice
     QString strBeforeNick;
@@ -223,7 +223,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             strUserAvatar = "file://"+strUserAvatar;
 #endif
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatar);
-            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 </span><span class=\"%5\" %6>%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString(Settings::instance()->get("time_format")));
+            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4 </span><span class=\"%5 %6\">%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
         else
         {
@@ -233,14 +233,14 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else if (strThemes == "Alhena")
     {
         if (!strNick.isEmpty())
-            return QString("<table><tr><td class=\"TableText\"><span class=\"DefaultColor\">%1<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%2</a>%3 </span><span class=\"%4\" %5>%6</span></td><td class=\"time\">[%7]</td></tr></table>").arg(strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData, dt.toString(Settings::instance()->get("time_format")));
+            return QString("<table><tr><td class=\"TableText\"><span class=\"DefaultColor\">%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3 </span><span class=\"%4 %5\">%6</span></td><td class=\"time\">[%7]</td></tr></table>").arg(strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         else
             return QString("<table><tr><td class=\"TableText\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">[%3]</td></tr></table>").arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
     }
     else
     {
         if (!strNick.isEmpty())
-            return QString("<span class=\"time\">[%1]</span> <span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\" style=\"color:inherit;text-decoration:none;\">%3</a>%4 <span class=\"%5\" %6>%7</span></span>").arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strTextDecoration, strData);
+            return QString("<span class=\"time\">[%1]</span> <span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4 <span class=\"%5 %6\">%7</span></span>").arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
         else
             return QString("<span class=\"time\">[%1]</span> <span class=\"DefaultColor\"><span class=\"%2\">%3</span></span>").arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
     }
@@ -290,8 +290,12 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageError = Settings::instance()->get("message_error_color");
 
     QString strHeadCSS = "div{margin-bottom: 2px;white-space:pre-wrap;}";
-    strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}.TableText{width:100%;}").arg(strFontSize));
-    strHeadCSS.append(QString(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}"));
+    strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}").arg(strFontSize));
+    strHeadCSS.append(".TableText{width:100%;}");
+    strHeadCSS.append("a{color:inherit;text-decoration:none;}");
+    strHeadCSS.append(".thumb{max-width:75px;max-height:75px;}");
+    strHeadCSS.append(".underline{text-decoration:underline;}");
+    strHeadCSS.append(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}");
 
     if (strThemes == "Origin") {
         strHeadCSS.append(QString(".time{font-size:0.95em; color:%1;}").arg(strTimeColor));
