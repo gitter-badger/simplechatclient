@@ -140,7 +140,8 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
     if (((!lUrlImages.isEmpty()) || (!lYoutubeImages.isEmpty())) && (Settings::instance()->get("img_thumbs") == "true"))
     {
-        strDataList << "<br/>";
+        strDataList << "<br/><span class=\"thumbs\">";
+
         foreach (const QString strImage, lUrlImages)
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strImage, strImage);
 
@@ -150,6 +151,8 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
             QString strThumbImage = QString("http://img.youtube.com/vi/%1/default.jpg").arg(strImage);
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strFullImage, strThumbImage);
         }
+
+        strDataList << "</span>";
     }
 
     strData = strDataList.join(" ");
@@ -310,6 +313,7 @@ QString HtmlMessagesRenderer::headCSS()
     strHeadCSS.append(".TableText{width:100%;}");
     strHeadCSS.append("a{color:inherit;text-decoration:none;}");
     strHeadCSS.append(".thumb{max-width:75px;max-height:75px;}");
+    strHeadCSS.append(".thumbs{margin-left: 100px;}");
     strHeadCSS.append(".underline{text-decoration:underline;}");
     strHeadCSS.append(".avatar{vertical-align:middle; margin-left:4px; margin-right:4px; width:30px; height:30px;}");
 
