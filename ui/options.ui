@@ -1250,9 +1250,9 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_12">
         <item>
-         <widget class="QCheckBox" name="checkBox_hide_formating">
+         <widget class="QCheckBox" name="checkBox_font_formating">
           <property name="text">
-           <string>Disable formatting messages</string>
+           <string>Font formatting</string>
           </property>
          </widget>
         </item>

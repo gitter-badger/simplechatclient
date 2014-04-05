@@ -60,7 +60,7 @@ void convertColor(QString &strData)
 {
     QList<QString> lColors = Utils::instance()->getColors();
 
-    if (Settings::instance()->get("hide_formating") == "false")
+    if (Settings::instance()->get("font_formating") == "true")
     {
         foreach (const QString &strColor, lColors)
         {
@@ -88,7 +88,7 @@ void convertFont(QString &strData)
         int first = pos;
         int second = first + rx.matchedLength();
 
-        if (Settings::instance()->get("hide_formating") == "false")
+        if (Settings::instance()->get("font_formating") == "true")
         {
             QString strAtributes;
             QString strFontStyle = rx.cap(1);

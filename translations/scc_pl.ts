@@ -1606,8 +1606,8 @@
         <translation>Wygląd</translation>
     </message>
     <message>
-        <source>Disable font size, color...</source>
-        <translation>Wyłącz wielkość, kolor czcionek...</translation>
+        <source>Font formating</source>
+        <translation>Formatowanie czcionki</translation>
     </message>
     <message>
         <source>Hide join/part</source>

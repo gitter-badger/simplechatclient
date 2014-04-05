@@ -93,7 +93,7 @@ private slots:
     void setBackgroundImage();
     void disableBackgroundImage(bool bValue);
 
-    void hideFormating(bool bValue);
+    void fontFormating(bool bValue);
     void hideJoinPart(bool bValue);
     void hideJoinPart200(bool bValue);
     void hideEmoticons(bool bValue);

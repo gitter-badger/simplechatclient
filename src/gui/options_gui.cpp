@@ -135,7 +135,7 @@ void OptionsGui::createGui()
 
     // page view
     ui.groupBox_view->setTitle(tr("View"));
-    ui.checkBox_hide_formating->setText(tr("Disable font size, color..."));
+    ui.checkBox_font_formating->setText(tr("Font formating"));
     ui.checkBox_hide_join_part->setText(tr("Hide join/part"));
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
     ui.checkBox_hide_emoticons->setText(tr("Hide emoticons"));
@@ -325,7 +325,7 @@ void OptionsGui::setDefaultValues()
 
     QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
 
-    QString strHideFormating = Settings::instance()->get("hide_formating");
+    QString strFontFormating = Settings::instance()->get("font_formating");
     QString strHideJoinPart = Settings::instance()->get("hide_join_part");
     QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
     QString strHideEmoticons = Settings::instance()->get("hide_emoticons");
@@ -385,11 +385,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_disable_background_image->setChecked(false);
 
-    // hide formating
-    if (strHideFormating == "true")
-        ui.checkBox_hide_formating->setChecked(true);
+    // font formating
+    if (strFontFormating == "true")
+        ui.checkBox_font_formating->setChecked(true);
     else
-        ui.checkBox_hide_formating->setChecked(false);
+        ui.checkBox_font_formating->setChecked(false);
 
     // hide join part
     if (strHideJoinPart == "true")
@@ -562,7 +562,7 @@ void OptionsGui::createSignals()
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
     connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
 
-    connect(ui.checkBox_hide_formating, SIGNAL(clicked(bool)), this, SLOT(hideFormating(bool)));
+    connect(ui.checkBox_font_formating, SIGNAL(clicked(bool)), this, SLOT(fontFormating(bool)));
     connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
     connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
     connect(ui.checkBox_hide_emoticons, SIGNAL(clicked(bool)), this, SLOT(hideEmoticons(bool)));
@@ -1057,14 +1057,14 @@ void OptionsGui::disableBackgroundImage(bool bValue)
     Core::instance()->mainWindow()->refreshCSS();
 }
 
-void OptionsGui::hideFormating(bool bValue)
+void OptionsGui::fontFormating(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("hide_formating", strValue);
+    Settings::instance()->set("font_formating", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("hide_formating", strValue);
+    pConfig->set("font_formating", strValue);
     delete pConfig;
 }
 
