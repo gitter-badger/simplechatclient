@@ -32,7 +32,8 @@ HtmlMessagesRenderer::HtmlMessagesRenderer()
 void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMessageCategory)
 {
     QStringList strDataList = strData.split(" ");
-    QStringList lImages;
+    QStringList lUrlImages;
+    QStringList lYoutubeImages;
 
     // nick
     if ((strDataList.at(0) == "*") && ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit)  || (eMessageCategory == MessageKick)))
@@ -69,12 +70,16 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
             if ((strWord.contains(exYoutube_1)) || (strWord.contains(exYoutube_2)) || (strWord.contains(exYoutube_3)))
             {
+                if (!exYoutube_1.cap(1).isEmpty()) lYoutubeImages << exYoutube_1.cap(1);
+                if (!exYoutube_2.cap(1).isEmpty()) lYoutubeImages << exYoutube_2.cap(1);
+                if (!exYoutube_3.cap(1).isEmpty()) lYoutubeImages << exYoutube_3.cap(1);
+
                 QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
                 strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
             }
             else if (lSupportedImages.contains(QFileInfo(strWord).completeSuffix().toLower()))
             {
-                lImages << strWord;
+                lUrlImages << strWord;
 
                 strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"> %2</a>").arg(strWord, strWord);
             }
@@ -110,12 +115,16 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
                 if ((strAfterLink.contains(exYoutube_1)) || (strAfterLink.contains(exYoutube_2)) || (strAfterLink.contains(exYoutube_3)))
                 {
+                    if (!exYoutube_1.cap(1).isEmpty()) lYoutubeImages << exYoutube_1.cap(1);
+                    if (!exYoutube_2.cap(1).isEmpty()) lYoutubeImages << exYoutube_2.cap(1);
+                    if (!exYoutube_3.cap(1).isEmpty()) lYoutubeImages << exYoutube_3.cap(1);
+
                     QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
                     strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
                 }
                 else if (lSupportedImages.contains(QFileInfo(strAfterLink).completeSuffix().toLower()))
                 {
-                    lImages << strAfterLink;
+                    lUrlImages << strAfterLink;
 
                     strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a>").arg(strAfterLink, strAfterLink);
                 }
@@ -129,11 +138,18 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         }
     }
 
-    if ((!lImages.isEmpty()) && (Settings::instance()->get("img_thumbs") == "true"))
+    if (((!lUrlImages.isEmpty()) || (!lYoutubeImages.isEmpty())) && (Settings::instance()->get("img_thumbs") == "true"))
     {
         strDataList << "<br/>";
-        foreach (const QString strImage, lImages)
+        foreach (const QString strImage, lUrlImages)
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strImage, strImage);
+
+        foreach (const QString strImage, lYoutubeImages)
+        {
+            QString strFullImage = QString("http://youtu.be/%1").arg(strImage);
+            QString strThumbImage = QString("http://img.youtube.com/vi/%1/default.jpg").arg(strImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strFullImage, strThumbImage);
+        }
     }
 
     strData = strDataList.join(" ");
