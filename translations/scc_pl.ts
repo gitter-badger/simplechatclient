@@ -1598,8 +1598,8 @@
         <translation>Domyślna tapeta:</translation>
     </message>
     <message>
-        <source>Disable background image</source>
-        <translation>Wyłącz tapetę</translation>
+        <source>Show background image</source>
+        <translation>Wyświetlaj tapetę</translation>
     </message>
     <message>
         <source>View</source>

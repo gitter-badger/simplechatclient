@@ -346,14 +346,14 @@ QString HtmlMessagesRenderer::bodyCSS()
 {
     QString strFontSize = Settings::instance()->get("font_size");
     QString strBackgroundImage = Settings::instance()->get("background_image");
-    QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
+    QString strShowBackgroundImage = Settings::instance()->get("show_background_image");
 
 #ifndef Q_WS_WIN
     strBackgroundImage = "file://"+strBackgroundImage;
 #endif
 
     QString strBackground;
-    if ((strDisableBackgroundImage == "false") && (!strBackgroundImage.isEmpty()))
+    if ((strShowBackgroundImage == "true") && (!strBackgroundImage.isEmpty()))
         strBackground = QString("background-image: url('%1'); background-attachment: fixed; background-position: center; background-repeat: no-repeat;").arg(strBackgroundImage);
 
     return QString("margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1; %2").arg(strFontSize, strBackground);

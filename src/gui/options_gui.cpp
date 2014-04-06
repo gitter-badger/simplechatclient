@@ -131,7 +131,7 @@ void OptionsGui::createGui()
     ui.groupBox_background_image->setTitle(tr("Background image"));
     ui.label_background_image->setText(tr("Default background image:"));
     ui.pushButton_set_background_image->setText(tr("Set"));
-    ui.checkBox_disable_background_image->setText(tr("Disable background image"));
+    ui.checkBox_show_background_image->setText(tr("Show background image"));
 
     // page view
     ui.groupBox_view->setTitle(tr("View"));
@@ -323,7 +323,7 @@ void OptionsGui::setDefaultValues()
 
     QString strSound = Settings::instance()->get("sound");
 
-    QString strDisableBackgroundImage = Settings::instance()->get("disable_background_image");
+    QString strShowBackgroundImage = Settings::instance()->get("show_background_image");
 
     QString strFontFormating = Settings::instance()->get("font_formating");
     QString strHideJoinPart = Settings::instance()->get("hide_join_part");
@@ -379,11 +379,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_sound->setChecked(false);
 
-    // disable background image
+    // show background image
     if (strDisableBackgroundImage == "true")
-        ui.checkBox_disable_background_image->setChecked(true);
+        ui.checkBox_show_background_image->setChecked(true);
     else
-        ui.checkBox_disable_background_image->setChecked(false);
+        ui.checkBox_show_background_image->setChecked(false);
 
     // font formating
     if (strFontFormating == "true")
@@ -560,7 +560,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_logs, SIGNAL(clicked(bool)), this, SLOT(setLogs(bool)));
 
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
-    connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(setDisableBackgroundImage(bool)));
+    connect(ui.checkBox_show_background_image, SIGNAL(clicked(bool)), this, SLOT(setShowBackgroundImage(bool)));
 
     connect(ui.checkBox_font_formating, SIGNAL(clicked(bool)), this, SLOT(setFontFormating(bool)));
     connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(setHideJoinPart(bool)));
@@ -1043,14 +1043,14 @@ void OptionsGui::setBackgroundImage()
     }
 }
 
-void OptionsGui::setDisableBackgroundImage(bool bValue)
+void OptionsGui::setShowBackgroundImage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("disable_background_image", strValue);
+    Settings::instance()->set("show_background_image", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("disable_background_image", strValue);
+    pConfig->set("show_background_image", strValue);
     delete pConfig;
 
     // refresh background image

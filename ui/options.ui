@@ -1216,9 +1216,9 @@
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_disable_background_image">
+         <widget class="QCheckBox" name="checkBox_show_background_image">
           <property name="text">
-           <string>Disable background image</string>
+           <string>Show background image</string>
           </property>
          </widget>
         </item>

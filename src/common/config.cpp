@@ -222,7 +222,7 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("sound", "true");
 
         lDefaultValues.insert("background_image", strBackgroundImage);
-        lDefaultValues.insert("disable_background_image", "false");
+        lDefaultValues.insert("show_background_image", "false");
 
         lDefaultValues.insert("font_formating", "true");
         lDefaultValues.insert("hide_join_part", "false");

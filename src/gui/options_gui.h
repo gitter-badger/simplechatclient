@@ -91,7 +91,7 @@ private slots:
     void setLogs(bool bValue);
 
     void setBackgroundImage();
-    void setDisableBackgroundImage(bool bValue);
+    void setShowBackgroundImage(bool bValue);
 
     void setFontFormating(bool bValue);
     void setHideJoinPart(bool bValue);
