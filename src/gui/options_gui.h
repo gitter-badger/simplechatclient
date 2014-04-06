@@ -94,8 +94,8 @@ private slots:
     void setShowBackgroundImage(bool bValue);
 
     void setFontFormating(bool bValue);
-    void setHideJoinPart(bool bValue);
-    void setHideJoinPart200(bool bValue);
+    void setShowJoinPart(bool bValue);
+    void setShowJoinPart200(bool bValue);
     void setEmoticons(bool bValue);
     void setReplaceEmoticons(bool bValue);
     void setNicklist(bool bValue);

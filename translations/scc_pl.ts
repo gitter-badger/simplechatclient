@@ -1610,12 +1610,12 @@
         <translation>Formatowanie czcionki</translation>
     </message>
     <message>
-        <source>Hide join/part</source>
-        <translation>Ukryj wejścia/wyjścia</translation>
+        <source>Show join/part</source>
+        <translation>Pokazuj wejścia/wyjścia osób</translation>
     </message>
     <message>
-        <source>Hide join/part on big channels</source>
-        <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
+        <source>Show join/part on big channels</source>
+        <translation>Pokazuj wejścia/wyjścia osób w dużych pokojach</translation>
     </message>
     <message>
         <source>Emoticons</source>

@@ -225,8 +225,8 @@ QHash<QString,QString> Config::getDefaultValues()
         lDefaultValues.insert("show_background_image", "false");
 
         lDefaultValues.insert("font_formating", "true");
-        lDefaultValues.insert("hide_join_part", "false");
-        lDefaultValues.insert("hide_join_part_200", "true");
+        lDefaultValues.insert("show_join_part", "true");
+        lDefaultValues.insert("show_join_part_200", "false");
         lDefaultValues.insert("emoticons", "true");
         lDefaultValues.insert("replace_emoticons", "true");
         lDefaultValues.insert("nicklist", "true");

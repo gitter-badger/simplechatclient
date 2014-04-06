@@ -91,11 +91,11 @@ bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessage
 {
     if ((eMessageCategory == MessageJoin) || (eMessageCategory == MessagePart) || (eMessageCategory == MessageQuit))
     {
-        if (Settings::instance()->get("hide_join_part") == "true")
+        if (Settings::instance()->get("show_join_part") == "false")
             return true;
 
         int iNickCount = Nick::instance()->getFromChannel(strChannel).size();
-        if ((Settings::instance()->get("hide_join_part_200") == "true") && (iNickCount > 200))
+        if ((Settings::instance()->get("show_join_part_200") == "false") && (iNickCount > 200))
             return true;
     }
     return false;

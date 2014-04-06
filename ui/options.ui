@@ -1257,16 +1257,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_hide_join_part">
+         <widget class="QCheckBox" name="checkBox_show_join_part">
           <property name="text">
-           <string>Hide join/part</string>
+           <string>Show join/part</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_hide_join_part_200">
+         <widget class="QCheckBox" name="checkBox_show_join_part_200">
           <property name="text">
-           <string>Hide join/part when number of nicks &gt; 200</string>
+           <string>Show join/part when number of nicks &gt; 200</string>
           </property>
          </widget>
         </item>
