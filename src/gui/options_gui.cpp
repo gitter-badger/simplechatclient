@@ -380,7 +380,7 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_sound->setChecked(false);
 
     // show background image
-    if (strDisableBackgroundImage == "true")
+    if (strShowBackgroundImage == "true")
         ui.checkBox_show_background_image->setChecked(true);
     else
         ui.checkBox_show_background_image->setChecked(false);
