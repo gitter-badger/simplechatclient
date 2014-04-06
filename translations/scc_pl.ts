@@ -1618,8 +1618,8 @@
         <translation>Ukryj wejścia/wyjścia osób w dużych pokojach</translation>
     </message>
     <message>
-        <source>Hide emoticons</source>
-        <translation>Nie pokazuj emotikon</translation>
+        <source>Emoticons</source>
+        <translation>Emotikony</translation>
     </message>
     <message>
         <source>Replace emoticons</source>

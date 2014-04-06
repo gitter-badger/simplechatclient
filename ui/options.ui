@@ -1271,9 +1271,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_hide_emoticons">
+         <widget class="QCheckBox" name="checkBox_emoticons">
           <property name="text">
-           <string>Hide emoticons</string>
+           <string>Emoticons</string>
           </property>
          </widget>
         </item>

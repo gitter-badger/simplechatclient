@@ -96,7 +96,7 @@ private slots:
     void fontFormating(bool bValue);
     void hideJoinPart(bool bValue);
     void hideJoinPart200(bool bValue);
-    void hideEmoticons(bool bValue);
+    void setEmoticons(bool bValue);
     void setReplaceEmoticons(bool bValue);
     void hideNicklist(bool bValue);
     void imgThumbs(bool bValue);

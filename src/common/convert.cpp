@@ -124,7 +124,7 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight, bool qWebViewCo
         QString strEmoticon = rx.cap(1);
         QString strEmoticonFull = "%I"+strEmoticon+"%";
 
-        if (Settings::instance()->get("hide_emoticons") == "false")
+        if (Settings::instance()->get("emoticons") == "true")
         {
             QString strEmoticonPath = findEmoticon(strEmoticon);
 
