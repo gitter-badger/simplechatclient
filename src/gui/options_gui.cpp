@@ -560,31 +560,31 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_logs, SIGNAL(clicked(bool)), this, SLOT(setLogs(bool)));
 
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
-    connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(disableBackgroundImage(bool)));
+    connect(ui.checkBox_disable_background_image, SIGNAL(clicked(bool)), this, SLOT(setDisableBackgroundImage(bool)));
 
-    connect(ui.checkBox_font_formating, SIGNAL(clicked(bool)), this, SLOT(fontFormating(bool)));
-    connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart(bool)));
-    connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(hideJoinPart200(bool)));
+    connect(ui.checkBox_font_formating, SIGNAL(clicked(bool)), this, SLOT(setFontFormating(bool)));
+    connect(ui.checkBox_hide_join_part, SIGNAL(clicked(bool)), this, SLOT(setHideJoinPart(bool)));
+    connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(setHideJoinPart200(bool)));
     connect(ui.checkBox_emoticons, SIGNAL(clicked(bool)), this, SLOT(setEmoticons(bool)));
     connect(ui.checkBox_replace_emoticons, SIGNAL(clicked(bool)), this, SLOT(setReplaceEmoticons(bool)));
-    connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(hideNicklist(bool)));
-    connect(ui.checkBox_img_thumbs, SIGNAL(clicked(bool)), this, SLOT(imgThumbs(bool)));
-    connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(timeFormatChanged(int)));
+    connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(setHideNicklist(bool)));
+    connect(ui.checkBox_img_thumbs, SIGNAL(clicked(bool)), this, SLOT(setImgThumbs(bool)));
+    connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(setTimeFormat(int)));
 
     connect(ui.pushButton_set_winamp, SIGNAL(clicked()), this, SLOT(setWinamp()));
 
     connect(ui.pushButton_set_mpris_format, SIGNAL(clicked()), this, SLOT(setMprisFormat()));
-    connect(ui.comboBox_mpris_player, SIGNAL(activated(int)), this, SLOT(mprisPlayerChanged(int)));
+    connect(ui.comboBox_mpris_player, SIGNAL(activated(int)), this, SLOT(setMprisPlayer(int)));
 
-    connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(trayMessage(bool)));
+    connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(setTrayMessage(bool)));
 
-    connect(ui.checkBox_updates, SIGNAL(clicked(bool)), this, SLOT(updates(bool)));
+    connect(ui.checkBox_updates, SIGNAL(clicked(bool)), this, SLOT(setUpdates(bool)));
 
-    connect(ui.checkBox_auto_connect, SIGNAL(clicked(bool)), this, SLOT(autoConnect(bool)));
-    connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(autoBusy(bool)));
-    connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(autoAway(bool)));
-    connect(ui.checkBox_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(autojoinFavourites(bool)));
-    connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(minimizeToTray(bool)));
+    connect(ui.checkBox_auto_connect, SIGNAL(clicked(bool)), this, SLOT(setAutoConnect(bool)));
+    connect(ui.checkBox_auto_busy, SIGNAL(clicked(bool)), this, SLOT(setAutoBusy(bool)));
+    connect(ui.checkBox_auto_away, SIGNAL(clicked(bool)), this, SLOT(setAutoAway(bool)));
+    connect(ui.checkBox_autojoin_favourites, SIGNAL(clicked(bool)), this, SLOT(setAutojoinFavourites(bool)));
+    connect(ui.checkBox_minimize_to_tray, SIGNAL(clicked(bool)), this, SLOT(setMinimizeToTray(bool)));
     connect(ui.checkBox_zuo_and_ip, SIGNAL(clicked(bool)), this, SLOT(setZuoAndIp(bool)));
 
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -1043,7 +1043,7 @@ void OptionsGui::setBackgroundImage()
     }
 }
 
-void OptionsGui::disableBackgroundImage(bool bValue)
+void OptionsGui::setDisableBackgroundImage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1057,7 +1057,7 @@ void OptionsGui::disableBackgroundImage(bool bValue)
     Core::instance()->mainWindow()->refreshCSS();
 }
 
-void OptionsGui::fontFormating(bool bValue)
+void OptionsGui::setFontFormating(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1068,7 +1068,7 @@ void OptionsGui::fontFormating(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::hideJoinPart(bool bValue)
+void OptionsGui::setHideJoinPart(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1079,7 +1079,7 @@ void OptionsGui::hideJoinPart(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::hideJoinPart200(bool bValue)
+void OptionsGui::setHideJoinPart200(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1112,7 +1112,7 @@ void OptionsGui::setReplaceEmoticons(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::hideNicklist(bool bValue)
+void OptionsGui::setHideNicklist(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1123,7 +1123,7 @@ void OptionsGui::hideNicklist(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::imgThumbs(bool bValue)
+void OptionsGui::setImgThumbs(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1134,7 +1134,7 @@ void OptionsGui::imgThumbs(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::timeFormatChanged(int index)
+void OptionsGui::setTimeFormat(int index)
 {
     Q_UNUSED(index);
 
@@ -1168,7 +1168,7 @@ void OptionsGui::setMprisFormat()
     delete pConfig;
 }
 
-void OptionsGui::mprisPlayerChanged(int index)
+void OptionsGui::setMprisPlayer(int index)
 {
     Settings::instance()->set("mpris_player", ui.comboBox_mpris_player->itemText(index));
     Settings::instance()->set("mpris_service", ui.comboBox_mpris_player->itemData(index).toString());
@@ -1179,7 +1179,7 @@ void OptionsGui::mprisPlayerChanged(int index)
     delete pConfig;
 }
 
-void OptionsGui::trayMessage(bool bValue)
+void OptionsGui::setTrayMessage(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1190,7 +1190,7 @@ void OptionsGui::trayMessage(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::updates(bool bValue)
+void OptionsGui::setUpdates(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1201,7 +1201,7 @@ void OptionsGui::updates(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::autoConnect(bool bValue)
+void OptionsGui::setAutoConnect(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1212,7 +1212,7 @@ void OptionsGui::autoConnect(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::autoBusy(bool bValue)
+void OptionsGui::setAutoBusy(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1223,7 +1223,7 @@ void OptionsGui::autoBusy(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::autoAway(bool bValue)
+void OptionsGui::setAutoAway(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1234,7 +1234,7 @@ void OptionsGui::autoAway(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::autojoinFavourites(bool bValue)
+void OptionsGui::setAutojoinFavourites(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
@@ -1245,7 +1245,7 @@ void OptionsGui::autojoinFavourites(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::minimizeToTray(bool bValue)
+void OptionsGui::setMinimizeToTray(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 

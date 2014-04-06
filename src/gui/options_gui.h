@@ -91,31 +91,31 @@ private slots:
     void setLogs(bool bValue);
 
     void setBackgroundImage();
-    void disableBackgroundImage(bool bValue);
+    void setDisableBackgroundImage(bool bValue);
 
-    void fontFormating(bool bValue);
-    void hideJoinPart(bool bValue);
-    void hideJoinPart200(bool bValue);
+    void setFontFormating(bool bValue);
+    void setHideJoinPart(bool bValue);
+    void setHideJoinPart200(bool bValue);
     void setEmoticons(bool bValue);
     void setReplaceEmoticons(bool bValue);
-    void hideNicklist(bool bValue);
-    void imgThumbs(bool bValue);
-    void timeFormatChanged(int index);
+    void setHideNicklist(bool bValue);
+    void setImgThumbs(bool bValue);
+    void setTimeFormat(int index);
 
     void setWinamp();
 
     void setMprisFormat();
-    void mprisPlayerChanged(int index);
+    void setMprisPlayer(int index);
 
-    void trayMessage(bool);
+    void setTrayMessage(bool);
 
-    void updates(bool);
+    void setUpdates(bool);
 
-    void autoConnect(bool bValue);
-    void autoBusy(bool bValue);
-    void autoAway(bool bValue);
-    void autojoinFavourites(bool bValue);
-    void minimizeToTray(bool bValue);
+    void setAutoConnect(bool bValue);
+    void setAutoBusy(bool bValue);
+    void setAutoAway(bool bValue);
+    void setAutojoinFavourites(bool bValue);
+    void setMinimizeToTray(bool bValue);
     void setZuoAndIp(bool bValue);
 };
 
