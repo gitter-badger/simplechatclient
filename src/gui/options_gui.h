@@ -98,7 +98,7 @@ private slots:
     void setHideJoinPart200(bool bValue);
     void setEmoticons(bool bValue);
     void setReplaceEmoticons(bool bValue);
-    void setHideNicklist(bool bValue);
+    void setNicklist(bool bValue);
     void setImgThumbs(bool bValue);
     void setTimeFormat(int index);
 

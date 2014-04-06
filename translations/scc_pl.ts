@@ -1626,10 +1626,6 @@
         <translation>Zamieniaj emotikony na graficzne</translation>
     </message>
     <message>
-        <source>Hide nicklist</source>
-        <translation>Ukryj listę nicków</translation>
-    </message>
-    <message>
         <source>Image thumbnails</source>
         <translation>Miniatury zdjęć</translation>
     </message>

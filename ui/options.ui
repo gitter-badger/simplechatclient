@@ -1292,9 +1292,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_hide_nicklist">
+         <widget class="QCheckBox" name="checkBox_nicklist">
           <property name="text">
-           <string>Hide nicklist</string>
+           <string>Nicklist</string>
           </property>
          </widget>
         </item>

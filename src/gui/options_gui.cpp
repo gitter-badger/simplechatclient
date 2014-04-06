@@ -140,7 +140,7 @@ void OptionsGui::createGui()
     ui.checkBox_hide_join_part_200->setText(tr("Hide join/part on big channels"));
     ui.checkBox_emoticons->setText(tr("Emoticons"));
     ui.checkBox_replace_emoticons->setText(tr("Replace emoticons"));
-    ui.checkBox_hide_nicklist->setText(tr("Hide nicklist"));
+    ui.checkBox_nicklist->setText(tr("Nicklist"));
     ui.checkBox_img_thumbs->setText(tr("Image thumbnails"));
     ui.label_time_format->setText(tr("Time format:"));
 
@@ -330,7 +330,7 @@ void OptionsGui::setDefaultValues()
     QString strHideJoinPart200 = Settings::instance()->get("hide_join_part_200");
     QString strEmoticons = Settings::instance()->get("emoticons");
     QString strReplaceEmoticons = Settings::instance()->get("replace_emoticons");
-    QString strHideNicklist = Settings::instance()->get("hide_nicklist");
+    QString strNicklist = Settings::instance()->get("nicklist");
     QString strImgThumbs = Settings::instance()->get("img_thumbs");
     QString strTimeFormat = Settings::instance()->get("time_format");
 
@@ -415,11 +415,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_replace_emoticons->setChecked(false);
 
-    // hide nicklist
-    if (strHideNicklist == "true")
-        ui.checkBox_hide_nicklist->setChecked(true);
+    // nicklist
+    if (strNicklist == "true")
+        ui.checkBox_nicklist->setChecked(true);
     else
-        ui.checkBox_hide_nicklist->setChecked(false);
+        ui.checkBox_nicklist->setChecked(false);
 
     // img thumbs
     if (strImgThumbs == "true")
@@ -567,7 +567,7 @@ void OptionsGui::createSignals()
     connect(ui.checkBox_hide_join_part_200, SIGNAL(clicked(bool)), this, SLOT(setHideJoinPart200(bool)));
     connect(ui.checkBox_emoticons, SIGNAL(clicked(bool)), this, SLOT(setEmoticons(bool)));
     connect(ui.checkBox_replace_emoticons, SIGNAL(clicked(bool)), this, SLOT(setReplaceEmoticons(bool)));
-    connect(ui.checkBox_hide_nicklist, SIGNAL(clicked(bool)), this, SLOT(setHideNicklist(bool)));
+    connect(ui.checkBox_nicklist, SIGNAL(clicked(bool)), this, SLOT(setNicklist(bool)));
     connect(ui.checkBox_img_thumbs, SIGNAL(clicked(bool)), this, SLOT(setImgThumbs(bool)));
     connect(ui.comboBox_time_format, SIGNAL(activated(int)), this, SLOT(setTimeFormat(int)));
 
@@ -1112,14 +1112,14 @@ void OptionsGui::setReplaceEmoticons(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::setHideNicklist(bool bValue)
+void OptionsGui::setNicklist(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("hide_nicklist", strValue);
+    Settings::instance()->set("nicklist", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("hide_nicklist", strValue);
+    pConfig->set("nicklist", strValue);
     delete pConfig;
 }
 

@@ -91,15 +91,15 @@ void TabWidget::createGui()
 void TabWidget::setDefaultValues()
 {
     // settings
-    if (Settings::instance()->get("hide_nicklist") == "true")
-    {
-        users->hide();
-        pNickListWidget->hide();
-    }
-    else
+    if (Settings::instance()->get("nicklist") == "true")
     {
         users->show();
         pNickListWidget->show();
+    }
+    else
+    {
+        users->hide();
+        pNickListWidget->hide();
     }
 
     // channel type
@@ -117,15 +117,15 @@ void TabWidget::showEvent(QShowEvent *)
 {
     if ((strName.at(0) == '^') || (strName.at(0) == '#'))
     {
-        if ((Settings::instance()->get("hide_nicklist") == "true") && (!pNickListWidget->isHidden()))
-        {
-            users->hide();
-            pNickListWidget->hide();
-        }
-        else if ((Settings::instance()->get("hide_nicklist") == "false") && (pNickListWidget->isHidden()))
+        if ((Settings::instance()->get("nicklist") == "true") && (pNickListWidget->isHidden()))
         {
             users->show();
             pNickListWidget->show();
+        }
+        else if ((Settings::instance()->get("nicklist") == "false") && (!pNickListWidget->isHidden()))
+        {
+            users->hide();
+            pNickListWidget->hide();
         }
     }
 
