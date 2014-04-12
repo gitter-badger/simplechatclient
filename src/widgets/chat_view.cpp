@@ -614,7 +614,7 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
 
 void ChatView::forceScrollToBottom()
 {
-    //QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
+    QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
 }
 
 void ChatView::autoScrollToBottom()
