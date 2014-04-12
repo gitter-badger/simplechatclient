@@ -51,7 +51,7 @@
     #include "webcam_gui.h"
 #endif
 
-ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bAtBottom(true)
+ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScrollToBottom(true)
 {
     setFocusPolicy(Qt::NoFocus);
 
@@ -103,7 +103,7 @@ void ChatView::clearMessages()
 {
     this->page()->mainFrame()->evaluateJavaScript("clearMessages()");
 
-    bAtBottom = true;
+    bScrollToBottom = true;
 }
 
 void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
@@ -116,9 +116,6 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
     else
         strContent = pHtmlMessagesRenderer->renderer(strData, eMessageCategory, iTime, strNick);
     delete pHtmlMessagesRenderer;
-
-    // scroll
-    bAtBottom = (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) >= this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
@@ -617,16 +614,25 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
 
 void ChatView::forceScrollToBottom()
 {
-    QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
+    //QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
 }
 
 void ChatView::autoScrollToBottom()
 {
-    if (bAtBottom)
+    if (bScrollToBottom)
         QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
 }
 
 void ChatView::scrollToBottom()
 {
     page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
+}
+
+void ChatView::wheelEvent(QWheelEvent *event)
+{
+    // event
+    QWebView::wheelEvent(event);
+
+    // scroll
+    bScrollToBottom = (this->page()->mainFrame()->scrollBarValue(Qt::Vertical) >= this->page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }

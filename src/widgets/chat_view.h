@@ -41,7 +41,7 @@ private:
     QAction *openChannelsActs[MAX_OPEN_CHANNELS];
     QAction *kickReasonAct[MAX_PUNISH_REASONS];
     QAction *kbanReasonAct[MAX_PUNISH_REASONS];
-    bool bAtBottom;
+    bool bScrollToBottom;
 
     void createBody();
     void menuNick(QContextMenuEvent *event);
@@ -89,6 +89,7 @@ private slots:
 protected:
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void contextMenuEvent(QContextMenuEvent *event);
+    virtual void wheelEvent(QWheelEvent *event);
 };
 
 #endif // CHAT_VIEW_H
