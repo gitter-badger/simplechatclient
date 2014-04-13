@@ -66,7 +66,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
             QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
 
             QList<QString> lSupportedImages;
-            lSupportedImages << "gif" << "jpg" << "jpeg" << "png" << "bmp";
+            lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";
 
             if ((strWord.contains(exYoutube_1)) || (strWord.contains(exYoutube_2)) || (strWord.contains(exYoutube_3)))
             {
@@ -111,7 +111,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
                 QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
 
                 QList<QString> lSupportedImages;
-                lSupportedImages << "gif" << "jpg" << "jpeg" << "png" << "bmp";
+                lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";
 
                 if ((strAfterLink.contains(exYoutube_1)) || (strAfterLink.contains(exYoutube_2)) || (strAfterLink.contains(exYoutube_3)))
                 {
