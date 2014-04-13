@@ -242,26 +242,45 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             strUserAvatar = "file://"+strUserAvatar;
 #endif
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatar);
-            return QString("<table><tr><td class=\"TableText\">%1<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4&nbsp;</span><span class=\"%5 %6\">%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
+            return QString("<table><tr><td class=\"message\">%1<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4&nbsp;</span><span class=\"%5 %6\">%7</span></td><td class=\"time\">%8</td></tr></table>").arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
         else
         {
-            return QString("<table><tr><td class=\"TableText\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">%3</td></tr></table>").arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
+            return QString("<table><tr><td class=\"message\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">%3</td></tr></table>").arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
     }
     else if (strThemes == "Alhena")
     {
         if (!strNick.isEmpty())
-            return QString("<table><tr><td class=\"TableText\"><span class=\"DefaultColor\">%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3&nbsp;</span><span class=\"%4 %5\">%6</span></td><td class=\"time\">[%7]</td></tr></table>").arg(strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
+            return QString("<table><tr><td class=\"message\"><span class=\"DefaultColor\">%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3&nbsp;</span><span class=\"%4 %5\">%6</span></td><td class=\"time\">[%7]</td></tr></table>").arg(strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         else
-            return QString("<table><tr><td class=\"TableText\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">[%3]</td></tr></table>").arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
+            return QString("<table><tr><td class=\"message\">&nbsp;<span class=\"%1\">%2</span></td><td class=\"time\">[%3]</td></tr></table>").arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
     }
     else
     {
         if (!strNick.isEmpty())
-            return QString("<span class=\"time\">[%1]</span>&nbsp;<span class=\"DefaultColor\">%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4&nbsp;<span class=\"%5 %6\">%7</span></span>").arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
+            return QString("<table>" \
+                             "<tr>" \
+                               "<td class=\"time\">[%1]</td>" \
+                               "<td class=\"message DefaultColor\">" \
+                                 "&nbsp;%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
+                                 "&nbsp;<span class=\"%5 %6\">%7</span>" \
+                               "</td>" \
+                             "</tr>" \
+                           "</table>")
+                    .arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
         else
-            return QString("<span class=\"time\">[%1]</span>&nbsp;<span class=\"DefaultColor\"><span class=\"%2\">%3</span></span>").arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
+            return QString("<table>" \
+                             "<tr>" \
+                               "<td class=\"time\">" \
+                                 "[%1]" \
+                               "</td>" \
+                               "<td class=\"message DefaultColor\">" \
+                                 "&nbsp;<span class=\"%2\">%3</span>" \
+                               "</td>" \
+                             "</tr>" \
+                           "</table>")
+                    .arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
     }
 }
 
@@ -310,7 +329,8 @@ QString HtmlMessagesRenderer::headCSS()
 
     QString strHeadCSS = "div {margin-bottom:2px; vertical-align:bottom;}";
     strHeadCSS.append(QString("table {border-spacing:0; margin:0; padding:0; font-family:sans; font-size:%1;}").arg(strFontSize));
-    strHeadCSS.append(".TableText {width:100%; word-break: break-word;}");
+    strHeadCSS.append("table td {vertical-align:bottom;}");
+    strHeadCSS.append(".message {width:100%; word-break: break-word;}");
     strHeadCSS.append("a {color:inherit; text-decoration:none;}");
     strHeadCSS.append(".thumb {max-width:75px; max-height:75px;}");
     strHeadCSS.append(".thumbs {margin-left:100px;}");
