@@ -40,7 +40,9 @@ public:
     void get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl);
     QString getAvatarPath(const QString &strAvatar);
     QString getEmptyRegisteredUserAvatar();
+    QString getEmptyRegisteredUserAvatarBig();
     QString getEmptyUnregisteredUserAvatar();
+    QString getEmptyUnregisteredUserAvatarBig();
 
 private:
     QNetworkAccessManager *accessManager;

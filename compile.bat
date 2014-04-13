@@ -137,7 +137,9 @@ xcopy translations\*.qm %DESTINATION%\translations\ /C /H /R /Y /Q
 
 echo Copying images
 xcopy images\registered_user_avatar.png %DESTINATION%\images\           /C /H /R /Y /Q 
+xcopy images\registered_user_avatar_big.png %DESTINATION%\images\           /C /H /R /Y /Q 
 xcopy images\unregistered_user_avatar.png %DESTINATION%\images\           /C /H /R /Y /Q 
+xcopy images\unregistered_user_avatar_big.png %DESTINATION%\images\           /C /H /R /Y /Q 
 xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q 
 
 echo Copying sounds

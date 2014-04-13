@@ -231,9 +231,9 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             if (strUserAvatar.isEmpty())
             {
                 if (strNick.at(0) == '~')
-                    strUserAvatar = Avatar::instance()->getEmptyUnregisteredUserAvatar();
+                    strUserAvatar = Avatar::instance()->getEmptyUnregisteredUserAvatarBig();
                 else
-                    strUserAvatar = Avatar::instance()->getEmptyRegisteredUserAvatar();
+                    strUserAvatar = Avatar::instance()->getEmptyRegisteredUserAvatarBig();
             }
             else
                 strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);

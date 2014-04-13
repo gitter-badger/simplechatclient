@@ -172,6 +172,18 @@ QString Avatar::getEmptyRegisteredUserAvatar()
     return path+"/images/registered_user_avatar.png";
 }
 
+QString Avatar::getEmptyRegisteredUserAvatarBig()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    return path+"/images/registered_user_avatar_big.png";
+}
+
 QString Avatar::getEmptyUnregisteredUserAvatar()
 {
     QString path;
@@ -182,4 +194,16 @@ QString Avatar::getEmptyUnregisteredUserAvatar()
 #endif
 
     return path+"/images/unregistered_user_avatar.png";
+}
+
+QString Avatar::getEmptyUnregisteredUserAvatarBig()
+{
+    QString path;
+#ifdef Q_WS_WIN
+    path = QCoreApplication::applicationDirPath();
+#else
+    path = SCC_DATA_DIR;
+#endif
+
+    return path+"/images/unregistered_user_avatar_big.png";
 }
