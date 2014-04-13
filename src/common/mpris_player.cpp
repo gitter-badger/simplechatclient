@@ -23,6 +23,7 @@
 #include <QtDBus/QDBusServiceWatcher>
 #include <QtDBus/QDBusConnection>
 #include <QObject>
+#include <QDebug>
 
 #include "mpris_player.h"
 
@@ -51,20 +52,39 @@ QString MprisPlayer::trackInfo(const QString &strPlayer, const QString &strServi
                 if (results.isValid())
                 {
                     QVariantMap metaData = qdbus_cast<QVariantMap>(results.value().variant());
+
+                    uint position = 0;
                     QDBusReply<QDBusVariant> rposition = dbus_iface.call("Get","org.mpris.MediaPlayer2.Player","Position");
                     if (rposition.isValid())
                     {
-                        uint position = qdbus_cast<uint>(rposition.value().variant()) / 1000;
-
-                        strMessage = parse(strFormat, strPlayer, metaData, position);
+                        position = qdbus_cast<uint>(rposition.value().variant()) / 1000;
                     }
+                    else if (rposition.error().type() == QDBusError::InvalidSignature)
+                    {
+                        /* GNOME MPlayer do it in a different way */
+                        QDBusReply<qlonglong> rposition2 = dbus_iface.call("Get","org.mpris.MediaPlayer2.Player","Position");
+                        if (rposition2.isValid())
+                            position = qdbus_cast<uint>(rposition2.value()) / 1000;
+                        else
+                            qDebug() << "mpris Position invalid" << rposition2.error().name() << rposition2.error().message();
+                    }
+                    else
+                        qDebug() << "mpris Position invalid" << rposition.error().name() << rposition.error().message();
+
+
+                    strMessage = parse(strFormat, strPlayer, metaData, position);
                 }
+                else
+                    qDebug() << "mpris Metadata invalid" << results.error().name() << results.error().message();
             }
             else if (strStatus == "Paused")
                 strMessage = tr("%1 is paused").arg(strPlayer);
             else
                 strMessage = tr("%1 is stopped").arg(strPlayer);
         }
+        else
+            qDebug() << "mpris PlaybackStatus invalid" << rstatus.error().name() << rstatus.error().message();
+
         bus.disconnectFromBus(strService);
     }
     else
@@ -111,7 +131,7 @@ QString MprisPlayer::parse(const QString &str, const QString &strPlayer, const Q
                 break;
 
             case 'f':
-                r += metaData.value("mpris:url").toString();
+                r += metaData.value("xesam:url").toString();
                 break;
 
             case 'l':

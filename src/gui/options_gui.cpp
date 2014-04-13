@@ -312,6 +312,7 @@ void OptionsGui::setDefaultValues()
     ui.comboBox_mpris_player->addItem("Amarok", "org.mpris.MediaPlayer2.amarok");
     ui.comboBox_mpris_player->addItem("Audacious", "org.mpris.MediaPlayer2.audacious");
     ui.comboBox_mpris_player->addItem("Clementine", "org.mpris.MediaPlayer2.clementine");
+    ui.comboBox_mpris_player->addItem("GNOME MPlayer", "org.mpris.MediaPlayer2.gnome-mplayer");
     ui.comboBox_mpris_player->addItem("Rhythmbox", "org.mpris.MediaPlayer2.rhythmbox");
     ui.comboBox_mpris_player->addItem("VLC", "org.mpris.MediaPlayer2.vlc");
 
