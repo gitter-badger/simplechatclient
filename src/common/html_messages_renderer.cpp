@@ -308,14 +308,14 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageMe = Settings::instance()->get("message_me_color");
     QString strMessageError = Settings::instance()->get("message_error_color");
 
-    QString strHeadCSS = "div{margin-bottom: 2px; white-space:pre-wrap; word-wrap: break-word; vertical-align:bottom;}";
-    strHeadCSS.append(QString("table{border-spacing: 0; margin: 0; padding: 0; font-family: sans; word-wrap: break-word; font-size:%1;}").arg(strFontSize));
-    strHeadCSS.append(".TableText{width:100%;}");
-    strHeadCSS.append("a{color:inherit; text-decoration:none;}");
-    strHeadCSS.append(".thumb{max-width:75px; max-height:75px;}");
-    strHeadCSS.append(".thumbs{margin-left: 100px;}");
-    strHeadCSS.append(".underline{text-decoration:underline;}");
-    strHeadCSS.append(".avatar{margin-left:4px; margin-right:4px; width:30px; height:30px;}");
+    QString strHeadCSS = "div {margin-bottom:2px; vertical-align:bottom;}";
+    strHeadCSS.append(QString("table {border-spacing:0; margin:0; padding:0; font-family:sans; font-size:%1;}").arg(strFontSize));
+    strHeadCSS.append(".TableText {width:100%; word-break: break-word;}");
+    strHeadCSS.append("a {color:inherit; text-decoration:none;}");
+    strHeadCSS.append(".thumb {max-width:75px; max-height:75px;}");
+    strHeadCSS.append(".thumbs {margin-left:100px;}");
+    strHeadCSS.append(".underline {text-decoration:underline;}");
+    strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px;}");
 
     if (strThemes == "Origin") {
         strHeadCSS.append(QString(".time{font-size:0.95em; color:%1;}").arg(strTimeColor));
