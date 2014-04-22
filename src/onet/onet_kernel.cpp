@@ -2492,11 +2492,12 @@ void OnetKernel::raw_312()
     if (strDataList.size() < 4) return;
 
     QString strNick = strDataList.at(3);
+    QString strServer = strDataList.at(4);
 
-    QString strServer;
-    for (int i = 4; i < strDataList.size(); ++i) { if (i != 4) strServer += " "; strServer += strDataList.at(i); }
+    QString strInfo;
+    for (int i = 5; i < strDataList.size(); ++i) { if (i != 5) strInfo += " "; strInfo += strDataList.at(i); }
 
-    QString strDisplay = QString(tr("* %1 is online via %2")).arg(strNick, strServer);
+    QString strDisplay = QString(tr("* %1 is online via %2 %3")).arg(strNick, strServer, strInfo);
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 }
 
