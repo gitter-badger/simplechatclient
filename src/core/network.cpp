@@ -371,7 +371,7 @@ void Network::timeoutPing()
     QString strMSecs = QString::number(QDateTime::currentMSecsSinceEpoch());
 
     if ((isConnected()) && (Settings::instance()->get("logged") == "true"))
-        emit send(QString("PING :%1").arg(strMSecs));
+        send(QString("PING :%1").arg(strMSecs));
 }
 
 void Network::timeoutQueue()

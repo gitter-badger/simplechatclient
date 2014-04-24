@@ -2496,9 +2496,18 @@ void OnetKernel::raw_312()
 
     QString strInfo;
     for (int i = 5; i < strDataList.size(); ++i) { if (i != 5) strInfo += " "; strInfo += strDataList.at(i); }
+    if ((!strInfo.isEmpty()) && (strInfo.at(0) == ':')) strInfo.remove(0,1);
 
-    QString strDisplay = QString(tr("* %1 is online via %2 %3")).arg(strNick, strServer, strInfo);
-    Message::instance()->showMessageActive(strDisplay, MessageInfo);
+    if (strInfo.size() == 24) // WHOWAS
+    {
+        QString strDisplay = QString(tr("* %1 was online via %2 from %3")).arg(strNick, strServer, strInfo);
+        Message::instance()->showMessageActive(strDisplay, MessageInfo);
+    }
+    else // WHOIS
+    {
+        QString strDisplay = QString(tr("* %1 is online via %2 (%3)")).arg(strNick, strServer, strInfo);
+        Message::instance()->showMessageActive(strDisplay, MessageInfo);
+    }
 }
 
 // WHOIS
