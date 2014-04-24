@@ -2894,8 +2894,12 @@
         <translation>* %1 używa serwera: %2 (%3)</translation>
     </message>
     <message>
-        <source>* %1 was online via %2 from %3</source>
-        <translation>* %1 używał serwera: %2 od %3</translation>
+        <source>* %1 was online via %2</source>
+        <translation>* %1 używał serwera: %2</translation>
+    </message>
+    <message>
+        <source>* %1 was online from %2</source>
+        <translation>* %1 był zalogowany od %2</translation>
     </message>
     <message>
         <source>* %1 is a GlobalOp on OnetCzat</source>

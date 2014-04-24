@@ -2500,8 +2500,21 @@ void OnetKernel::raw_312()
 
     if (strInfo.size() == 24) // WHOWAS
     {
-        QString strDisplay = QString(tr("* %1 was online via %2 from %3")).arg(strNick, strServer, strInfo);
-        Message::instance()->showMessageActive(strDisplay, MessageInfo);
+        QString strDisplayServer = QString(tr("* %1 was online via %2")).arg(strNick, strServer);
+        Message::instance()->showMessageActive(strDisplayServer, MessageInfo);
+
+#if (QT_VERSION >= 0x052000)
+        QDateTime signoff = QDateTime::fromString(strInfo, Qt::RFC2822Date);
+
+        QString strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, signoff.toString("dd MMM yyyy hh:mm:ss"));
+        Message::instance()->showMessageActive(strDisplaySignOff, MessageInfo);
+#else
+        QLocale enUsLocale = QLocale(QLocale::C, QLocale::AnyCountry);
+        QDateTime signoff = enUsLocale.toDateTime(strInfo, "ddd MMM dd hh:mm:ss yyyy");
+
+        QString strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, signoff.toString("dd MMM yyyy hh:mm:ss"));
+        Message::instance()->showMessageActive(strDisplaySignOff, MessageInfo);
+#endif
     }
     else // WHOIS
     {
