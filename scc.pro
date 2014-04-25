@@ -41,6 +41,7 @@ SOURCES += src/common/commands.cpp \
     src/gui/ignore_gui.cpp \
     src/gui/invite_gui.cpp \
     src/gui/invite_list_gui.cpp \
+    src/gui/join_channel_gui.cpp \
     src/gui/moderation_gui.cpp \
     src/gui/my_avatar_gui.cpp \
     src/gui/my_profile_gui.cpp \
@@ -148,6 +149,7 @@ HEADERS += src/common/commands.h \
     src/gui/ignore_gui.h \
     src/gui/invite_gui.h \
     src/gui/invite_list_gui.h \
+    src/gui/join_channel_gui.h \
     src/gui/moderation_gui.h \
     src/gui/my_avatar_gui.h \
     src/gui/my_profile_gui.h \

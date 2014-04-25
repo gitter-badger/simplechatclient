@@ -1,7 +1,7 @@
 /*
  * Simple Chat Client
  *
- *   Copyright (C) 2012-2013 Piotr Łuczko <piotr.luczko@gmail.com>
+ *   Copyright (C) 2012-2014 Piotr Łuczko <piotr.luczko@gmail.com>
  *   Copyright (C) 2012 Dariusz Markowicz <dmarkowicz@alari.pl>
  *
  * This program is free software: you can redistribute it and/or modify
