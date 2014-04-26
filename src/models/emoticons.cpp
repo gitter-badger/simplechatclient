@@ -70,7 +70,7 @@ QList<CaseIgnoreString> Emoticons::listEmoticons()
     }
 
     // sort
-    qSort(lEmoticonsList.begin(), lEmoticonsList.end());
+    qStableSort(lEmoticonsList.begin(), lEmoticonsList.end());
 
     return lEmoticonsList;
 }

@@ -78,7 +78,7 @@ void JoinChannelGui::createCompleter()
     lChannelList.clear();
 
     // sort
-    qSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
+    qStableSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
 
     // create sorted list
     foreach (const QString &strChannel, lChannelsCaseIgnore)

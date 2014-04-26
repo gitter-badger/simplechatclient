@@ -247,7 +247,7 @@ QList<CaseIgnoreString> Nick::getFromChannel(const QString &strChannel)
     }
 
     // sort
-    qSort(lNicksFromChannel.begin(), lNicksFromChannel.end());
+    qStableSort(lNicksFromChannel.begin(), lNicksFromChannel.end());
 
     return lNicksFromChannel;
 }

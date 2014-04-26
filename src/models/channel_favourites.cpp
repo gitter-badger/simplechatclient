@@ -56,7 +56,7 @@ QList<CaseIgnoreString> ChannelFavourites::getAllCaseIgnoreSorted()
         lChannelsCaseIgnore.append(strChannel);
 
     // sort
-    qSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
+    qStableSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
 
     return lChannelsCaseIgnore;
 }

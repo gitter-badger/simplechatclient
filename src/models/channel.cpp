@@ -180,7 +180,7 @@ QList<CaseIgnoreString> Channel::getListClearedSorted()
         lChannelsCaseIgnore.append(strChannel);
 
     // sort
-    qSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
+    qStableSort(lChannelsCaseIgnore.begin(), lChannelsCaseIgnore.end());
 
     return lChannelsCaseIgnore;
 }
