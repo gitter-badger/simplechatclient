@@ -64,9 +64,15 @@ void convertColor(QString &strData)
     {
         foreach (const QString &strColor, lColors)
         {
-            if (strData.contains(QString("%C%1%").arg(strColor)))
+            QRegExp rx("%C"+strColor+"%");
+
+            int pos = 0;
+            while ((pos = rx.indexIn(strData, pos)) != -1)
             {
-                strData.replace(QString("%C%1%").arg(strColor), QString("<span style=\"color:#%1;\">").arg(strColor));
+                int first = pos;
+                int second = first + rx.matchedLength();
+
+                strData.replace(first, second-first, QString("<span style=\"color:#%1;\">").arg(strColor));
                 strData += "</span>";
             }
         }
@@ -74,7 +80,7 @@ void convertColor(QString &strData)
     else
     {
         foreach (const QString &strColor, lColors)
-            strData.remove(QString("%C%1%").arg(strColor));
+            strData.remove("%C"+strColor+"%");
     }
 }
 
@@ -199,7 +205,7 @@ void removeColor(QString &strData)
 {
     QList<QString> lColors = Utils::instance()->getColors();
     foreach (const QString &strColor, lColors)
-        strData.remove(QString("%C%1%").arg(strColor));
+        strData.remove("%C"+strColor+"%");
 }
 
 void removeFont(QString &strData)
@@ -371,7 +377,7 @@ int Convert::getColor(const QString &strData)
     int iColor = 0;
     foreach (const QString &strColor, lColors)
     {
-        if (strData.contains(QString("%C%1%").arg(strColor)))
+        if (strData.contains("%C"+strColor+"%"))
             return iColor;
         iColor++;
     }
