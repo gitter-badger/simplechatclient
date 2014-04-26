@@ -30,7 +30,7 @@ namespace Log
     void convert(QString &strData);
     void logOpened(const QString &strChannel);
     void logClosed(const QString &strChannel);
-    void save(const QString &strChannel, const QString &strData);
+    void save(const QString &strChannel, const QString &strData, const QString &strFileExtension = "txt");
 }
 
 #endif // LOG_H

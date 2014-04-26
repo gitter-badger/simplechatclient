@@ -32,6 +32,7 @@
 #include "friends.h"
 #include "html_messages_renderer.h"
 #include "ignore.h"
+#include "log.h"
 #include "mainwindow.h"
 #include "notes.h"
 #include "nick.h"
@@ -77,9 +78,9 @@ void ChatView::createBody()
     path = SCC_DATA_DIR;
 #endif
 
-    QString jsCode = "function appendMessage(html) { var div = document.getElementById('Chat').getElementsByTagName('div'); if (div.length > 350) { var chatElement = document.getElementById('Chat'); chatElement.removeChild(chatElement.firstChild); } var chatElement = document.getElementById('Chat'); var n = document.createElement('div'); n.innerHTML = html; chatElement.appendChild(n); } function clearMessages() { var chatElement = document.getElementById('Chat'); chatElement.innerHTML = ''; }";
+    QString jsCode = "function appendMessage(html) { var elements = document.getElementById('Chat').getElementsByTagName('article'); if (elements.length > 350) { var chatElement = document.getElementById('Chat'); chatElement.removeChild(chatElement.firstChild); } var chatElement = document.getElementById('Chat'); var n = document.createElement('article'); n.innerHTML = html; chatElement.appendChild(n); } function clearMessages() { var chatElement = document.getElementById('Chat'); chatElement.innerHTML = ''; }";
 
-    QString strMainHtml = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\"></style></head><body><div id=\"Chat\"></div></body></html>";
+    QString strMainHtml = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\"></style></head><body><main id=\"Chat\"></main></body></html>";
     this->setHtml(strMainHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
 }
@@ -97,6 +98,12 @@ void ChatView::refreshCSS()
 
     QWebElement body = this->page()->mainFrame()->findFirstElement("body");
     body.setAttribute("style", strBodyCSS);
+
+    if (Settings::instance()->get("debug") == "true")
+    {
+        Log::save(strChatViewChannel, QString("<style type=\"text/css\">%1</style>").arg(strHeadCSS), "html");
+        Log::save(strChatViewChannel, QString("<style type=\"text/css\">%1</style>").arg(strBodyCSS), "html");
+    }
 }
 
 void ChatView::clearMessages()
@@ -119,6 +126,9 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
+
+    if (Settings::instance()->get("debug") == "true")
+        Log::save(strChatViewChannel, strContent, "html");
 }
 
 void ChatView::joinChannel()

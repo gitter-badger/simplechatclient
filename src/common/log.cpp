@@ -43,7 +43,7 @@ void Log::logClosed(const QString &strChannel)
     Log::save(strChannel, strData);
 }
 
-void Log::save(const QString &strChannel, const QString &strMessage)
+void Log::save(const QString &strChannel, const QString &strMessage, const QString &strFileExtension)
 {
     if (Settings::instance()->get("logs") == "false") return;
     if ((strChannel.isEmpty()) || (strMessage.isEmpty())) return;
@@ -77,7 +77,7 @@ void Log::save(const QString &strChannel, const QString &strMessage)
     if (strFileName.at(0) == '^')
         strFileName = Channel::instance()->getAlternativeName(strFileName);
 
-    QFile f(path+strFileName+".txt");
+    QFile f(path+strFileName+"."+strFileExtension);
     if (f.open(QIODevice::Append))
     {
         // convert
