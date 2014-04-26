@@ -3,6 +3,7 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Fixed paste multi-line text - now cut on last space
 * Added youtube and images preview in main window
 * Fixed toolbar icons orientation 
 * Moved updates to notification
