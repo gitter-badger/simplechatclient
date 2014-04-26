@@ -78,9 +78,32 @@ void ChatView::createBody()
     path = SCC_DATA_DIR;
 #endif
 
-    QString jsCode = "function appendMessage(html) { var elements = document.getElementById('Chat').getElementsByTagName('article'); if (elements.length > 350) { var chatElement = document.getElementById('Chat'); chatElement.removeChild(chatElement.firstChild); } var chatElement = document.getElementById('Chat'); var n = document.createElement('article'); n.innerHTML = html; chatElement.appendChild(n); } function clearMessages() { var chatElement = document.getElementById('Chat'); chatElement.innerHTML = ''; }";
+    QString jsCode = "function appendMessage(html) { " \
+                         "var elements = document.getElementById('Chat').getElementsByTagName('article'); " \
+                         "if (elements.length > 350) { " \
+                             "var chatElement = document.getElementById('Chat'); " \
+                             "chatElement.removeChild(chatElement.firstChild); " \
+                         "} " \
+                         "var chatElement = document.getElementById('Chat'); " \
+                         "var n = document.createElement('article'); " \
+                         "n.innerHTML = html; " \
+                         "chatElement.appendChild(n); " \
+                     "} " \
 
-    QString strMainHtml = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\"></style></head><body><main id=\"Chat\"></main></body></html>";
+                     "function clearMessages() { " \
+                         "var chatElement = document.getElementById('Chat'); " \
+                         "chatElement.innerHTML = ''; " \
+                     "}";
+
+    QString strMainHtml = "<html>" \
+                              "<head>" \
+                                  "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />" \
+                                  "<style type=\"text/css\"></style>" \
+                              "</head>" \
+                              "<body>" \
+                                  "<main id=\"Chat\"></main>" \
+                              "</body>" \
+                          "</html>";
     this->setHtml(strMainHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
 }
@@ -99,10 +122,13 @@ void ChatView::refreshCSS()
     QWebElement body = this->page()->mainFrame()->findFirstElement("body");
     body.setAttribute("style", strBodyCSS);
 
+    // html logs
     if (Settings::instance()->get("debug") == "true")
     {
+        Log::save(strChatViewChannel, "<html><head>", "html");
         Log::save(strChatViewChannel, QString("<style type=\"text/css\">%1</style>").arg(strHeadCSS), "html");
         Log::save(strChatViewChannel, QString("<style type=\"text/css\">%1</style>").arg(strBodyCSS), "html");
+        Log::save(strChatViewChannel, "</head><body>", "html");
     }
 }
 
@@ -127,6 +153,7 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
 
+    // html logs
     if (Settings::instance()->get("debug") == "true")
         Log::save(strChatViewChannel, strContent, "html");
 }

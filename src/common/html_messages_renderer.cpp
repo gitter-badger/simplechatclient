@@ -74,7 +74,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
                 if (!exYoutube_2.cap(1).isEmpty()) lYoutubeImages << exYoutube_2.cap(1);
                 if (!exYoutube_3.cap(1).isEmpty()) lYoutubeImages << exYoutube_3.cap(1);
 
-                QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\"></a>").arg(strWord, tr("Watch video"));
+                QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\" /></a>").arg(strWord, tr("Watch video"));
                 strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
             }
             else if (lSupportedImages.contains(QFileInfo(strWord).completeSuffix().toLower()))
@@ -119,7 +119,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
                     if (!exYoutube_2.cap(1).isEmpty()) lYoutubeImages << exYoutube_2.cap(1);
                     if (!exYoutube_3.cap(1).isEmpty()) lYoutubeImages << exYoutube_3.cap(1);
 
-                    QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\"></a>").arg(strAfterLink, tr("Watch video"));
+                    QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\" /></a>").arg(strAfterLink, tr("Watch video"));
                     strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
                 }
                 else if (lSupportedImages.contains(QFileInfo(strAfterLink).completeSuffix().toLower()))
@@ -143,13 +143,13 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         strDataList << "<br/><span class=\"thumbs\">";
 
         foreach (const QString strImage, lUrlImages)
-            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strImage, strImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\" /></a>").arg(strImage, strImage);
 
         foreach (const QString strImage, lYoutubeImages)
         {
             QString strFullImage = QString("http://youtu.be/%1").arg(strImage);
             QString strThumbImage = QString("http://img.youtube.com/vi/%1/default.jpg").arg(strImage);
-            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\"></a>").arg(strFullImage, strThumbImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\" /></a>").arg(strFullImage, strThumbImage);
         }
 
         strDataList << "</span>";
@@ -221,7 +221,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
         }
     }
 
-    if (strThemes == "Adara")
+    if (strThemes == "Adara") // adara
     {
         if (!strNick.isEmpty())
         {
@@ -238,84 +238,80 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             else
                 strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
 
-#ifndef Q_WS_WIN
-            strUserAvatar = "file://"+strUserAvatar;
+#ifdef Q_WS_WIN
+            strUserAvatar = "/"+strUserAvatar;
 #endif
+            strUserAvatar = "file://"+strUserAvatar;
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatar);
-            return QString("<table>" \
-                           "<tr>" \
-                           "<td class=\"message\">%1<span class=\"DefaultColor\">"\
-                           "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
-                           "&nbsp;</span>"\
-                           "<span class=\"%5 %6\">%7</span>"\
-                           "</td>"\
-                           "<td class=\"time\">%8</td>"\
-                           "</tr>"\
-                           "</table>")
+
+            return QString("<section>" \
+                               "<span class=\"message\">" \
+                                   "%1" \
+                                   "<span class=\"DefaultColor\">" \
+                                       "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
+                                   "</span>" \
+                                   "&nbsp;" \
+                                   "<span class=\"%5 %6\">%7</span>" \
+                               "</span>" \
+                               "<time class=\"right\">%8</time>" \
+                           "</section>")
                     .arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
         else
         {
-            return QString("<table>"\
-                           "<tr>"\
-                           "<td class=\"message\">&nbsp;<span class=\"%1\">%2</span>"\
-                           "</td>"\
-                           "<td class=\"time\">%3</td>"\
-                           "</tr>"\
-                           "</table>")
+            return QString("<section>" \
+                               "<span class=\"message\">" \
+                                   "<span class=\"%1\">%2</span>" \
+                               "</span>" \
+                               "<time class=\"right\">%3</time>" \
+                           "</section>")
                     .arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
     }
-    else if (strThemes == "Alhena")
+    else if (strThemes == "Alhena") // alhena
     {
         if (!strNick.isEmpty())
-            return QString("<table>"\
-                           "<tr>"\
-                           "<td class=\"message\"><span class=\"DefaultColor\">"\
-                           "%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3"\
-                           "&nbsp;</span>"\
-                           "<span class=\"%4 %5\">%6</span>"\
-                           "</td>"\
-                           "<td class=\"time\">[%7]</td>"\
-                           "</tr>"\
-                           "</table>")
+            return QString("<section>" \
+                               "<span class=\"message\">" \
+                                   "<span class=\"DefaultColor\">" \
+                                     "%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3" \
+                                   "</span>" \
+                                   "&nbsp;" \
+                                   "<span class=\"%4 %5\">%6</span>" \
+                               "</span>"\
+                               "<time class=\"right\">[%7]</time>"\
+                           "</section>")
                     .arg(strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         else
-            return QString("<table>" \
-                             "<tr>" \
-                               "<td class=\"message\">" \
-                                 "&nbsp;" \
-                                 "<span class=\"%1\">%2</span>" \
-                               "</td>" \
-                               "<td class=\"time\">[%3]</td>" \
-                             "</tr>" \
-                           "</table>")
+            return QString("<section>" \
+                               "<span class=\"message\">" \
+                                   "<span class=\"%1\">%2</span>" \
+                               "</span>" \
+                               "<time class=\"right\">[%3]</time>" \
+                           "</section>")
                     .arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
     }
-    else
+    else // origin & standard
     {
         if (!strNick.isEmpty())
-            return QString("<table>" \
-                             "<tr>" \
-                               "<td class=\"time\">[%1]</td>" \
-                               "<td class=\"message DefaultColor\">" \
-                                 "&nbsp;%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
-                                 "&nbsp;<span class=\"%5 %6\">%7</span>" \
-                               "</td>" \
-                             "</tr>" \
-                           "</table>")
+            return QString("<section>" \
+                               "<time>[%1]</time>" \
+                               "&nbsp;" \
+                               "<span class=\"message DefaultColor\">" \
+                                   "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
+                                   "&nbsp;" \
+                                   "<span class=\"%5 %6\">%7</span>" \
+                               "</span>" \
+                           "</section>")
                     .arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
         else
-            return QString("<table>" \
-                             "<tr>" \
-                               "<td class=\"time\">" \
-                                 "[%1]" \
-                               "</td>" \
-                               "<td class=\"message DefaultColor\">" \
-                                 "&nbsp;<span class=\"%2\">%3</span>" \
-                               "</td>" \
-                             "</tr>" \
-                           "</table>")
+            return QString("<section>" \
+                               "<time>[%1]</time>" \
+                               "&nbsp;" \
+                               "<span class=\"message DefaultColor\">" \
+                                   "<span class=\"%2\">%3</span>" \
+                               "</span>" \
+                           "</section>")
                     .arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
     }
 }
@@ -363,20 +359,20 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageMe = Settings::instance()->get("message_me_color");
     QString strMessageError = Settings::instance()->get("message_error_color");
 
-    QString strHeadCSS = "div {margin-bottom:2px; vertical-align:bottom;}";
-    strHeadCSS.append(QString("table {border-spacing:0; margin:0; padding:0; font-family:sans; font-size:%1;}").arg(strFontSize));
-    strHeadCSS.append("table td {vertical-align:bottom;}");
+    QString strHeadCSS = "article {margin-bottom:2px; vertical-align:bottom;}";
+    strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1;}").arg(strFontSize));
     strHeadCSS.append(".message {width:100%; word-break: break-word;}");
     strHeadCSS.append("a {color:inherit; text-decoration:none;}");
     strHeadCSS.append(".thumb {max-width:75px; max-height:75px;}");
     strHeadCSS.append(".thumbs {margin-left:100px;}");
     strHeadCSS.append(".underline {text-decoration:underline;}");
     strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px;}");
+    strHeadCSS.append(".right {float:right;}");
 
     if (strThemes == "Origin") {
-        strHeadCSS.append(QString(".time{font-size:0.95em; color:%1;}").arg(strTimeColor));
+        strHeadCSS.append(QString("time {font-size:0.95em; color:%1;}").arg(strTimeColor));
     } else {
-        strHeadCSS.append(QString(".time{font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strTimeColor));
+        strHeadCSS.append(QString("time {font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strTimeColor));
     }
 
     strHeadCSS.append(QString(".DefaultColor{color:%1;}").arg(strDefaultColor));
@@ -404,13 +400,15 @@ QString HtmlMessagesRenderer::bodyCSS()
     QString strBackgroundImage = Settings::instance()->get("background_image");
     QString strShowBackgroundImage = Settings::instance()->get("show_background_image");
 
-#ifndef Q_WS_WIN
-    strBackgroundImage = "file://"+strBackgroundImage;
-#endif
-
     QString strBackground;
     if ((strShowBackgroundImage == "true") && (!strBackgroundImage.isEmpty()))
+    {
+#ifdef Q_WS_WIN
+    strBackgroundImage = "/"+strBackgroundImage;
+#endif
+        strBackgroundImage = "file://"+strBackgroundImage;
         strBackground = QString("background-image: url('%1'); background-attachment: fixed; background-position: center; background-repeat: no-repeat;").arg(strBackgroundImage);
+    }
 
     return QString("margin: 0; padding: 0; font-family: sans; font-size:%1; %2").arg(strFontSize, strBackground);
 }
