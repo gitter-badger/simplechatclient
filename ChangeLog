@@ -3,15 +3,23 @@ ChangeLog for Simple Chat Client
 
 Version dev (unknown)
 ================================
+* Added youtube and images preview in main window
+* Fixed toolbar icons orientation 
+* Moved updates to notification
+* Nick moved to program title
+* Nicklist with sex in origin
+* Restyled option dialog
 * Added support for Linux Music Players (using mpris)
 * Added topic url clickable
+* Added time format option
 * Added emoticons hint
 * Added commands hint
-* Added new default avatars
+* Added user avatar in tabs
+* Added new default channel avatars
 * Added extra channels list button
 * Added alt+1..0 key modifier
 * Added alt+left and alt+right key modifier
-* Fixed updates
+* Fixed update
 * Fixed nicklist margins
 * Fixed tab order
 * Fixed white space characeters
