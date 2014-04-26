@@ -847,9 +847,16 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
         {
             while (line.size() > len)
             {
-                QString short_line = line.left(len);
+                // find last space and cut
+                int pos = line.lastIndexOf(' ', len);
+                if (pos != -1)
+                    pos++; // remove space
+                else
+                    pos = len; // no cut
+
+                QString short_line = line.left(pos);
                 sendMessage(short_line, bModeration);
-                line.remove(0, len);
+                line.remove(0, pos);
             }
         }
         if ((line.size() < len) && (line.size() != 0))
