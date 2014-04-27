@@ -3170,6 +3170,10 @@
         <translation>* %1 :Nieprawidłowy argument</translation>
     </message>
     <message>
+        <source>* %1 :No such setting</source>
+        <translation>* %1 :Nieprawidłowy parametr ustawień</translation>
+    </message>
+    <message>
         <source>* %1 :channel is blocked</source>
         <translation>* %1 :Pokój jest zablokowany</translation>
     </message>

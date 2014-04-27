@@ -177,6 +177,7 @@ private:
     void raw_407n();
     void raw_408n();
     void raw_409n();
+    void raw_411n();
     void raw_412();
     void raw_412n();
     void raw_413n();
@@ -212,6 +213,7 @@ private:
     void raw_462();
     void raw_463n();
     void raw_464n();
+    void raw_465n();
     void raw_466n();
     void raw_467n();
     void raw_468n();

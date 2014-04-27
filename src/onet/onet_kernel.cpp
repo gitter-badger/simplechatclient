@@ -284,6 +284,7 @@ void OnetKernel::kernel(const QString &_strData)
                 case 407: raw_407n(); break;
                 case 408: raw_408n(); break;
                 case 409: raw_409n(); break;
+                case 411: raw_411n(); break;
                 case 412: raw_412n(); break;
                 case 413: raw_413n(); break;
                 case 414: raw_414n(); break;
@@ -306,6 +307,7 @@ void OnetKernel::kernel(const QString &_strData)
                 case 461: raw_461n(); break;
                 case 463: raw_463n(); break;
                 case 464: raw_464n(); break;
+                case 465: raw_465n(); break;
                 case 466: raw_466n(); break;
                 case 467: raw_467n(); break;
                 case 468: raw_468n(); break;
@@ -3246,6 +3248,17 @@ void OnetKernel::raw_409n()
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
+// :NickServ!service@service.onet NOTICE Merovingian :411 ABC :no such setting
+void OnetKernel::raw_411n()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strCommand = strDataList.at(4);
+
+    QString strMessage = QString(tr("* %1 :No such setting")).arg(strCommand);
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
 // :cf1f3.onet 412 scc_test :No text to send
 void OnetKernel::raw_412()
 {
@@ -3718,6 +3731,17 @@ void OnetKernel::raw_464n()
     QString strCommand = strDataList.at(4);
 
     QString strMessage = QString(tr("* %1 :Invalid argument")).arg(strCommand);
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// :ChanServ!service@service.onet NOTICE Merovingian :465 TEST :no such setting
+void OnetKernel::raw_465n()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strCommand = strDataList.at(4);
+
+    QString strMessage = QString(tr("* %1 :No such setting")).arg(strCommand);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
