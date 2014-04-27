@@ -221,7 +221,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
         }
     }
 
-    if (strThemes == "Adara") // adara
+    if (strThemes == "Adara")
     {
         if (!strNick.isEmpty())
         {
@@ -268,7 +268,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
                     .arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
     }
-    else if (strThemes == "Alhena") // alhena
+    else if (strThemes == "Alhena")
     {
         if (!strNick.isEmpty())
             return QString("<section>" \
@@ -291,7 +291,30 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
                            "</section>")
                     .arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
     }
-    else // origin & standard
+    else if (strThemes == "Origin")
+    {
+        if (!strNick.isEmpty())
+            return QString("<section>" \
+                               "<time class=\"time_small\">[%1]</time>" \
+                               "&nbsp;" \
+                               "<span class=\"message DefaultColor\">" \
+                                   "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
+                                   "&nbsp;" \
+                                   "<span class=\"%5 %6\">%7</span>" \
+                               "</span>" \
+                           "</section>")
+                    .arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
+        else
+            return QString("<section>" \
+                               "<time class=\"time_small\">[%1]</time>" \
+                               "&nbsp;" \
+                               "<span class=\"message DefaultColor\">" \
+                                   "<span class=\"%2\">%3</span>" \
+                               "</span>" \
+                           "</section>")
+                    .arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
+    }
+    else // standard
     {
         if (!strNick.isEmpty())
             return QString("<section>" \
@@ -337,13 +360,16 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, qint64 iTime)
     QString strTime = QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]");
 
     // display
-    return QString("%1 <span style=\"color:%2;\">%3</span>").arg(strTime, strColor, strData);
+    return QString("<section>" \
+                       "<time>%1</time>" \
+                       "&nbsp;" \
+                       "<code style=\"color:%2;\">%3</code>" \
+                   "</section>")
+            .arg(strTime, strColor, strData);
 }
 
 QString HtmlMessagesRenderer::headCSS()
 {
-    QString strThemes = Settings::instance()->get("themes");
-
     QString strDefaultColor = Settings::instance()->get("default_color");
     QString strChannelColor = Settings::instance()->get("channel_color");
     QString strTimeColor = Settings::instance()->get("time_color");
@@ -361,6 +387,7 @@ QString HtmlMessagesRenderer::headCSS()
 
     QString strHeadCSS = "article {margin-bottom:2px; vertical-align:bottom;}";
     strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1;}").arg(strFontSize));
+    strHeadCSS.append(QString("time {color:%1;}").arg(strTimeColor));
     strHeadCSS.append(".message {width:100%; word-break: break-word;}");
     strHeadCSS.append("a {color:inherit; text-decoration:none;}");
     strHeadCSS.append(".thumb {max-width:75px; max-height:75px;}");
@@ -368,12 +395,7 @@ QString HtmlMessagesRenderer::headCSS()
     strHeadCSS.append(".underline {text-decoration:underline;}");
     strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px;}");
     strHeadCSS.append(".right {float:right;}");
-
-    if (strThemes == "Origin") {
-        strHeadCSS.append(QString("time {font-size:0.95em; color:%1;}").arg(strTimeColor));
-    } else {
-        strHeadCSS.append(QString("time {font-weight:normal; text-decoration:none; color:%1; padding-right:5px;}").arg(strTimeColor));
-    }
+    strHeadCSS.append(".time_small {font-size:0.95em;}");
 
     strHeadCSS.append(QString(".DefaultColor{color:%1;}").arg(strDefaultColor));
     strHeadCSS.append(QString(".ChannelColor{color:%1;}").arg(strChannelColor));
