@@ -2,7 +2,7 @@
 
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
-set QT_DIR="C:\Qt\4.8.5"
+set QT_DIR="C:\Qt\4.8.6"
 set QCA2_DIR="C:\qca-2.0.3"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
 set QCA_OSSL_DIR="C:\qca-ossl-2.0.0-beta3"
@@ -17,14 +17,14 @@ set QTDIR=%QT_DIR%
 
 if not exist %CMAKE_DIR%\bin\cmake.exe (
 if not exist %CMAKE32_DIR%\bin\cmake.exe (
-echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.11.2-win32-x86.exe
+echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.12.2-win32-x86.exe
 pause
 exit
 )
 )
 
 if not exist %QT_DIR%\bin\qtvars.bat (
-echo Download Qt 4.8.5 for MinGW from http://qt-project.org/downloads#qt-lib
+echo Download Qt 4.8.6 for MinGW from http://qt-project.org/downloads
 pause
 exit
 )
@@ -47,14 +47,14 @@ goto end_compile_qca2
 :compile_qca2
 echo Compiling qca2
 cd /D %QCA2_DIR%
-configure.exe --release --disable-tests --qtdir=%QT_DIR%
-mingw32-make
+configure.exe --qtdir=%QT_DIR%
+mingw32-make release
 call installwin
 cd /D %SCC_DIR%
 :end_compile_qca2
 
 if not exist %OPENSSL_DIR%\include\openssl\ssl.h (
-echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1e.exe
+echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1g.exe
 pause
 exit
 )
