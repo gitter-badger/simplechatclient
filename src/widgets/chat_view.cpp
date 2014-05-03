@@ -78,31 +78,31 @@ void ChatView::createBody()
     path = SCC_DATA_DIR;
 #endif
 
-    QString jsCode = "function appendMessage(html) { " \
-                         "var elements = document.getElementById('Chat').getElementsByTagName('article'); " \
-                         "if (elements.length > 350) { " \
-                             "var chatElement = document.getElementById('Chat'); " \
-                             "chatElement.removeChild(chatElement.firstChild); " \
-                         "} " \
-                         "var chatElement = document.getElementById('Chat'); " \
-                         "var n = document.createElement('article'); " \
-                         "n.innerHTML = html; " \
-                         "chatElement.appendChild(n); " \
-                     "} " \
+    QString jsCode = "function appendMessage(html) { "
+                         "var elements = document.getElementById('Chat').getElementsByTagName('article'); "
+                         "if (elements.length > 350) { "
+                             "var chatElement = document.getElementById('Chat'); "
+                             "chatElement.removeChild(chatElement.firstChild); "
+                         "} "
+                         "var chatElement = document.getElementById('Chat'); "
+                         "var n = document.createElement('article'); "
+                         "n.innerHTML = html; "
+                         "chatElement.appendChild(n); "
+                     "} "
 
-                     "function clearMessages() { " \
-                         "var chatElement = document.getElementById('Chat'); " \
-                         "chatElement.innerHTML = ''; " \
+                     "function clearMessages() { "
+                         "var chatElement = document.getElementById('Chat'); "
+                         "chatElement.innerHTML = ''; "
                      "}";
 
-    QString strMainHtml = "<html>" \
-                              "<head>" \
-                                  "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />" \
-                                  "<style type=\"text/css\"></style>" \
-                              "</head>" \
-                              "<body>" \
-                                  "<main id=\"Chat\"></main>" \
-                              "</body>" \
+    QString strMainHtml = "<html>"
+                              "<head>"
+                                  "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />"
+                                  "<style type=\"text/css\"></style>"
+                              "</head>"
+                              "<body>"
+                                  "<main id=\"Chat\"></main>"
+                              "</body>"
                           "</html>";
     this->setHtml(strMainHtml);
     this->page()->mainFrame()->evaluateJavaScript(jsCode);

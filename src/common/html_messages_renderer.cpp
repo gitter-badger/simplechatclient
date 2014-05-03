@@ -244,26 +244,26 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             strUserAvatar = "file://"+strUserAvatar;
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatar);
 
-            return QString("<section>" \
-                               "%1" \
-                               "<span class=\"message\">" \
-                                   "<span class=\"DefaultColor\">" \
-                                       "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
-                                   "</span>" \
-                                   "&nbsp;" \
-                                   "<span class=\"%5 %6\">%7</span>" \
-                               "</span>" \
-                               "<time class=\"right\">%8</time>" \
+            return QString("<section>"
+                               "%1"
+                               "<span class=\"message\">"
+                                   "<span class=\"DefaultColor\">"
+                                       "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4"
+                                   "</span>"
+                                   "&nbsp;"
+                                   "<span class=\"%5 %6\">%7</span>"
+                               "</span>"
+                               "<time class=\"right\">%8</time>"
                            "</section>")
                     .arg(strUserAvatarImg, strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
         else
         {
-            return QString("<section>" \
-                               "<span class=\"message\">" \
-                                   "<span class=\"%1\">%2</span>" \
-                               "</span>" \
-                               "<time class=\"right\">%3</time>" \
+            return QString("<section>"
+                               "<span class=\"message\">"
+                                   "<span class=\"%1\">%2</span>"
+                               "</span>"
+                               "<time class=\"right\">%3</time>"
                            "</section>")
                     .arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
         }
@@ -271,69 +271,69 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     else if (strThemes == "Alhena")
     {
         if (!strNick.isEmpty())
-            return QString("<section>" \
-                               "<span class=\"message\">" \
-                                   "<span class=\"DefaultColor\">" \
-                                     "%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3" \
-                                   "</span>" \
-                                   "&nbsp;" \
-                                   "<span class=\"%4 %5\">%6</span>" \
-                               "</span>"\
-                               "<time class=\"right\">[%7]</time>"\
+            return QString("<section>"
+                               "<span class=\"message\">"
+                                   "<span class=\"DefaultColor\">"
+                                     "%1<a href=\"#\" onclick=\"return false\" name=\"nick\">%2</a>%3"
+                                   "</span>"
+                                   "&nbsp;"
+                                   "<span class=\"%4 %5\">%6</span>"
+                               "</span>"
+                               "<time class=\"right\">[%7]</time>"
                            "</section>")
                     .arg(strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData, dt.toString(Settings::instance()->get("time_format")));
         else
-            return QString("<section>" \
-                               "<span class=\"message\">" \
-                                   "<span class=\"%1\">%2</span>" \
-                               "</span>" \
-                               "<time class=\"right\">[%3]</time>" \
+            return QString("<section>"
+                               "<span class=\"message\">"
+                                   "<span class=\"%1\">%2</span>"
+                               "</span>"
+                               "<time class=\"right\">[%3]</time>"
                            "</section>")
                     .arg(strFontClass, strData, dt.toString(Settings::instance()->get("time_format")));
     }
     else if (strThemes == "Origin")
     {
         if (!strNick.isEmpty())
-            return QString("<section>" \
-                               "<time class=\"time_small\">[%1]</time>" \
-                               "&nbsp;" \
-                               "<span class=\"message DefaultColor\">" \
-                                   "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
-                                   "&nbsp;" \
-                                   "<span class=\"%5 %6\">%7</span>" \
-                               "</span>" \
+            return QString("<section>"
+                               "<time class=\"time_small\">[%1]</time>"
+                               "&nbsp;"
+                               "<span class=\"message DefaultColor\">"
+                                   "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4"
+                                   "&nbsp;"
+                                   "<span class=\"%5 %6\">%7</span>"
+                               "</span>"
                            "</section>")
                     .arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
         else
-            return QString("<section>" \
-                               "<time class=\"time_small\">[%1]</time>" \
-                               "&nbsp;" \
-                               "<span class=\"message DefaultColor\">" \
-                                   "<span class=\"%2\">%3</span>" \
-                               "</span>" \
+            return QString("<section>"
+                               "<time class=\"time_small\">[%1]</time>"
+                               "&nbsp;"
+                               "<span class=\"message DefaultColor\">"
+                                   "<span class=\"%2\">%3</span>"
+                               "</span>"
                            "</section>")
                     .arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
     }
     else // standard
     {
         if (!strNick.isEmpty())
-            return QString("<section>" \
-                               "<time>[%1]</time>" \
-                               "&nbsp;" \
-                               "<span class=\"message DefaultColor\">" \
-                                   "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
-                                   "&nbsp;" \
-                                   "<span class=\"%5 %6\">%7</span>" \
-                               "</span>" \
+            return QString("<section>"
+                               "<time>[%1]</time>"
+                               "&nbsp;"
+                               "<span class=\"message DefaultColor\">"
+                                   "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4"
+                                   "&nbsp;"
+                                   "<span class=\"%5 %6\">%7</span>"
+                               "</span>"
                            "</section>")
                     .arg(dt.toString(Settings::instance()->get("time_format")), strBeforeNick, strNick, strAfterNick, strFontClass, strExtraClass, strData);
         else
-            return QString("<section>" \
-                               "<time>[%1]</time>" \
-                               "&nbsp;" \
-                               "<span class=\"message DefaultColor\">" \
-                                   "<span class=\"%2\">%3</span>" \
-                               "</span>" \
+            return QString("<section>"
+                               "<time>[%1]</time>"
+                               "&nbsp;"
+                               "<span class=\"message DefaultColor\">"
+                                   "<span class=\"%2\">%3</span>"
+                               "</span>"
                            "</section>")
                     .arg(dt.toString(Settings::instance()->get("time_format")), strFontClass, strData);
     }
@@ -360,10 +360,10 @@ QString HtmlMessagesRenderer::rendererDebug(QString strData, qint64 iTime)
     QString strTime = QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]");
 
     // display
-    return QString("<section>" \
-                       "<time>%1</time>" \
-                       "&nbsp;" \
-                       "<code style=\"color:%2;\">%3</code>" \
+    return QString("<section>"
+                       "<time>%1</time>"
+                       "&nbsp;"
+                       "<code style=\"color:%2;\">%3</code>"
                    "</section>")
             .arg(strTime, strColor, strData);
 }
