@@ -132,21 +132,23 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     // sex
     if ((nick.at(0) != '~') && (Themes::instance()->isCurrentWithNicklistAvatar()))
     {
-        QColor cSexColor;
-
-        if (userSex == USER_SEX_MALE) cSexColor = cUserSexMale;
-        else if (userSex == USER_SEX_FEMALE) cSexColor = cUserSexFemale;
-        else cSexColor = cUserSexUnknown;
-
-        QRect rect = option.rect;
-
-        int x = rect.x()+35+2;
-        int y = rect.top()+1;
-        int w = 2;
-        int h = 35-2;
-
         if (userSex == USER_SEX_MALE || userSex == USER_SEX_FEMALE)
+        {
+            QColor cSexColor;
+
+            if (userSex == USER_SEX_MALE) cSexColor = cUserSexMale;
+            else if (userSex == USER_SEX_FEMALE) cSexColor = cUserSexFemale;
+            else cSexColor = cUserSexUnknown;
+
+            QRect rect = option.rect;
+
+            int x = rect.x()+35+2;
+            int y = rect.top()+1;
+            int w = 2;
+            int h = 35-2;
+        
             painter->fillRect(x, y, w, h, cSexColor);
+        }
     }
 
     // nick
