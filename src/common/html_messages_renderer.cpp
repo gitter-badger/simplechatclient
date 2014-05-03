@@ -81,7 +81,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
             {
                 lUrlImages << strWord;
 
-                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"> %2</a>").arg(strWord, strWord);
+                strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a>").arg(strWord, strWord);
             }
             else
             {
