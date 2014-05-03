@@ -245,8 +245,8 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             QString strUserAvatarImg = QString("<img src=\"%1\" alt=\"avatar\" class=\"avatar\" />").arg(strUserAvatar);
 
             return QString("<section>" \
+                               "%1" \
                                "<span class=\"message\">" \
-                                   "%1" \
                                    "<span class=\"DefaultColor\">" \
                                        "%2<a href=\"#\" onclick=\"return false\" name=\"nick\">%3</a>%4" \
                                    "</span>" \
@@ -386,14 +386,14 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageError = Settings::instance()->get("message_error_color");
 
     QString strHeadCSS = "article {margin-bottom:2px; vertical-align:bottom;}";
-    strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1;}").arg(strFontSize));
-    strHeadCSS.append(QString("time {color:%1;}").arg(strTimeColor));
-    strHeadCSS.append(".message {width:100%; word-break: break-word;}");
+    strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1; display:table-row;}").arg(strFontSize));
+    strHeadCSS.append(QString("time {color:%1; display:table-cell;}").arg(strTimeColor));
+    strHeadCSS.append(".message {width:100%; word-break: break-word; display:table-cell;}");
     strHeadCSS.append("a {color:inherit; text-decoration:none;}");
     strHeadCSS.append(".thumb {max-width:75px; max-height:75px;}");
     strHeadCSS.append(".thumbs {margin-left:100px;}");
     strHeadCSS.append(".underline {text-decoration:underline;}");
-    strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px;}");
+    strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px; display:table-cell;}");
     strHeadCSS.append(".right {float:right;}");
     strHeadCSS.append(".time_small {font-size:0.95em;}");
 
