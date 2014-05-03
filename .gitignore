@@ -10,3 +10,7 @@
 /install_manifest.txt
 /*.txt.user
 /*.cbp
+/object_script.scc.Release
+/object_script.scc.Debug
+/Makefile.Release
+/Makefile.Debug
