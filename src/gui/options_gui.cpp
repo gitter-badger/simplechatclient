@@ -1294,8 +1294,6 @@ void OptionsGui::setColor(const QString &strKey)
 
         if (strKey == "background_color")
             ui.pushButton_background_color->setIcon(QIcon(color));
-        else if (strKey == "background_color")
-            ui.pushButton_background_color->setIcon(QIcon(color));
         else if (strKey == "default_color")
             ui.pushButton_default_color->setIcon(QIcon(color));
         else if (strKey == "time_color")

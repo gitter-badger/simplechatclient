@@ -26,6 +26,7 @@
 MyAvatar::MyAvatar()
 {
     m_angle = -1;
+    m_width = -1;
     m_height = -1;
     m_imgId = -1;
     m_mApp = -1;
