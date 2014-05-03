@@ -77,7 +77,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
                 QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\" /></a>").arg(strWord, tr("Watch video"));
                 strDataList[i] = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strWord, strWord, strYoutubeLink);
             }
-            else if (lSupportedImages.contains(QFileInfo(strWord).completeSuffix().toLower()))
+            else if (lSupportedImages.contains(QFileInfo(strWord).suffix().toLower()))
             {
                 lUrlImages << strWord;
 
@@ -122,7 +122,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
                     QString strYoutubeLink = QString("<a onclick=\"return false\" name=\"youtube\" href=\"%1\"><img src=\"qrc:/images/oxygen/16x16/media-playback-start.png\" alt=\"%2\" /></a>").arg(strAfterLink, tr("Watch video"));
                     strAfterLink = QString("<a onclick=\"return false\" name=\"website\" href=\"%1\">%2</a> %3").arg(strAfterLink, strAfterLink, strYoutubeLink);
                 }
-                else if (lSupportedImages.contains(QFileInfo(strAfterLink).completeSuffix().toLower()))
+                else if (lSupportedImages.contains(QFileInfo(strAfterLink).suffix().toLower()))
                 {
                     lUrlImages << strAfterLink;
 
