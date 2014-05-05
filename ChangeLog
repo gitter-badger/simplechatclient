@@ -1,7 +1,7 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version dev (unknown)
+Version 1.9.0 (07.05.2014)
 ================================
 * Fixed paste multi-line text - now cut on last space
 * Added youtube and images preview in main window
