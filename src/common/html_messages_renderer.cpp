@@ -390,8 +390,8 @@ QString HtmlMessagesRenderer::headCSS()
     strHeadCSS.append(QString("time {color:%1; display:table-cell;}").arg(strTimeColor));
     strHeadCSS.append(".message {width:100%; word-break: break-word; display:table-cell;}");
     strHeadCSS.append("a {color:inherit; text-decoration:none;}");
-    strHeadCSS.append(".thumb {max-width:75px; max-height:75px;}");
-    strHeadCSS.append(".thumbs {margin-left:100px;}");
+    strHeadCSS.append(".thumb {max-width:75px; max-height:75px; box-shadow: 0 0 5px #888;}");
+    strHeadCSS.append(".thumbs {display: block; margin: 6px 0px 3px 100px;}");
     strHeadCSS.append(".underline {text-decoration:underline;}");
     strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px; display:table-cell;}");
     strHeadCSS.append(".right {float:right;}");
