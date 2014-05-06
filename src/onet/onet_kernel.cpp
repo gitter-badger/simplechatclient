@@ -2513,8 +2513,14 @@ void OnetKernel::raw_312()
 #else
         QLocale enUsLocale = QLocale(QLocale::C, QLocale::AnyCountry);
         QDateTime signoff = enUsLocale.toDateTime(strInfo, "ddd MMM dd hh:mm:ss yyyy");
+        if (signoff.isNull()) signoff = enUsLocale.toDateTime(strInfo, "ddd MMM  d hh:mm:ss yyyy");
 
-        QString strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, signoff.toString("dd MMM yyyy hh:mm:ss"));
+        QString strDisplaySignOff;
+        if (!signoff.isNull())
+            strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, signoff.toString("dd MMM yyyy hh:mm:ss"));
+        else
+            strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, strInfo);
+
         Message::instance()->showMessageActive(strDisplaySignOff, MessageInfo);
 #endif
     }
