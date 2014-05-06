@@ -372,8 +372,8 @@ void Channel::setTopic(const QString &strChannel, const QString &strTopicContent
     Convert::convertText(strTopic);
 
     // fix length bug
-    if (strTopic.contains(QRegExp("\\S{100}")))
-        strTopic.replace(QRegExp("(\\S{100})"), "\\1 ");
+    //if (strTopic.contains(QRegExp("\\S{100}")))
+        //strTopic.replace(QRegExp("(\\S{100})"), "\\1\n");
 
     // set topic
     getTopic(strChannel)->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
