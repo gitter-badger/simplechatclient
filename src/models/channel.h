@@ -86,6 +86,8 @@ public:
     QLabel* getUsers(const QString &channel);
     NickListWidget* getNickListWidget(const QString &channel);
     QSplitter* getSplitter(const QString &channel);
+    // ctrl+c
+    bool copySelectedText(const QString &channel);
 
     void setTopic(const QString &strChannel, const QString &strTopicContent);
     void setAuthorTopic(const QString &strChannel, const QString &strNick);

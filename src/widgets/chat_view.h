@@ -31,6 +31,7 @@ public:
     void clearMessages();
     void displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
     void refreshCSS();
+    bool copySelectedText();
     void forceScrollToBottom();
 
 private:

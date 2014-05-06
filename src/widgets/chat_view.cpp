@@ -649,6 +649,17 @@ void ChatView::contextMenuEvent(QContextMenuEvent *event)
     menuStandard(event);
 }
 
+bool ChatView::copySelectedText()
+{
+    if (page()->hasSelection())
+    {
+        page()->triggerAction(QWebPage::Copy);
+        return true;
+    }
+    else
+        return false;
+}
+
 void ChatView::forceScrollToBottom()
 {
     QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec

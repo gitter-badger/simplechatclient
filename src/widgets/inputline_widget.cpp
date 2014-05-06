@@ -278,6 +278,14 @@ bool InputLineWidget::event(QEvent *e)
     }
     else
     {
+        if (((k->key() == Qt::Key_C) && (k->modifiers() == Qt::ControlModifier)) && (!this->textCursor().hasSelection()))
+        {
+            QString strChannel = Channel::instance()->getCurrentName();
+            bool bCopied = Channel::instance()->copySelectedText(strChannel);
+            if (bCopied)
+                return true;
+        }
+
         iLastMessage = -1;
         index = 0;
         strLastWord = QString::null;

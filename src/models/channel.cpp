@@ -357,6 +357,11 @@ QSplitter* Channel::getSplitter(const QString &channel)
     return getTw(channel)->splitter;
 }
 
+bool Channel::copySelectedText(const QString &channel)
+{
+    return getTw(channel)->pChatView->copySelectedText();
+}
+
 // topic
 void Channel::setTopic(const QString &strChannel, const QString &strTopicContent)
 {
