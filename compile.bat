@@ -100,15 +100,15 @@ xcopy VERSION      %DESTINATION%\ /R /Y /Q
 xcopy src\scc.exe  %DESTINATION%\ /R /Y /Q
 
 echo Copying Qt files
-xcopy %QT_DIR%\bin\libgcc_s_dw2-1.dll   %DESTINATION%\ /C /H /R /Y /Q
-xcopy %QT_DIR%\bin\libwinpthread-1.dll  %DESTINATION%\ /C /H /R /Y /Q
-xcopy %QT_DIR%\bin\mingwm10.dll         %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\phonon4.dll          %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtCore4.dll          %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtGui4.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtNetwork4.dll       %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtWebKit4.dll        %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\QtXml4.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\libgcc_s_dw2-1.dll   %DESTINATION%\ /C /H /R /Y /Q
+if exist %QT_DIR%\bin\libwinpthread-1.dll xcopy %QT_DIR%\bin\libwinpthread-1.dll  %DESTINATION%\ /C /H /R /Y /Q
+if exist %QT_DIR%\bin\mingwm10.dll xcopy %QT_DIR%\bin\mingwm10.dll         %DESTINATION%\ /C /H /R /Y /Q
 
 echo Copying MinGW files 
 xcopy %MINGW_DIR%\bin\libstdc++-6.dll   %DESTINATION%\ /C /H /R /Y /Q
