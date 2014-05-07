@@ -676,6 +676,13 @@ void ChatView::scrollToBottom()
     page()->mainFrame()->setScrollBarValue(Qt::Vertical, page()->mainFrame()->scrollBarMaximum(Qt::Vertical));
 }
 
+void ChatView::resizeEvent(QResizeEvent *event)
+{
+    QWebView::resizeEvent(event);
+
+    forceScrollToBottom();
+}
+
 void ChatView::wheelEvent(QWheelEvent *event)
 {
     // event
