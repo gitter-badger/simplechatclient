@@ -659,9 +659,10 @@ bool ChatView::copySelectedText()
     else
         return false;
 }
-
 void ChatView::forceScrollToBottom()
 {
+    bScrollToBottom = true;
+
     QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
 }
 
