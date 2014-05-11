@@ -81,7 +81,7 @@ public:
     bool containsAlternativeName(const QString &channel);
     // tw
     TabWidget* getTw(const QString &channel);
-    QLabel* getTopic(const QString &channel);
+    TopicWidget* getTopic(const QString &channel);
     ChatView* getChatView(const QString &channel);
     QLabel* getUsers(const QString &channel);
     NickListWidget* getNickListWidget(const QString &channel);

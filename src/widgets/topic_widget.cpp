@@ -17,43 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TAB_WIDGET_H
-#define TAB_WIDGET_H
-
-#include "chat_view.h"
+#include <QAbstractTextDocumentLayout>
 #include "topic_widget.h"
-#include <QWidget>
-class NickListWidget;
 
-QT_BEGIN_NAMESPACE
-class QLabel;
-class QSplitter;
-QT_END_NAMESPACE
-
-/**
- * Main widget
- */
-class TabWidget : public QWidget
+TopicWidget::TopicWidget()
 {
-    Q_OBJECT
-public:
-    TabWidget(const QString &_strName);
-    virtual ~TabWidget();
+}
 
-    TopicWidget *topic;
-    ChatView *pChatView;
-    QLabel *users;
-    NickListWidget *pNickListWidget;
-    QSplitter *splitter;
+void TopicWidget::resizeEvent(QResizeEvent *event)
+{
+    QTextEdit::resizeEvent(event);
 
-private:
-    QString strName;
-
-    void createGui();
-    void setDefaultValues();
-
-protected:
-    void showEvent(QShowEvent *);
-};
-
-#endif // TAB_WIDGET_H
+    this->setMinimumHeight(this->document()->documentLayout()->documentSize().toSize().height());
+}

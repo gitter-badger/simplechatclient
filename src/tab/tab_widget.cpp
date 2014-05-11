@@ -39,11 +39,15 @@ TabWidget::~TabWidget()
 
 void TabWidget::createGui()
 {
-    topic = new QLabel(this);
-    topic->setWordWrap(true);
-    topic->setOpenExternalLinks(true);
+    topic = new TopicWidget();
+    topic->setParent(this);
+    topic->setReadOnly(true);
+    //topic->setEnabled(false);
     topic->setMinimumHeight(20);
-    topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    topic->setFrameShape(QFrame::NoFrame);
+    //topic->setWordWrap(true);
+    //topic->setOpenExternalLinks(true);
+    topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     topic->show();
 
     pChatView = new ChatView(strName);
@@ -104,7 +108,9 @@ void TabWidget::setDefaultValues()
 
     // channel type
     if (strName.at(0) == '^')
+    {
         topic->hide();
+    }
     if ((strName.at(0) != '^') && (strName.at(0) != '#'))
     {
         topic->hide();

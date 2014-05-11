@@ -17,43 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TAB_WIDGET_H
-#define TAB_WIDGET_H
+#ifndef TOPIC_WIDGET_H
+#define TOPIC_WIDGET_H
 
-#include "chat_view.h"
-#include "topic_widget.h"
-#include <QWidget>
-class NickListWidget;
+#include <QTextEdit>
 
-QT_BEGIN_NAMESPACE
-class QLabel;
-class QSplitter;
-QT_END_NAMESPACE
-
-/**
- * Main widget
- */
-class TabWidget : public QWidget
+class TopicWidget : public QTextEdit
 {
     Q_OBJECT
 public:
-    TabWidget(const QString &_strName);
-    virtual ~TabWidget();
-
-    TopicWidget *topic;
-    ChatView *pChatView;
-    QLabel *users;
-    NickListWidget *pNickListWidget;
-    QSplitter *splitter;
-
-private:
-    QString strName;
-
-    void createGui();
-    void setDefaultValues();
+    TopicWidget();
 
 protected:
-    void showEvent(QShowEvent *);
+//    virtual void mousePressEvent(QMouseEvent *event);
+//    virtual void contextMenuEvent(QContextMenuEvent *event);
+    virtual void resizeEvent(QResizeEvent *event);
 };
 
-#endif // TAB_WIDGET_H
+#endif // TOPIC_VIEW_H

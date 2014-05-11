@@ -332,7 +332,7 @@ TabWidget* Channel::getTw(const QString &channel)
     }
 }
 
-QLabel* Channel::getTopic(const QString &channel)
+TopicWidget* Channel::getTopic(const QString &channel)
 {
     return getTw(channel)->topic;
 }
@@ -377,7 +377,7 @@ void Channel::setTopic(const QString &strChannel, const QString &strTopicContent
     Convert::convertText(strTopic);
 
     // set topic
-    getTopic(strChannel)->setText(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
+    getTopic(strChannel)->setHtml(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
 
     // tooltip
     Convert::fixHtmlChars(strTooltip);

@@ -114,6 +114,7 @@ SOURCES += src/common/commands.cpp \
     src/widgets/simple_rank_widget.cpp \
     src/widgets/simple_stats_widget.cpp \
     src/widgets/tool_widget.cpp \
+    src/widgets/topic_widget.cpp \
     src/widgets/webcam_delegate.cpp
 HEADERS += src/common/commands.h \
     src/common/config.h \
@@ -222,6 +223,7 @@ HEADERS += src/common/commands.h \
     src/widgets/simple_rank_widget.h \
     src/widgets/simple_stats_widget.h \
     src/widgets/tool_widget.h \
+    src/widgets/topic_widget.h \
     src/widgets/webcam_delegate.h
 FORMS += ui/about.ui \
     ui/avatar_edit.ui \
