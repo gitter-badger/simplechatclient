@@ -22,6 +22,15 @@
 
 TopicWidget::TopicWidget()
 {
+    connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()));
+}
+
+void TopicWidget::textChanged()
+{
+    int height = this->document()->documentLayout()->documentSize().toSize().height();
+
+    this->setMinimumHeight(height);
+    this->setMaximumHeight(height);
 }
 
 void TopicWidget::resizeEvent(QResizeEvent *event)

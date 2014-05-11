@@ -28,6 +28,9 @@ class TopicWidget : public QTextEdit
 public:
     TopicWidget();
 
+private slots:
+    void textChanged();
+
 protected:
 //    virtual void mousePressEvent(QMouseEvent *event);
 //    virtual void contextMenuEvent(QContextMenuEvent *event);
