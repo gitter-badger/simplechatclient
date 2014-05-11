@@ -28,5 +28,8 @@ void TopicWidget::resizeEvent(QResizeEvent *event)
 {
     QTextEdit::resizeEvent(event);
 
-    this->setMinimumHeight(this->document()->documentLayout()->documentSize().toSize().height());
+    int height = this->document()->documentLayout()->documentSize().toSize().height();
+
+    this->setMinimumHeight(height);
+    this->setMaximumHeight(height);
 }
