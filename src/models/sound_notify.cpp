@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QUrl>
 #include "settings.h"
 #include "sound_notify.h"
 
@@ -40,7 +41,7 @@ void SoundNotify::init()
 #else
     #if WITH_PHONON
         QString strSoundBeep = Settings::instance()->get("sound_beep");
-        music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(strSoundBeep));
+        music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(QUrl::fromLocalFile(strSoundBeep)));
     #endif
 #endif
 }
@@ -94,7 +95,7 @@ void SoundNotify::play(NotifyCategory eCategory)
             if (eCurrentCategory != Query)
             {
                 QString strSoundQuery = Settings::instance()->get("sound_query");
-                music->setCurrentSource(strSoundQuery);
+                music->setCurrentSource(QUrl::fromLocalFile(strSoundQuery));
                 eCurrentCategory = Query;
             }
         }
@@ -103,7 +104,7 @@ void SoundNotify::play(NotifyCategory eCategory)
             if (eCurrentCategory != Beep)
             {
                 QString strSoundBeep = Settings::instance()->get("sound_beep");
-                music->setCurrentSource(strSoundBeep);
+                music->setCurrentSource(QUrl::fromLocalFile(strSoundBeep));
                 eCurrentCategory = Beep;
             }
         }
