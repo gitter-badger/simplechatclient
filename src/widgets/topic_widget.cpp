@@ -22,23 +22,29 @@
 
 TopicWidget::TopicWidget()
 {
-    connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()));
+    setReadOnly(true);
+    setFrameShape(QFrame::NoFrame);
+    setOpenExternalLinks(true);
+
+    connect(this, SIGNAL(textChanged()), this, SLOT(topicTextChanged()));
 }
 
-void TopicWidget::textChanged()
+void TopicWidget::refreshTopicHeight()
 {
     int height = this->document()->documentLayout()->documentSize().toSize().height();
 
     this->setMinimumHeight(height);
     this->setMaximumHeight(height);
+}
+
+void TopicWidget::topicTextChanged()
+{
+    this->refreshTopicHeight();
 }
 
 void TopicWidget::resizeEvent(QResizeEvent *event)
 {
     QTextEdit::resizeEvent(event);
 
-    int height = this->document()->documentLayout()->documentSize().toSize().height();
-
-    this->setMinimumHeight(height);
-    this->setMaximumHeight(height);
+    this->refreshTopicHeight();
 }

@@ -377,7 +377,7 @@ void Channel::setTopic(const QString &strChannel, const QString &strTopicContent
     Convert::convertText(strTopic);
 
     // set topic
-    getTopic(strChannel)->setHtml(QString("<b>%1</b> %2").arg(tr("Topic:"), strTopic));
+    getTopic(strChannel)->setHtml(QString("<b>%1</b>&nbsp;%2").arg(tr("Topic:"), strTopic));
 
     // tooltip
     Convert::fixHtmlChars(strTooltip);

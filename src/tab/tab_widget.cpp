@@ -41,12 +41,6 @@ void TabWidget::createGui()
 {
     topic = new TopicWidget();
     topic->setParent(this);
-    topic->setReadOnly(true);
-    //topic->setEnabled(false);
-    //topic->setMinimumHeight(20);
-    topic->setFrameShape(QFrame::NoFrame);
-    //topic->setWordWrap(true);
-    //topic->setOpenExternalLinks(true);
     topic->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     topic->show();
 

@@ -20,20 +20,21 @@
 #ifndef TOPIC_WIDGET_H
 #define TOPIC_WIDGET_H
 
-#include <QTextEdit>
+#include <QTextBrowser>
 
-class TopicWidget : public QTextEdit
+class TopicWidget : public QTextBrowser
 {
     Q_OBJECT
 public:
     TopicWidget();
 
+private:
+    void refreshTopicHeight();
+
 private slots:
-    void textChanged();
+    void topicTextChanged();
 
 protected:
-//    virtual void mousePressEvent(QMouseEvent *event);
-//    virtual void contextMenuEvent(QContextMenuEvent *event);
     virtual void resizeEvent(QResizeEvent *event);
 };
 
