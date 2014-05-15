@@ -386,7 +386,7 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageError = Settings::instance()->get("message_error_color");
 
     QString strHeadCSS = "article {margin-bottom:2px; vertical-align:bottom;}";
-    strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1; display:table-row;}").arg(strFontSize));
+    strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1; white-space: pre-wrap; display:table-row;}").arg(strFontSize));
     strHeadCSS.append(QString("time {color:%1; display:table-cell;}").arg(strTimeColor));
     strHeadCSS.append(".message {width:100%; word-break: break-word; display:table-cell;}");
     strHeadCSS.append("a {color:inherit; text-decoration:none;}");
