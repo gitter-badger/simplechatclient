@@ -31,7 +31,7 @@ WebBrowserGui::WebBrowserGui(const QUrl &url, QWidget *parent) : QDialog(parent)
     // center screen
     move(QApplication::desktop()->screenGeometry(QApplication::desktop()->screenNumber(parent)).center()  - rect().center());
 
-    ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
+    ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
     ui->webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, true);
 
     ui->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
