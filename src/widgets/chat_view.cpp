@@ -24,7 +24,7 @@
 #include <QMenu>
 #include <QTimer>
 #include <QUrl>
-#include <QtWebKit/QWebFrame>
+#include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKit/QWebElement>
 #include "channel.h"
 #include "core.h"
@@ -42,7 +42,7 @@
 #include "webbrowser_gui.h"
 #include "chat_view.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <QCoreApplication>
 #endif
 
@@ -72,7 +72,7 @@ ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_str
 void ChatView::createBody()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;
@@ -663,13 +663,13 @@ void ChatView::forceScrollToBottom()
 {
     bScrollToBottom = true;
 
-    QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
+    this->scrollToBottom();
 }
 
 void ChatView::autoScrollToBottom()
 {
     if (bScrollToBottom)
-        QTimer::singleShot(50, this, SLOT(scrollToBottom())); // 0.05 sec
+        this->scrollToBottom();
 }
 
 void ChatView::scrollToBottom()

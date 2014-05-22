@@ -94,7 +94,7 @@ void WebcamNetwork::networkDisconnect()
 
 void WebcamNetwork::networkSend(const QString &strData)
 {
-    QByteArray bData = (strData+"\n").toAscii();
+    QByteArray bData = (strData+"\n").toLatin1();
 
     networkSendb(bData);
 }

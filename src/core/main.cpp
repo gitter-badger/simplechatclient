@@ -17,14 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QTextCodec>
 #include "core.h"
 #include "settings.h"
 
 #include <iostream>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <windows.h>
 #endif
 
@@ -50,7 +50,7 @@ void displayOptions()
 
 void enableDEP()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     /* Call SetProcessDEPPolicy to permanently enable DEP.
        The function will not resolve on earlier versions of Windows,
        and failure is not dangerous. */
@@ -77,8 +77,7 @@ int main(int argc, char *argv[])
     QApplication::setQuitOnLastWindowClosed(false);
 
     // set codec
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("ISO-8859-2"));
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     // set organization
     QCoreApplication::setOrganizationName("scc");
@@ -89,9 +88,8 @@ int main(int argc, char *argv[])
     Settings::instance()->set("debug", "false");
 
     // args
-    for (int i = 1; i < app.argc(); ++i)
+    foreach (QString param, app.arguments())
     {
-        QString param = app.argv()[i];
         if (param == "--debug")
         {
             displayDebug();

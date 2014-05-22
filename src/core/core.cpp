@@ -172,7 +172,7 @@ void Core::configProfileValues()
 void Core::fixSettings()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;
@@ -234,7 +234,7 @@ void Core::refreshLanguage()
 
     // set translate
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;

@@ -1,8 +1,18 @@
 # init
 project (scc)
-cmake_minimum_required (VERSION 2.8.9 FATAL_ERROR)
-set (QT_MIN_VERSION "4.8.0")
-find_package (Qt4 REQUIRED)
+cmake_minimum_required (VERSION 2.8.11 FATAL_ERROR)
+set (QT_MIN_VERSION "5.2.1")
+find_package(Qt5Core REQUIRED)
+find_package(Qt5LinguistTools)
+
+# gcc minimum
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
+        message(FATAL_ERROR "GCC version must be at least 4.8!")
+    endif()
+else()
+    message(WARNING "You are using an unsupported compiler!")
+endif()
 
 # optimization
 if (NOT CMAKE_BUILD_TYPE)
@@ -13,19 +23,17 @@ endif (NOT CMAKE_BUILD_TYPE)
 set (CMAKE_C_FLAGS "-Wall -Wextra ${CMAKE_C_FLAGS}")
 set (CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
 
+# pedantic
+#set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
+#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++11 ${CMAKE_CXX_FLAGS}")
+
 # debug
 #set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
-#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++0x -ggdb -pg ${CMAKE_CXX_FLAGS}")
+#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++11 -ggdb -pg ${CMAKE_CXX_FLAGS}")
 
 if (MINGW)
-	execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
-
-	if (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
-		# enable ASLR
-		set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
-	else (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
-		message(STATUS "DEP and ASLR not supported. Use GCC 4.5 or greater.")
-	endif (GCC_VERSION VERSION_GREATER 4.5 OR GCC_VERSION VERSION_EQUAL 4.5)
+	# enable ASLR
+	set (CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -Wl,--dynamicbase -Wl,--nxcompat")
 
 	# disable console on windows mingw
 	if (CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -37,10 +45,6 @@ endif (MINGW)
 set (SCC_BIN_DIR ${CMAKE_INSTALL_PREFIX}/bin)
 set (SCC_SHARE_DIR ${CMAKE_INSTALL_PREFIX}/share)
 set (SCC_DATA_DIR ${CMAKE_INSTALL_PREFIX}/share/scc)
-
-# include
-include (FindPkgConfig)
-include (CheckIncludeFiles)
 
 # sub dir
 add_subdirectory (src)

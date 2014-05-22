@@ -29,7 +29,7 @@
 #include "settings.h"
 #include "update.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <QSysInfo>
 #endif
 
@@ -74,11 +74,7 @@ void Update::checkUpdate()
 
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
-    #if (QT_VERSION >= 0x050000)
-        request.setHeader(QNetworkRequest::UserAgentHeader, strUserAgent.toAscii());
-    #else
-        request.setRawHeader("User-Agent", strUserAgent.toAscii());
-    #endif
+    request.setHeader(QNetworkRequest::UserAgentHeader, strUserAgent.toLatin1());
 
     QString strUUID = Settings::instance()->get("unique_id");
     QRegExp rUUID("^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$");
@@ -87,7 +83,7 @@ void Update::checkUpdate()
         QString strContent = QString("{\"uuid\":\"%1\"}").arg(strUUID);
 
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-        QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+        QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
         pReply->setProperty("update_url", "1");
     }
     else
@@ -196,7 +192,7 @@ void Update::updateFinished(QNetworkReply *reply)
 QString Update::getPlatform()
 {
     QString strPlatform = "Unknown OS";
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     switch (QSysInfo::windowsVersion())
     {
         case 0x0001: strPlatform = "Windows 3.1"; break;
@@ -210,9 +206,7 @@ QString Update::getPlatform()
         case 0x0080: strPlatform = "Windows NT 6.0"; break;
         case 0x0090: strPlatform = "Windows NT 6.1"; break;
         case 0x00a0: strPlatform = "Windows NT 6.2"; break;
-        #if (QT_VERSION >= 0x050200)
         case 0x00b0: strPlatform = "Windows NT 6.3"; break;
-        #endif
 
         case 0x0100: strPlatform = "Windows CE"; break;
         case 0x0200: strPlatform = "Windows CE .NET"; break;

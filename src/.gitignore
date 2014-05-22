@@ -5,3 +5,7 @@
 /cmake_install.cmake
 /scc.exe
 /Makefile
+/scc_automoc.cpp
+moc_*.cpp
+/qrc_scc.cpp
+/MOC_FILES_parameters

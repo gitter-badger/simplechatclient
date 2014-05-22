@@ -2505,24 +2505,10 @@ void OnetKernel::raw_312()
         QString strDisplayServer = QString(tr("* %1 was online via %2")).arg(strNick, strServer);
         Message::instance()->showMessageActive(strDisplayServer, MessageInfo);
 
-#if (QT_VERSION >= 0x052000)
         QDateTime signoff = QDateTime::fromString(strInfo, Qt::RFC2822Date);
 
         QString strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, signoff.toString("dd MMM yyyy hh:mm:ss"));
         Message::instance()->showMessageActive(strDisplaySignOff, MessageInfo);
-#else
-        QLocale enUsLocale = QLocale(QLocale::C, QLocale::AnyCountry);
-        QDateTime signoff = enUsLocale.toDateTime(strInfo, "ddd MMM dd hh:mm:ss yyyy");
-        if (signoff.isNull()) signoff = enUsLocale.toDateTime(strInfo, "ddd MMM  d hh:mm:ss yyyy");
-
-        QString strDisplaySignOff;
-        if (!signoff.isNull())
-            strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, signoff.toString("dd MMM yyyy hh:mm:ss"));
-        else
-            strDisplaySignOff = QString(tr("* %1 was online from %2")).arg(strNick, strInfo);
-
-        Message::instance()->showMessageActive(strDisplaySignOff, MessageInfo);
-#endif
     }
     else // WHOIS
     {
@@ -4269,13 +4255,13 @@ void OnetKernel::raw_819()
             int c;
             if (s1.length() > 1)
             {
-                c = s1.at(0).toAscii();
+                c = s1.at(0).toLatin1();
                 flag = (c & 0x6d) == 109;
                 flag1 = (c & 0x70) == 112;
-                c = s1.at(1).toAscii();
+                c = s1.at(1).toLatin1();
             }
             else
-                c = s1.at(0).toAscii();
+                c = s1.at(0).toLatin1();
             c++;
             int k = c & 7;
             int l = (c & 0x38) >> 3;

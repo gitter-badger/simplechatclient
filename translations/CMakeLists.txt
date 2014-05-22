@@ -10,7 +10,7 @@ set (TRANSLATION_QM
 )
 
 # translation
-qt4_add_translation (TRANSLATION_FILES ${TRANSLATION_SRCS})
+qt5_add_translation (TRANSLATION_FILES ${TRANSLATION_SRCS})
 add_custom_target (translations DEPENDS ${TRANSLATION_FILES})
 
 # translations

@@ -23,10 +23,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkCookieJar>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QUrl>
-#include <QtWebKit/QWebFrame>
+#include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKit/QWebElement>
-#include <QtWebKit/QWebPage>
+#include <QtWebKitWidgets/QWebPage>
 #include "settings.h"
 #include "update_gui.h"
 
@@ -60,7 +61,7 @@ UpdateGui::~UpdateGui()
 
 void UpdateGui::createGui()
 {
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
     ui.progressBar->hide();
 #endif
     ui.pushButton_download->setIcon(QIcon(":/images/oxygen/16x16/download.png"));
@@ -91,7 +92,7 @@ void UpdateGui::buttonDownload()
 {
     ui.pushButton_download->setEnabled(false);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_SITE_LINK).arg(strVersion))));
     pReply->setProperty("category", "sfsite");
 #else
@@ -126,7 +127,7 @@ void UpdateGui::gotSFSite(QString site)
 
 void UpdateGui::gotFile(const QByteArray &bData)
 {
-    QString path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::TempLocation)).absoluteFilePath();
+    QString path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::TempLocation)).absoluteFilePath();
 
     // save
     QString fileName = path+"/scc-"+strVersion+".exe";

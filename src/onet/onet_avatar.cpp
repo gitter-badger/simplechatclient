@@ -22,9 +22,10 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QHttpMultiPart>
+#include <QNetworkCookie>
+#include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-#include <QNetworkCookieJar>
 #include <QObject>
 #include <QStringList>
 #include <QUrl>
@@ -56,8 +57,8 @@ void OnetAvatar::getCookies()
     constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
     foreach (const QString &constCookie, constCookies)
     {
-        cookie.setName(constCookie.toAscii());
-        cookie.setValue(Settings::instance()->get(constCookie).toAscii());
+        cookie.setName(constCookie.toLatin1());
+        cookie.setValue(Settings::instance()->get(constCookie).toLatin1());
         cookies.append(cookie);
     }
 
@@ -79,9 +80,9 @@ void OnetAvatar::requestGetCollections()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_getCollections);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestGetCollectionAvatars(int id)
@@ -93,9 +94,9 @@ void OnetAvatar::requestGetCollectionAvatars(int id)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_getAvatarsFromCollect);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestGetMyAvatars()
@@ -106,9 +107,9 @@ void OnetAvatar::requestGetMyAvatars()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_loadFAvatars);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestSetAvatar(int imgId, int albumId)
@@ -125,9 +126,9 @@ void OnetAvatar::requestSetAvatar(int imgId, int albumId)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_setAvatar);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestUploadImage(const QString &fileName, const QByteArray &data)
@@ -146,11 +147,11 @@ void OnetAvatar::requestUploadImage(const QString &fileName, const QByteArray &d
 
     QHttpPart ridPart;
     ridPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"rid\""));
-    ridPart.setBody(createRid().toAscii());
+    ridPart.setBody(createRid().toLatin1());
 
     QHttpPart envelopePart;
     envelopePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"envelope\""));
-    envelopePart.setBody(QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(strFileFormName.size()).arg(strFileFormName).toAscii());
+    envelopePart.setBody(QString("a:1:{s:14:\"imageInputName\";s:%1:\"%2\";}").arg(strFileFormName.size()).arg(strFileFormName).toLatin1());
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
@@ -193,9 +194,9 @@ void OnetAvatar::requestUpdatePhoto(const MyAvatar &avatar)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_updatePhoto);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestAddPhoto(const MyAvatar &avatar)
@@ -219,9 +220,9 @@ void OnetAvatar::requestAddPhoto(const MyAvatar &avatar)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_addPhoto);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestDeletePhoto(int imgId)
@@ -233,9 +234,9 @@ void OnetAvatar::requestDeletePhoto(int imgId)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     request.setAttribute(QNetworkRequest::User, RT_deletePhoto);
 
-    //qDebug() << request.url().toString() << postData.toAscii();
+    //qDebug() << request.url().toString() << postData.toLatin1();
 
-    this->post(request, postData.toAscii());
+    this->post(request, postData.toLatin1());
 }
 
 void OnetAvatar::requestGetAvatar(const QString &avatarUrl, AvatarType type)

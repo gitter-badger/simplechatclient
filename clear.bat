@@ -11,7 +11,7 @@ cd ..
 
 cd src
 rd /S /Q CMakeFiles scc.dir __
-del /S /Q /F /A cmake_install.cmake Makefile moc_* ui_* qrc_* scc.*
+del /S /Q /F /A cmake_install.cmake Makefile scc_automoc.cpp moc_* ui_* qrc_* scc.*
 cd ..
 
 cls

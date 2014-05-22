@@ -36,14 +36,7 @@ SoundNotify * SoundNotify::instance()
 
 void SoundNotify::init()
 {
-#if (QT_VERSION >= 0x050000)
     music = new QMediaPlayer;
-#else
-    #if WITH_PHONON
-        QString strSoundBeep = Settings::instance()->get("sound_beep");
-        music = Phonon::createPlayer(Phonon::NotificationCategory, Phonon::MediaSource(QUrl::fromLocalFile(strSoundBeep)));
-    #endif
-#endif
 }
 
 SoundNotify::SoundNotify()
@@ -53,18 +46,11 @@ SoundNotify::SoundNotify()
 
 SoundNotify::~SoundNotify()
 {
-#if (QT_VERSION >= 0x050000)
     delete music;
-#else
-    #if WITH_PHONON
-        delete music;
-    #endif
-#endif
 }
 
 void SoundNotify::play(NotifyCategory eCategory)
 {
-#if (QT_VERSION >= 0x050000)
     if (eCategory == Query)
     {
         if (eCurrentCategory != Query)
@@ -88,33 +74,4 @@ void SoundNotify::play(NotifyCategory eCategory)
     thread.start();
     thread.quit();
     //thread.wait();
-#else
-    #if WITH_PHONON
-        if (eCategory == Query)
-        {
-            if (eCurrentCategory != Query)
-            {
-                QString strSoundQuery = Settings::instance()->get("sound_query");
-                music->setCurrentSource(QUrl::fromLocalFile(strSoundQuery));
-                eCurrentCategory = Query;
-            }
-        }
-        else
-        {
-            if (eCurrentCategory != Beep)
-            {
-                QString strSoundBeep = Settings::instance()->get("sound_beep");
-                music->setCurrentSource(QUrl::fromLocalFile(strSoundBeep));
-                eCurrentCategory = Beep;
-            }
-        }
-
-        thread.setMedia(music);
-        thread.start();
-        thread.quit();
-        //thread.wait();
-    #else
-        Q_UNUSED(eCategory)
-    #endif
-#endif
 }

@@ -23,9 +23,9 @@
 #include "xml.h"
 #include "config.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <QCoreApplication>
-    #include <QDesktopServices>
+    #include <QStandardPaths>
 #else
     #include "scc-config.h"
 #endif
@@ -33,8 +33,8 @@
 Config::Config(ConfigCategory _eConfigCategory, QString _strProfile) : eConfigCategory(_eConfigCategory), strProfile(_strProfile)
 {
     QString path;
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     path += "/scc/";
 #else
     path = QDir::homePath()+"/.scc/";
@@ -153,7 +153,7 @@ void Config::fix()
 QHash<QString,QString> Config::getDefaultValues()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;

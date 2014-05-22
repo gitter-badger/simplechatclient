@@ -21,6 +21,7 @@
 #include <QDomDocument>
 #include <QMessageBox>
 #include <QNetworkAccessManager>
+#include <QNetworkCookie>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QUrl>
@@ -142,8 +143,8 @@ void RegisterNickGui::registerNick()
          QString strKey = it.key();
          QString strValue = it.value();
 
-         cookie.setName(strKey.toAscii());
-         cookie.setValue(strValue.toAscii());
+         cookie.setName(strKey.toLatin1());
+         cookie.setValue(strValue.toLatin1());
          cookieList.append(cookie);
      }
 
@@ -156,7 +157,7 @@ void RegisterNickGui::registerNick()
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+    QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
     pReply->setProperty("category", RT_register);
 }
 

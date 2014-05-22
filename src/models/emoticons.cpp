@@ -20,7 +20,7 @@
 #include <QDir>
 #include "emoticons.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <QCoreApplication>
 #else
     #include "scc-config.h"
@@ -48,7 +48,7 @@ QList<CaseIgnoreString> Emoticons::listEmoticons()
         return lEmoticonsList;
 
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;

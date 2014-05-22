@@ -18,12 +18,10 @@
  */
 
 #include <QDebug>
-#include <QtCrypto>
-// in OpenSuSE 11 try this:
-//#include <QtCrypto/QtCrypto>
+#include <QtCrypto/QtCrypto>
 #include "simple_crypt.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <windows.h>
 #else
     #include <unistd.h>
@@ -31,7 +29,7 @@
 
 SimpleCrypt::SimpleCrypt()
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     char volName[256];
     char fileSysName[256];
     DWORD dwSerialNumber;
@@ -66,12 +64,12 @@ QString SimpleCrypt::encrypt(QString strKey, const QString &strData)
         return strData;
     }
 
-    QCA::SecureArray arg = QByteArray(strData.toAscii());
+    QCA::SecureArray arg = QByteArray(strData.toLatin1());
 
     if (strKey.length() < 16) { while(strKey.length() < 16) { strKey += " "; } }
-    QCA::SymmetricKey key = QByteArray(strKey.toAscii());
+    QCA::SymmetricKey key = QByteArray(strKey.toLatin1());
 
-    QCA::InitializationVector iv = QByteArray(strIv.toAscii());
+    QCA::InitializationVector iv = QByteArray(strIv.toLatin1());
 
     if (QCA::isSupported("aes256-cbc-pkcs7"))
     {
@@ -112,9 +110,9 @@ QString SimpleCrypt::decrypt(QString strKey, const QString &strData)
     QCA::SecureArray arg = QCA::hexToArray(strData);
 
     if (strKey.length() < 16) { while(strKey.length() < 16) { strKey += " "; } }
-    QCA::SymmetricKey key = QByteArray(strKey.toAscii());
+    QCA::SymmetricKey key = QByteArray(strKey.toLatin1());
 
-    QCA::InitializationVector iv = QByteArray(strIv.toAscii());
+    QCA::InitializationVector iv = QByteArray(strIv.toLatin1());
 
     if (QCA::isSupported("aes256-cbc-pkcs7"))
     {

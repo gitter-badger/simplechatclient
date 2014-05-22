@@ -27,8 +27,8 @@
 #include "settings.h"
 #include "log.h"
 
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
+#ifdef Q_OS_WIN
+    #include <QStandardPaths>
 #endif
 
 void Log::logOpened(const QString &strChannel)
@@ -50,8 +50,8 @@ void Log::save(const QString &strChannel, const QString &strMessage, const QStri
 
     QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     path += "/scc/";
 #else
     path = QDir::homePath()+"/.scc/";

@@ -25,7 +25,7 @@
 #include "inputline_widget.h"
 #include "emoticons_gui.h"
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
     #include "scc-config.h"
 #endif
 
@@ -132,7 +132,7 @@ void EmoticonsGui::createGui()
 void EmoticonsGui::setDefaultValues()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;

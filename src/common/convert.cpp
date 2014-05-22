@@ -23,7 +23,7 @@
 #include "utils.h"
 #include "convert.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <QCoreApplication>
 #else
     #include "scc-config.h"
@@ -32,7 +32,7 @@
 QString findEmoticon(const QString &strEmoticon)
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;
@@ -142,7 +142,7 @@ void convertEmoticons(QString &strData, bool bInsertWidthHeight, bool qWebViewCo
                     QPixmap p(strEmoticonPath);
                     strWidthHeight = " width=\""+QString::number(p.width())+"\" height=\""+QString::number(p.height())+"\"";
                 }
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
                 strEmoticonPath = "/"+strEmoticonPath;
 #endif
                 if (qWebViewContext)
@@ -403,7 +403,7 @@ void Convert::convertPrefix(QString &strData)
 
     static const QHash<char, QString> m = createPrefixHash();
 
-    char prefix = strData.at(1).toAscii();
+    char prefix = strData.at(1).toLatin1();
     QString title = m[prefix];
     if (!title.isNull()) {
         strData.remove(1, 1);

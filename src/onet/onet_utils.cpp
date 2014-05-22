@@ -34,7 +34,7 @@ QString OnetUtils::transformKey(QString s)
 
     for (int i = 0; i < 16; ++i)
     {
-        int c = s[i].toAscii();
+        int c = s[i].toLatin1();
         ai[i] = (c > 57 ? c > 90 ? (c - 97) + 36 : (c - 65) + 10 : c - 48);
     }
 

@@ -22,8 +22,8 @@
 #include "settings.h"
 #include "profile_manager.h"
 
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
+#ifdef Q_OS_WIN
+    #include <QStandardPaths>
 #endif
 
 ProfileManager * ProfileManager::Instance = 0;
@@ -45,8 +45,8 @@ ProfileManager::ProfileManager()
 
 void ProfileManager::init()
 {
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     path += "/scc/";
 #else
     path = QDir::homePath()+"/.scc/";

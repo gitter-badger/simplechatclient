@@ -18,10 +18,11 @@
  */
 
 #include <QColorDialog>
-#include <QDesktopServices>
 #include <QDesktopWidget>
+#include <QDesktopServices>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QStandardPaths>
 #include <QUrl>
 #include "config.h"
 #include "core.h"
@@ -230,7 +231,7 @@ void OptionsGui::createGui()
     mpris->setText(tr("MPRIS"));
     mpris->setToolTip(tr("MPRIS"));
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     mpris->setHidden(true);
 #else
     winamp->setHidden(true);
@@ -286,8 +287,8 @@ void OptionsGui::setDefaultValues()
     // logs
     QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString strLogsPath;
-#ifdef Q_WS_WIN
-    strLogsPath = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    strLogsPath = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     strLogsPath += "/scc/";
 #else
     strLogsPath = QDir::homePath();
@@ -597,8 +598,8 @@ void OptionsGui::refreshProfilesList()
     ui.comboBox_profiles->clear();
 
     QString path;
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     path += "/scc/";
 #else
     path = QDir::homePath()+"/.scc/";

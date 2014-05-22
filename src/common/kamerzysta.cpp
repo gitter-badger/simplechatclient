@@ -290,7 +290,7 @@ void Kamerzysta::networkSend(const QString &strData)
     {
         log("Send:"+strData);
 
-        socket->write((strData+"\r\n").toAscii());
+        socket->write((strData+"\r\n").toLatin1());
     }
 }
 

@@ -238,7 +238,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
             else
                 strUserAvatar = Avatar::instance()->getAvatarPath(strUserAvatar);
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
             strUserAvatar = "/"+strUserAvatar;
 #endif
             strUserAvatar = "file://"+strUserAvatar;
@@ -425,7 +425,7 @@ QString HtmlMessagesRenderer::bodyCSS()
     QString strBackground;
     if ((strShowBackgroundImage == "true") && (!strBackgroundImage.isEmpty()))
     {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     strBackgroundImage = "/"+strBackgroundImage;
 #endif
         strBackgroundImage = "file://"+strBackgroundImage;

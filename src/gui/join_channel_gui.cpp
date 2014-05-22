@@ -66,9 +66,6 @@ void JoinChannelGui::createCompleter()
         lChannelList.append(strName);
     }
 
-#if (QT_VERSION >= 0x050000)
-    lChannelList.sort(Qt::CaseInsensitive);
-#else
     QList<CaseIgnoreString> lChannelsCaseIgnore;
 
     foreach (const QString &strChannel, lChannelList)
@@ -86,7 +83,6 @@ void JoinChannelGui::createCompleter()
 
     // clear old list
     lChannelsCaseIgnore.clear();
-#endif
 
     QCompleter *completer = new QCompleter(lChannelList, this);
     completer->setCaseSensitivity(Qt::CaseInsensitive);

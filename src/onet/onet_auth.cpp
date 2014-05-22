@@ -19,6 +19,7 @@
 
 #include <QDomDocument>
 #include <QNetworkAccessManager>
+#include <QNetworkCookie>
 #include <QNetworkCookieJar>
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -105,7 +106,7 @@ void OnetAuth::getChat()
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+    QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
     pReply->setProperty("category", AT_chat);
 }
 
@@ -182,7 +183,7 @@ void OnetAuth::getSecureLogin()
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+    QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
     pReply->setProperty("category", AT_secure_login);
     pReply->ignoreSslErrors();
 }
@@ -198,7 +199,7 @@ void OnetAuth::getOverride()
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+    QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
     pReply->setProperty("category", AT_override);
 }
 
@@ -214,7 +215,7 @@ void OnetAuth::getUo()
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+    QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
     pReply->setProperty("category", AT_uo);
 }
 
@@ -236,7 +237,7 @@ void OnetAuth::getCheckCode()
     QNetworkRequest request;
     request.setUrl(QUrl(strUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QNetworkReply *pReply = accessManager->post(request, strContent.toAscii());
+    QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
     pReply->setProperty("category", AT_check_code);
 }
 
@@ -349,19 +350,9 @@ void OnetAuth::removeCookies()
         Settings::instance()->set(constCookie, QString::null);
 
     // clear from cookie jar
-#if (QT_VERSION >= 0x050000)
     QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
     foreach (const QNetworkCookie &cookie, cookies)
         accessManager->cookieJar()->deleteCookie(cookie);
-#else
-    /*
-    https://github.com/simplechatclient/simplechatclient/issues/280
-
-    cookieJar->deleteLater();
-    cookieJar = new QNetworkCookieJar();
-    accessManager->setCookieJar(cookieJar);
-    */
-#endif
 }
 
 QString OnetAuth::getVersion(const QString &strData)

@@ -21,13 +21,7 @@
 #define SOUND_NOTIFY_H
 
 #include "scc-config.h"
-#if (QT_VERSION >= 0x050000)
-    #include <QMediaPlayer>
-#else
-    #if WITH_PHONON
-        #include <phonon/MediaObject>
-    #endif
-#endif
+#include <QMediaPlayer>
 #include <QObject>
 #include <QThread>
 
@@ -38,17 +32,9 @@ class SoundThread : public QThread
 public:
     void run() { music->stop(); music->play(); exec(); }
 
-#if (QT_VERSION >= 0x050000)
     void setMedia(QMediaPlayer *m) { music = m; }
 private:
     QMediaPlayer *music;
-#else
-    #if WITH_PHONON
-        void setMedia(Phonon::MediaObject *m) { music = m; }
-private:
-        Phonon::MediaObject *music;
-    #endif
-#endif
 };
 
 /**
@@ -69,13 +55,7 @@ public:
 
 private:
     QString apath;
-#if (QT_VERSION >= 0x050000)
     QMediaPlayer *music;
-#else
-    #if WITH_PHONON
-        Phonon::MediaObject *music;
-    #endif
-#endif
     NotifyCategory eCurrentCategory;
     SoundThread thread;
 

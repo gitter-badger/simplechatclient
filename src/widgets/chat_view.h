@@ -21,7 +21,7 @@
 #define CHAT_VIEW_H
 
 #include "defines.h"
-#include <QtWebKit/QWebView>
+#include <QtWebKitWidgets/QWebView>
 
 class ChatView : public QWebView
 {

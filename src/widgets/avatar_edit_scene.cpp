@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QPainter>
 
 #include "avatar_edit_scene.h"

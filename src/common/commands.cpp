@@ -28,7 +28,7 @@
 #include "utils.h"
 #include "commands.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include "winamp.h"
 #else
     #include "mpris_player.h"
@@ -495,7 +495,7 @@ QString Commands::cmdMp3()
 {
     QString strMessage = QString::null;
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     const QString strPlayer = "Winamp";
     Winamp *pWinamp = new Winamp();
     bool bIsRunning = pWinamp->isRunning();

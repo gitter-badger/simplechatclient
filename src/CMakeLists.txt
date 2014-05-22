@@ -309,12 +309,12 @@ endif (WIN32)
 
 # qca2
 if (WIN32)
-	set (QCA2_INCLUDE_DIRS ${WIN32_QCA2_DIR}/include/QtCrypto)
+	set (QCA2_INCLUDE_DIRS ${Qt5Widgets_INCLUDES}/QtCrypto)
 	set (QCA2_LIBRARY_DIRS ${WIN32_QCA2_DIR}/lib)
 	if (MINGW)
-		set (QCA2_LIBRARIES -lqca2)
+		set (QCA2_LIBRARIES -lqca)
 	else (MINGW)
-		set (QCA2_LIBRARIES ${WIN32_QCA2_DIR}/lib/qca2.lib)
+		set (QCA2_LIBRARIES ${WIN32_QCA2_DIR}/lib/libqca.lib)
 	endif (MINGW)
 else (WIN32)
 	pkg_search_module (QCA2 REQUIRED qca2)
@@ -324,44 +324,25 @@ include_directories (${QCA2_INCLUDE_DIRS})
 link_directories (${QCA2_LIBRARY_DIRS})
 add_definitions (${QCA2_CFLAGS_OTHER})
 
-option (WITH_PHONON "Compile with Phonon support" ON)
-if (WITH_PHONON)
-	pkg_search_module (PHONON phonon)
-	if (PHONON_FOUND)
-		set (PHONON_LIBRARIES ${PHONON_LIBRARIES})
-		link_directories (${PHONON_LIBRARY_DIRS})
-		include_directories (${PHONON_INCLUDE_DIRS})
-	else (PHONON_FOUND)
-		if (QT_PHONON_FOUND)
-			set (PHONON_LIBRARIES ${QT_PHONON_LIBRARY})
-			include_directories (${QT_PHONON_INCLUDE_DIR})
-		else (QT_PHONON_FOUND)
-			message (FATAL_ERROR "Could not find Phonon library")
-		endif (QT_PHONON_FOUND)
-	endif (PHONON_FOUND)
-	message (STATUS "Found Phonon library: ${PHONON_LIBRARIES}") 
-else (WITH_PHONON)
-	message (STATUS "Phonon disabled")
-endif (WITH_PHONON)
+# Tell CMake to run moc when necessary:
+set(CMAKE_AUTOMOC ON)
+
+# As moc files are generated in the binary dir, tell CMake
+# to always look for includes there:
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # qt
-#find_package (Qt4 REQUIRED)
-
-# xml
-set (QT_USE_QTXML TRUE)
-
-# webkit
-set (QT_USE_QTWEBKIT TRUE)
-
-# rest
-include (${QT_USE_FILE})
-
+find_package(Qt5Widgets)
+find_package(Qt5Multimedia)
+find_package(Qt5Network)
+#find_package(Qt5LinguistTools)
+find_package(Qt5WebKit)
+find_package(Qt5WebKitWidgets)
+find_package(Qt5Xml)
+ 
 # include qt qtnetwork
 include_directories (
-	${QT_INCLUDE_DIR}
-	${QT_QTNETWORK_INCLUDE_DIR}
 	${CMAKE_BINARY_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/common
 	${CMAKE_CURRENT_SOURCE_DIR}/core
 	${CMAKE_CURRENT_SOURCE_DIR}/gui
@@ -373,13 +354,13 @@ include_directories (
 
 # resources
 set (scc_QRC ../scc.qrc)
-qt4_add_resources (scc_QRC_SRCS ${scc_QRC})
+qt5_add_resources (scc_QRC_SRCS ${scc_QRC})
 
 # ui
-qt4_wrap_ui (scc_UIS_H ${scc_UIS})
+qt5_wrap_ui (scc_UIS_H ${scc_UIS})
 
 # moc
-qt_wrap_cpp (scc MOC_FILES ${scc_MOC_HDRS})
+qt5_generate_moc (scc MOC_FILES ${scc_MOC_HDRS})
 
 # resource
 set (scc_RESOURCE ../scc_mingw.rc)
@@ -393,8 +374,10 @@ else (MINGW) # linux
 	add_executable (scc ${scc_SRCS} ${MOC_FILES} ${scc_HDRS} ${scc_QRC_SRCS} ${scc_UIS_H})
 endif (MINGW)
 
-target_link_libraries (scc ${QT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES} ${QCA2_LIBRARIES} ${PHONON_LIBRARIES})
+target_link_libraries (scc Qt5::Widgets Qt5::Multimedia Qt5::Network Qt5::WebKit Qt5::WebKitWidgets Qt5::Xml ${QCA2_LIBRARIES})
 
+#qt5_use_modules(scc Widgets Multimedia Network WebKit WebKitWidgets Xml)
+ 
 # install
 if (UNIX AND NOT APPLE)
 	install (TARGETS scc DESTINATION ${SCC_BIN_DIR})

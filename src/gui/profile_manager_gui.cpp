@@ -28,8 +28,8 @@
 #include "settings.h"
 #include "profile_manager_gui.h"
 
-#ifdef Q_WS_WIN
-    #include <QDesktopServices>
+#ifdef Q_OS_WIN
+    #include <QStandardPaths>
 #endif
 
 ProfileManagerGui::ProfileManagerGui(OptionsGui *_pOptionsGui, QWidget *parent) : QDialog(parent), pOptionsGui(_pOptionsGui)
@@ -102,8 +102,8 @@ bool ProfileManagerGui::existProfile(const QString &strExistProfile)
 
 void ProfileManagerGui::createPath()
 {
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     path += "/scc/";
 #else
     path = QDir::homePath()+"/.scc/";

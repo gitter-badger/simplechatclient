@@ -29,7 +29,7 @@ Linux Debian/Ubuntu packages
 =========
 ::
 
-	libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake make pkg-config
+	libssl-dev libqca2-dev libqca2-plugin-ossl g++ cmake make pkg-config
 
 *******************
 Custom build
@@ -52,12 +52,6 @@ Available options
 
 -	ON - compile with Kamerzysta connection (default=ON on Windows)
 -	OFF - compile with internal webcam window (default=OFF on Unix/Linux)
-
-::
-
-	-DWITH_PHONON=ON|OFF
-
-compile with Phonon (default=ON)
 
 ::
 

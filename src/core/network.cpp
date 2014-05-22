@@ -20,6 +20,7 @@
 #include <QDateTime>
 #include <QTcpSocket>
 #include <QTimer>
+#include <QTextCodec>
 #include "autoaway.h"
 #include "away.h"
 #include "busy.h"
@@ -258,7 +259,10 @@ void Network::write(const QString &strData)
         if (Settings::instance()->get("debug") == "true")
             Message::instance()->showMessage(DEBUG_WINDOW, "-> "+strData, MessageDefault);
 
-        if (socket->write((strData+"\r\n").toAscii()) == -1)
+        QTextCodec *codec = QTextCodec::codecForName("ISO-8859-2");
+        QByteArray bISOData = codec->fromUnicode(strData+"\r\n");
+
+        if (socket->write(bISOData) == -1)
         {
             if (socket->state() == QAbstractSocket::ConnectedState)
             {
@@ -305,8 +309,11 @@ void Network::recv()
         // set active
         iActive = QDateTime::currentMSecsSinceEpoch();
 
+        QTextCodec *codec = QTextCodec::codecForName("ISO-8859-2");
+        QString strData = codec->toUnicode(data);
+
         // process to kernel
-        emit kernel(QString(data));
+        emit kernel(strData);
     }
 }
 

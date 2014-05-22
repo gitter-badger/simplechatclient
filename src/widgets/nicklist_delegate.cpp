@@ -68,7 +68,7 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         selected = true;
     }
 /*
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
     else if (option.state & QStyle::State_MouseOver)
     {
         painter->fillRect(option.rect, option.palette.highlight());

@@ -28,9 +28,9 @@
 #include "nick.h"
 #include "settings.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     #include <QCoreApplication>
-    #include <QDesktopServices>
+    #include <QStandardPaths>
 #else
     #include "scc-config.h"
 #endif
@@ -144,8 +144,8 @@ QString Avatar::getAvatarPath(const QString &strAvatar)
 {
     QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
-#ifdef Q_WS_WIN
-    path = QFileInfo(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)).absoluteFilePath();
+#ifdef Q_OS_WIN
+    path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
     path += "/scc/";
 #else
     path = QDir::homePath()+"/.scc/";
@@ -163,7 +163,7 @@ QString Avatar::getAvatarPath(const QString &strAvatar)
 QString Avatar::getEmptyRegisteredUserAvatar()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;
@@ -175,7 +175,7 @@ QString Avatar::getEmptyRegisteredUserAvatar()
 QString Avatar::getEmptyRegisteredUserAvatarBig()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;
@@ -187,7 +187,7 @@ QString Avatar::getEmptyRegisteredUserAvatarBig()
 QString Avatar::getEmptyUnregisteredUserAvatar()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;
@@ -199,7 +199,7 @@ QString Avatar::getEmptyUnregisteredUserAvatar()
 QString Avatar::getEmptyUnregisteredUserAvatarBig()
 {
     QString path;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     path = QCoreApplication::applicationDirPath();
 #else
     path = SCC_DATA_DIR;

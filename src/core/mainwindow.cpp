@@ -401,7 +401,7 @@ void MainWindow::refreshColors()
 
     if (Settings::instance()->get("background_color").toLower() != "#ffffff")
     {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
         QString strMidColor = this->palette().midlight().color().name();
         strTabBackgroundColor = QString("QTabBar::tab { padding: 4px; margin-right: 3px; border: 1px solid %1; border-top-left-radius: 6px; border-top-right-radius: 6px; min-width: 8ex; background-color: %2;}").arg(strMidColor, Settings::instance()->get("background_color"));
 #endif
@@ -830,7 +830,7 @@ void MainWindow::insertTextToInputLine(const QString &strText)
 
 void MainWindow::toolButtonFix(QWidget *widget)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     // workaround for QTBUG-21808
     Q_ASSERT(widget);
     widget->setStyleSheet("QTabBar QToolButton {"
