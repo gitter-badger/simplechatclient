@@ -107,7 +107,8 @@ xcopy %QT_DIR%\bin\libwinpthread-1.dll  %DESTINATION%\ /C /H /R /Y /Q
 echo Copying Qt plugins
 xcopy %QT_DIR%\plugins\imageformats\qgif.dll         %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\imageformats\qjpeg.dll        %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
-xcopy %QT_DIR%\plugins\audio\qtaudio_windows.dll     %DESTINATION%\plugins\audio\ /C /H /R /Y /Q
+xcopy %QT_DIR%\plugins\mediaservice\dsengine.dll     %DESTINATION%\plugins\mediaservice\ /C /H /R /Y /Q
+rem xcopy %QT_DIR%\plugins\mediaservice\qtmedia_audioengine.dll     %DESTINATION%\plugins\mediaservice\ /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\platforms\qwindows.dll        %DESTINATION%\plugins\platforms\ /C /H /R /Y /Q
 
 echo Creating Qt conf
