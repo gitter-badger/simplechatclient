@@ -93,7 +93,14 @@ void ChatView::createBody()
                      "function clearMessages() { "
                          "var chatElement = document.getElementById('Chat'); "
                          "chatElement.innerHTML = ''; "
-                     "}";
+                     "}"
+
+                    "function imgError(image) {"
+                        "image.onerror = '';"
+                        //"image.src = 'qrc:/images/not_image.png';"
+                        "image.style.display = 'none';"
+                        "return true;"
+                    "}";
 
     QString strMainHtml = "<html>"
                               "<head>"

@@ -143,7 +143,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         strDataList << "<br/><span class=\"thumbs\">";
 
         foreach (const QString strImage, lUrlImages)
-            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\" /></a>").arg(strImage, strImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strImage, strImage);
 
         foreach (const QString strImage, lYoutubeImages)
         {
