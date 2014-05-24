@@ -375,8 +375,6 @@ else (MINGW) # linux
 endif (MINGW)
 
 target_link_libraries (scc Qt5::Widgets Qt5::Multimedia Qt5::Network Qt5::WebKit Qt5::WebKitWidgets Qt5::Xml ${QCA2_LIBRARIES})
-
-#qt5_use_modules(scc Widgets Multimedia Network WebKit WebKitWidgets Xml)
  
 # install
 if (UNIX AND NOT APPLE)
