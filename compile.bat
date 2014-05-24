@@ -36,7 +36,7 @@ exit
 )
 
 if not exist %QCA2_DIR%\include\QtCrypto\qca.h (
-echo Download QCA2 from http://delta.affinix.com/download/qca/2.0/qca-2.0.3.tar.bz2
+echo Download QCA2 from https://projects.kde.org/projects/kdesupport/qca/repository
 pause
 exit
 )
