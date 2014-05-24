@@ -3,4 +3,3 @@
 #define SCC_DATA_DIR "${SCC_DATA_DIR}"
 
 #cmakedefine01 WITH_KAMERZYSTA
-#cmakedefine01 WITH_PHONON
