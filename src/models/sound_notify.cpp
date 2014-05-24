@@ -37,11 +37,14 @@ SoundNotify * SoundNotify::instance()
 void SoundNotify::init()
 {
     music = new QMediaPlayer;
+
+    QString strSoundBeep = Settings::instance()->get("sound_beep");
+    eCurrentCategory = Beep;
+    music->setMedia(QUrl::fromLocalFile(strSoundBeep));
 }
 
 SoundNotify::SoundNotify()
 {
-    eCurrentCategory = Beep;
 }
 
 SoundNotify::~SoundNotify()
