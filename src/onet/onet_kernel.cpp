@@ -99,6 +99,7 @@ void OnetKernel::kernel(const QString &_strData)
         else if (strCmd1 == "MODERATE") raw_moderate();
         else if (strCmd1 == "KILL") raw_kill();
         else if (strCmd1 == "NICK") raw_nick();
+        else if (strCmd1 == "SNONOTICE") raw_snonotice();
         else
             bUnknownRaw1 = true;
 
@@ -1161,6 +1162,24 @@ void OnetKernel::raw_nick()
         // update nick
         Core::instance()->mainWindow()->updateNick(strNewNick);
     }
+}
+
+// :cf1f1.onet SNONOTICE f :FILTER: StyX1 had their message filtered, target was #scc: Naruszanie regulaminu czata #29012
+void OnetKernel::raw_snonotice()
+{
+    if (strDataList.size() < 3) return;
+
+    QString strNick = strDataList.at(0);
+    if (strNick.at(0) == ':') strNick.remove(0,1);
+    strNick = strNick.left(strNick.indexOf('!'));
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    if (strMessage.at(0) == ':') strMessage.remove(0,1);
+
+    QString strDisplay = QString("-%1- %2").arg(strNick, strMessage);
+
+    Message::instance()->showMessage(STATUS_WINDOW, strDisplay, MessageNotice);
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
