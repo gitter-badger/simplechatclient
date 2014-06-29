@@ -2,13 +2,12 @@
 
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
-set QT_DIR="c:\Qt\Qt5.3.0\5.3\mingw482_32"
+set QT_DIR="c:\Qt\Qt5.3.1\5.3\mingw482_32"
 set QCA2_DIR="C:\qca-2.0.3"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
-set QCA_OSSL_DIR="C:\qca-ossl-2.0.0-beta3"
-set MINGW_DIR="C:\MinGW"
-set CMAKE_DIR="C:\Program Files\CMake 2.8"
-set CMAKE32_DIR="C:\Program Files (x86)\CMake 2.8"
+set MINGW_DIR="c:\Qt\Qt5.3.1\Tools\mingw482_32"
+set CMAKE_DIR="C:\Program Files\CMake"
+set CMAKE32_DIR="C:\Program Files (x86)\CMake"
 
 rem ----------------------- END OF CONFIG ---------------------------
 
@@ -17,7 +16,7 @@ set QTDIR=%QT_DIR%
 
 if not exist %CMAKE_DIR%\bin\cmake.exe (
 if not exist %CMAKE32_DIR%\bin\cmake.exe (
-echo Download CMake from http://www.cmake.org/files/v2.8/cmake-2.8.12.2-win32-x86.exe
+echo Download CMake from http://www.cmake.org/files/v3.0/cmake-3.0.0-win32-x86.exe
 pause
 exit
 )
