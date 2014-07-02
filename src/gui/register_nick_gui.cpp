@@ -85,7 +85,7 @@ void RegisterNickGui::getCookies()
 void RegisterNickGui::gotCookies()
 {
     // save cookies
-    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl/"));
     foreach (const QNetworkCookie &cookie, cookies)
     {
         QString strKey = cookie.name();

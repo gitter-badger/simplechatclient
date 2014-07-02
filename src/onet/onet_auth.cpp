@@ -330,7 +330,7 @@ void OnetAuth::saveCookies()
     constCookies << "onet_ubi" << "onet_cid" << "onet_sid" << "onet_uid" << "onetzuo_ticket" << "onet_uoi" << "onet_sgn";
 
     // save cookies
-    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl/"));
     foreach (const QNetworkCookie &cookie, cookies)
     {
         QString strKey = cookie.name();
@@ -350,7 +350,7 @@ void OnetAuth::removeCookies()
         Settings::instance()->set(constCookie, QString::null);
 
     // clear from cookie jar
-    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl"));
+    QList<QNetworkCookie> cookies = accessManager->cookieJar()->cookiesForUrl(QUrl("http://czat.onet.pl/"));
     foreach (const QNetworkCookie &cookie, cookies)
         accessManager->cookieJar()->deleteCookie(cookie);
 }
