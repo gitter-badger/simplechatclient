@@ -1042,6 +1042,13 @@ void OnetKernel::raw_invignore()
 
     QString strChannel = strDataList.at(3);
 
+    if (strChannel.at(0) == '^')
+    {
+        Channel::instance()->setAlternativeName(strChannel, strWho);
+
+        pTabC->renameTab(strChannel, strWho);
+    }
+
     QString strDisplay;
     if (strChannel.at(0) == '^')
         strDisplay = QString(tr("* %1 ignored your invitation to the priv")).arg(strWho);
