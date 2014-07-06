@@ -72,6 +72,7 @@ private slots:
     void createList();
     void buttonClear();
     void showAdvOptions();
+    void refresh();
 };
 
 #endif // CHANNEL_LIST_GUI_H

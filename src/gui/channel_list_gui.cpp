@@ -48,6 +48,7 @@ void ChannelListGui::createGui()
 {
     ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
     ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
+    ui.buttonBox->button(QDialogButtonBox::Retry)->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.groupBox_search->setTitle(tr("Search"));
@@ -87,9 +88,17 @@ void ChannelListGui::createGui()
     ui.tabWidget->setTabIcon(4, QIcon(":/images/oxygen/16x16/karbon.png"));
     ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
 
+    ui.buttonBox->button(QDialogButtonBox::Retry)->setText(tr("Refresh"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     Core::instance()->mainWindow()->toolButtonFix(ui.tabWidget);
+}
+
+void ChannelListGui::refresh()
+{
+    ChannelList::instance()->clear();
+    Core::instance()->network->send("SLIST  R- 0 0 100 null");
+    createList();
 }
 
 void ChannelListGui::setDefaultValues()
@@ -119,6 +128,7 @@ void ChannelListGui::createSignals()
     connect(ui.tableWidget_erotic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(eroticCellDoubleClicked(int,int)));
     connect(ui.tableWidget_thematic, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(thematicCellDoubleClicked(int,int)));
     connect(ui.tableWidget_regional, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(regionalCellDoubleClicked(int,int)));
+    connect(ui.buttonBox, SIGNAL(accepted()), this, SLOT(refresh()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     connect(ui.lineEdit_search, SIGNAL(returnPressed()), this, SLOT(createList()));

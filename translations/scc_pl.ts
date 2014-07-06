@@ -735,6 +735,10 @@
         <translation>Wchodzę</translation>
     </message>
     <message>
+        <source>Refresh</source>
+        <translation>Odśwież</translation>
+    </message>
+    <message>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
