@@ -33,8 +33,8 @@
     #include <QSysInfo>
 #endif
 
-#define UPDATE_URL_1 "http://simplechatclien.sourceforge.net/update.xml"
-#define UPDATE_URL_2 "http://simplechatclient.github.io/update.xml"
+#define UPDATE_URL_SOURCEFORGE "http://simplechatclien.sourceforge.net/update.xml"
+#define UPDATE_URL_GITHUB "http://simplechatclient.github.io/update.xml"
 
 Update * Update::Instance = 0;
 
@@ -64,7 +64,12 @@ Update::~Update()
 
 void Update::checkUpdate()
 {
-    QString strUrl = UPDATE_URL_1;
+    checkUpdateSourceforge();
+}
+
+void Update::checkUpdateSourceforge()
+{
+    QString strUrl = UPDATE_URL_SOURCEFORGE;
 
     QString strAgentPlatform = this->getPlatform();
     QString strAgentUrl = "http://simplechatclien.sourceforge.net";
@@ -84,16 +89,42 @@ void Update::checkUpdate()
 
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
-        pReply->setProperty("update_url", "1");
+        pReply->setProperty("update_url", UPDATE_URL_SOURCEFORGE);
     }
     else
     {
         QNetworkReply *pReply = accessManager->get(request);
-        pReply->setProperty("update_url", "1");
+        pReply->setProperty("update_url", UPDATE_URL_SOURCEFORGE);
     }
 }
 
-void Update::compareVersion()
+void Update::checkUpdateGithub()
+{
+    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_GITHUB)));
+    pReply->setProperty("update_url", UPDATE_URL_GITHUB);
+}
+
+int Update::fastParseVersion(QString strVersionXml)
+{
+    if (strVersionXml.isEmpty()) return 0;
+
+    QDomDocument doc;
+    doc.setContent(strVersionXml);
+
+    if (doc.isNull()) return 0;
+
+    QString strVersion = doc.elementsByTagName("version").item(0).toElement().text();
+
+    if (strVersion.isEmpty()) return 0;
+
+    QStringList lVersion = strVersion.split(".");
+    int iMajor = lVersion.at(0).toInt();
+    int iMinor = lVersion.at(1).toInt();
+    int iPatch = lVersion.at(2).toInt();
+    return (QString("%1%2%3").arg(iMajor).arg(iMinor).arg(iPatch)).toInt();
+}
+
+QString Update::fullParseVersion()
 {
     QString strCurrentVersion = Settings::instance()->get("version");
     QStringList lCurrentVersion = strCurrentVersion.split(".");
@@ -109,27 +140,20 @@ void Update::compareVersion()
     int iAvailablePatch = lAvailableVersion.at(2).toInt();
     int iAvailableVersion = (QString("%1%2%3").arg(iAvailableMajor).arg(iAvailableMinor).arg(iAvailablePatch)).toInt();
 
-    QString strVersionStatus;
     if (iAvailableVersion == iCurrentVersion)
-        strVersionStatus = UPDATE_STATUS_UPTODATE;
+        return UPDATE_STATUS_UPTODATE;
     else if (iAvailableVersion < iCurrentVersion)
-        strVersionStatus = UPDATE_STATUS_BETA;
+        return UPDATE_STATUS_BETA;
     else if (iAvailableVersion > iCurrentVersion)
-        strVersionStatus = UPDATE_STATUS_OUTOFDATE;
+        return UPDATE_STATUS_OUTOFDATE;
     else
-        strVersionStatus = UPDATE_STATUS_UNKNOWN;
-
-    // save status
-    Settings::instance()->set("version_status", strVersionStatus);
-
-    if (Settings::instance()->get("debug") == "true")
-        qDebug() << "Current version: " << strCurrentVersion << " Available version: " << strAvailableVersion << " Status: " << strVersionStatus;
+        return UPDATE_STATUS_UNKNOWN;
 }
 
-void Update::saveSettings(QString strUpdateXml)
+void Update::saveUpdate(QString strXml)
 {
     QDomDocument doc;
-    doc.setContent(strUpdateXml);
+    doc.setContent(strXml);
 
     QString strAvailableVersion = doc.elementsByTagName("version").item(0).toElement().text();
     QString strWhatsNew = doc.elementsByTagName("whats_new").item(0).toElement().text();
@@ -149,42 +173,49 @@ void Update::updateFinished(QNetworkReply *reply)
 {
     reply->deleteLater();
 
-    int update_url = reply->property("update_url").toInt();
+    QString update_url = reply->property("update_url").toString();
 
-    // if errors
     if (reply->error())
+        hUpdateResults[update_url] = QString::null;
+    else
     {
-        if (update_url == 1)
-        {
-            QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_2)));
-            pReply->setProperty("update_url", "2");
-        }
-        else
-        {
-            if (Settings::instance()->get("debug") == "true")
-                qWarning() << "Error: Cannot get update xml";
-        }
+        QString strUpdateXml = reply->readAll();
 
-        return;
+        hUpdateResults[update_url] = strUpdateXml;
     }
 
-    QString strUpdateXml = reply->readAll();
-
-    if (!strUpdateXml.isEmpty())
+    if (hUpdateResults.size() == 1)
     {
-        saveSettings(strUpdateXml);
+        checkUpdateGithub();
+    }
+    else if (hUpdateResults.size() == 2)
+    {
+        int updateSourceforge = fastParseVersion(hUpdateResults.value(UPDATE_URL_SOURCEFORGE));
+        int updateGithub = fastParseVersion(hUpdateResults.value(UPDATE_URL_GITHUB));
 
-        if (!Settings::instance()->get("motd").isEmpty())
+        if ((updateSourceforge != 0) && (updateGithub != 0))
         {
-            QString strMOTD = Settings::instance()->get("motd");
-            QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
-            Message::instance()->showMessage(STATUS_WINDOW, strMessageOfTheDay, MessageDefault);
-        }
+            if (updateSourceforge >= updateGithub)
+                saveUpdate(hUpdateResults.value(UPDATE_URL_SOURCEFORGE));
+            else
+                saveUpdate(hUpdateResults.value(UPDATE_URL_GITHUB));
 
-        if (Settings::instance()->get("available_version") != "0.0.0.0")
-        {
-            compareVersion();
-            Notification::instance()->refreshUpdate();
+            if (!Settings::instance()->get("motd").isEmpty())
+            {
+                QString strMOTD = Settings::instance()->get("motd");
+                QString strMessageOfTheDay = QString("%Fb%%1 %2").arg(tr("Message Of The Day:"), strMOTD);
+                Message::instance()->showMessage(STATUS_WINDOW, strMessageOfTheDay, MessageDefault);
+            }
+
+            if (Settings::instance()->get("available_version") != "0.0.0.0")
+            {
+                QString strVersionStatus = fullParseVersion();
+
+                // save status
+                Settings::instance()->set("version_status", strVersionStatus);
+
+                Notification::instance()->refreshUpdate();
+            }
         }
     }
 }

@@ -44,9 +44,13 @@ public:
 
 private:
     QNetworkAccessManager *accessManager;
+    QHash<QString, QString> hUpdateResults;
 
-    void compareVersion();
-    void saveSettings(QString strUpdateXml);
+    void checkUpdateSourceforge();
+    void checkUpdateGithub();
+    int fastParseVersion(QString strXml);
+    QString fullParseVersion();
+    void saveUpdate(QString strXml);
     QString getPlatform();
 
 private slots:
