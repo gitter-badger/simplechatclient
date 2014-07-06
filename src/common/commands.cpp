@@ -37,7 +37,7 @@
 Commands::Commands(const QString &_strChan, const QString &_strData) : strChan(_strChan), strData(_strData)
 {
     if (!strData.isEmpty())
-        strDataList = strData.split(" ");
+        strDataList = strData.split(" ", QString::SkipEmptyParts);
 }
 
 QString Commands::execute()
