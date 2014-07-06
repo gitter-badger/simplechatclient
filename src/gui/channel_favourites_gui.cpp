@@ -53,6 +53,7 @@ void ChannelFavouritesGui::createGui()
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
     ui.toolButton_options->setText(tr("Options"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
     optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(join()));

@@ -52,6 +52,7 @@ void FindNickGui::createGui()
     ui.pushButton_clear->setText(tr("Clear"));
 
     ui.toolButton_options->setText(tr("Options"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
     optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));

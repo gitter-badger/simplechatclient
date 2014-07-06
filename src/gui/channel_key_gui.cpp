@@ -41,6 +41,8 @@ void ChannelKeyGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
 
     ui.label_msg->setText(tr("Enter key:"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 }
 
 void ChannelKeyGui::createSignals()

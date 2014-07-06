@@ -55,6 +55,7 @@ void WebcamStandardGui::createGui()
     ui.label_list_nick->setText(tr("Nick"));
     ui.label_list_spectators->setText(tr("Spectators"));
     ui.label_list_rank->setText(tr("Rank"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     //hide desc
     ui.textEdit_desc->clear();

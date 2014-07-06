@@ -55,6 +55,7 @@ void ProfileManagerGui::createGui()
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_edit->setText(tr("Edit"));
     ui.pushButton_remove->setText(tr("Remove"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     ui.pushButton_edit->setEnabled(false);
     ui.pushButton_remove->setEnabled(false);

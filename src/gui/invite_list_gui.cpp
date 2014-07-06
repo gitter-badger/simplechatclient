@@ -55,6 +55,7 @@ void InviteListGui::createGui()
     ui.pushButton_ignore->setText(tr("Ignore"));
 
     ui.toolButton_options->setText(tr("Options"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
     optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));

@@ -39,6 +39,7 @@ void UserAvatarGui::createGui()
     ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/zoom-out.png"));
     ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 
 void UserAvatarGui::setDefaultValues()

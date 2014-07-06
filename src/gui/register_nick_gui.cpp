@@ -67,6 +67,8 @@ void RegisterNickGui::createGui()
     ui.label_confirm_password->setText(tr("Confirm password:"));
     ui.label_code->setText(tr("Code:"));
     ui.pushButton_refresh->setText(tr("Refresh"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 }
 
 void RegisterNickGui::createSignals()

@@ -65,6 +65,8 @@ void MyProfileGui::createGui()
     ui.label_country->setText(tr("Country:"));
     ui.label_hobby->setText(tr("Hobby:"));
     ui.label_www->setText(tr("Website:"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 }
 
 void MyProfileGui::setDefaultValues()

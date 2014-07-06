@@ -180,6 +180,8 @@ void OptionsGui::createGui()
     ui.checkBox_minimize_to_tray->setText(tr("Minimize to tray"));
     ui.checkBox_zuo_and_ip->setText(tr("Show ZUO and IP"));
 
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
+
     // options list
     QListWidgetItem *basic = new QListWidgetItem(ui.listWidget_options);
     basic->setIcon(QIcon(":/images/oxygen/16x16/view-media-artist.png"));

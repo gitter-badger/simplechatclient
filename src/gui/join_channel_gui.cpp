@@ -43,8 +43,8 @@ void JoinChannelGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
 
     ui.pushButton_join->setText(tr("Join"));
-
     ui.label_channel_name->setText(tr("Channel name:"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 
 void JoinChannelGui::createSignals()

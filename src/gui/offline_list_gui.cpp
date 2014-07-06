@@ -48,6 +48,7 @@ void OfflineListGui::createGui()
 
     ui.pushButton_accept->setText(tr("Read"));
     ui.pushButton_reject->setText(tr("Reject"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 
 void OfflineListGui::createSignals()

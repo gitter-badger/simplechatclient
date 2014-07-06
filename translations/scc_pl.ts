@@ -457,6 +457,10 @@
         <source>Thanks to &lt;b&gt;ovo_&lt;/b&gt; for creating graphics and to all persons who actively support the development of the project.</source>
         <translation> Podziękowania dla &lt;b&gt;ovo_&lt;/b&gt; za wykonanie elementów grafiki oraz dla wszystkich, którzy aktywnie wsparli rozwój projektu.</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
 </context>
 <context>
     <name>AvatarEditGui</name>
@@ -471,6 +475,14 @@
     <message>
         <source>Size:</source>
         <translation>Wielkość:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -501,6 +513,10 @@
     <message>
         <source>Loading...</source>
         <translation>Wczytywanie...</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -536,6 +552,10 @@
     <message>
         <source>Enter the name of the channel to remove from the favorites:</source>
         <translation>Podaj nazwę pokoju do usunięcia z ulubionych:</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -580,6 +600,10 @@
         <source>Enter the name of the channel to remove:</source>
         <translation>Podaj nazwę pokoju do usunięcia:</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>ChannelKeyGui</name>
@@ -590,6 +614,14 @@
     <message>
         <source>Enter key:</source>
         <translation>Podaj klucz:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -701,6 +733,10 @@
     <message>
         <source>Enter</source>
         <translation>Wchodzę</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -985,6 +1021,25 @@
         <source>Channel exists days:</source>
         <translation>Pokój istnieje dni:</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+</context>
+<context>
+    <name>EmoticonsGui</name>
+    <message>
+        <source>Emoticons</source>
+        <translation>Emotikony</translation>
+    </message>
+    <message>
+        <source>Insert</source>
+        <translation>Wstaw</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>FindNickGui</name>
@@ -1020,16 +1075,9 @@
         <source>Invite</source>
         <translation>Zaproś</translation>
     </message>
-</context>
-<context>
-    <name>EmoticonsGui</name>
     <message>
-        <source>Emoticons</source>
-        <translation>Emotikony</translation>
-    </message>
-    <message>
-        <source>Insert</source>
-        <translation>Wstaw</translation>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1113,6 +1161,10 @@
         <source>Enter a nickname for removal:</source>
         <translation>Podaj nazwę nicka do usunięcia:</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>IgnoreGui</name>
@@ -1139,6 +1191,10 @@
     <message>
         <source>Enter a nickname for removal:</source>
         <translation>Podaj nazwę nicka do usunięcia:</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1175,6 +1231,10 @@
         <source>Whois</source>
         <translation>Gdzie jest</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>InviteListGui</name>
@@ -1210,6 +1270,10 @@
         <source>Whois</source>
         <translation>Gdzie jest</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>JoinChannelGui</name>
@@ -1224,6 +1288,10 @@
     <message>
         <source>Join</source>
         <translation>Wejdź</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1244,6 +1312,10 @@
         <source>Moderated by</source>
         <translation>Zmoderowany przez</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>MyAvatarGui</name>
@@ -1258,6 +1330,10 @@
     <message>
         <source>No photo available</source>
         <translation>Brak zdjęcia</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1298,6 +1374,14 @@
         <source>No photo available</source>
         <translation>Brak zdjęcia</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
 </context>
 <context>
     <name>MyStatsGui</name>
@@ -1308,7 +1392,7 @@
     <message>
         <source>Type</source>
         <translation>Ranga</translation>
-    </message>	
+    </message>
     <message>
         <source>Statistics</source>
         <translation>Statystyki</translation>
@@ -1325,12 +1409,24 @@
         <source>Average time:</source>
         <translation>Średnio spędzony czas na czacie:</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>NotesGui</name>
     <message>
         <source>Notes</source>
         <translation>Notatki</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -1350,6 +1446,10 @@
     <message>
         <source>Reject</source>
         <translation>Odrzuć</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1769,6 +1869,10 @@
         <source>Restore default</source>
         <translation>Przywróć domyślne</translation>
     </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>ProfileAddGui</name>
@@ -1804,6 +1908,14 @@
         <source>Profile already exists!</source>
         <translation>Profil już istnieje!</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
 </context>
 <context>
     <name>ProfileEditGui</name>
@@ -1822,6 +1934,14 @@
     <message>
         <source>Password is empty!</source>
         <translation>Hasło jest puste!</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -1845,6 +1965,10 @@
     <message>
         <source>Cannot remove last profile</source>
         <translation>Nie można usunąć ostatniego profilu</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1921,6 +2045,14 @@
         <source>Given passwords are not identical.</source>
         <translation>Podane hasła nie są identyczne.</translation>
     </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
 </context>
 <context>
     <name>ThemesGui</name>
@@ -1931,6 +2063,10 @@
     <message>
         <source>View</source>
         <translation>Przykładowy wygląd wybranej kompozycji</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -1965,6 +2101,10 @@
     <message>
         <source>Avatar</source>
         <translation>Avatar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>
@@ -2023,6 +2163,13 @@
     </message>
 </context>
 <context>
+    <name>WebBrowserGui</name>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+</context>
+<context>
     <name>WebcamMiniGui</name>
     <message>
         <source>Disconnected from server webcams</source>
@@ -2058,6 +2205,10 @@
     <message>
         <source>Downloading image</source>
         <translation>Pobieranie obrazu</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
     </message>
 </context>
 <context>

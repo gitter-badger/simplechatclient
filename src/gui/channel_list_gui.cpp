@@ -87,6 +87,8 @@ void ChannelListGui::createGui()
     ui.tabWidget->setTabIcon(4, QIcon(":/images/oxygen/16x16/karbon.png"));
     ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
 
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
+
     Core::instance()->mainWindow()->toolButtonFix(ui.tabWidget);
 }
 

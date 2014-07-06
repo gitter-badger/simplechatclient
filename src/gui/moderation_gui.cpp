@@ -49,6 +49,7 @@ void ModerationGui::createGui()
 
     ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_remove->setText(tr("Remove"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     ui.label_channel->setText(strCurrentChannel);
 }

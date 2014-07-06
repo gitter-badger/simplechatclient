@@ -45,6 +45,8 @@ void ProfileEditGui::createGui()
 
     ui.label_nick->setText(tr("Nick:"));
     ui.label_password->setText(tr("Password:"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 }
 
 void ProfileEditGui::setDefaultValues()

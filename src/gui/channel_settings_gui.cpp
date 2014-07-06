@@ -81,6 +81,7 @@ void ChannelSettingsGui::createGui()
     ui.pushButton_permission_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_permission_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     // summary
     ui.label_created1->setText(tr("Created:"));

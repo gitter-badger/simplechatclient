@@ -46,6 +46,7 @@ void IgnoreGui::createGui()
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 
 void IgnoreGui::createSignals()

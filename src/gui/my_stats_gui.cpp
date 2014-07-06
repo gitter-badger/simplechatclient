@@ -63,6 +63,7 @@ void MyStatsGui::createGui()
     ui.label_friends->setText(tr("Added you as a friend:"));
     ui.label_ignored->setText(tr("Added you to ignore:"));
     ui.label_average_time->setText(tr("Average time:"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 
 void MyStatsGui::createSignals()

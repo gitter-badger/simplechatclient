@@ -69,6 +69,8 @@ void AvatarEditGui::createGui()
 
     ui.label_fileName_title->setText(tr("Filename:"));
     ui.label_size_title->setText(tr("Size:"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 
     editScene = new AvatarEditScene(this);
     ui.graphicsView_edit->setScene(editScene);
