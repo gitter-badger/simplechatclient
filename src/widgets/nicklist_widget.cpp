@@ -56,6 +56,7 @@ void NickListWidget::addUser(const QString &strNick, const QString &strModes, in
     item->setData(NickListModesRole, strModes); // modes
     item->setData(NickListAvatarUrlRole, strAvatar); // avatar url
     item->setData(NickListSexRole, cSex); // sex
+    item->setData(NickListChannelRole, strChannel); // channel
 
     this->addItem(item);
 }

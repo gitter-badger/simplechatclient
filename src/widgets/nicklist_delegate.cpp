@@ -87,13 +87,14 @@ void NickListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     QString modes = index.data(NickListModesRole).toString();
     QString userAvatar = index.data(NickListAvatarUrlRole).toString();
     QChar userSex = index.data(NickListSexRole).toChar();
+    QString channel = index.data(NickListChannelRole).toString();
 
     bool busy = false;
     bool statusIcons = true;
 
     QList<QIcon> icons;
     if (modes.contains(FLAG_BUSY)) { busy = true; }
-    if (modes.contains(FLAG_CAM_PRIV)) { icons << QIcon(":/images/privcam.png"); }
+    if ((modes.contains(FLAG_CAM_PRIV)) && (channel.at(0) == '^')) { icons << QIcon(":/images/privcam.png"); }
     if (modes.contains(FLAG_CAM_PUB)) { icons << QIcon(":/images/pubcam.png"); }
     if (modes.contains(FLAG_VOICE)) { icons << QIcon(":/images/voice.png"); }
     if (modes.contains(FLAG_SCREENER)) { icons << QIcon(":/images/screener.png"); }

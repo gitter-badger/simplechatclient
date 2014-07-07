@@ -46,7 +46,8 @@ private:
     {
         NickListModesRole = Qt::UserRole+20,
         NickListAvatarUrlRole = Qt::UserRole+21,
-        NickListSexRole = Qt::UserRole+22
+        NickListSexRole = Qt::UserRole+22,
+        NickListChannelRole = Qt::UserRole+23
     };
 
     bool existUser(const QString &strNick);

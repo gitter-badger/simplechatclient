@@ -46,7 +46,9 @@ void Nick::clear()
 
 void Nick::add(const QString &strNick, const QString &strChannel, QString strModes)
 {
+    // hide OP flag if owner
     if ((strModes.contains(FLAG_OWNER)) && (strModes.contains(FLAG_OP))) strModes.remove(FLAG_OP);
+
     int iMaxModes = createMaxModes(strModes);
     QChar cSex = USER_SEX_UNKNOWN;
 
