@@ -26,6 +26,7 @@
 QT_BEGIN_NAMESPACE
 class QTcpSocket;
 class QTimer;
+class QTextCodec;
 QT_END_NAMESPACE
 
 class WebcamNetwork : public QObject
@@ -58,6 +59,7 @@ private:
     qint64 iLastKeepAlive;
     bool bText;
     bool bReconnecting;
+    QTextCodec *codec_iso8859_2;
 
 private slots:
     void networkRead();

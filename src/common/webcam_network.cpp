@@ -19,6 +19,7 @@
 
 #include <QDateTime>
 #include <QTcpSocket>
+#include <QTextCodec>
 #include <QTimer>
 #include "settings.h"
 #include "webcam_network.h"
@@ -27,6 +28,8 @@ WebcamNetwork::WebcamNetwork() : iLastActive(0), iLastKeepAlive(0), bReconnectin
 {
     timerPingPong = new QTimer();
     timerPingPong->setInterval(1000*60*1); // 1 min
+
+    codec_iso8859_2 = QTextCodec::codecForName("ISO-8859-2");
 
     socket = new QTcpSocket(this);
     socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
@@ -131,7 +134,7 @@ void WebcamNetwork::networkRead()
     {
         // read line
         QByteArray data = socket->readLine().trimmed();
-        QString strData = QString(data);
+        QString strData = codec_iso8859_2->toUnicode(data);
         emit textKernel(strData);
     }
     // read data (image, description)

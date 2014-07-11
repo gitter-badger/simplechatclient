@@ -45,8 +45,8 @@ private:
     bool bMini;
     WebcamNetwork *pWebcamNetwork;
 
+    QTextCodec *codec_iso8859_2;
     QTextCodec *codec_cp1250;
-    QString cp2unicode(const QByteArray&);
 
     void createSignals();
     int iCamCmd;

@@ -27,6 +27,7 @@
 
 WebcamEngine::WebcamEngine(const QString &_strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)
 {
+    codec_iso8859_2 = QTextCodec::codecForName("ISO-8859-2");
     codec_cp1250 = QTextCodec::codecForName("CP1250");
 
     pWebcamNetwork = new WebcamNetwork();
@@ -137,7 +138,7 @@ scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
 void WebcamEngine::raw_250b(const QByteArray &data)
 {
     // init data
-    QString strData(data);
+    QString strData = codec_iso8859_2->toUnicode(data);
 
     // is empty
     if (strData.isEmpty())
@@ -206,7 +207,7 @@ scc_test:1:2/0/#Quiz/0,2/0/#Relax/0,2/0/#Scrabble/0,4/0/#scc/0:0::0
 */
 void WebcamEngine::raw_251b(const QByteArray &data)
 {
-    QString strLine(data);
+    QString strLine = codec_iso8859_2->toUnicode(data);
 
     // is empty
     if (strLine.isEmpty())
@@ -265,7 +266,7 @@ void WebcamEngine::raw_252b(const QByteArray &data)
 {
     if (data.indexOf("SETSTATUS ") == 0)
     {
-        QString strStatus = cp2unicode(data.mid(10));
+        QString strStatus = codec_cp1250->toUnicode(data.mid(10));
 
         if (Settings::instance()->get("debug") == "true")
             qDebug() << "CAM <- SETSTATUS " << strStatus;
@@ -284,7 +285,7 @@ Bluesky 2 0
 /* multi-line */
 void WebcamEngine::raw_254b(const QByteArray &data)
 {
-    QString strData(data);
+    QString strData = codec_iso8859_2->toUnicode(data);
 
     // is empty
     if (strData.isEmpty())
@@ -808,9 +809,4 @@ void WebcamEngine::raw_520()
 {
     emit error(tr("Invalid authorization key"));
     pWebcamNetwork->networkDisconnect();
-}
-
-QString WebcamEngine::cp2unicode(const QByteArray &buf)
-{
-    return codec_cp1250->toUnicode(buf);
 }
