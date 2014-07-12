@@ -347,6 +347,10 @@
         <translation>/whereis [nick] lub /whois [nick] - wyświetlenie informacji gdzie znajduje się użytkownik</translation>
     </message>
     <message>
+        <source>/whowas [nick] - returns a list of times the user was last seen on chat</source>
+        <translation>/whowas [nick] - wyświetla informacje o podanym nicku, z jego poprzednich połączeń do czata</translation>
+    </message>
+    <message>
         <source>No reason</source>
         <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
     </message>
