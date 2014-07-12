@@ -315,7 +315,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTextEdit" name="textEdit_channels">
+       <widget class="QTextBrowser" name="textBrowser_channels">
         <property name="maximumSize">
          <size>
           <width>16777215</width>

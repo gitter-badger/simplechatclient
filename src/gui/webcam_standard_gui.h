@@ -69,6 +69,7 @@ private slots:
     void votePlus();
     void enableVote();
     void buttonClose();
+    void channelClicked(QUrl url);
 
 protected:
     virtual void closeEvent(QCloseEvent *);

@@ -19,7 +19,9 @@
 
 #include <QPushButton>
 #include <QTimer>
+
 #include "defines.h"
+#include "core.h"
 #include "simple_rank_widget.h"
 #include "webcam_delegate.h"
 #include "webcam_standard_gui.h"
@@ -68,6 +70,7 @@ void WebcamStandardGui::createSignals()
     connect(ui.toolButton_vote_minus, SIGNAL(clicked()), this, SLOT(voteMinus()));
     connect(ui.toolButton_vote_plus, SIGNAL(clicked()), this, SLOT(votePlus()));
     connect(ui.buttonBox, SIGNAL(rejected()), this, SLOT(buttonClose()));
+    connect(ui.textBrowser_channels, SIGNAL(anchorClicked(QUrl)), this, SLOT(channelClicked(QUrl)));
 }
 
 void WebcamStandardGui::updateImage(const QByteArray &b)
@@ -98,7 +101,7 @@ void WebcamStandardGui::userError(const QString &s)
     // rank
     pSimpleRankWidget->setRank(0);
     // channels
-    ui.textEdit_channels->clear();
+    ui.textBrowser_channels->clear();
 }
 
 void WebcamStandardGui::updateStatus(const QString &s)
@@ -142,7 +145,7 @@ void WebcamStandardGui::error(const QString &s)
     ui.textEdit_desc->clear();
     ui.textEdit_desc->hide();
     pSimpleRankWidget->setRank(0);
-    ui.textEdit_channels->clear();
+    ui.textBrowser_channels->clear();
 }
 
 void WebcamStandardGui::updateUser(const QString &strNick, int iSpectators, int iRank, int iCamOnOff, const QString &strUdget, const QStringList &lUserChannels)
@@ -255,9 +258,10 @@ void WebcamStandardGui::changeUser(QListWidgetItem *item)
 
     // update channels
     QString strNewNickChannels;
-    foreach (QString strNewNickChannel, lNewNickChannels) strNewNickChannels += strNewNickChannel+" ";
+    foreach (QString strNewNickChannel, lNewNickChannels)
+        strNewNickChannels += QString("<a zzonclick=\"return false\" name=\"channel\" href=\"%1\" class=\"ChannelColor\">%2</a> ").arg(strNewNickChannel, strNewNickChannel);
 
-    ui.textEdit_channels->setText(QString("<b>%1:</b><br/><font color=\"#0000ff\">%2</font>").arg(tr("Is on channels"), strNewNickChannels));
+    ui.textBrowser_channels->setText(QString("<b>%1:</b><br/>%2").arg(tr("Is on channels"), strNewNickChannels));
 }
 
 void WebcamStandardGui::buttonClose()
@@ -268,4 +272,9 @@ void WebcamStandardGui::buttonClose()
 void WebcamStandardGui::closeEvent(QCloseEvent *)
 {
     emit closeCam();
+}
+
+void WebcamStandardGui::channelClicked(QUrl url)
+{
+    Core::instance()->network->send(QString("JOIN %1").arg(url.toString()));
 }
