@@ -43,6 +43,7 @@ private:
     QString strData;
     QStringList strDataList;
 
+private slots:
     void raw_error();
     void raw_ping();
     void raw_pong();
@@ -63,11 +64,11 @@ private:
     void raw_kill();
     void raw_nick();
     void raw_snonotice();
-    void raw_001();
-    void raw_002();
-    void raw_003();
-    void raw_004();
-    void raw_005();
+    void raw_1();
+    void raw_2();
+    void raw_3();
+    void raw_4();
+    void raw_5();
     void raw_100n();
     void raw_109n();
     void raw_111n();

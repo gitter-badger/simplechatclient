@@ -104,6 +104,11 @@ void OnetKernel::kernel(const QString &_strData)
             bUnknownRaw1 = true;
 
         int iCmd1 = strDataList.at(1).toInt();
+        if (iCmd1 == 0 || !QMetaObject::invokeMethod(this, QString("raw_" + QString::number(iCmd1)).toStdString().c_str(), Qt::DirectConnection))
+            bUnknownRaw2 = true;
+
+        /*
+        int iCmd1 = strDataList.at(1).toInt();
         switch (iCmd1)
         {
             case 001: raw_001(); break;
@@ -224,9 +229,15 @@ void OnetKernel::kernel(const QString &_strData)
                 bUnknownRaw2 = true;
                 break;
         }
+        */
 
         if ((strDataList.at(1) == "NOTICE") && (!strDataList.value(3).isEmpty()))
         {
+            int iCmd3 = strDataList.at(3).mid(1).toInt();
+            if (iCmd3 == 0 || !QMetaObject::invokeMethod(this, QString("raw_" + QString::number(iCmd3) + "n").toStdString().c_str(), Qt::DirectConnection))
+                bUnknownRaw3 = true;
+
+            /*
             int iCmd3 = strDataList.at(3).mid(1).toInt();
             switch (iCmd3)
             {
@@ -317,6 +328,7 @@ void OnetKernel::kernel(const QString &_strData)
                 default:
                     bUnknownRaw3 = true;
             }
+            */
 
             if ((strDataList.at(3).length() != 4) || (strDataList.at(3).toLower() == ":***"))
             {
@@ -1190,7 +1202,7 @@ void OnetKernel::raw_snonotice()
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
-void OnetKernel::raw_001()
+void OnetKernel::raw_1()
 {
     // logged
     Settings::instance()->set("logged", "true");
@@ -1260,24 +1272,24 @@ void OnetKernel::raw_001()
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
-void OnetKernel::raw_002()
+void OnetKernel::raw_2()
 {
 }
 
 // :cf1f4.onet 003 Merovingian :This server was created 06:35:35 Jan 12 2010
-void OnetKernel::raw_003()
+void OnetKernel::raw_3()
 {
 }
 
 // :cf1f4.onet 004 Merovingian cf1f4.onet InspIRCd-1.1 BGQRVWbinoqrswx DFGIJLMPQRVXYabcehiklmnopqrstuv FIJLXYabcehkloqv
-void OnetKernel::raw_004()
+void OnetKernel::raw_4()
 {
 }
 
 // :cf1f4.onet 005 ~test WALLCHOPS WALLVOICES MODES=19 CHANTYPES=^# PREFIX=(qaohXYv)`&@%!=+ MAP MAXCHANNELS=20 MAXBANS=60 VBANLIST NICKLEN=32 CASEMAPPING=rfc1459 STATUSMSG=@%+ CHARSET=ascii :are supported by this server
 // :cf1f4.onet 005 ~test TOPICLEN=203 KICKLEN=255 MAXTARGETS=20 AWAYLEN=200 CHANMODES=Ibe,k,Fcl,DKMRVimnprstu FNC NETWORK=OnetCzat MAXPARA=32 ELIST=MU OVERRIDE ONETNAMESX INVEX=I EXCEPTS=e :are supported by this server
 // :cf1f4.onet 005 ~test INVIGNORE=100 USERIP ESILENCE SILENCE=100 WATCH=200 NAMESX :are supported by this server
-void OnetKernel::raw_005()
+void OnetKernel::raw_5()
 {
     QHash<QString,QString> mKeyValue;
 
