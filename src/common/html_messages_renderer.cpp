@@ -184,18 +184,21 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
 
     // font class
     QString strFontClass;
-    if (eMessageCategory == MessageDefault) strFontClass = "DefaultColor";
-    else if (eMessageCategory == MessageJoin) strFontClass = "MessageJoin";
-    else if (eMessageCategory == MessagePart) strFontClass = "MessagePart";
-    else if (eMessageCategory == MessageQuit) strFontClass = "MessageQuit";
-    else if (eMessageCategory == MessageKick) strFontClass = "MessageKick";
-    else if (eMessageCategory == MessageMode) strFontClass = "MessageMode";
-    else if (eMessageCategory == MessageNotice) strFontClass = "MessageNotice";
-    else if (eMessageCategory == MessageInfo) strFontClass = "MessageInfo";
-    else if (eMessageCategory == MessageMe) strFontClass = "MessageMe";
-    else if (eMessageCategory == MessageError) strFontClass = "MessageError";
-    else if (eMessageCategory == MessageHighlight) strFontClass = "DefaultColor";
-    else if (eMessageCategory == MessageModerNotice) strFontClass = "NoticeColor";
+    switch(eMessageCategory)
+    {
+        case MessageDefault: strFontClass = "DefaultColor"; break;
+        case MessageJoin: strFontClass = "MessageJoin"; break;
+        case MessagePart: strFontClass = "MessagePart"; break;
+        case MessageQuit: strFontClass = "MessageQuit"; break;
+        case MessageKick: strFontClass = "MessageKick"; break;
+        case MessageMode: strFontClass = "MessageMode"; break;
+        case MessageNotice: strFontClass = "MessageNotice"; break;
+        case MessageInfo: strFontClass = "MessageInfo"; break;
+        case MessageMe: strFontClass = "MessageMe"; break;
+        case MessageError: strFontClass = "MessageError"; break;
+        case MessageHighlight: strFontClass = "DefaultColor"; break;
+        case MessageModerNotice: strFontClass = "NoticeColor"; break;
+    }
 
     // themes
     QString strThemes = Settings::instance()->get("themes");
@@ -385,33 +388,34 @@ QString HtmlMessagesRenderer::headCSS()
     QString strMessageMe = Settings::instance()->get("message_me_color");
     QString strMessageError = Settings::instance()->get("message_error_color");
 
-    QString strHeadCSS = "article {margin-bottom:2px; vertical-align:bottom;}";
-    strHeadCSS.append(QString("section {margin:0; padding:0; font-family:sans; font-size:%1; white-space: pre-wrap; display:table-row;}").arg(strFontSize));
-    strHeadCSS.append(QString("time {color:%1; display:table-cell;}").arg(strTimeColor));
-    strHeadCSS.append(".message {width:100%; word-break: break-word; display:table-cell;}");
-    strHeadCSS.append("a {color:inherit; text-decoration:none;}");
-    strHeadCSS.append(".thumb {max-width:75px; max-height:75px; box-shadow: 0 0 5px #888;}");
-    strHeadCSS.append(".thumbs {display: block; margin: 6px 0px 3px 100px;}");
-    strHeadCSS.append(".underline {text-decoration:underline;}");
-    strHeadCSS.append(".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px; display:table-cell;}");
-    strHeadCSS.append(".right {float:right;}");
-    strHeadCSS.append(".time_small {font-size:0.95em;}");
+    QString strHeadCSS
+            = "article {margin-bottom:2px; vertical-align:bottom;}"
+            + QString("section {margin:0; padding:0; font-family:sans; font-size:%1; white-space: pre-wrap; display:table-row;}").arg(strFontSize)
+            + QString("time {color:%1; display:table-cell;}").arg(strTimeColor)
+            + ".message {width:100%; word-break: break-word; display:table-cell;}"
+            + "a {color:inherit; text-decoration:none;}"
+            + ".thumb {max-width:75px; max-height:75px; box-shadow: 0 0 5px #888;}"
+            + ".thumbs {display: block; margin: 6px 0px 3px 100px;}"
+            + ".underline {text-decoration:underline;}"
+            + ".avatar {margin-left:4px; margin-right:4px; width:30px; height:30px; display:table-cell;}"
+            + ".right {float:right;}"
+            + ".time_small {font-size:0.95em;}"
 
-    strHeadCSS.append(QString(".DefaultColor{color:%1;}").arg(strDefaultColor));
-    strHeadCSS.append(QString(".ChannelColor{color:%1;}").arg(strChannelColor));
+            + QString(".DefaultColor{color:%1;}").arg(strDefaultColor)
+            + QString(".ChannelColor{color:%1;}").arg(strChannelColor)
 
-    strHeadCSS.append(QString(".MessageDefault{color:%1;}").arg(strDefaultColor));
-    strHeadCSS.append(QString(".MessageJoin{color:%1;}").arg(strMessageJoin));
-    strHeadCSS.append(QString(".MessagePart{color:%1;}").arg(strMessagePart));
-    strHeadCSS.append(QString(".MessageQuit{color:%1;}").arg(strMessageQuit));
-    strHeadCSS.append(QString(".MessageKick{color:%1;}").arg(strMessageKick));
-    strHeadCSS.append(QString(".MessageMode{color:%1;}").arg(strMessageMode));
-    strHeadCSS.append(QString(".MessageNotice{color:%1;}").arg(strMessageNotice));
-    strHeadCSS.append(QString(".MessageInfo{color:%1;}").arg(strMessageInfo));
-    strHeadCSS.append(QString(".MessageMe{color:%1;}").arg(strMessageMe));
-    strHeadCSS.append(QString(".MessageError{color:%1;}").arg(strMessageError));
-    strHeadCSS.append(QString(".MessageHighlight{color:%1;}").arg(strDefaultColor));
-    strHeadCSS.append(QString(".MessageModerNotice{color:%1;}").arg(strDefaultColor));
+            + QString(".MessageDefault{color:%1;}").arg(strDefaultColor)
+            + QString(".MessageJoin{color:%1;}").arg(strMessageJoin)
+            + QString(".MessagePart{color:%1;}").arg(strMessagePart)
+            + QString(".MessageQuit{color:%1;}").arg(strMessageQuit)
+            + QString(".MessageKick{color:%1;}").arg(strMessageKick)
+            + QString(".MessageMode{color:%1;}").arg(strMessageMode)
+            + QString(".MessageNotice{color:%1;}").arg(strMessageNotice)
+            + QString(".MessageInfo{color:%1;}").arg(strMessageInfo)
+            + QString(".MessageMe{color:%1;}").arg(strMessageMe)
+            + QString(".MessageError{color:%1;}").arg(strMessageError)
+            + QString(".MessageHighlight{color:%1;}").arg(strDefaultColor)
+            + QString(".MessageModerNotice{color:%1;}").arg(strDefaultColor);
 
     return strHeadCSS;
 }

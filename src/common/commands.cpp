@@ -114,45 +114,45 @@ QString Commands::execute()
 QList<QString> Commands::getList()
 {
     QList<QString> lCommands;
+    lCommands << "/all"
+              << "/amsg"
+              << "/away"
+              << "/ban"
+              << "/banip"
+              << "/busy"
+              << "/clear"
+              << "/cycle"
+              << "/friend"
+              << "/help"
+              << "/hop"
+              << "/ignore"
+              << "/invite"
+              << "/join"
+              << "/kban"
+              << "/kbanip"
+              << "/kick"
+              << "/logout"
+              << "/me"
+              << "/moder"
+              << "/moderator"
+              << "/mp3"
+              << "/offmsg"
+              << "/op"
+              << "/part"
+              << "/priv"
+              << "/query"
+              << "/quit"
+              << "/quote"
+              << "/raw"
+              << "/sop"
+              << "/topic"
+              << "/vip"
+              << "/whereis"
+              << "/whois"
+              << "/winamp";
 
-    lCommands.append("/all");
-    lCommands.append("/amsg");
-    lCommands.append("/away");
-    lCommands.append("/ban");
-    lCommands.append("/banip");
-    lCommands.append("/busy");
-    lCommands.append("/clear");
-    lCommands.append("/cycle");
-    lCommands.append("/friend");
-    lCommands.append("/help");
-    lCommands.append("/hop");
-    lCommands.append("/ignore");
-    lCommands.append("/invite");
-    lCommands.append("/join");
-    lCommands.append("/kban");
-    lCommands.append("/kbanip");
-    lCommands.append("/kick");
-    lCommands.append("/logout");
-    lCommands.append("/me");
-    lCommands.append("/moder");
-    lCommands.append("/moderator");
-    lCommands.append("/mp3");
-    lCommands.append("/offmsg");
-    lCommands.append("/op");
-    lCommands.append("/part");
     if (Settings::instance()->get("language") == "pl")
-        lCommands.append("/pomoc");
-    lCommands.append("/priv");
-    lCommands.append("/query");
-    lCommands.append("/quit");
-    lCommands.append("/quote");
-    lCommands.append("/raw");
-    lCommands.append("/sop");
-    lCommands.append("/topic");
-    lCommands.append("/vip");
-    lCommands.append("/whereis");
-    lCommands.append("/whois");
-    lCommands.append("/winamp");
+        lCommands << "/pomoc";
 
     return lCommands;
 }
@@ -296,37 +296,36 @@ QString Commands::cmdFriend()
 QString Commands::cmdHelp()
 {
     QStringList lHelp;
-
-    lHelp.append(tr("* Available commands:"));
-    lHelp.append(tr("/amsg [text] or /all [text] - send message to all opened channels"));
-    lHelp.append(tr("/away [text] - mark/unmark as being away"));
-    lHelp.append(tr("/ban [nick] or /ban -[nick] - ban or unban nick on current channel"));
-    lHelp.append(tr("/banip [nick] or /banip -[nick] - ban user ip or unban user ip on current channel"));
-    lHelp.append(tr("/busy - mark/unmark as busy"));
-    lHelp.append(tr("/clear - clear current screen"));
-    lHelp.append(tr("/cycle [text] or /hop [text] - part and join current channel"));
-    lHelp.append(tr("/friend [nick] or /friend -[nick] - add or remove nick from friends list"));
-    lHelp.append(tr("/help"));
-    lHelp.append(tr("/ignore [nick] or /ignore -[nick] - add or remove nick from ignore list"));
-    lHelp.append(tr("/invite [nick] - invite nick to current channel"));
-    lHelp.append(tr("/join [channel] [key] or /j [channel] [key] - join channel"));
-    lHelp.append(tr("/kban [nick] [reason] - kick and ban nick on current channel"));
-    lHelp.append(tr("/kbanip [nick] [reason] - kick and ban user ip on current channel"));
-    lHelp.append(tr("/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel"));
-    lHelp.append(tr("/logout [text] or /quit [text] or /q [text] - logout"));
-    lHelp.append(tr("/me [text] - action command"));
-    lHelp.append(tr("/moder [nick] or /moder -[nick] or /moderator [nick] or /moderator -[nick] - add or remove mod privilege"));
-    lHelp.append(tr("/mp3 or /winamp - show current song from winamp/aimp"));
-    lHelp.append(tr("/offmsg [nick] [text] - send offline message to user"));
-    lHelp.append(tr("/op [nick] or /op -[nick] - add or remove operator privilege"));
-    lHelp.append(tr("/part [text] or /p [text] - part current channel"));
-    lHelp.append(tr("/priv [nick] - open priv"));
-    lHelp.append(tr("/raw [text] - send command directly to server"));
-    lHelp.append(tr("/sop [nick] or /sop -[nick] - add or remove super-operator privilege"));
-    lHelp.append(tr("/topic [text] - change topic on current channel"));
-    lHelp.append(tr("/vip [nick] or /vip -[nick] - add or remove vip privilege"));
-    lHelp.append(tr("/whereis [nick] or /whois [nick] - show where is user"));
-    lHelp.append(tr("/whowas [nick] - returns a list of times the user was last seen on chat"));
+    lHelp << tr("* Available commands:")
+          << tr("/amsg [text] or /all [text] - send message to all opened channels")
+          << tr("/away [text] - mark/unmark as being away")
+          << tr("/ban [nick] or /ban -[nick] - ban or unban nick on current channel")
+          << tr("/banip [nick] or /banip -[nick] - ban user ip or unban user ip on current channel")
+          << tr("/busy - mark/unmark as busy")
+          << tr("/clear - clear current screen")
+          << tr("/cycle [text] or /hop [text] - part and join current channel")
+          << tr("/friend [nick] or /friend -[nick] - add or remove nick from friends list")
+          << tr("/help")
+          << tr("/ignore [nick] or /ignore -[nick] - add or remove nick from ignore list")
+          << tr("/invite [nick] - invite nick to current channel")
+          << tr("/join [channel] [key] or /j [channel] [key] - join channel")
+          << tr("/kban [nick] [reason] - kick and ban nick on current channel")
+          << tr("/kbanip [nick] [reason] - kick and ban user ip on current channel")
+          << tr("/kick [nick] [reason] or /k [nick] [reason] - kick user from current channel")
+          << tr("/logout [text] or /quit [text] or /q [text] - logout")
+          << tr("/me [text] - action command")
+          << tr("/moder [nick] or /moder -[nick] or /moderator [nick] or /moderator -[nick] - add or remove mod privilege")
+          << tr("/mp3 or /winamp - show current song from winamp/aimp")
+          << tr("/offmsg [nick] [text] - send offline message to user")
+          << tr("/op [nick] or /op -[nick] - add or remove operator privilege")
+          << tr("/part [text] or /p [text] - part current channel")
+          << tr("/priv [nick] - open priv")
+          << tr("/raw [text] - send command directly to server")
+          << tr("/sop [nick] or /sop -[nick] - add or remove super-operator privilege")
+          << tr("/topic [text] - change topic on current channel")
+          << tr("/vip [nick] or /vip -[nick] - add or remove vip privilege")
+          << tr("/whereis [nick] or /whois [nick] - show where is user")
+          << tr("/whowas [nick] - returns a list of times the user was last seen on chat");
 
     foreach (const QString &strDisplay, lHelp)
         Message::instance()->showMessage(strChan, strDisplay, MessageInfo);

@@ -120,7 +120,7 @@ bool InputLineWidget::event(QEvent *e)
         if ((strWord.at(0) == '/') && (strWord.at(1) != '/'))
         {
             Commands *pCommands = new Commands();
-            QList<QString> lCommands = pCommands->getList();
+            static const QList<QString> lCommands = pCommands->getList();
             delete pCommands;
 
             if (lCommands.size() == 0)
