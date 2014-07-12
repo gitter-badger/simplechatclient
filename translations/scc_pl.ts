@@ -3829,4 +3829,106 @@
         <translation>Błąd: Nie można zapisać pliku xml %1</translation>
     </message>
 </context>
+<context>
+    <name>QPlatformTheme</name>
+    <!-- <comment>Merged from qtbase_XX.ts. There is no Polish translation and scc needs only this single context.</comment> -->
+    <!-- Another funny thing that Qt does not allow comment tag here despite the fact that the DTD allows -->
+    <!-- http://qt-project.org/doc/qt-4.8/linguist-ts-file-format.html -->
+    <message>
+        <source>Abort</source>
+        <translation>Przerwij</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Zastosuj</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Zachowaj</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anuluj</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Zamknij</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Zamknij</translation>
+    </message>
+    <message>
+        <source>Close without Saving</source>
+        <translation>Zamknij bez zapisywania</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Odrzuć</translation>
+    </message>
+    <message>
+        <source>Don&apos;t Save</source>
+        <translation>Nie zachowuj</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Pomoc</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Zignoruj</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation>&amp;Nie</translation>
+    </message>
+    <message>
+        <source>N&amp;o to All</source>
+        <translation>Ni&amp;e dla wszystkich</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Otwórz</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Zresetuj</translation>
+    </message>
+    <message>
+        <source>Restore Defaults</source>
+        <translation>Przywróć ustawienia</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation>Ponów</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Zachowaj</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation>Zachowaj wszystko</translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation>&amp;Tak</translation>
+    </message>
+    <message>
+        <source>Yes to &amp;All</source>
+        <translation>Ta&amp;k dla wszystkich</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+</context>
 </TS>
