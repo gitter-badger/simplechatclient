@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     QApplication::setQuitOnLastWindowClosed(false);
 
     // set codec
-    QLocale::setDefault(QLocale(QLocale::Polish, QLocale::Poland));
+    QLocale::setDefault(QLocale::Polish);
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     // set organization
