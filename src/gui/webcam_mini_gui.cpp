@@ -20,7 +20,7 @@
 #include <QDesktopWidget>
 #include "webcam_mini_gui.h"
 
-WebcamMiniGui::WebcamMiniGui(QString nick)
+WebcamMiniGui::WebcamMiniGui(QString nick) : nick(nick)
 {
     ui.setupUi(this);
     setWindowFlags(Qt::Dialog | Qt::WindowStaysOnTopHint);
@@ -52,4 +52,12 @@ void WebcamMiniGui::error(const QString &s)
 void WebcamMiniGui::closeEvent(QCloseEvent *)
 {
     emit closeCam();
+}
+
+void WebcamMiniGui::updateUserCount(const QString &strNick, int iSpectators, int iRank)
+{
+    Q_UNUSED(iRank);
+
+    if (strNick == nick)
+        setWindowTitle(QString("%1 (%2)").arg(nick, QString::number(iSpectators)));
 }

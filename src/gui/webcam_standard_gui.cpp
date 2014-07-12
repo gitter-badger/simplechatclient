@@ -259,7 +259,7 @@ void WebcamStandardGui::changeUser(QListWidgetItem *item)
     // update channels
     QString strNewNickChannels;
     foreach (QString strNewNickChannel, lNewNickChannels)
-        strNewNickChannels += QString("<a zzonclick=\"return false\" name=\"channel\" href=\"%1\" class=\"ChannelColor\">%2</a> ").arg(strNewNickChannel, strNewNickChannel);
+        strNewNickChannels += QString("<a href=\"%1\" class=\"ChannelColor\">%2</a> ").arg(strNewNickChannel, strNewNickChannel);
 
     ui.textBrowser_channels->setText(QString("<b>%1:</b><br/>%2").arg(tr("Is on channels"), strNewNickChannels));
 }

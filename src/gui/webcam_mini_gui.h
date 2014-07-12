@@ -32,10 +32,12 @@ public:
 public slots:
     void updateImage(const QByteArray &data);
     void updateText(const QString &text);
+    void updateUserCount(const QString &strNick, int iSpectators, int iRank);
     void error(const QString &s);
 
 private:
     Ui::uiWebcamMini ui;
+    QString nick;
 
 protected:
     virtual void closeEvent(QCloseEvent *);

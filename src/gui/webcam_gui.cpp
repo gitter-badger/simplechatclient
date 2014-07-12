@@ -58,6 +58,7 @@ void WebcamGui::createSignals()
         connect(pWebcamEngine, SIGNAL(updateText(const QString&)), pWebcamMini, SLOT(updateText(const QString&)));
         connect(pWebcamEngine, SIGNAL(userError(const QString&)), this, SLOT(userError(const QString&)));
         connect(pWebcamEngine, SIGNAL(error(const QString&)), pWebcamMini, SLOT(error(const QString&)));
+        connect(pWebcamEngine, SIGNAL(updateUserCount(const QString&,int,int)), pWebcamMini, SLOT(updateUserCount(const QString&,int,int)));
 
         connect(pWebcamMini, SIGNAL(closeCam()), this, SLOT(closeCam()));
     }
