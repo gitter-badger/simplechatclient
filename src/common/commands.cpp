@@ -57,7 +57,7 @@ QString Commands::execute()
         return cmdClear();
     else if (strCmd == "friend")
         return cmdFriend();
-    else if (strCmd == "help" || strCmd == "pomoc")
+    else if (strCmd == "help" || (Settings::instance()->get("language") == "pl" && strCmd == "pomoc"))
         return cmdHelp();
     else if (strCmd == "ignore")
         return cmdIgnore();
@@ -140,6 +140,8 @@ QList<QString> Commands::getList()
     lCommands.append("/offmsg");
     lCommands.append("/op");
     lCommands.append("/part");
+    if (Settings::instance()->get("language") == "pl")
+        lCommands.append("/pomoc");
     lCommands.append("/priv");
     lCommands.append("/query");
     lCommands.append("/quit");
