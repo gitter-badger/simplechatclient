@@ -103,237 +103,20 @@ void OnetKernel::kernel(const QString &_strData)
         else
             bUnknownRaw1 = true;
 
-        int iCmd1 = strDataList.at(1).toInt();
-        if (iCmd1 == 0 || !QMetaObject::invokeMethod(this, QString("raw_" + QString::number(iCmd1)).toStdString().c_str(), Qt::DirectConnection))
+        if (strCmd1.size() !=3 || !QMetaObject::invokeMethod(this, QString("raw_" + strCmd1).toStdString().c_str(), Qt::DirectConnection))
             bUnknownRaw2 = true;
-
-        /*
-        int iCmd1 = strDataList.at(1).toInt();
-        switch (iCmd1)
-        {
-            case 001: raw_001(); break;
-            case 002: raw_002(); break;
-            case 003: raw_003(); break;
-            case 004: raw_004(); break;
-            case 005: raw_005(); break;
-            case 251: raw_251(); break;
-            case 252: raw_252(); break;
-            case 253: raw_253(); break;
-            case 254: raw_254(); break;
-            case 255: raw_255(); break;
-            case 256: raw_256(); break;
-            case 257: raw_257(); break;
-            case 258: raw_258(); break;
-            case 259: raw_259(); break;
-            case 265: raw_265(); break;
-            case 266: raw_266(); break;
-            case 271: raw_271(); break;
-            case 272: raw_272(); break;
-            case 301: raw_301(); break;
-            case 302: raw_302(); break;
-            case 303: raw_303(); break;
-            case 304: raw_304(); break;
-            case 305: raw_305(); break;
-            case 306: raw_306(); break;
-            case 307: raw_307(); break;
-            case 311: raw_311(); break;
-            case 312: raw_312(); break;
-            case 313: raw_313(); break;
-            case 314: raw_314(); break;
-            case 315: raw_315(); break;
-            case 316: raw_316(); break;
-            case 317: raw_317(); break;
-            case 318: raw_318(); break;
-            case 319: raw_319(); break;
-            case 320: raw_320(); break;
-            case 332: raw_332(); break;
-            case 333: raw_333(); break;
-            case 335: raw_335(); break;
-            case 340: raw_340(); break;
-            case 341: raw_341(); break;
-            case 352: raw_352(); break;
-            case 353: raw_353(); break;
-            case 355: raw_355(); break;
-            case 366: raw_366(); break;
-            case 369: raw_369(); break;
-            case 371: raw_371(); break;
-            case 372: raw_372(); break;
-            case 374: raw_374(); break;
-            case 375: raw_375(); break;
-            case 376: raw_376(); break;
-            case 378: raw_378(); break;
-            case 379: raw_379(); break;
-            case 381: raw_381(); break;
-            case 391: raw_391(); break;
-            case 396: raw_396(); break;
-            case 401: raw_401(); break;
-            case 402: raw_402(); break;
-            case 403: raw_403(); break;
-            case 404: raw_404(); break;
-            case 405: raw_405(); break;
-            case 406: raw_406(); break;
-            case 412: raw_412(); break;
-            case 421: raw_421(); break;
-            case 432: raw_432(); break;
-            case 433: raw_433(); break;
-            case 441: raw_441(); break;
-            case 442: raw_442(); break;
-            case 443: raw_443(); break;
-            case 445: raw_445(); break;
-            case 446: raw_446(); break;
-            case 451: raw_451(); break;
-            case 461: raw_461(); break;
-            case 462: raw_462(); break;
-            case 470: raw_470(); break;
-            case 471: raw_471(); break;
-            case 473: raw_473(); break;
-            case 474: raw_474(); break;
-            case 475: raw_475(); break;
-            case 480: raw_480(); break;
-            case 481: raw_481(); break;
-            case 482: raw_482(); break;
-            case 484: raw_484(); break;
-            case 491: raw_491(); break;
-            case 492: raw_492(); break;
-            case 530: raw_530(); break;
-            case 531: raw_531(); break;
-            case 600: raw_600(); break;
-            case 601: raw_601(); break;
-            case 602: raw_602(); break;
-            case 604: raw_604(); break;
-            case 605: raw_605(); break;
-            case 607: raw_607(); break;
-            case 666: raw_666(); break;
-            case 702: raw_702(); break;
-            case 703: raw_703(); break;
-            case 704: raw_704(); break;
-            case 801: raw_801(); break;
-            case 802: raw_802(); break;
-            case 807: raw_807(); break;
-            case 808: raw_808(); break;
-            case 809: raw_809(); break;
-            case 811: raw_811(); break;
-            case 812: raw_812(); break;
-            case 815: raw_815(); break;
-            case 816: raw_816(); break;
-            case 817: raw_817(); break;
-            case 818: raw_818(); break;
-            case 819: raw_819(); break;
-            case 820: raw_820(); break;
-            case 821: raw_821(); break;
-            case 942: raw_942(); break;
-            case 950: raw_950(); break;
-            case 951: raw_951(); break;
-            case 952: raw_952(); break;
-            default:
-                bUnknownRaw2 = true;
-                break;
-        }
-        */
 
         if ((strDataList.at(1) == "NOTICE") && (!strDataList.value(3).isEmpty()))
         {
-            int iCmd3 = strDataList.at(3).mid(1).toInt();
-            if (iCmd3 == 0 || !QMetaObject::invokeMethod(this, QString("raw_" + QString::number(iCmd3) + "n").toStdString().c_str(), Qt::DirectConnection))
-                bUnknownRaw3 = true;
-
-            /*
-            int iCmd3 = strDataList.at(3).mid(1).toInt();
-            switch (iCmd3)
-            {
-                case 100: raw_100n(); break;
-                case 109: raw_109n(); break;
-                case 111: raw_111n(); break;
-                case 112: raw_112n(); break;
-                case 121: raw_121n(); break;
-                case 122: raw_122n(); break;
-                case 123: raw_123n(); break;
-                case 131: raw_131n(); break;
-                case 132: raw_132n(); break;
-                case 133: raw_133n(); break;
-                case 141: raw_141n(); break;
-                case 142: raw_142n(); break;
-                case 151: raw_151n(); break;
-                case 152: raw_152n(); break;
-                case 160: raw_160n(); break;
-                case 161: raw_161n(); break;
-                case 162: raw_162n(); break;
-                case 163: raw_163n(); break;
-                case 164: raw_164n(); break;
-                case 165: raw_165n(); break;
-                case 170: raw_170n(); break;
-                case 171: raw_171n(); break;
-                case 175: raw_175n(); break;
-                case 176: raw_176n(); break;
-                case 210: raw_210n(); break;
-                case 211: raw_211n(); break;
-                case 220: raw_220n(); break;
-                case 221: raw_221n(); break;
-                case 230: raw_230n(); break;
-                case 231: raw_231n(); break;
-                case 240: raw_240n(); break;
-                case 241: raw_241n(); break;
-                case 250: raw_250n(); break;
-                case 251: raw_251n(); break;
-                case 252: raw_252n(); break;
-                case 253: raw_253n(); break;
-                case 254: raw_254n(); break;
-                case 255: raw_255n(); break;
-                case 256: raw_256n(); break;
-                case 257: raw_257n(); break;
-                case 258: raw_258n(); break;
-                case 259: raw_259n(); break;
-                case 260: raw_260n(); break;
-                case 261: raw_261n(); break;
-                case 262: raw_262n(); break;
-                case 263: raw_263n(); break;
-                case 400: raw_400n(); break;
-                case 401: raw_401n(); break;
-                case 402: raw_402n(); break;
-                case 403: raw_403n(); break;
-                case 404: raw_404n(); break;
-                case 406: raw_406n(); break;
-                case 407: raw_407n(); break;
-                case 408: raw_408n(); break;
-                case 409: raw_409n(); break;
-                case 411: raw_411n(); break;
-                case 412: raw_412n(); break;
-                case 413: raw_413n(); break;
-                case 414: raw_414n(); break;
-                case 415: raw_415n(); break;
-                case 416: raw_416n(); break;
-                case 420: raw_420n(); break;
-                case 421: raw_421n(); break;
-                case 430: raw_430n(); break;
-                case 431: raw_431n(); break;
-                case 440: raw_440n(); break;
-                case 441: raw_441n(); break;
-                case 452: raw_452n(); break;
-                case 453: raw_453n(); break;
-                case 454: raw_454n(); break;
-                case 455: raw_455n(); break;
-                case 456: raw_456n(); break;
-                case 458: raw_458n(); break;
-                case 459: raw_459n(); break;
-                case 460: raw_460n(); break;
-                case 461: raw_461n(); break;
-                case 463: raw_463n(); break;
-                case 464: raw_464n(); break;
-                case 465: raw_465n(); break;
-                case 466: raw_466n(); break;
-                case 467: raw_467n(); break;
-                case 468: raw_468n(); break;
-                case 469: raw_469n(); break;
-                case 472: raw_472n(); break;
-                default:
-                    bUnknownRaw3 = true;
-            }
-            */
-
-            if ((strDataList.at(3).length() != 4) || (strDataList.at(3).toLower() == ":***"))
+            if ((strDataList.at(3).length() != 4) || (strDataList.at(3) == ":***"))
             {
                 raw_notice();
-                bUnknownRaw3 = false;
+            }
+            else
+            {
+                QString strCmd3 = strDataList.at(3).mid(1);
+                if (strCmd3.size() != 3 || !QMetaObject::invokeMethod(this, QString("raw_" + strCmd3 + "n").toStdString().c_str(), Qt::DirectConnection))
+                    bUnknownRaw3 = true;
             }
         }
         else
@@ -1202,7 +985,7 @@ void OnetKernel::raw_snonotice()
 }
 
 // :cf1f4.onet 001 scc_test :Welcome to the OnetCzat IRC Network scc_test!51976824@83.28.35.219
-void OnetKernel::raw_1()
+void OnetKernel::raw_001()
 {
     // logged
     Settings::instance()->set("logged", "true");
@@ -1272,24 +1055,24 @@ void OnetKernel::raw_1()
 }
 
 // :cf1f4.onet 002 Merovingian :Your host is cf1f4.onet, running version InspIRCd-1.1
-void OnetKernel::raw_2()
+void OnetKernel::raw_002()
 {
 }
 
 // :cf1f4.onet 003 Merovingian :This server was created 06:35:35 Jan 12 2010
-void OnetKernel::raw_3()
+void OnetKernel::raw_003()
 {
 }
 
 // :cf1f4.onet 004 Merovingian cf1f4.onet InspIRCd-1.1 BGQRVWbinoqrswx DFGIJLMPQRVXYabcehiklmnopqrstuv FIJLXYabcehkloqv
-void OnetKernel::raw_4()
+void OnetKernel::raw_004()
 {
 }
 
 // :cf1f4.onet 005 ~test WALLCHOPS WALLVOICES MODES=19 CHANTYPES=^# PREFIX=(qaohXYv)`&@%!=+ MAP MAXCHANNELS=20 MAXBANS=60 VBANLIST NICKLEN=32 CASEMAPPING=rfc1459 STATUSMSG=@%+ CHARSET=ascii :are supported by this server
 // :cf1f4.onet 005 ~test TOPICLEN=203 KICKLEN=255 MAXTARGETS=20 AWAYLEN=200 CHANMODES=Ibe,k,Fcl,DKMRVimnprstu FNC NETWORK=OnetCzat MAXPARA=32 ELIST=MU OVERRIDE ONETNAMESX INVEX=I EXCEPTS=e :are supported by this server
 // :cf1f4.onet 005 ~test INVIGNORE=100 USERIP ESILENCE SILENCE=100 WATCH=200 NAMESX :are supported by this server
-void OnetKernel::raw_5()
+void OnetKernel::raw_005()
 {
     QHash<QString,QString> mKeyValue;
 
