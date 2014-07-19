@@ -230,13 +230,23 @@ public:
                         return true;
                 }
                 else
-                    return text().toLower() < o.text().toLower();
+                    return compareNicks(text(), o.text()) < 0;
             }
             else
-                return text().toLower() < o.text().toLower();
+                return compareNicks(text(), o.text()) < 0;
         }
         else
             return QListWidgetItem::operator< (o); // other compare
+    }
+
+    static int compareNicks(const QString & nick1, const QString & nick2)
+    {
+        if (nick1.startsWith('~') && !nick2.startsWith('~'))
+            return 1;
+        else if (!nick1.startsWith('~') && nick2.startsWith('~'))
+            return -1;
+        else
+            return nick1.toLower().localeAwareCompare(nick2.toLower());
     }
 };
 
