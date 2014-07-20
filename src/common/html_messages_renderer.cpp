@@ -390,7 +390,7 @@ QString HtmlMessagesRenderer::headCSS()
 
     QString strHeadCSS
             = "article {margin-bottom:2px; vertical-align:bottom;}"
-            + QString("section {margin:0; padding:0; font-family:sans; font-size:%1; white-space: pre-wrap; display:table-row;}").arg(strFontSize)
+            + QString("section {margin:0; padding:0; font-family:sans-serif; font-size:%1; white-space: pre-wrap; display:table-row;}").arg(strFontSize)
             + QString("time {color:%1; display:table-cell;}").arg(strTimeColor)
             + ".message {width:100%; word-break: break-word; display:table-cell;}"
             + "a {color:inherit; text-decoration:none;}"
@@ -436,5 +436,5 @@ QString HtmlMessagesRenderer::bodyCSS()
         strBackground = QString("background-image: url('%1'); background-attachment: fixed; background-position: center; background-repeat: no-repeat;").arg(strBackgroundImage);
     }
 
-    return QString("margin: 0; padding: 0; font-family: sans; font-size:%1; %2").arg(strFontSize, strBackground);
+    return QString("margin: 0; padding: 0; font-family: sans-serif; font-size:%1; %2").arg(strFontSize, strBackground);
 }
