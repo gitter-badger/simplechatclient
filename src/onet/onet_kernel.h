@@ -94,13 +94,25 @@ private slots:
     void raw_175n();
     void raw_176n();
     void raw_210n();
+    void raw_211();
     void raw_211n();
+    void raw_212();
+    void raw_213();
+    void raw_215();
+    void raw_218();
+    void raw_219();
     void raw_220n();
     void raw_221n();
     void raw_230n();
     void raw_231n();
+    void raw_240();
     void raw_240n();
     void raw_241n();
+    void raw_242();
+    void raw_243();
+    void raw_244();
+    void raw_248();
+    void raw_249();
     void raw_250n();
     void raw_251();
     void raw_251n();
@@ -145,6 +157,8 @@ private slots:
     void raw_318();
     void raw_319();
     void raw_320();
+    void raw_324();
+    void raw_329();
     void raw_332();
     void raw_333();
     void raw_335();
@@ -262,6 +276,8 @@ private slots:
     void raw_950();
     void raw_951();
     void raw_952();
+    void raw_974();
+    void raw_975();
 };
 
 #endif // ONET_KERNEL_H

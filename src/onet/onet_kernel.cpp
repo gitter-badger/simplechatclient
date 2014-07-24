@@ -188,7 +188,6 @@ void OnetKernel::raw_join()
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strChannel = strDataList.at(2);
-    if (strChannel.at(0) == ':') strChannel.remove(0,1);
 
     QString strSuffix;
     if (!strDataList.value(3).isEmpty())
@@ -277,7 +276,6 @@ void OnetKernel::raw_part()
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strChannel = strDataList.at(2);
-    if (strChannel.at(0) == ':') strChannel.remove(0,1);
 
     QString strReason;
     for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strReason += " "; strReason += strDataList.at(i); }
@@ -370,7 +368,6 @@ void OnetKernel::raw_kick()
     strIP = strIP.right(strIP.length()-strIP.indexOf('@')-1);
 
     QString strChannel = strDataList.at(2);
-    if (strChannel.at(0) == ':') strChannel.remove(0,1);
 
     QString strNick = strDataList.at(3);
     if (strNick.at(0) == ':') strNick.remove(0,1);
@@ -514,6 +511,8 @@ void OnetKernel::raw_mode()
             else if (strFlag == "-L") strDisplay = QString(tr("* Channel %1 no longer has limit redirection (set by %2)")).arg(strChannel, strWho);
             else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strChannel, strValue, strWho);
             else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+D") strDisplay = QString(tr("* Channel %1 now hide users joining to the channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-D") strDisplay = QString(tr("* Channel %1 no longer hide users joining to the channel (set by %2)")).arg(strChannel, strWho);
 
             else if (strFlag.at(1) == 'F')
             {
@@ -1652,6 +1651,19 @@ void OnetKernel::raw_210n()
 {
 }
 
+// STATS l
+// <server> 211 <nick> irc1.sprynet.com 0 49243278 3327277 22095880 1208863 :134450
+void OnetKernel::raw_211()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
 // NS SET city
 // :NickServ!service@service.onet NOTICE scc_test :211 city :value unset
 void OnetKernel::raw_211n()
@@ -1666,6 +1678,64 @@ void OnetKernel::raw_211n()
     // set my profile
     if (strNick == strMe)
         MyProfile::instance()->set(strKey, QString::null);
+}
+
+// STATS m
+// <server> 212 <nick> PRIVMSG 28931 1446042
+void OnetKernel::raw_212()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS c
+// <server> 213 <nick> C *@205.150.226.4 * toronto.on.ca.dal.net 0 50
+void OnetKernel::raw_213()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS p
+// <server> 215 I <nick> <ipmask> * <hostmask> <port> <class>
+// <server> 215 I <nick> *@204.127.145.* * NOMATCH 0 3
+void OnetKernel::raw_215()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS Y
+// <server> 218 <nick> Y 100 120 240 1 5000000
+void OnetKernel::raw_218()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// :cf1f3.onet 219 Darom d :End of /STATS report
+void OnetKernel::raw_219()
+{
 }
 
 // NS FRIENDS ADD aaa
@@ -1720,6 +1790,20 @@ void OnetKernel::raw_231n()
     Ignore::instance()->remove(strNick);
 }
 
+// STATS m
+// <server> 240 <nick> :<info>
+void OnetKernel::raw_240()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    if ((!strMessage.isEmpty()) && (strMessage.at(0) == ':')) strMessage.remove(0,1);
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
 // NS FAVOURITES ADD scc
 // :NickServ!service@service.onet NOTICE scc_test :240 #scc :favourite added to list
 void OnetKernel::raw_240n()
@@ -1746,6 +1830,75 @@ void OnetKernel::raw_241n()
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 
     ChannelFavourites::instance()->remove(strChannel);
+}
+
+// STATS u
+// <server> 242 <nick> :Server Up 37 days, 9:20:39
+void OnetKernel::raw_242()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    if ((!strMessage.isEmpty()) && (strMessage.at(0) == ':')) strMessage.remove(0,1);
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS o
+// <server> 243 <nick> O *@calley.stlnet.com * konjump 4293328895 1
+void OnetKernel::raw_243()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS h
+// <server> 244 <nick> H * * indy.in.us.dal.net 0 -1
+void OnetKernel::raw_244()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS U
+// <server> 248 <nick> U <host> * <??> <??> <??>
+// <server> 248 <nick> U Uworld2.Undernet.Org * * 0 -1
+void OnetKernel::raw_248()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// STATS p
+// <server> 249 <nick> :<info>
+// <server> 249 <nick> :nick collisions 1879 unknown closes 11383991
+void OnetKernel::raw_249()
+{
+    if (strDataList.size() < 4) return;
+
+    QString strMessage;
+    for (int i = 3; i < strDataList.size(); ++i) { if (i != 3) strMessage += " "; strMessage += strDataList.at(i); }
+    if ((!strMessage.isEmpty()) && (strMessage.at(0) == ':')) strMessage.remove(0,1);
+    strMessage = "* "+strMessage;
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
 
 // CS REGISTER czesctoja
@@ -2526,13 +2679,40 @@ void OnetKernel::raw_320()
     Message::instance()->showMessageActive(strDisplay, MessageInfo);
 }
 
+// :cf1f4.onet 324 Darom #gorący_pokój +DFJcnt 2 20 4
+void OnetKernel::raw_324()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strChannel = strDataList.at(3);
+
+    QString strFlags;
+    for (int i = 4; i < strDataList.size(); ++i) { if (i != 4) strFlags += " "; strFlags += strDataList.at(i); }
+
+    QString strDisplay = QString(tr("* Channel %1 flags: %2")).arg(strChannel, strFlags);
+    Message::instance()->showMessageActive(strDisplay, MessageInfo);
+}
+
+// :cf1f4.onet 329 Darom #gorący_pokój 1174660325
+void OnetKernel::raw_329()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strChannel = strDataList.at(3);
+    int iCreatedTime = strDataList.at(4).toInt();
+
+    QString strCreatedTime = QDateTime::fromTime_t(iCreatedTime).toString("dd MMM yyyy hh:mm:ss");
+
+    QString strDisplay = QString(tr("* Channel %1 created at: %2")).arg(strChannel, strCreatedTime);
+    Message::instance()->showMessageActive(strDisplay, MessageInfo);
+}
+
 // :cf1f4.onet 332 scc_test #scc :Simple Chat Client; current version: beta;
 void OnetKernel::raw_332()
 {
     if (strDataList.size() < 5) return;
 
     QString strChannel = strDataList.at(3);
-    if (strChannel.at(0) == ':') strChannel.remove(0,1);
 
     QString strTopic;
     for (int i = 4; i < strDataList.size(); ++i) { if (i != 4) strTopic += " "; strTopic += strDataList.at(i); }
@@ -4184,5 +4364,35 @@ void OnetKernel::raw_952()
     if (strNick.at(0) == ':') strNick.remove(0,1);
 
     QString strMessage = QString(tr("* %1 is already on your silence list")).arg(strNick);
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// :cf1f4.onet 974 Darom m_cloaking.so :Failed to load module: Unknown module
+void OnetKernel::raw_974()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strModule = strDataList.at(3);
+
+    QString strInfo;
+    for (int i = 4; i < strDataList.size(); ++i) { if (i != 4) strInfo += " "; strInfo += strDataList.at(i); }
+    if ((!strInfo.isEmpty()) && (strInfo.at(0) == ':')) strInfo.remove(0,1);
+
+    QString strMessage = QString("* %1 %2").arg(strModule, strInfo);
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
+// :cf1f4.onet 975 Darom m_cloaking.so :Module successfully loaded.
+void OnetKernel::raw_975()
+{
+    if (strDataList.size() < 5) return;
+
+    QString strModule = strDataList.at(3);
+
+    QString strInfo;
+    for (int i = 4; i < strDataList.size(); ++i) { if (i != 4) strInfo += " "; strInfo += strDataList.at(i); }
+    if ((!strInfo.isEmpty()) && (strInfo.at(0) == ':')) strInfo.remove(0,1);
+
+    QString strMessage = QString("* %1 %2").arg(strModule, strInfo);
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }

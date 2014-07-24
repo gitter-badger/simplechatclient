@@ -2825,6 +2825,14 @@
         <translation>* Pokój %1 nie posiada już blokady uniemożliwiającej użytkownikom na automatyczny powrót do pokoju kiedy zostaną wyrzuceni (Ustawił %2)</translation>
     </message>
     <message>
+        <source>* Channel %1 now hide users joining to the channel (set by %2)</source>
+        <translation>* Pokój %1 ukrywa od teraz wchodzących do niego użytkowników (Ustawił %2)</translation>
+    </message>
+    <message>
+        <source>* Channel %1 no longer hide users joining to the channel (set by %2)</source>
+        <translation>* Pokój %1 pokazuje od teraz wchodzących do niego użytkowników (Ustawił %2)</translation>
+    </message>
+    <message>
         <source>* Channel %1 now has status %2 (set by %3)</source>
         <translation>* Pokój %1 ma teraz status %2 (Ustawił %3)</translation>
     </message>
@@ -3087,6 +3095,14 @@
     <message>
         <source>* %1 is on channels: %2</source>
         <translation>* %1 jest na pokojach: %2</translation>
+    </message>
+    <message>
+        <source>* Channel %1 flags: %2</source>
+        <translation>* Flagi pokoju %1: %2</translation>
+    </message>
+    <message>
+        <source>* Channel %1 created at: %2</source>
+        <translation>* Pokój %1 utworzono dnia: %2</translation>
     </message>
     <message>
         <source>* %1 is a bot on OnetCzat</source>
