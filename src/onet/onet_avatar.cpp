@@ -62,7 +62,7 @@ void OnetAvatar::getCookies()
         cookies.append(cookie);
     }
 
-    this->cookieJar()->setCookiesFromUrl(cookies, QUrl("http://czat.onet.pl"));
+    this->cookieJar()->setCookiesFromUrl(cookies, QUrl("http://czat.onet.pl/"));
 }
 
 QString OnetAvatar::createRid()

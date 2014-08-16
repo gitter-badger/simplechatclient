@@ -150,7 +150,7 @@ void RegisterNickGui::registerNick()
          cookieList.append(cookie);
      }
 
-    accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl"));
+    accessManager->cookieJar()->setCookiesFromUrl(cookieList, QUrl("http://czat.onet.pl/"));
 
     // request
     QString strUrl = AJAX_API;
