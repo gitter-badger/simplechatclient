@@ -26,8 +26,9 @@ Windows
 <http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=5582>`_
 
 Example Environment variables for development:
-PATH c:\Qt\5.3\mingw482_32\bin;c:\Qt\Tools\mingw482_32\bin;C:\Program Files (x86)\CMake\bin;
-QT_DIR c:\Qt\5.3\mingw482_32\bin\
+
+	PATH c:\Qt\5.3\mingw482_32\bin;c:\Qt\Tools\mingw482_32\bin;C:\Program Files (x86)\CMake\bin;
+	QT_DIR c:\Qt\5.3\mingw482_32\bin\
 
 Linux Debian/Ubuntu packages
 =========
