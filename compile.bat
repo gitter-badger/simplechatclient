@@ -2,10 +2,10 @@
 
 set SCC_DIR=%CD%
 set DESTINATION="C:\scc\release"
-set QT_DIR="c:\Qt\Qt5.3.1\5.3\mingw482_32"
+set QT_DIR="c:\Qt\5.3\mingw482_32"
 set QCA2_DIR="C:\qca-2.0.3"
 set OPENSSL_DIR="C:\OpenSSL-Win32"
-set MINGW_DIR="c:\Qt\Qt5.3.1\Tools\mingw482_32"
+set MINGW_DIR="c:\Qt\Tools\mingw482_32"
 set CMAKE_DIR="C:\Program Files\CMake"
 set CMAKE32_DIR="C:\Program Files (x86)\CMake"
 
@@ -23,7 +23,7 @@ exit
 )
 
 if not exist %QT_DIR%\bin\qmake.exe (
-echo Download Qt 5.3.0 for MinGW from http://qt-project.org/downloads
+echo Download Qt 5.3.0 for MinGW from http://www.qt.io/download/
 pause
 exit
 )
