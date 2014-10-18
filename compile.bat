@@ -98,6 +98,19 @@ xcopy %QT_DIR%\bin\Qt5WebKitWidgets.dll %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5Widgets.dll       %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5Xml.dll           %DESTINATION%\ /C /H /R /Y /Q
 
+echo Copying Qt dependency
+xcopy %QT_DIR%\bin\icuin52.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\icuuc52.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\icudt52.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5Sql.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5Qml.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5Quick.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5Sensors.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5Positioning.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5OpenGL.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5PrintSupport.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5MultimediaWidgets.dll           %DESTINATION%\ /C /H /R /Y /Q
+
 echo Copying MinGW files
 xcopy %QT_DIR%\bin\libgcc_s_dw2-1.dll   %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\libstdc++-6.dll      %DESTINATION%\ /C /H /R /Y /Q
@@ -107,7 +120,6 @@ echo Copying Qt plugins
 xcopy %QT_DIR%\plugins\imageformats\qgif.dll         %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\imageformats\qjpeg.dll        %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\mediaservice\dsengine.dll     %DESTINATION%\plugins\mediaservice\ /C /H /R /Y /Q
-rem xcopy %QT_DIR%\plugins\mediaservice\qtmedia_audioengine.dll     %DESTINATION%\plugins\mediaservice\ /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\platforms\qwindows.dll        %DESTINATION%\plugins\platforms\ /C /H /R /Y /Q
 
 echo Creating Qt conf
