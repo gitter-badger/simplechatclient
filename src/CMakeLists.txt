@@ -298,6 +298,7 @@ if (WIN32)
 		common/winamp.cpp
 	)
 else (WIN32)
+	find_package(Qt5DBus)
 	LIST (APPEND scc_MOC_HDRS
 		common/mpris_player.h
 	)
@@ -375,7 +376,10 @@ else (MINGW) # linux
 endif (MINGW)
 
 target_link_libraries (scc Qt5::Widgets Qt5::Multimedia Qt5::Network Qt5::WebKit Qt5::WebKitWidgets Qt5::Xml ${QCA2_LIBRARIES})
- 
+if (NOT WIN32)
+	target_link_libraries (scc Qt5::DBus)
+endif (NOT WIN32)
+
 # install
 if (UNIX AND NOT APPLE)
 	install (TARGETS scc DESTINATION ${SCC_BIN_DIR})
