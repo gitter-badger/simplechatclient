@@ -246,6 +246,7 @@ private slots:
     void raw_484();
     void raw_491();
     void raw_492();
+    void raw_495();
     void raw_530();
     void raw_531();
     void raw_600();

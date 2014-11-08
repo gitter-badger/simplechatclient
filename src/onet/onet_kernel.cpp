@@ -3941,6 +3941,14 @@ void OnetKernel::raw_492()
     Message::instance()->showMessage(strChannel, strMessage, MessageInfo);
 }
 
+// :cf1f1.onet 495 Merovingian #scc :You cannot rejoin this channel yet after being kicked (+J)
+void OnetKernel::raw_495()
+{
+    QString strMessage = QString(tr("* You cannot rejoin this channel yet after being kicked"));
+
+    Message::instance()->showMessageActive(strMessage, MessageInfo);
+}
+
 //:cf1f2.onet 530 Merovingian #f :Only IRC operators may create new channels
 void OnetKernel::raw_530()
 {
