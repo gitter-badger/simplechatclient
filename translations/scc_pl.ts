@@ -3413,8 +3413,8 @@
         <translation>* %1 :Nie ma takiego pokoju</translation>
     </message>
     <message>
-        <source>* You cannot rejoin this channel yet after being kicked</source>
-        <translation>* Nie możesz chwilowo wrócić do tego pokoju po wyrzuceniu</translation>
+        <source>* %1 :You cannot rejoin this channel yet after being kicked</source>
+        <translation>* %1 :Nie możesz chwilowo wrócić do tego pokoju po wyrzuceniu</translation>
     </message>
     <message>
         <source>* %1 :You are not permitted to send private messages to this user</source>

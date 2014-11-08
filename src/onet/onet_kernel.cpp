@@ -3944,7 +3944,11 @@ void OnetKernel::raw_492()
 // :cf1f1.onet 495 Merovingian #scc :You cannot rejoin this channel yet after being kicked (+J)
 void OnetKernel::raw_495()
 {
-    QString strMessage = QString(tr("* You cannot rejoin this channel yet after being kicked"));
+    if (strDataList.size() < 4) return;
+
+    QString strChannel = strDataList.at(3);
+
+    QString strMessage = QString(tr("* %1 :You cannot rejoin this channel yet after being kicked")).arg(strChannel);
 
     Message::instance()->showMessageActive(strMessage, MessageInfo);
 }
