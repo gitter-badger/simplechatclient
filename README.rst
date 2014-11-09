@@ -41,7 +41,16 @@ Linux Debian/Ubuntu packages
 ============================
 ::
 
-	libssl-dev libqca2-dev libqca2-plugin-ossl g++ cmake make pkg-config
+	cmake make pkg-config g++ libssl-dev qtbase5-dev qttools5-dev qttools5-dev-tools qtmultimedia5-dev libqt5webkit5-dev
+	
+	Install qca plugin from https://projects.kde.org/projects/kdesupport/qca/repository
+	We need qca build with Qt5 support. Current version from packages is with Qt4 support.
+	   $ git clone git://anongit.kde.org/qca
+	   $ cd qca
+	   $ cmake .
+	   $ make
+	   $ sudo make install
+
 
 *******************
 Custom build
