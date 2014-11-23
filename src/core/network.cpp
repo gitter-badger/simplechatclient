@@ -309,8 +309,12 @@ void Network::recv()
         // set active
         iActive = QDateTime::currentMSecsSinceEpoch();
 
-        QTextCodec *codec = QTextCodec::codecForName("ISO-8859-2");
-        QString strData = codec->toUnicode(data);
+        QString strData = QString::fromUtf8(data);
+        if (strData.toUtf8() != data)
+        {
+            QTextCodec *codec = QTextCodec::codecForName("ISO-8859-2");
+            strData = codec->toUnicode(data);
+        }
 
         // process to kernel
         emit kernel(strData);
