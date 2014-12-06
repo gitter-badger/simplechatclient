@@ -100,6 +100,22 @@
         <translation>Wejdź do pokoju</translation>
     </message>
     <message>
+        <source>Add channel to favourites</source>
+        <translation>Dodaj pokój do ulubionych</translation>
+    </message>
+    <message>
+        <source>Remove channel from favourites</source>
+        <translation>Usuń pokój z ulubionych</translation>
+    </message>
+    <message>
+        <source>Moderation</source>
+        <translation>Moderacja</translation>
+    </message>
+    <message>
+        <source>Channel settings</source>
+        <translation>Ustawienia</translation>
+    </message>
+    <message>
         <source>No reason</source>
         <translation>Zachowuj się! Byle jak ale się zachowuj!</translation>
     </message>

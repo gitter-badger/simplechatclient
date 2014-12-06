@@ -55,6 +55,12 @@ public slots:
 
 private slots:
     void joinChannel();
+    void addChannelToFavourites();
+    void removeChannelFromFavourites();
+    void addCurrentChannelToFavourites();
+    void removeCurrentChannelFromFavourites();
+    void openCurrentChannelModeration();
+    void openCurrentChannelSettings();
     void nick();
     void priv();
     void whois();

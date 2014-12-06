@@ -28,12 +28,15 @@
 #include <QtWebKit/QWebElement>
 #include "channel.h"
 #include "core.h"
+#include "channel_favourites.h"
+#include "channel_settings_gui.h"
 #include "find_text_gui.h"
 #include "friends.h"
 #include "html_messages_renderer.h"
 #include "ignore.h"
 #include "log.h"
 #include "mainwindow.h"
+#include "moderation_gui.h"
 #include "notes.h"
 #include "nick.h"
 #include "punish_reason.h"
@@ -168,6 +171,36 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 void ChatView::joinChannel()
 {
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+}
+
+void ChatView::addChannelToFavourites()
+{
+    Core::instance()->network->send(QString("NS FAVOURITES ADD %1").arg(strChannel));
+}
+
+void ChatView::removeChannelFromFavourites()
+{
+    Core::instance()->network->send(QString("NS FAVOURITES DEL %1").arg(strChannel));
+}
+
+void ChatView::addCurrentChannelToFavourites()
+{
+    Core::instance()->network->send(QString("NS FAVOURITES ADD %1").arg(strChatViewChannel));
+}
+
+void ChatView::removeCurrentChannelFromFavourites()
+{
+    Core::instance()->network->send(QString("NS FAVOURITES DEL %1").arg(strChatViewChannel));
+}
+
+void ChatView::openCurrentChannelModeration()
+{
+    ModerationGui(strChatViewChannel).exec();
+}
+
+void ChatView::openCurrentChannelSettings()
+{
+    ChannelSettingsGui(strChatViewChannel).exec();
 }
 
 void ChatView::nick()
@@ -383,6 +416,11 @@ void ChatView::menuChannel(QContextMenuEvent *event)
     menu.addAction(nameAct);
     menu.addSeparator();
     menu.addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join channel"), this, SLOT(joinChannel()));
+    if (ChannelFavourites::instance()->contains(strChannel))
+        menu.addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Remove channel from favourites"), this, SLOT(removeChannelFromFavourites()));
+    else
+        menu.addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Add channel to favourites"), this, SLOT(addChannelToFavourites()));
+
     menu.exec(event->globalPos());
 }
 
@@ -526,24 +564,10 @@ void ChatView::menuNick(QContextMenuEvent *event)
 
 void ChatView::menuStandard(QContextMenuEvent *event)
 {
+    QString strMe = Settings::instance()->get("nick");
+    QString strSelfModes = Nick::instance()->getModes(strMe, strChatViewChannel);
+
     QMenu menu;
-
-    if (!this->selectedText().isEmpty())
-    {
-        QAction *sendToNotes = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Send to notes"), &menu);
-        connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
-        menu.addAction(sendToNotes);
-    }
-
-    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find..."), &menu);
-    connect(search, SIGNAL(triggered()), this, SLOT(search()));
-    menu.addAction(search);
-
-    QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
-    connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
-    menu.addAction(clear);
-
-    menu.addSeparator();
 
     if (!this->selectedText().isEmpty())
     {
@@ -555,6 +579,39 @@ void ChatView::menuStandard(QContextMenuEvent *event)
     QAction *selectAll = this->pageAction(QWebPage::SelectAll);
     selectAll->setIcon(QIcon(":/images/oxygen/16x16/edit-select-all.png"));
     menu.addAction(selectAll);
+
+    if (!this->selectedText().isEmpty())
+    {
+        QAction *sendToNotes = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Send to notes"), &menu);
+        connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
+        menu.addAction(sendToNotes);
+    }
+
+    menu.addSeparator();
+
+    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find..."), &menu);
+    connect(search, SIGNAL(triggered()), this, SLOT(search()));
+    menu.addAction(search);
+
+    QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
+    connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
+    menu.addAction(clear);
+
+    if (strChatViewChannel.at(0) == '#')
+    {
+        QMenu *channel = new QMenu(strChatViewChannel, &menu);
+        channel->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        if (ChannelFavourites::instance()->contains(strChatViewChannel))
+            channel->addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Remove channel from favourites"), this, SLOT(removeCurrentChannelFromFavourites()));
+        else
+            channel->addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Add channel to favourites"), this, SLOT(addCurrentChannelToFavourites()));
+        if (strSelfModes.contains(FLAG_MOD))
+            channel->addAction(QIcon(":/images/oxygen/16x16/layer-visible-on.png"), tr("Moderation"), this, SLOT(openCurrentChannelModeration()));
+        channel->addAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Channel settings"), this, SLOT(openCurrentChannelSettings()));
+
+        menu.addSeparator();
+        menu.addMenu(channel);
+    }
 
     menu.exec(event->globalPos());
 }
