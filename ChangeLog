@@ -2,6 +2,7 @@ ChangeLog for Simple Chat Client
 ========================= 
 
 Version dev
+* Added to context menu: add/remove channel to favourites, moderation, channel settings
 
 Version 1.9.0 (16.05.2014)
 ================================
