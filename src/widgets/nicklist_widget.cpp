@@ -31,12 +31,13 @@
 #include "punish_reason.h"
 #include "settings.h"
 #include "user_profile_gui.h"
+#include "webcam_gui.h"
 #include "nicklist_widget.h"
 
-#if WITH_KAMERZYSTA
+#ifdef Q_OS_WIN
+    #include <QDir>
+    #include <QSettings>
     #include "kamerzysta.h"
-#else
-    #include "webcam_gui.h"
 #endif
 
 NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)
@@ -139,11 +140,14 @@ void NickListWidget::cam()
 {
     if (strSelectedNick.isEmpty()) return;
 
-#if WITH_KAMERZYSTA
-    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strSelectedNick);
-#else
     new WebcamGui(strSelectedNick, true);
-#endif
+}
+
+void NickListWidget::kamerzysta()
+{
+    if (strSelectedNick.isEmpty()) return;
+
+    (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strSelectedNick);
 }
 
 void NickListWidget::friendsAdd()
@@ -330,6 +334,13 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     QString strNickModes = Nick::instance()->getModes(strSelectedNick, strChannel);
     QList<QString> lPunishReasons = PunishReason::instance()->get();
 
+    #ifdef Q_OS_WIN
+        QSettings winSettings(QSettings::UserScope, "Onet.pl", "InstalledApps");
+        winSettings.beginGroup("Kamerzysta");
+        QDir dir;
+        bool bKamerzystaExists = dir.exists(winSettings.value("DataPath").toString());
+    #endif
+
     QMenu *mInvite = new QMenu(tr("Invite"));
     mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
     QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
@@ -434,7 +445,13 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     {
         menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
         if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))
-            menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(cam()));
+        {
+#ifdef Q_OS_WIN
+            if (bKamerzystaExists)
+                menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(kamerzysta()));
+#endif
+            menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+        }
     }
     menu->addMenu(mInvite);
     if (strSelfModes.contains(FLAG_REGISTERED))

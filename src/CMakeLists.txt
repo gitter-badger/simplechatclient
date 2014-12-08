@@ -1,8 +1,3 @@
-if (WIN32)
-	option (WITH_KAMERZYSTA "Compile with Kamerzysta" ON)
-else (WIN32)
-	option (WITH_KAMERZYSTA "Compile with Kamerzysta" OFF)
-endif (WIN32)
 
 set (scc_UIS
 	../ui/about.ui
@@ -259,38 +254,37 @@ set (scc_HDRS
 	models/my_avatar.h
 )
 
-# kamerzysta/cam
-if (WITH_KAMERZYSTA)
-	message (STATUS "Kamerzysta support enabled.")
+# kamerzysta
+if (WIN32)
 	LIST (APPEND scc_SRCS
 		common/kamerzysta.cpp
 	)
 	LIST (APPEND scc_MOC_HDRS
 		common/kamerzysta.h
 	)
-else (WITH_KAMERZYSTA)
-	message (STATUS "Kamerzysta support disabled. Using internal Webcam window")
-	LIST (APPEND scc_UIS
-		../ui/webcam_standard.ui
-		../ui/webcam_mini.ui
-	)
-	LIST (APPEND scc_SRCS
-		common/webcam_engine.cpp
-		common/webcam_network.cpp
-		gui/webcam_gui.cpp
-		gui/webcam_standard_gui.cpp
-		gui/webcam_mini_gui.cpp
-		widgets/webcam_delegate.cpp
-	)
-	LIST (APPEND scc_MOC_HDRS
-		common/webcam_engine.h
-		common/webcam_network.h
-		gui/webcam_gui.h
-		gui/webcam_standard_gui.h
-		gui/webcam_mini_gui.h
-		widgets/webcam_delegate.h
-	)
-endif (WITH_KAMERZYSTA)
+endif (WIN32)
+
+# internal camera
+LIST (APPEND scc_UIS
+	../ui/webcam_standard.ui
+	../ui/webcam_mini.ui
+)
+LIST (APPEND scc_SRCS
+	common/webcam_engine.cpp
+	common/webcam_network.cpp
+	gui/webcam_gui.cpp
+	gui/webcam_standard_gui.cpp
+	gui/webcam_mini_gui.cpp
+	widgets/webcam_delegate.cpp
+)
+LIST (APPEND scc_MOC_HDRS
+	common/webcam_engine.h
+	common/webcam_network.h
+	gui/webcam_gui.h
+	gui/webcam_standard_gui.h
+	gui/webcam_mini_gui.h
+	widgets/webcam_delegate.h
+)
 
 # winamp
 if (WIN32)

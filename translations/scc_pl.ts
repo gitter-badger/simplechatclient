@@ -197,6 +197,10 @@
     </message>
     <message>
         <source>Webcam</source>
+        <translation>Kamerzysta</translation>
+    </message>
+    <message>
+        <source>Webcam internal</source>
         <translation>Kamerka</translation>
     </message>
     <message>
@@ -2511,6 +2515,10 @@
     </message>
     <message>
         <source>Webcam</source>
+        <translation>Kamerzysta</translation>
+    </message>
+    <message>
+        <source>Webcam internal</source>
         <translation>Kamerka</translation>
     </message>
     <message>

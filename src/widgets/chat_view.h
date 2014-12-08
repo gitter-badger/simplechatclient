@@ -66,6 +66,7 @@ private slots:
     void whois();
     void profile();
     void cam();
+    void kamerzysta();
     void friendsAdd();
     void friendsDel();
     void ignoreAdd();

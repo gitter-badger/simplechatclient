@@ -63,7 +63,7 @@
 #include "update_gui.h"
 #include "tool_widget.h"
 
-#if WITH_KAMERZYSTA
+#ifdef Q_OS_WIN
     #include "kamerzysta.h"
 #else
     #include "webcam_gui.h"
@@ -550,7 +550,7 @@ void MainWindow::openFindNick()
 
 void MainWindow::openCams()
 {
-#if WITH_KAMERZYSTA
+#ifdef Q_OS_WIN
     if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
     {
         QString strMe = Settings::instance()->get("nick");

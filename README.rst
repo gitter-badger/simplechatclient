@@ -69,13 +69,6 @@ Available options
 
 ::
 
-	-DWITH_KAMERZYSTA=ON|OFF
-
--	ON - compile with Kamerzysta connection (default=ON on Windows)
--	OFF - compile with internal webcam window (default=OFF on Unix/Linux)
-
-::
-
 	-DWIN32_QCA2_DIR=DIR
 
 compile with custom libQCA path i.e.: -DWIN32_QCA2_DIR=C:\QCA2
