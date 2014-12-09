@@ -254,6 +254,10 @@ void OptionsGui::createGui()
     webcam->setText(tr("Webcam"));
     webcam->setToolTip(tr("Webcam"));
 
+#ifndef Q_OS_WIN
+    webcam->setHidden(true);
+#endif
+
     QListWidgetItem *updates = new QListWidgetItem(ui.listWidget_options);
     updates->setIcon(QIcon(":/images/oxygen/16x16/system-software-update.png"));
     updates->setText(tr("Updates"));

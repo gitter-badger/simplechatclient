@@ -1843,11 +1843,11 @@
     </message>
     <message>
         <source>Webcam system</source>
-        <translation>Kamerki systemowe</translation>
+        <translation>Używaj programu zewnętrznego jeśli istnieje (Kamerzysta)</translation>
     </message>
     <message>
         <source>Webcam internal</source>
-        <translation>Kamerki wewnętrzne</translation>
+        <translation>Używaj wewnętrznej obsługi kamerek</translation>
     </message>
     <message>
         <source>Updates</source>

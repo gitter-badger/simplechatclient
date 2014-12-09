@@ -1551,7 +1551,7 @@
         <x>0</x>
         <y>20</y>
         <width>441</width>
-        <height>71</height>
+        <height>101</height>
        </rect>
       </property>
       <property name="title">
@@ -1562,7 +1562,7 @@
         <rect>
          <x>20</x>
          <y>30</y>
-         <width>191</width>
+         <width>411</width>
          <height>17</height>
         </rect>
        </property>
@@ -1573,9 +1573,9 @@
       <widget class="QRadioButton" name="radioButton_webcam_internal">
        <property name="geometry">
         <rect>
-         <x>230</x>
-         <y>30</y>
-         <width>201</width>
+         <x>20</x>
+         <y>60</y>
+         <width>411</width>
          <height>17</height>
         </rect>
        </property>
