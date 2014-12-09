@@ -61,12 +61,11 @@
 #include "tab_manager.h"
 #include "update.h"
 #include "update_gui.h"
+#include "webcam_gui.h"
 #include "tool_widget.h"
 
 #ifdef Q_OS_WIN
     #include "kamerzysta.h"
-#else
-    #include "webcam_gui.h"
 #endif
 
 #include "mainwindow.h"
@@ -550,16 +549,24 @@ void MainWindow::openFindNick()
 
 void MainWindow::openCams()
 {
-#ifdef Q_OS_WIN
-    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
+    if (Settings::instance()->get("webcam") == "system")
     {
-        QString strMe = Settings::instance()->get("nick");
-        (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
-    }
+#ifdef Q_OS_WIN
+        if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
+        {
+            QString strMe = Settings::instance()->get("nick");
+            (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strMe);
+        }
 #else
-    if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
-        new WebcamGui();
+        if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
+            new WebcamGui();
 #endif
+    }
+    else // internal
+    {
+        if ((Core::instance()->network->isConnected()) && (Settings::instance()->get("logged") == "true"))
+            new WebcamGui();
+    }
 }
 
 void MainWindow::openMyStats()

@@ -167,6 +167,11 @@ void OptionsGui::createGui()
     ui.groupBox_notification->setTitle(tr("Notification"));
     ui.checkBox_tray_message->setText(tr("Show tray notification"));
 
+    // webcam
+    ui.groupBox_webcam->setTitle(tr("Webcam"));
+    ui.radioButton_webcam_system->setText(tr("Webcam system"));
+    ui.radioButton_webcam_internal->setText(tr("Webcam internal"));
+
     // page updates
     ui.groupBox_updates->setTitle(tr("Updates"));
     ui.checkBox_updates->setText(tr("Check updates on start up"));
@@ -243,6 +248,11 @@ void OptionsGui::createGui()
     notification->setIcon(QIcon(":/images/oxygen/16x16/help-hint.png"));
     notification->setText(tr("Notification"));
     notification->setToolTip(tr("Notification"));
+
+    QListWidgetItem *webcam = new QListWidgetItem(ui.listWidget_options);
+    webcam->setIcon(QIcon(":/images/oxygen/16x16/camera-web.png"));
+    webcam->setText(tr("Webcam"));
+    webcam->setToolTip(tr("Webcam"));
 
     QListWidgetItem *updates = new QListWidgetItem(ui.listWidget_options);
     updates->setIcon(QIcon(":/images/oxygen/16x16/system-software-update.png"));
@@ -344,6 +354,8 @@ void OptionsGui::setDefaultValues()
     QString strMprisPlayer = Settings::instance()->get("mpris_player");
 
     QString strTrayMessage = Settings::instance()->get("tray_message");
+
+    QString strWebcam = Settings::instance()->get("webcam");
 
     QString strUpdates = Settings::instance()->get("updates");
 
@@ -457,6 +469,12 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_updates->setChecked(true);
     else
         ui.checkBox_updates->setChecked(false);
+
+    // webcam
+    if (strWebcam == "system")
+        ui.radioButton_webcam_system->setChecked(true);
+    else
+        ui.radioButton_webcam_internal->setChecked(true);
 
     // auto connect
     if (strAutoConnect == "true")
@@ -581,6 +599,9 @@ void OptionsGui::createSignals()
     connect(ui.comboBox_mpris_player, SIGNAL(activated(int)), this, SLOT(setMprisPlayer(int)));
 
     connect(ui.checkBox_tray_message, SIGNAL(clicked(bool)), this, SLOT(setTrayMessage(bool)));
+
+    connect(ui.radioButton_webcam_system, SIGNAL(clicked(bool)), this, SLOT(setWebcamSystem()));
+    connect(ui.radioButton_webcam_internal, SIGNAL(clicked(bool)), this, SLOT(setWebcamInternal()));
 
     connect(ui.checkBox_updates, SIGNAL(clicked(bool)), this, SLOT(setUpdates(bool)));
 
@@ -1191,6 +1212,28 @@ void OptionsGui::setTrayMessage(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("tray_message", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::setWebcamSystem()
+{
+    QString strValue = "system";
+
+    Settings::instance()->set("webcam", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("webcam", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::setWebcamInternal()
+{
+    QString strValue = "internal";
+
+    Settings::instance()->set("webcam", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("webcam", strValue);
     delete pConfig;
 }
 

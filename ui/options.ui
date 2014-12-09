@@ -1544,6 +1544,47 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="page">
+     <widget class="QGroupBox" name="groupBox_webcam">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>441</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Webcam</string>
+      </property>
+      <widget class="QRadioButton" name="radioButton_webcam_system">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>191</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Webcam system</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioButton_webcam_internal">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>30</y>
+         <width>201</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Webcam internal</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_updates">
      <widget class="QGroupBox" name="groupBox_updates">
       <property name="geometry">

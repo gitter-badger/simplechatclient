@@ -109,6 +109,9 @@ private slots:
 
     void setTrayMessage(bool);
 
+    void setWebcamSystem();
+    void setWebcamInternal();
+
     void setUpdates(bool);
 
     void setAutoConnect(bool bValue);

@@ -1838,6 +1838,18 @@
         <translation>Pokaż powiadomienia w zasobniku (dymki)</translation>
     </message>
     <message>
+        <source>Webcam</source>
+        <translation>Kamerki</translation>
+    </message>
+    <message>
+        <source>Webcam system</source>
+        <translation>Kamerki systemowe</translation>
+    </message>
+    <message>
+        <source>Webcam internal</source>
+        <translation>Kamerki wewnętrzne</translation>
+    </message>
+    <message>
         <source>Updates</source>
         <translation>Aktualizacje</translation>
     </message>

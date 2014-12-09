@@ -446,11 +446,21 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
         menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
         if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))
         {
+            if (Settings::instance()->get("webcam") == "system")
+            {
 #ifdef Q_OS_WIN
-            if (bKamerzystaExists)
-                menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(kamerzysta()));
+                if (bKamerzystaExists)
+                    menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(kamerzysta()));
+                else
+                    menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+#else
+                menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
 #endif
-            menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+            }
+            else // internal
+            {
+                menu->addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+            }
         }
     }
     menu->addMenu(mInvite);
