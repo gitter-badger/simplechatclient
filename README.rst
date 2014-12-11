@@ -30,12 +30,12 @@ Example Environment variables for development:
 PATH
 ::
 
-	c:\Qt\5.3\mingw482_32\bin;c:\Qt\Tools\mingw482_32\bin;C:\Program Files (x86)\CMake\bin;
+	c:\Qt\5.4\mingw491_32\bin;c:\Qt\Tools\mingw491_32\bin;C:\Program Files (x86)\CMake\bin;
 
 QT_DIR
 ::
 
-	c:\Qt\5.3\mingw482_32\bin\
+	c:\Qt\5.4\mingw491_32\bin\
 
 Linux Debian/Ubuntu packages
 ============================
