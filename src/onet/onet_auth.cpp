@@ -24,6 +24,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
+#include <QTextCodec>
 #include <QTimer>
 #include <QUrl>
 
@@ -299,10 +300,9 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
             break;
         case AT_uo:
             {
-                QString strData(bData);
                 if (Settings::instance()->get("logged") == "false")
                 {
-                    requestFinished(strData);
+                    requestFinished(bData);
 
                     saveCookies();
                 }
@@ -375,12 +375,15 @@ QString OnetAuth::getVersion(const QString &strData)
     return "20120711-1544b";
 }
 
-void OnetAuth::requestFinished(const QString &strData)
+void OnetAuth::requestFinished(const QByteArray &bData)
 {
-    if (!strData.isEmpty())
+    if (!bData.isEmpty())
     {
+        QTextCodec *codec = QTextCodec::codecForName("ISO-8859-2");
+        QString strDataUtf8 = codec->toUnicode(bData);
+
         QDomDocument doc;
-        doc.setContent(strData);
+        doc.setContent(strDataUtf8);
 
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><uoKey>LY9j2sXwio0G_yo3PdpukDL8iZJGHXKs</uoKey><zuoUsername>~Succubi_test</zuoUsername><error err_code="TRUE"  err_text="wartość prawdziwa" ></error></root>
         // <?xml version="1.0" encoding="ISO-8859-2"?><root><error err_code="-2"  err_text="U.ytkownik nie zalogowany" ></error></root>

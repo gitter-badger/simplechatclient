@@ -90,7 +90,7 @@ private:
     QString getVersion(const QString &strData);
     void saveCookies();
     void removeCookies();
-    void requestFinished(const QString &strData);
+    void requestFinished(const QByteArray &bData);
 
 private slots:
     void networkFinished(QNetworkReply *reply);
