@@ -1,7 +1,7 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version dev
+Version 2.0.0 (unknown)
 * Added to context menu: add/remove channel to favourites, moderation, channel settings
 * Internal small cam enabled by default on windows
 

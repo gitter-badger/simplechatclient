@@ -1,8 +1,8 @@
 [Setup]
 AppVerName=Simple Chat Client
-AppVersion=1.9.0
-VersionInfoVersion=1.9.0
-OutputBaseFilename=scc-1.9.0.0
+AppVersion=2.0.0
+VersionInfoVersion=2.0.0
+OutputBaseFilename=scc-2.0.0.0
 
 AppName=Simple Chat Client
 AppPublisher=Simple Chat Client
