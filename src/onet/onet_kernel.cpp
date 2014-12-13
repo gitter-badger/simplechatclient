@@ -4100,7 +4100,7 @@ void OnetKernel::raw_801()
     if (strAuthKey.length() == 16)
     {
         Core::instance()->network->send(QString("AUTHKEY %1").arg(strAuthKey));
-        QString strUOKey = Settings::instance()->get("uokey");
+        QString strUOKey = Settings::instance()->get("uo_key");
         QString strNickUo = Settings::instance()->get("uo_nick");
         if ((!strUOKey.isEmpty()) && (!strNickUo.isEmpty()))
             Core::instance()->network->send(QString("USER * %1 czat-app.onet.pl :%2").arg(strUOKey, strNickUo));

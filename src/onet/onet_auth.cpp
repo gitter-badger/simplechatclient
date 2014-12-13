@@ -395,15 +395,15 @@ void OnetAuth::requestFinished(const QByteArray &bData)
         if (strErrorCode.toLower() == "true")
         {
             QString strUOKey = doc.elementsByTagName("uoKey").item(0).toElement().text();
-            QString strNick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
+            QString strUONick = doc.elementsByTagName("zuoUsername").item(0).toElement().text();
 
-            Settings::instance()->set("uokey", strUOKey);
-            Settings::instance()->set("uo_nick", strNick);
+            Settings::instance()->set("uo_key", strUOKey);
+            Settings::instance()->set("uo_nick", strUONick);
 
             // send auth
             if (Core::instance()->network->isConnected())
             {
-                Core::instance()->network->send(QString("NICK %1").arg(strFullNick));
+                Core::instance()->network->send(QString("NICK %1").arg(strUONick));
                 Core::instance()->network->send("AUTHKEY");
             }
         }

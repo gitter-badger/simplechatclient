@@ -108,7 +108,7 @@ void Core::createSettings()
     Settings::instance()->set("ignore_raw_141", "false");
     Settings::instance()->set("age_check", "true");
     Settings::instance()->set("first_run", "true");
-    Settings::instance()->set("uokey", QString::null);
+    Settings::instance()->set("uo_key", QString::null);
     Settings::instance()->set("uo_nick", QString::null);
     Settings::instance()->set("last_active", "0");
     Settings::instance()->set("reconnect", "true");

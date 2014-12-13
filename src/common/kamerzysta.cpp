@@ -66,7 +66,7 @@ void Kamerzysta::show(const QString &_strNick)
 {
     strNick = _strNick;
 
-    QString strUOKey = Settings::instance()->get("uokey");
+    QString strUOKey = Settings::instance()->get("uo_key");
 
     log("Nick:"+strNick);
     log("UO:"+strUOKey);
@@ -228,7 +228,7 @@ void Kamerzysta::getPort()
 void Kamerzysta::authorize()
 {
     QString strMe = Settings::instance()->get("nick");
-    QString strUOKey = Settings::instance()->get("uokey");
+    QString strUOKey = Settings::instance()->get("uo_key");
 
     networkSend(QString("d%1|%2").arg(strMe, strUOKey));
 

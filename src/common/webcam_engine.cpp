@@ -666,7 +666,7 @@ void WebcamEngine::raw_267()
 void WebcamEngine::raw_268()
 {
     // CAUTH ok
-    QString strUOKey = Settings::instance()->get("uokey");
+    QString strUOKey = Settings::instance()->get("uo_key");
     pWebcamNetwork->networkSend(QString("AUTH %1 3.00.159").arg(strUOKey));
 }
 
