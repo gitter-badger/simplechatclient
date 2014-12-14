@@ -1562,6 +1562,10 @@
         <translation>Dodaj podświetlany tekst:</translation>
     </message>
     <message>
+        <source>Edit highlight text:</source>
+        <translation>Zmień podświetlany tekst:</translation>
+    </message>
+    <message>
         <source>Remove highlight text:</source>
         <translation>Usuń podświetlany tekst:</translation>
     </message>
@@ -1576,6 +1580,10 @@
     <message>
         <source>Add punish reason:</source>
         <translation>Dodaj powód wyrzucenia:</translation>
+    </message>
+    <message>
+        <source>Edit punish reason:</source>
+        <translation>Zmień powód wyrzucenia:</translation>
     </message>
     <message>
         <source>Remove punish reason:</source>
@@ -1896,6 +1904,10 @@
     <message>
         <source>Add</source>
         <translation>Dodaj</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Zmień</translation>
     </message>
     <message>
         <source>Remove</source>

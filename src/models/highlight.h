@@ -33,8 +33,9 @@ public:
 
     Highlight();
     void init();
-    void add(QString &strHighlight);
+    void add(const QString &strHighlight);
     void remove(const QString &strHighlight);
+    void replace(const QString &strOldHighlight, const QString &strNewHighlight);
     bool contains(const QString &strHighlight);
     void clear();
     QStringList get();
@@ -44,7 +45,7 @@ private:
 
     void read();
     void save();
-    void fix(QString &strHighlight);
+    QString fix(const QString &strHighlight);
 };
 
 #endif // HIGHLIGHT_H

@@ -54,8 +54,10 @@ void OptionsGui::createGui()
     ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
     ui.pushButton_themes->setIcon(QIcon(":/images/oxygen/16x16/view-presentation.png"));
     ui.pushButton_highlight_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_highlight_edit->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_highlight_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.pushButton_punish_reason_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+    ui.pushButton_punish_reason_edit->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
     ui.pushButton_punish_reason_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
     ui.pushButton_reverse_colors->setIcon(QIcon(":/images/oxygen/16x16/format-stroke-color.png"));
     ui.pushButton_restore_default_colors->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
@@ -80,11 +82,13 @@ void OptionsGui::createGui()
     // page highlight
     ui.groupBox_highlight->setTitle(tr("Highlight text"));
     ui.pushButton_highlight_add->setText(tr("Add"));
+    ui.pushButton_highlight_edit->setText(tr("Edit"));
     ui.pushButton_highlight_remove->setText(tr("Remove"));
 
     // page punish reason
     ui.groupBox_punish_reason->setTitle(tr("Punish reason"));
     ui.pushButton_punish_reason_add->setText(tr("Add"));
+    ui.pushButton_punish_reason_edit->setText(tr("Edit"));
     ui.pushButton_punish_reason_remove->setText(tr("Remove"));
 
     // page colors
@@ -549,9 +553,11 @@ void OptionsGui::createSignals()
     connect(ui.comboBox_language, SIGNAL(activated(int)), this, SLOT(languageChanged(int)));
 
     connect(ui.pushButton_highlight_add, SIGNAL(clicked()), this, SLOT(highlightAdd()));
+    connect(ui.pushButton_highlight_edit, SIGNAL(clicked()), this, SLOT(highlightEdit()));
     connect(ui.pushButton_highlight_remove, SIGNAL(clicked()), this, SLOT(highlightRemove()));
 
     connect(ui.pushButton_punish_reason_add, SIGNAL(clicked()), this, SLOT(punishReasonAdd()));
+    connect(ui.pushButton_punish_reason_edit, SIGNAL(clicked()), this, SLOT(punishReasonEdit()));
     connect(ui.pushButton_punish_reason_remove, SIGNAL(clicked()), this, SLOT(punishReasonRemove()));
 
     connect(ui.pushButton_reverse_colors, SIGNAL(clicked()), this, SLOT(reverseColors()));
@@ -739,6 +745,27 @@ void OptionsGui::highlightAdd()
     }
 }
 
+void OptionsGui::highlightEdit()
+{
+    if (ui.listWidget_highlight->selectedItems().size() == 0)
+        return;
+
+    QListWidgetItem *itemSelectedNick = ui.listWidget_highlight->selectedItems().at(0);
+    QString strSelectedNick = itemSelectedNick->text();
+
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing highlight text"), tr("Edit highlight text:"), QLineEdit::Normal, strSelectedNick, &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        Highlight::instance()->replace(strSelectedNick, strText);
+
+        ui.listWidget_highlight->takeItem(ui.listWidget_highlight->row(itemSelectedNick));
+        ui.listWidget_highlight->addItem(strText);
+    }
+}
+
 void OptionsGui::highlightRemove()
 {
     QString strRemove;
@@ -773,6 +800,27 @@ void OptionsGui::punishReasonAdd()
 
             ui.listWidget_punish_reason->addItem(strText);
         }
+    }
+}
+
+void OptionsGui::punishReasonEdit()
+{
+    if (ui.listWidget_punish_reason->selectedItems().size() == 0)
+        return;
+
+    QListWidgetItem *itemSelectedReason = ui.listWidget_punish_reason->selectedItems().at(0);
+    QString strSelectedReason = itemSelectedReason->text();
+
+    bool ok;
+    QString strText = QInputDialog::getText(this, tr("Changing punish reason"), tr("Edit punish reason:"), QLineEdit::Normal, strSelectedReason, &ok);
+    strText = strText.trimmed();
+
+    if ((ok) && (!strText.isEmpty()))
+    {
+        PunishReason::instance()->replace(strSelectedReason, strText);
+
+        ui.listWidget_punish_reason->takeItem(ui.listWidget_punish_reason->row(itemSelectedReason));
+        ui.listWidget_punish_reason->addItem(strText);
     }
 }
 

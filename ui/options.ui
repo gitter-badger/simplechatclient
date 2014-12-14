@@ -311,6 +311,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="pushButton_highlight_edit">
+            <property name="text">
+             <string>Edit</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pushButton_highlight_remove">
             <property name="text">
              <string>Remove</string>
@@ -388,6 +395,13 @@
            <widget class="QPushButton" name="pushButton_punish_reason_add">
             <property name="text">
              <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_punish_reason_edit">
+            <property name="text">
+             <string>Edit</string>
             </property>
            </widget>
           </item>

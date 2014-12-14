@@ -43,29 +43,38 @@ void PunishReason::init()
     read();
 }
 
-void PunishReason::add(QString &strPunishReason)
+void PunishReason::add(const QString &strPunishReason)
 {
-    fix(strPunishReason);
+    QString strPunishReasonClean = fix(strPunishReason);
 
-    if (!lPunishReason.contains(strPunishReason))
+    if (!lPunishReason.contains(strPunishReasonClean))
     {
-        lPunishReason.append(strPunishReason);
+        lPunishReason.append(strPunishReasonClean);
         save();
     }
 }
 
 void PunishReason::remove(const QString &strPunishReason)
 {
-    if (lPunishReason.contains(strPunishReason))
+    QString strPunishReasonClean = fix(strPunishReason);
+
+    if (lPunishReason.contains(strPunishReasonClean))
     {
-        lPunishReason.removeOne(strPunishReason);
+        lPunishReason.removeAll(strPunishReasonClean);
         save();
     }
 }
 
+void PunishReason::replace(const QString &strOldPunishReason, const QString &strNewPunishReason)
+{
+    this->remove(strOldPunishReason);
+    this->add(strNewPunishReason);
+}
+
 bool PunishReason::contains(const QString &strPunishReason)
 {
-    return lPunishReason.contains(strPunishReason);
+    QString strPunishReasonClean = fix(strPunishReason);
+    return lPunishReason.contains(strPunishReasonClean);
 }
 
 void PunishReason::clear()
@@ -101,7 +110,8 @@ void PunishReason::save()
     delete pConfig;
 }
 
-void PunishReason::fix(QString &strPunishReason)
+QString PunishReason::fix(const QString &strPunishReason)
 {
-    strPunishReason.remove(QRegExp("[&<>\"'\\;]"));
+    QString strPunishReasonFixed = strPunishReason;
+    return strPunishReasonFixed.remove(QRegExp("[&<>\"'\\;]"));
 }

@@ -43,29 +43,38 @@ void Highlight::init()
     read();
 }
 
-void Highlight::add(QString &strHighlight)
+void Highlight::add(const QString &strHighlight)
 {
-    fix(strHighlight);
+    QString strHighlightClean = fix(strHighlight);
 
-    if (!lHighlight.contains(strHighlight))
+    if (!lHighlight.contains(strHighlightClean))
     {
-        lHighlight.append(strHighlight);
+        lHighlight.append(strHighlightClean);
         save();
     }
 }
 
 void Highlight::remove(const QString &strHighlight)
 {
-    if (lHighlight.contains(strHighlight))
+    QString strHighlightClean = fix(strHighlight);
+
+    if (lHighlight.contains(strHighlightClean))
     {
-        lHighlight.removeOne(strHighlight);
+        lHighlight.removeAll(strHighlightClean);
         save();
     }
 }
 
+void Highlight::replace(const QString &strOldHighlight, const QString &strNewHighlight)
+{
+    remove(strOldHighlight);
+    add(strNewHighlight);
+}
+
 bool Highlight::contains(const QString &strHighlight)
 {
-    return lHighlight.contains(strHighlight);
+    QString strHighlightClean = fix(strHighlight);
+    return lHighlight.contains(strHighlightClean);
 }
 
 void Highlight::clear()
@@ -101,7 +110,8 @@ void Highlight::save()
     delete pConfig;
 }
 
-void Highlight::fix(QString &strHighlight)
+QString Highlight::fix(const QString &strHighlight)
 {
-    strHighlight.remove(QRegExp("[&<>\"'\\;]"));
+    QString strHighlightFixed = strHighlight;
+    return strHighlightFixed.remove(QRegExp("[&<>\"'\\;]"));
 }

@@ -33,8 +33,9 @@ public:
 
     PunishReason();
     void init();
-    void add(QString &strPunishReason);
+    void add(const QString &strPunishReason);
     void remove(const QString &strPunishReason);
+    void replace(const QString &strOldPunishReason, const QString &strNewPunishReason);
     bool contains(const QString &strPunishReason);
     void clear();
     QStringList get();
@@ -44,7 +45,7 @@ private:
 
     void read();
     void save();
-    void fix(QString &strPunishReason);
+    QString fix(const QString &strPunishReason);
 };
 
 #endif // PUNISH_REASON_H

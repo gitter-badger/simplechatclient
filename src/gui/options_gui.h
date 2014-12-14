@@ -53,9 +53,11 @@ private slots:
     void languageChanged(int index);
 
     void highlightAdd();
+    void highlightEdit();
     void highlightRemove();
 
     void punishReasonAdd();
+    void punishReasonEdit();
     void punishReasonRemove();
 
     void reverseColors();
