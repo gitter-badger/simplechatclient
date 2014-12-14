@@ -207,7 +207,9 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     pInputLine->show();
 
     sendButton = new QToolButton(this);
+    sendButton->setToolButtonStyle(Qt::ToolButtonIconOnly); // ToolButtonTextBesideIcon
     sendButton->setIcon(QIcon(":/images/oxygen/16x16/key-enter.png"));
+    sendButton->setText(tr("Send"));
     sendButton->setToolTip(tr("Send"));
     sendButton->show();
 
@@ -216,32 +218,27 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     moderSendButton->setToolTip(tr("Send to moderators"));
     moderSendButton->show();
 
-    QHBoxLayout *topLayout = new QHBoxLayout;
-    topLayout->setMargin(0);
-    topLayout->setAlignment(Qt::AlignLeft);
-    topLayout->addWidget(showFontButtons);
-    topLayout->addWidget(separator1);
-    topLayout->addWidget(bold);
-    topLayout->addWidget(italic);
-    topLayout->addWidget(fontfamily);
-    topLayout->addWidget(color);
-    topLayout->addWidget(size);
-    topLayout->addWidget(separator2);
-    topLayout->addWidget(emoticons);
-    topLayout->addWidget(channel_settings);
-    topLayout->addWidget(moderation);
-
-    QHBoxLayout *bottomLayout = new QHBoxLayout;
-    bottomLayout->setMargin(0);
-    bottomLayout->setAlignment(Qt::AlignLeft);
-    bottomLayout->addWidget(pInputLine);
-    bottomLayout->addWidget(sendButton);
-    bottomLayout->addWidget(moderSendButton);
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->setMargin(0);
+    layout->setAlignment(Qt::AlignLeft);
+    layout->addWidget(pInputLine);
+    layout->addWidget(showFontButtons);
+    layout->addWidget(separator1);
+    layout->addWidget(bold);
+    layout->addWidget(italic);
+    layout->addWidget(fontfamily);
+    layout->addWidget(color);
+    layout->addWidget(size);
+    layout->addWidget(separator2);
+    layout->addWidget(emoticons);
+    layout->addWidget(channel_settings);
+    layout->addWidget(moderation);
+    layout->addWidget(sendButton);
+    layout->addWidget(moderSendButton);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
-    mainLayout->addLayout(topLayout);
-    mainLayout->addLayout(bottomLayout);
+    mainLayout->addLayout(layout);
     this->setLayout(mainLayout);
 
     // set default values
