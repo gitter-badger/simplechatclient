@@ -2,6 +2,7 @@ ChangeLog for Simple Chat Client
 ========================= 
 
 Version 2.0.0 (unknown)
+* Html logs by default
 * Added edit hightlight text, edit punish reason
 * Added to context menu: add/remove channel to favourites, moderation, channel settings
 * Internal small cam enabled by default on windows
