@@ -24,6 +24,7 @@
 #include <QTextStream>
 #include "channel.h"
 #include "convert.h"
+#include "html_messages_renderer.h"
 #include "settings.h"
 #include "log.h"
 
@@ -34,16 +35,36 @@
 void Log::logOpened(const QString &strChannel)
 {
     QString strData = "--- Log opened "+QDateTime::currentDateTime().toString(Qt::TextDate);
-    Log::save(strChannel, strData);
+
+    QString strLogsFormat = Settings::instance()->get("logs_format");
+    if (strLogsFormat == "html")
+    {
+        strData = "<div><strong>"+strData+"</strong></div>";
+        Log::save(strChannel, strData, Log::Html);
+    }
+    else
+    {
+        Log::save(strChannel, strData, Log::Txt);
+    }
 }
 
 void Log::logClosed(const QString &strChannel)
 {
     QString strData = "--- Log closed "+QDateTime::currentDateTime().toString(Qt::TextDate);
-    Log::save(strChannel, strData);
+
+    QString strLogsFormat = Settings::instance()->get("logs_format");
+    if (strLogsFormat == "html")
+    {
+        strData = "<div><strong>"+strData+"</strong></div>";
+        Log::save(strChannel, strData, Log::Html);
+    }
+    else
+    {
+        Log::save(strChannel, strData, Log::Txt);
+    }
 }
 
-void Log::save(const QString &strChannel, const QString &strMessage, const QString &strFileExtension)
+void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFormat currentLogFormat)
 {
     if (Settings::instance()->get("logs") == "false") return;
     if ((strChannel.isEmpty()) || (strMessage.isEmpty())) return;
@@ -77,11 +98,25 @@ void Log::save(const QString &strChannel, const QString &strMessage, const QStri
     if (strFileName.at(0) == '^')
         strFileName = Channel::instance()->getAlternativeName(strFileName);
 
+    // convert
+    QString strSaveMessage = strMessage;
+
+    // file
+    QString strFileExtension = (currentLogFormat == Log::Html ? "html" : "txt");
     QFile f(path+strFileName+"."+strFileExtension);
+
+    if ((!f.exists()) && (currentLogFormat == Log::Html))
+    {
+        HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
+        QString strHeadCSS = pHtmlMessagesRenderer->headCSS();
+        QString strBodyCSS = pHtmlMessagesRenderer->bodyCSS();
+        delete pHtmlMessagesRenderer;
+
+        strSaveMessage = "<!DOCTYPE html><html><head><title>"+strFileName+"</title><style type=\"text/css\">"+strHeadCSS+"</style></head><body style=\""+strBodyCSS+"\">"+strSaveMessage;
+    }
+
     if (f.open(QIODevice::Append))
     {
-        // convert
-        QString strSaveMessage = strMessage;
 
         if (strChannel != DEBUG_WINDOW)
             Convert::simpleConvert(strSaveMessage);

@@ -91,6 +91,8 @@ private slots:
 
     void openLogsFolder();
     void setLogs(bool bValue);
+    void setLogsFormatHtml();
+    void setLogsFormatTxt();
 
     void setBackgroundImage();
     void setShowBackgroundImage(bool bValue);

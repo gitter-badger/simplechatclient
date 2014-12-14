@@ -84,7 +84,8 @@ void Message::saveMessage(const QString &strChannel, const QString &strData, Mes
     // fix /me
     Convert::fixMeAction(strSaveData);
 
-    Log::save(strChannel, strSaveData);
+    if (Settings::instance()->get("logs_format") == "txt")
+        Log::save(strChannel, strSaveData, Log::Txt);
 }
 
 bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessageCategory)

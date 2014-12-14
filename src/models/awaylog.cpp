@@ -81,7 +81,7 @@ void Awaylog::add(qint64 iTime, const QString &strChannel, const QString &strDat
     if (Settings::instance()->get("logs") == "true")
     {
         QString strAwaylogFileData = QString("%1 %2 %3").arg(QDateTime::fromMSecsSinceEpoch(iTime).toString("[yyyy-MM-dd] [hh:mm:ss]"), strAwayLogChannel, strData);
-        Log::save("awaylog", strAwaylogFileData);
+        Log::save("awaylog", strAwaylogFileData, Log::Txt);
     }
 
     strAwayLogData = QString("%1\n%2 %3").arg(strAwayLogChannel, QDateTime::fromMSecsSinceEpoch(iTime).toString("[hh:mm:ss]"), strAwayLogData);

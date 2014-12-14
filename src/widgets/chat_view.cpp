@@ -129,15 +129,6 @@ void ChatView::refreshCSS()
 
     QWebElement body = this->page()->mainFrame()->findFirstElement("body");
     body.setAttribute("style", strBodyCSS);
-
-    // html logs
-    if (Settings::instance()->get("debug") == "true")
-    {
-        Log::save(strChatViewChannel, "<html><head>", "html");
-        Log::save(strChatViewChannel, QString("<style type=\"text/css\">%1</style>").arg(strHeadCSS), "html");
-        Log::save(strChatViewChannel, QString("<style type=\"text/css\">%1</style>").arg(strBodyCSS), "html");
-        Log::save(strChatViewChannel, "</head><body>", "html");
-    }
 }
 
 void ChatView::clearMessages()
@@ -162,8 +153,8 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
 
     // html logs
-    if (Settings::instance()->get("debug") == "true")
-        Log::save(strChatViewChannel, strContent, "html");
+    if (Settings::instance()->get("logs_format") == "html")
+        Log::save(strChatViewChannel, strContent, Log::Html);
 }
 
 void ChatView::joinChannel()

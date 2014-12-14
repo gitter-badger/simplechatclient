@@ -131,6 +131,9 @@ void OptionsGui::createGui()
     ui.pushButton_logs_open_folder->setText(tr("Open folder"));
     ui.checkBox_logs_by_date->setText(tr("Save logs by date"));
     ui.checkBox_logs->setText(tr("Save logs"));
+    ui.groupBox_logs_format->setTitle(tr("Logs format"));
+    ui.radioButton_logs_format_html->setText(tr("Html"));
+    ui.radioButton_logs_format_txt->setText(tr("Txt"));
 
     // page background image
     ui.groupBox_background_image->setTitle(tr("Background image"));
@@ -341,6 +344,7 @@ void OptionsGui::setDefaultValues()
     QString strLanguage = Settings::instance()->get("language");
 
     QString strLogsByDate = Settings::instance()->get("logs_by_date");
+    QString strLogsFormat = Settings::instance()->get("logs_format");
     QString strLogs = Settings::instance()->get("logs");
 
     QString strSound = Settings::instance()->get("sound");
@@ -396,6 +400,12 @@ void OptionsGui::setDefaultValues()
         ui.checkBox_logs->setChecked(true);
     else
         ui.checkBox_logs->setChecked(false);
+
+    // logs format
+    if (strLogsFormat == "html")
+        ui.radioButton_logs_format_html->setChecked(true);
+    else
+        ui.radioButton_logs_format_txt->setChecked(true);
 
     // sound
     if (strSound == "true")
@@ -590,6 +600,8 @@ void OptionsGui::createSignals()
     connect(ui.pushButton_logs_open_folder, SIGNAL(clicked()), this, SLOT(openLogsFolder()));
     connect(ui.checkBox_logs_by_date, SIGNAL(clicked(bool)), this, SLOT(setLogsByDate(bool)));
     connect(ui.checkBox_logs, SIGNAL(clicked(bool)), this, SLOT(setLogs(bool)));
+    connect(ui.radioButton_logs_format_html, SIGNAL(clicked()), SLOT(setLogsFormatHtml()));
+    connect(ui.radioButton_logs_format_txt, SIGNAL(clicked()), SLOT(setLogsFormatTxt()));
 
     connect(ui.pushButton_set_background_image, SIGNAL(clicked()), this, SLOT(setBackgroundImage()));
     connect(ui.checkBox_show_background_image, SIGNAL(clicked(bool)), this, SLOT(setShowBackgroundImage(bool)));
@@ -1093,6 +1105,28 @@ void OptionsGui::setLogs(bool bValue)
 
     Config *pConfig = new Config();
     pConfig->set("logs", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::setLogsFormatHtml()
+{
+    QString strValue = "html";
+
+    Settings::instance()->set("logs_format", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("logs_format", strValue);
+    delete pConfig;
+}
+
+void OptionsGui::setLogsFormatTxt()
+{
+    QString strValue = "txt";
+
+    Settings::instance()->set("logs_format", strValue);
+
+    Config *pConfig = new Config();
+    pConfig->set("logs_format", strValue);
     delete pConfig;
 }
 

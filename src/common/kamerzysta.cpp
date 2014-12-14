@@ -77,7 +77,7 @@ void Kamerzysta::show(const QString &_strNick)
 void Kamerzysta::log(const QString &strData)
 {
     if (Settings::instance()->get("debug") == "true")
-        Log::save("kamerzysta", strData);
+        Log::save("kamerzysta", strData, Log::Txt);
 }
 
 void Kamerzysta::getPath()

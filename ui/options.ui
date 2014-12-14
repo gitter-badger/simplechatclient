@@ -1180,6 +1180,45 @@
        </layout>
       </widget>
      </widget>
+     <widget class="QGroupBox" name="groupBox_logs_format">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>190</y>
+        <width>441</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Logs format</string>
+      </property>
+      <widget class="QRadioButton" name="radioButton_logs_format_html">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>421</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Html</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="radioButton_logs_format_txt">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>421</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Txt</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_background_image">
      <widget class="QGroupBox" name="groupBox_background_image">
@@ -1574,9 +1613,9 @@
       <widget class="QRadioButton" name="radioButton_webcam_system">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>30</y>
-         <width>411</width>
+         <width>421</width>
          <height>17</height>
         </rect>
        </property>
@@ -1587,9 +1626,9 @@
       <widget class="QRadioButton" name="radioButton_webcam_internal">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>10</x>
          <y>60</y>
-         <width>411</width>
+         <width>421</width>
          <height>17</height>
         </rect>
        </property>

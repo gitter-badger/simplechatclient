@@ -27,10 +27,16 @@
  */
 namespace Log
 {
+    enum LogsFormats {
+        Txt = 0,
+        Html = 1
+    };
+    Q_DECLARE_FLAGS(LogsFormat, LogsFormats)
+
     void convert(QString &strData);
     void logOpened(const QString &strChannel);
     void logClosed(const QString &strChannel);
-    void save(const QString &strChannel, const QString &strData, const QString &strFileExtension = "txt");
+    void save(const QString &strChannel, const QString &strData, Log::LogsFormat format = Log::Txt);
 }
 
 #endif // LOG_H

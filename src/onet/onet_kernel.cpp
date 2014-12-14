@@ -132,7 +132,7 @@ void OnetKernel::kernel(const QString &_strData)
     // detect unknown raw
     if (bUnknownRaw1 && bUnknownRaw2 && bUnknownRaw3)
     {
-        Log::save("unknown-raw", strData);
+        Log::save("unknown-raw", strData, Log::Txt);
     }
 }
 

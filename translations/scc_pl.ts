@@ -1726,6 +1726,18 @@
         <translation>Zapisuj logi</translation>
     </message>
     <message>
+        <source>Logs format</source>
+        <translation>Format logów</translation>
+    </message>
+    <message>
+        <source>Html</source>
+        <translation>Html</translation>
+    </message>
+    <message>
+        <source>Txt</source>
+        <translation>Txt</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Tapeta</translation>
     </message>
