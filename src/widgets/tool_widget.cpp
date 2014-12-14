@@ -222,6 +222,9 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     layout->setMargin(0);
     layout->setAlignment(Qt::AlignLeft);
     layout->addWidget(pInputLine);
+    layout->addWidget(sendButton);
+    layout->addWidget(emoticons);
+
     layout->addWidget(showFontButtons);
     layout->addWidget(separator1);
     layout->addWidget(bold);
@@ -230,10 +233,9 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     layout->addWidget(color);
     layout->addWidget(size);
     layout->addWidget(separator2);
-    layout->addWidget(emoticons);
+
     layout->addWidget(channel_settings);
     layout->addWidget(moderation);
-    layout->addWidget(sendButton);
     layout->addWidget(moderSendButton);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
