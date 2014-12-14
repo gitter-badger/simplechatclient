@@ -88,8 +88,8 @@ private:
     QAction *size20Act;
     QAction *size24Act;
 
-    void pasteMultiLine(const QString &strText, bool bModeration);
-    void sendMessage(QString strText, bool bModeration);
+    bool pasteMultiLine(const QString &strText, bool bModeration);
+    bool sendMessage(QString strText, bool bModeration);
 
 private slots:
     void documentSizeChanged(const QSizeF &newSize);

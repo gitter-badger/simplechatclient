@@ -815,8 +815,9 @@ void ToolWidget::inputlineReturnPressed()
 
     // text
     QString strText = pInputLine->toPlainText().trimmed();
-    pasteMultiLine(strText, false);
-    pInputLine->clear();
+    bool bClearLine = pasteMultiLine(strText, false);
+    if (bClearLine)
+        pInputLine->clear();
 }
 
 void ToolWidget::moderButtonClicked()
@@ -836,10 +837,11 @@ void ToolWidget::moderButtonClicked()
     pInputLine->clear();
 }
 
-void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
+bool ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
 {
     QStringList list = strText.split(QRegExp("(\n|\r)"));
     int len = 396;
+    bool bClearLine = true;
 
     foreach (QString line, list)
     {
@@ -855,22 +857,24 @@ void ToolWidget::pasteMultiLine(const QString &strText, bool bModeration)
                     pos = len; // no cut
 
                 QString short_line = line.left(pos);
-                sendMessage(short_line, bModeration);
+                bClearLine = sendMessage(short_line, bModeration);
                 line.remove(0, pos);
             }
         }
         if ((line.size() < len) && (line.size() != 0))
-            sendMessage(line, bModeration);
+            bClearLine = sendMessage(line, bModeration);
     }
+
+    return bClearLine;
 }
 
-void ToolWidget::sendMessage(QString strText, bool bModeration)
+bool ToolWidget::sendMessage(QString strText, bool bModeration)
 {
     QString strChannel = Channel::instance()->getCurrentName();
 
     // empty text or channel
     if ((strText.isEmpty()) || (strChannel.isEmpty()))
-        return;
+        return true;
 
     QString strMe = Settings::instance()->get("nick");
     QString strCommand;
@@ -897,7 +901,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
         // is empty
         if (strText.isEmpty())
-            return;
+            return true;
     }
 
     if ((strCommand == "amsg") || (strCommand == "all"))
@@ -913,7 +917,7 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
         }
 
-        return;
+        return true;
     }
     else if (strCommand == "me")
     {
@@ -930,35 +934,31 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
             QString strDisplay = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), strTextOriginal, QString(QByteArray("\x01")));
             Message::instance()->showMessage(strChannel, strDisplay, MessageMe, strMe);
         }
-        return;
+        return true;
     }
     else if ((strCommand == "mp3") || (strCommand == "winamp"))
     {
         if ((strChannel != DEBUG_WINDOW) && (strChannel != STATUS_WINDOW))
         {
-            Convert::simpleReverseConvert(strText);
-            Replace::replaceEmots(strText);
-            Convert::createText(strText);
-
-            Core::instance()->network->send(QString("PRIVMSG %1 :%2").arg(strChannel, strText));
-            Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
+            pInputLine->clear();
+            pInputLine->insertPlainText(strText);
         }
-        return;
+        return false;
     }
     else if (strCommand == "raw")
     {
         Core::instance()->network->send(strText);
-        return;
+        return true;
     }
     else if (!strCommand.isEmpty())
     {
         Core::instance()->network->send(strText);
-        return;
+        return true;
     }
 
     // not status
     if ((strChannel == DEBUG_WINDOW) || (strChannel == STATUS_WINDOW))
-        return;
+        return true;
 
     // convert
     Convert::simpleReverseConvert(strText);
@@ -984,4 +984,6 @@ void ToolWidget::sendMessage(QString strText, bool bModeration)
 
         Message::instance()->showMessage(strChannel, strText, MessageDefault, strMe);
     }
+
+    return true;
 }
