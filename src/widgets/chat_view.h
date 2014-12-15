@@ -28,6 +28,7 @@ class ChatView : public QWebView
     Q_OBJECT
 public:
     ChatView(const QString &_strChatViewChannel);
+    virtual ~ChatView();
     void clearMessages();
     void displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
     void refreshCSS();

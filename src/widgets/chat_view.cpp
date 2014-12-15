@@ -47,7 +47,7 @@
 #include "chat_view.h"
 
 #ifdef Q_OS_WIN
-    #include <QCoreApplication>
+    #include <QApplication>
     #include <QDir>
     #include <QSettings>
     #include "kamerzysta.h"
@@ -68,6 +68,11 @@ ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_str
 
     createBody();
     refreshCSS();
+}
+
+ChatView::~ChatView()
+{
+    disconnect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(autoScrollToBottom()));
 }
 
 void ChatView::createBody()

@@ -35,6 +35,7 @@ TabWidget::~TabWidget()
 {
     delete pNickListWidget;
     delete pChatView;
+    delete topic;
 }
 
 void TabWidget::createGui()

@@ -81,11 +81,10 @@ void Channel::remove(const QString &channel)
         return;
 
     OnetChannel ochannel = lChannels.value(channel);
+    lChannels.remove(channel);
     int index = ochannel.index;
 
     delete ochannel.tw;
-
-    lChannels.remove(channel);
 
     // log
     Log::logClosed(channel);

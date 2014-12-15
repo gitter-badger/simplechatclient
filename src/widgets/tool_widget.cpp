@@ -207,9 +207,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     pInputLine->show();
 
     sendButton = new QToolButton(this);
-    sendButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
     sendButton->setIcon(QIcon(":/images/oxygen/16x16/key-enter.png"));
-    sendButton->setText(tr("Send"));
     sendButton->setToolTip(tr("Send"));
     sendButton->show();
 
@@ -287,6 +285,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
 
 ToolWidget::~ToolWidget()
 {
+    disconnect(pInputLine->document()->documentLayout(), SIGNAL(documentSizeChanged(const QSizeF &)), this, SLOT(documentSizeChanged(const QSizeF &)));
     delete pInputLine;
 }
 
