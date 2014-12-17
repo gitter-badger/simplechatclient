@@ -75,6 +75,7 @@ private slots:
     void guardianActive();
     void guardianClicked(int iLevel);
     void passwordChanged();
+    void kickRejoinChanged();
     void limitChanged();
     void moderatedInactive();
     void moderatedActive();

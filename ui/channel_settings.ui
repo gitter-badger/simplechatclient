@@ -709,7 +709,7 @@
         <x>0</x>
         <y>10</y>
         <width>551</width>
-        <height>181</height>
+        <height>191</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout_3">
@@ -839,7 +839,7 @@
             </sizepolicy>
            </property>
            <property name="maximum">
-            <number>999999</number>
+            <number>999999999</number>
            </property>
           </widget>
          </item>
@@ -864,14 +864,7 @@
          </item>
         </layout>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_auditorium">
-         <property name="text">
-          <string>Auditorium:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QWidget" name="widget_12" native="true">
          <property name="minimumSize">
           <size>
@@ -912,6 +905,44 @@
           </layout>
          </widget>
         </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_kick_rejoin">
+         <property name="text">
+          <string>Kick rejoin:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_auditorium">
+         <property name="text">
+          <string>Auditorium:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <item>
+          <widget class="QSpinBox" name="spinBox_kick_rejoin">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximum">
+            <number>999999999</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_set_kick_rejoin">
+           <property name="text">
+            <string>Apply</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

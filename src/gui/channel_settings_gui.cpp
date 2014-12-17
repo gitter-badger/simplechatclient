@@ -77,6 +77,7 @@ void ChannelSettingsGui::createGui()
     ui.toolButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
     ui.pushButton_set_desc->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_password->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_set_kick_rejoin->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
     ui.pushButton_permission_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
     ui.pushButton_permission_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
@@ -130,6 +131,8 @@ void ChannelSettingsGui::createGui()
     ui.pushButton_set_password->setText(tr("Apply"));
     ui.label_limit->setText(tr("Limit:"));
     ui.pushButton_set_limit->setText(tr("Apply"));
+    ui.label_kick_rejoin->setText(tr("Kick rejoin:"));
+    ui.pushButton_set_kick_rejoin->setText(tr("Apply"));
     ui.label_auditorium->setText(tr("Auditorium:"));
     ui.radioButton_auditorium_off->setText(tr("Off"));
     ui.radioButton_auditorium_on->setText(tr("On"));
@@ -254,6 +257,7 @@ void ChannelSettingsGui::createSignals()
     connect(ui.radioButton_guardian_on, SIGNAL(clicked()), this, SLOT(guardianActive()));
     connect(ui.comboBox_guardian_level, SIGNAL(activated(int)), this, SLOT(guardianClicked(int)));
     connect(ui.pushButton_set_password, SIGNAL(clicked()), this, SLOT(passwordChanged()));
+    connect(ui.pushButton_set_kick_rejoin, SIGNAL(clicked()), this, SLOT(kickRejoinChanged()));
     connect(ui.pushButton_set_limit, SIGNAL(clicked()), this, SLOT(limitChanged()));
     connect(ui.radioButton_moderation_off, SIGNAL(clicked()), this, SLOT(moderatedInactive()));
     connect(ui.radioButton_moderation_on, SIGNAL(clicked()), this, SLOT(moderatedActive()));
@@ -425,6 +429,10 @@ void ChannelSettingsGui::refreshChannelInfo()
                 ui.radioButton_guardian_on->setChecked(true);
                 ui.comboBox_guardian_level->setCurrentIndex(2);
             }
+        }
+        else if (strKey == "kickRejoin")
+        {
+            ui.spinBox_kick_rejoin->setValue(strValue.toInt());
         }
         else if (strKey == "limit")
         {
@@ -799,6 +807,14 @@ void ChannelSettingsGui::passwordChanged()
     refreshAll();
 }
 
+void ChannelSettingsGui::kickRejoinChanged()
+{
+    QString strKickRejoin = QString::number(ui.spinBox_kick_rejoin->value());
+    Core::instance()->network->send(QString("CS SET %1 KICKREJOIN %2").arg(strChannel, strKickRejoin));
+
+    refreshAll();
+}
+
 void ChannelSettingsGui::limitChanged()
 {
     QString strLimit = QString::number(ui.spinBox_limit->value());
@@ -1070,6 +1086,7 @@ void ChannelSettingsGui::clear()
     // advanced
     ui.lineEdit_email->clear();
     ui.lineEdit_password->clear();
+    ui.spinBox_kick_rejoin->setValue(0);
     ui.spinBox_limit->setValue(0);
     ui.radioButton_auditorium_off->setChecked(false);
     ui.radioButton_auditorium_on->setChecked(false);

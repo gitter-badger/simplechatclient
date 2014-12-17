@@ -942,6 +942,10 @@
         <translation>Limit nicków:</translation>
     </message>
     <message>
+        <source>Kick rejoin:</source>
+        <translation>Powrót po wyrzuceniu:</translation>
+    </message>
+    <message>
         <source>Auditorium:</source>
         <translation>Audytorium:</translation>
     </message>
