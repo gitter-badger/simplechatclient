@@ -437,7 +437,8 @@ void ToolWidget::showFontButtonsClicked()
         fontfamily->hide();
         color->hide();
         size->hide();
-        separator2->hide();
+        if (channel_settings->isVisible())
+            separator2->hide();
     }
     else
     {
@@ -448,7 +449,8 @@ void ToolWidget::showFontButtonsClicked()
         fontfamily->show();
         color->show();
         size->show();
-        separator2->show();
+        if (channel_settings->isVisible())
+            separator2->show();
     }
 }
 
