@@ -105,14 +105,27 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
     QString strFileExtension = (currentLogFormat == Log::Html ? "html" : "txt");
     QFile f(path+strFileName+"."+strFileExtension);
 
-    if ((!f.exists()) && (currentLogFormat == Log::Html))
+    if (currentLogFormat == Log::Html)
     {
-        HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
-        QString strHeadCSS = pHtmlMessagesRenderer->headCSS();
-        QString strBodyCSS = pHtmlMessagesRenderer->bodyCSS();
-        delete pHtmlMessagesRenderer;
+        if (!f.exists())
+        {
+            HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
+            QString strHeadCSS = pHtmlMessagesRenderer->headCSS();
+            QString strBodyCSS = pHtmlMessagesRenderer->bodyCSS();
+            delete pHtmlMessagesRenderer;
 
-        strSaveMessage = "<!DOCTYPE html><html><head><title>"+strFileName+"</title><style type=\"text/css\">"+strHeadCSS+"</style></head><body style=\""+strBodyCSS+"\">"+strSaveMessage;
+            strSaveMessage = "<!DOCTYPE html><html><head><title>"+strFileName+"</title><style type=\"text/css\">"+strHeadCSS+"</style></head><body style=\""+strBodyCSS+"\">"+strSaveMessage;
+        }
+
+        QString path;
+#ifdef Q_OS_WIN
+        path = QCoreApplication::applicationDirPath();
+#else
+        path = SCC_DATA_DIR;
+#endif
+
+        strSaveMessage = strSaveMessage.replace("qrc:/images/oxygen/16x16", "file://"+path+"/images");
+        strSaveMessage = strSaveMessage.replace("qrc:", "file://"+path);
     }
 
     if (f.open(QIODevice::Append))

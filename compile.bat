@@ -143,6 +143,18 @@ xcopy images\registered_user_avatar.png %DESTINATION%\images\ /C /H /R /Y /Q
 xcopy images\registered_user_avatar_big.png %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\unregistered_user_avatar.png %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\unregistered_user_avatar_big.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\oxygen\16x16\media-playback-start.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\admin.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\bot.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\dev.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\halfop.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\mod.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\op.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\owner.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\screener.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\voice.png %DESTINATION%\images\ /C /H /R /Y /Q 
+
+echo Copying wallpapers
 xcopy images\wallpaper\*.jpg %DESTINATION%\images\wallpaper\ /C /H /R /Y /Q 
 
 echo Copying sounds
