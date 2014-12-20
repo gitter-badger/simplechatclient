@@ -47,13 +47,17 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         QString strWord = strDataList.at(i);
 
         // channel
-        if ((!strWord.isEmpty()) && (strWord.at(0) == '#'))
+        if ((!strWord.isEmpty()) && (strWord.contains("#")))
         {
-            Convert::removeStyles(strWord);
-            if (eMessageCategory == MessageInfo)
-                Convert::convertPrefix(strWord);
+            QString strChannelWord = strWord;
+            Convert::removeStyles(strChannelWord);
+            if (strChannelWord.at(0) == '#')
+            {
+                if (eMessageCategory == MessageInfo)
+                    Convert::convertPrefix(strChannelWord);
 
-            strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strWord);
+                strDataList[i] = QString("<a onclick=\"return false\" name=\"channel\" href=\"#\" class=\"ChannelColor\">%1</a>").arg(strChannelWord);
+            }
         }
 
         // web
