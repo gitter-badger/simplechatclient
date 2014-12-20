@@ -63,6 +63,9 @@ ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_str
     //settings()->setAttribute(QWebSettings::NotificationsEnabled, false);
     settings()->setObjectCacheCapacities(0, 0, 0);
     settings()->setMaximumPagesInCache(0);
+    settings()->setOfflineWebApplicationCacheQuota(0);
+    settings()->clearIconDatabase();
+    settings()->clearMemoryCaches();
 
     connect(this->page()->mainFrame(), SIGNAL(contentsSizeChanged(const QSize &)), this, SLOT(autoScrollToBottom()));
 
