@@ -37,7 +37,7 @@ public:
 
     Cache();
     virtual ~Cache();
-    QString get(const QString &strUrl);
+    QString get(const QString &strChannel, const QString &strUrl);
 
 private:
     QNetworkAccessManager *accessManager;

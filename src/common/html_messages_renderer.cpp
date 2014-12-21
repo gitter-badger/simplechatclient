@@ -42,7 +42,7 @@ HtmlMessagesRenderer::HtmlMessagesRenderer()
 {
 }
 
-void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMessageCategory)
+void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMessageCategory, const QString &strChannel)
 {
     QStringList strDataList = strData.split(" ");
     QStringList lUrlImages;
@@ -161,7 +161,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
 
         foreach (const QString strImage, lUrlImages)
         {
-            QString strCacheImage = Cache::instance()->get(strImage);
+            QString strCacheImage = Cache::instance()->get(strChannel, strImage);
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"file://%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strImage, strCacheImage);
         }
 
@@ -169,7 +169,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         {
             QString strFullImage = QString("http://youtu.be/%1").arg(strImage);
             QString strThumbImage = QString("http://img.youtube.com/vi/%1/default.jpg").arg(strImage);
-            QString strCacheImage = Cache::instance()->get(strThumbImage);
+            QString strCacheImage = Cache::instance()->get(strChannel, strThumbImage);
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"file://%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strFullImage, strCacheImage);
         }
 
@@ -179,7 +179,7 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
     strData = strDataList.join(" ");
 }
 
-QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick)
+QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick, QString strChannel)
 {
     QDateTime dt = QDateTime::fromMSecsSinceEpoch(iTime);
 
@@ -187,7 +187,7 @@ QString HtmlMessagesRenderer::renderer(QString strData, MessageCategory eMessage
     Convert::fixHtmlChars(strData);
 
     // fix for context menu
-    fixContextMenu(strData, eMessageCategory);
+    fixContextMenu(strData, eMessageCategory, strChannel);
 
     // /me
     QString strRegExpMe = QString("%1ACTION %2%3").arg(QString(QByteArray("\x01")), "(.*)", QString(QByteArray("\x01")));

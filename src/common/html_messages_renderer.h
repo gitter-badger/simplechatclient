@@ -33,13 +33,13 @@ public:
 
     HtmlMessagesRenderer();
 
-    QString renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
+    QString renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null, QString strChannel = QString::null);
     QString rendererDebug(QString strData, qint64 iTime);
     QString headCSS();
     QString bodyCSS();
 
 private:
-    void fixContextMenu(QString &strData, MessageCategory eMessageCategory);
+    void fixContextMenu(QString &strData, MessageCategory eMessageCategory, const QString &strChannel);
 };
 
 #endif // HTML_MESSAGES_RENDERER_H

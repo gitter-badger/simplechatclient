@@ -21,6 +21,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QPixmap>
+#include "channel.h"
 #include "cache.h"
 
 #ifdef Q_OS_WIN
@@ -53,7 +54,7 @@ Cache::~Cache()
     accessManager->deleteLater();
 }
 
-QString Cache::get(const QString &strUrl)
+QString Cache::get(const QString &strChannel, const QString &strUrl)
 {
     QString strFileName = QString(strUrl.toLatin1().toHex())+"."+QFileInfo(strUrl).completeSuffix();
     QString strPathPlusFileName = getCachePath(strFileName);
@@ -70,6 +71,7 @@ QString Cache::get(const QString &strUrl)
     {
         QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
         reply->setProperty("file", strPathPlusFileName);
+        reply->setProperty("channel", strChannel);
     }
 
 #ifdef Q_OS_WIN
@@ -110,6 +112,7 @@ void Cache::httpFinished(QNetworkReply *reply)
         return;
 
     QString strFileName = reply->property("file").toString();
+    QString strChannel = reply->property("channel").toString();
 
     QList<QString> lSupportedImages;
     lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";
@@ -120,6 +123,10 @@ void Cache::httpFinished(QNetworkReply *reply)
         pixmap.loadFromData(bFileContent);
         pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio);
         pixmap.save(strFileName);
+
+        // refresh
+        if (!strChannel.isEmpty())
+            Channel::instance()->getChatView(strChannel)->refreshPage();
     }
     else
     {

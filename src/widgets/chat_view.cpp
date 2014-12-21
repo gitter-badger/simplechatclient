@@ -124,6 +124,16 @@ void ChatView::createBody()
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
 }
 
+void ChatView::refreshPage()
+{
+    // TODO nie dziala :(
+    //
+    //page()->triggerAction(QWebPage::ReloadAndBypassCache);
+    //autoScrollToBottom();
+    //
+    //this->page()->mainFrame()->evaluateJavaScript("reloadImages()");
+}
+
 void ChatView::refreshCSS()
 {
     QString strHeadCSS = HtmlMessagesRenderer::instance()->headCSS();
@@ -151,7 +161,7 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
     if (strChatViewChannel == DEBUG_WINDOW)
         strContent = HtmlMessagesRenderer::instance()->rendererDebug(strData, iTime);
     else
-        strContent = HtmlMessagesRenderer::instance()->renderer(strData, eMessageCategory, iTime, strNick);
+        strContent = HtmlMessagesRenderer::instance()->renderer(strData, eMessageCategory, iTime, strNick, strChatViewChannel);
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");
