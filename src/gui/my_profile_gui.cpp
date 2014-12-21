@@ -144,7 +144,7 @@ void MyProfileGui::avatarFinished(QNetworkReply *reply)
     {
         QPixmap avatar;
         avatar.loadFromData(bData);
-        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50)));
+        ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else
         ui.label_avatar->setText(tr("No photo available"));

@@ -45,7 +45,7 @@ void UserAvatarGui::createGui()
 void UserAvatarGui::setDefaultValues()
 {
     // slider value 5
-    ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250), Qt::KeepAspectRatio));
+    ui.label_avatar->setPixmap(avatar.scaled(QSize(250,250), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void UserAvatarGui::createSignals()
@@ -70,7 +70,7 @@ void UserAvatarGui::sliderValueChanged(int iValue)
     int iSize = 50;
     iSize *= iValue;
 
-    ui.label_avatar->setPixmap(avatar.scaled(QSize(iSize,iSize), Qt::KeepAspectRatio));
+    ui.label_avatar->setPixmap(avatar.scaled(QSize(iSize,iSize), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 }
 
 void UserAvatarGui::buttonZoomIn()

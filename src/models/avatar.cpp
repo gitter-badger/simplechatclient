@@ -61,32 +61,32 @@ Avatar::~Avatar()
 void Avatar::get(const QString &strNickOrChannel, const QString &strCategory, const QString &strUrl)
 {
     QFileInfo fi(strUrl);
-    QString strAvatarFile = fi.fileName();
-    QString strAvatarPath = getAvatarPath(strAvatarFile);
+    QString strFile = fi.fileName();
+    QString strPath = getAvatarPath(strFile);
 
-    bool bDownloadAvatar = true;
-    if (QFile::exists(strAvatarPath))
+    bool bDownload = true;
+    if (QFile::exists(strPath))
     {
         QPixmap pixmap;
-        if (!pixmap.load(strAvatarPath))
-            bDownloadAvatar = true;
+        if (!pixmap.load(strPath))
+            bDownload = true;
         else
-            bDownloadAvatar = false;
+            bDownload = false;
     }
     else
-        bDownloadAvatar = true;
+        bDownload = true;
 
-    if (bDownloadAvatar)
+    if (bDownload)
     {
         QNetworkReply *reply = accessManager->get(QNetworkRequest(strUrl));
         reply->setProperty("nickorchannel", strNickOrChannel);
         reply->setProperty("category", strCategory);
-        reply->setProperty("file", strAvatarFile);
-        reply->setProperty("path", strAvatarPath);
+        reply->setProperty("file", strFile);
+        reply->setProperty("path", strPath);
     }
     else
     {
-        updateAvatar(strCategory, strNickOrChannel, strAvatarFile);
+        updateAvatar(strCategory, strNickOrChannel, strFile);
     }
 }
 

@@ -56,13 +56,25 @@ Cache::~Cache()
 
 QString Cache::get(const QString &strChannel, const QString &strUrl)
 {
-    QString strFileName = QString(strUrl.toLatin1().toHex())+"."+QFileInfo(strUrl).completeSuffix();
+    QString strFileName = QString(strUrl.toLatin1().toHex())+"."+QFileInfo(strUrl).suffix();
     QString strPathPlusFileName = getCachePath(strFileName);
 
     bool bDownloadFile = true;
     if (QFile::exists(strPathPlusFileName))
     {
-        bDownloadFile = false;
+        QList<QString> lSupportedImages;
+        lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";
+
+        if (lSupportedImages.contains(QFileInfo(strFileName).suffix().toLower()))
+        {
+            QPixmap pixmap;
+            if (!pixmap.load(strPathPlusFileName))
+                bDownloadFile = true;
+            else
+                bDownloadFile = false;
+        }
+        else
+            bDownloadFile = false;
     }
     else
         bDownloadFile = true;
