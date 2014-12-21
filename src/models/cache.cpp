@@ -116,13 +116,24 @@ void Cache::httpFinished(QNetworkReply *reply)
     if (lSupportedImages.contains(QFileInfo(strFileName).suffix().toLower()))
     {
         QPixmap pixmap;
-        pixmap.loadFromData(bFileContent);
-        pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio);
-        pixmap.save(strFileName);
+        if (pixmap.loadFromData(bFileContent))
+        {
+            pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio);
+            pixmap.save(strFileName);
 
-        // refresh
-        if (!strChannel.isEmpty())
-            Channel::instance()->getChatView(strChannel)->reloadCacheImage(strFileName);
+            // refresh
+            if (!strChannel.isEmpty())
+                Channel::instance()->getChatView(strChannel)->reloadCacheImage(strFileName);
+        }
+        else
+        {
+            QFile f(strFileName);
+            if (f.open(QIODevice::WriteOnly))
+            {
+                f.write(bFileContent);
+                f.close();
+            }
+        }
     }
     else
     {
