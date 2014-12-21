@@ -20,6 +20,7 @@
 #include <QDateTime>
 #include <QFileInfo>
 #include "avatar.h"
+#include "cache.h"
 #include "convert.h"
 #include "nick.h"
 #include "settings.h"
@@ -147,13 +148,17 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         strDataList << "<br/><span class=\"thumbs\">";
 
         foreach (const QString strImage, lUrlImages)
-            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strImage, strImage);
+        {
+            QString strCacheImage = Cache::instance()->get(strImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"file://%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strImage, strCacheImage);
+        }
 
         foreach (const QString strImage, lYoutubeImages)
         {
             QString strFullImage = QString("http://youtu.be/%1").arg(strImage);
             QString strThumbImage = QString("http://img.youtube.com/vi/%1/default.jpg").arg(strImage);
-            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"%2\" alt=\"image\" /></a>").arg(strFullImage, strThumbImage);
+            QString strCacheImage = Cache::instance()->get(strThumbImage);
+            strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"file://%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strFullImage, strCacheImage);
         }
 
         strDataList << "</span>";

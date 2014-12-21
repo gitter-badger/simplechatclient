@@ -142,7 +142,6 @@ void Avatar::saveAvatar(const QString &strAvatarPath, const QByteArray &bAvatar)
 
 QString Avatar::getAvatarPath(const QString &strAvatar)
 {
-    QString strCurrentProfile = Settings::instance()->get("current_profile");
     QString path;
 #ifdef Q_OS_WIN
     path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)).absoluteFilePath();
@@ -151,7 +150,7 @@ QString Avatar::getAvatarPath(const QString &strAvatar)
     path = QDir::homePath()+"/.scc/";
 #endif
 
-    path += "profiles/"+strCurrentProfile+"/avatars/";
+    path += "cache/avatars/";
 
     // create dir if not exist
     if (!QDir().exists(path))

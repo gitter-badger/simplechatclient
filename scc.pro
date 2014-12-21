@@ -67,6 +67,7 @@ SOURCES += src/common/commands.cpp \
     src/models/away.cpp \
     src/models/awaylog.cpp \
     src/models/busy.cpp \
+    src/models/cache.cpp \
     src/models/channel.cpp \
     src/models/channel_favourites.cpp \
     src/models/channel_homes.cpp \
@@ -176,6 +177,7 @@ HEADERS += src/common/commands.h \
     src/models/away.h \
     src/models/awaylog.h \
     src/models/busy.h \
+    src/models/cache.h \
     src/models/channel.h \
     src/models/channel_favourites.h \
     src/models/channel_homes.h \

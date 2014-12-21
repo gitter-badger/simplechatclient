@@ -91,6 +91,7 @@ set (scc_SRCS
 	models/away.cpp
 	models/awaylog.cpp
 	models/busy.cpp
+	models/cache.cpp
 	models/channel.cpp
 	models/channel_favourites.cpp
 	models/channel_homes.cpp
@@ -195,6 +196,7 @@ set (scc_MOC_HDRS
 	models/away.h
 	models/awaylog.h
 	models/busy.h
+	models/cache.h
 	models/channel.h
 	models/channel_favourites.h
 	models/channel_homes.h
@@ -330,7 +332,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5Widgets)
 find_package(Qt5Multimedia)
 find_package(Qt5Network)
-#find_package(Qt5LinguistTools)
 find_package(Qt5WebKit)
 find_package(Qt5WebKitWidgets)
 find_package(Qt5Xml)
