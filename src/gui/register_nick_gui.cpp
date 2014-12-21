@@ -234,7 +234,13 @@ void RegisterNickGui::networkFinished(QNetworkReply *reply)
 
     int category = reply->property("category").toInt();
 
-    // TODO redirect support
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+        replyRedirect->setProperty("category", category);
+        return;
+    }
 
     QByteArray bData = reply->readAll();
 
