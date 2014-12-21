@@ -103,12 +103,21 @@ void Cache::httpFinished(QNetworkReply *reply)
     if (reply->error())
         return;
 
+    QString strFileName = reply->property("file").toString();
+    QString strChannel = reply->property("channel").toString();
+
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+        replyRedirect->setProperty("file", strFileName);
+        replyRedirect->setProperty("channel", strChannel);
+        return;
+    }
+
     QByteArray bFileContent = reply->readAll();
     if (bFileContent.isEmpty())
         return;
-
-    QString strFileName = reply->property("file").toString();
-    QString strChannel = reply->property("channel").toString();
 
     QList<QString> lSupportedImages;
     lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";

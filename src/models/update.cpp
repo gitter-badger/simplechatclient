@@ -179,6 +179,14 @@ void Update::updateFinished(QNetworkReply *reply)
         hUpdateResults[update_url] = QString::null;
     else
     {
+        QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+        if (!possibleRedirectUrl.toUrl().isEmpty())
+        {
+            QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+            replyRedirect->setProperty("update_url", update_url);
+            return;
+        }
+
         QString strUpdateXml = reply->readAll();
 
         hUpdateResults[update_url] = strUpdateXml;

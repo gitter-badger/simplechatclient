@@ -130,6 +130,13 @@ void MyProfileGui::avatarFinished(QNetworkReply *reply)
     if (reply->error())
         return;
 
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+        return;
+    }
+
     QByteArray bData = reply->readAll();
 
     // show avatar

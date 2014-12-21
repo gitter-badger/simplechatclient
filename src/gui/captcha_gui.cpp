@@ -83,6 +83,15 @@ void CaptchaGui::networkFinished(QNetworkReply *reply)
         return;
 
     QString strCategory = reply->property("category").toString();
+
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+        replyRedirect->setProperty("category", strCategory);
+        return;
+    }
+
     QByteArray bData = reply->readAll();
 
     if (bData.isEmpty())

@@ -277,6 +277,8 @@ void OnetAvatar::replyFinished(QNetworkReply *reply)
     }
     else
     {
+        // TODO redirect support
+
         switch (requestType)
         {
         case RT_getCollections:

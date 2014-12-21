@@ -97,14 +97,25 @@ void Avatar::httpFinished(QNetworkReply *reply)
     if (reply->error())
         return;
 
-    QByteArray bAvatar = reply->readAll();
-    if (bAvatar.isEmpty())
-        return;
-
     QString strNickOrChannel = reply->property("nickorchannel").toString();
     QString strCategory = reply->property("category").toString();
     QString strAvatarFile = reply->property("file").toString();
     QString strAvatarPath = reply->property("path").toString();
+
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+        replyRedirect->setProperty("nickorchannel", strNickOrChannel);
+        replyRedirect->setProperty("category", strCategory);
+        replyRedirect->setProperty("file", strAvatarFile);
+        replyRedirect->setProperty("path", strAvatarPath);
+        return;
+    }
+
+    QByteArray bAvatar = reply->readAll();
+    if (bAvatar.isEmpty())
+        return;
 
     saveAvatar(strAvatarPath, bAvatar);
     updateAvatar(strCategory, strNickOrChannel, strAvatarFile);

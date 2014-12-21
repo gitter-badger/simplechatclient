@@ -257,6 +257,15 @@ void OnetAuth::networkFinished(QNetworkReply *reply)
     }
 
     int category = reply->property("category").toInt();
+
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
+        replyRedirect->setProperty("category", category);
+        return;
+    }
+
     QByteArray bData = reply->readAll();
 
     switch (category)

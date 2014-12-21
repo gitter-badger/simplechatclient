@@ -233,6 +233,9 @@ void RegisterNickGui::networkFinished(QNetworkReply *reply)
         return;
 
     int category = reply->property("category").toInt();
+
+    // TODO redirect support
+
     QByteArray bData = reply->readAll();
 
     if (bData.isEmpty())
