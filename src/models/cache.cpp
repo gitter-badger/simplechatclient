@@ -127,7 +127,7 @@ void Cache::httpFinished(QNetworkReply *reply)
         QPixmap pixmap;
         if (pixmap.loadFromData(bFileContent))
         {
-            pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio);
+            pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio, Qt::SmoothTransformation);
             pixmap.save(strFileName);
 
             // refresh
