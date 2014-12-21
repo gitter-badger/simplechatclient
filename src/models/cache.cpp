@@ -74,10 +74,6 @@ QString Cache::get(const QString &strChannel, const QString &strUrl)
         reply->setProperty("channel", strChannel);
     }
 
-#ifdef Q_OS_WIN
-    strPathPlusFileName = "/"+strPathPlusFileName;
-#endif
-
     return strPathPlusFileName;
 }
 
@@ -126,7 +122,7 @@ void Cache::httpFinished(QNetworkReply *reply)
 
         // refresh
         if (!strChannel.isEmpty())
-            Channel::instance()->getChatView(strChannel)->refreshPage();
+            Channel::instance()->getChatView(strChannel)->reloadCacheImage(strFileName);
     }
     else
     {

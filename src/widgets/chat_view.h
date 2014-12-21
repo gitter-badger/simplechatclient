@@ -29,7 +29,7 @@ class ChatView : public QWebView
 public:
     ChatView(const QString &_strChatViewChannel);
     virtual ~ChatView();
-    void refreshPage();
+    void reloadCacheImage(const QString &strImage);
     void clearMessages();
     void displayMessage(const QString &strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
     void refreshCSS();

@@ -109,6 +109,16 @@ void ChatView::createBody()
                         //"image.src = 'qrc:/images/not_image.png';"
                         "image.style.display = 'none';"
                         "return true;"
+                    "}"
+
+                    "function reloadImage(image_src) {"
+                        "var images = document.getElementsByTagName('img');"
+                        "for (var i = 0; i < images.length; i++) {"
+                            "if (images[i].src == image_src) {"
+                                "images[i].style.display = 'block';"
+                                "images[i].src = images[i].src;"
+                            "}"
+                        "}"
                     "}";
 
     QString strMainHtml = "<html>"
@@ -124,14 +134,16 @@ void ChatView::createBody()
     this->page()->mainFrame()->evaluateJavaScript(jsCode);
 }
 
-void ChatView::refreshPage()
+void ChatView::reloadCacheImage(const QString &strImage)
 {
-    // TODO nie dziala :(
-    //
-    //page()->triggerAction(QWebPage::ReloadAndBypassCache);
-    //autoScrollToBottom();
-    //
-    //this->page()->mainFrame()->evaluateJavaScript("reloadImages()");
+    QString strFindImageSrc = "file://";
+#ifdef Q_OS_WIN
+    strFindImageSrc += "/";
+#endif
+
+    strFindImageSrc += strImage;
+
+    this->page()->mainFrame()->evaluateJavaScript("reloadImage('"+strFindImageSrc+"')");
 }
 
 void ChatView::refreshCSS()

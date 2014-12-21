@@ -162,6 +162,9 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
         foreach (const QString strImage, lUrlImages)
         {
             QString strCacheImage = Cache::instance()->get(strChannel, strImage);
+#ifdef Q_OS_WIN
+            strCacheImage = "/"+strCacheImage;
+#endif
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"file://%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strImage, strCacheImage);
         }
 
@@ -170,6 +173,9 @@ void HtmlMessagesRenderer::fixContextMenu(QString &strData, MessageCategory eMes
             QString strFullImage = QString("http://youtu.be/%1").arg(strImage);
             QString strThumbImage = QString("http://img.youtube.com/vi/%1/default.jpg").arg(strImage);
             QString strCacheImage = Cache::instance()->get(strChannel, strThumbImage);
+#ifdef Q_OS_WIN
+            strCacheImage = "/"+strCacheImage;
+#endif
             strDataList << QString("<a onclick=\"return false\" name=\"website\" href=\"%1\"><img class=\"thumb\" src=\"file://%2\" alt=\"image\" onerror=\"imgError(this);\" /></a>").arg(strFullImage, strCacheImage);
         }
 
