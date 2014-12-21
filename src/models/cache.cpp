@@ -17,6 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCryptographicHash>
 #include <QDir>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -56,7 +57,7 @@ Cache::~Cache()
 
 QString Cache::get(const QString &strChannel, const QString &strUrl)
 {
-    QString strFileName = QString(strUrl.toLatin1().toHex())+"."+QFileInfo(strUrl).suffix();
+    QString strFileName = QString(QCryptographicHash::hash(strUrl.toLatin1(), QCryptographicHash::Md5).toHex())+"."+QFileInfo(strUrl).suffix();
     QString strPathPlusFileName = getCachePath(strFileName);
 
     bool bDownloadFile = true;
