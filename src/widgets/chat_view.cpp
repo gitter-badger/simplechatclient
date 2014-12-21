@@ -126,10 +126,8 @@ void ChatView::createBody()
 
 void ChatView::refreshCSS()
 {
-    HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
-    QString strHeadCSS = pHtmlMessagesRenderer->headCSS();
-    QString strBodyCSS = pHtmlMessagesRenderer->bodyCSS();
-    delete pHtmlMessagesRenderer;
+    QString strHeadCSS = HtmlMessagesRenderer::instance()->headCSS();
+    QString strBodyCSS = HtmlMessagesRenderer::instance()->bodyCSS();
 
     QWebElement head = this->page()->mainFrame()->findFirstElement("head");
     QWebElement headStyle = head.findFirst("style");
@@ -150,12 +148,10 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
 {
     QString strContent;
 
-    HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
     if (strChatViewChannel == DEBUG_WINDOW)
-        strContent = pHtmlMessagesRenderer->rendererDebug(strData, iTime);
+        strContent = HtmlMessagesRenderer::instance()->rendererDebug(strData, iTime);
     else
-        strContent = pHtmlMessagesRenderer->renderer(strData, eMessageCategory, iTime, strNick);
-    delete pHtmlMessagesRenderer;
+        strContent = HtmlMessagesRenderer::instance()->renderer(strData, eMessageCategory, iTime, strNick);
 
     // append
     this->page()->mainFrame()->evaluateJavaScript("appendMessage(\'"+strContent+"\')");

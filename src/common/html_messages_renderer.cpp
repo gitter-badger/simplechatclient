@@ -26,6 +26,18 @@
 #include "settings.h"
 #include "html_messages_renderer.h"
 
+HtmlMessagesRenderer * HtmlMessagesRenderer::Instance = 0;
+
+HtmlMessagesRenderer * HtmlMessagesRenderer::instance()
+{
+    if (!Instance)
+    {
+        Instance = new HtmlMessagesRenderer();
+    }
+
+    return Instance;
+}
+
 HtmlMessagesRenderer::HtmlMessagesRenderer()
 {
 }

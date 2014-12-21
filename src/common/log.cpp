@@ -109,10 +109,8 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
     {
         if (!f.exists())
         {
-            HtmlMessagesRenderer *pHtmlMessagesRenderer = new HtmlMessagesRenderer();
-            QString strHeadCSS = pHtmlMessagesRenderer->headCSS();
-            QString strBodyCSS = pHtmlMessagesRenderer->bodyCSS();
-            delete pHtmlMessagesRenderer;
+            QString strHeadCSS = HtmlMessagesRenderer::instance()->headCSS();
+            QString strBodyCSS = HtmlMessagesRenderer::instance()->bodyCSS();
 
             strSaveMessage = "<!DOCTYPE html><html><head><title>"+strFileName+"</title><style type=\"text/css\">"+strHeadCSS+"</style></head><body style=\""+strBodyCSS+"\">"+strSaveMessage;
         }

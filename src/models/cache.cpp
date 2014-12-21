@@ -72,6 +72,10 @@ QString Cache::get(const QString &strUrl)
         reply->setProperty("file", strPathPlusFileName);
     }
 
+#ifdef Q_OS_WIN
+    strPathPlusFileName = "/"+strPathPlusFileName;
+#endif
+
     return strPathPlusFileName;
 }
 
@@ -91,10 +95,6 @@ QString Cache::getCachePath(const QString &strFile)
     if (!QDir().exists(path))
         QDir().mkpath(path);
 
-#ifdef Q_OS_WIN
-    path = "/"+path;
-#endif
-
     return path+strFile;
 }
 
@@ -106,28 +106,28 @@ void Cache::httpFinished(QNetworkReply *reply)
         return;
 
     QByteArray bFileContent = reply->readAll();
-    if (!bFileContent.isEmpty())
+    if (bFileContent.isEmpty())
+        return;
+
+    QString strFileName = reply->property("file").toString();
+
+    QList<QString> lSupportedImages;
+    lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";
+
+    if (lSupportedImages.contains(QFileInfo(strFileName).suffix().toLower()))
     {
-        QString strFileName = reply->property("file").toString();
-
-        QList<QString> lSupportedImages;
-        lSupportedImages << "jpg" << "jpeg" << "png" << "bmp";
-
-        if (lSupportedImages.contains(QFileInfo(strFileName).suffix().toLower()))
+        QPixmap pixmap;
+        pixmap.loadFromData(bFileContent);
+        pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio);
+        pixmap.save(strFileName);
+    }
+    else
+    {
+        QFile f(strFileName);
+        if (f.open(QIODevice::WriteOnly))
         {
-            QPixmap pixmap;
-            pixmap.loadFromData(bFileContent);
-            pixmap = pixmap.scaled(QSize(75,75), Qt::KeepAspectRatio);
-            pixmap.save(strFileName);
-        }
-        else
-        {
-            QFile f(strFileName);
-            if (f.open(QIODevice::WriteOnly))
-            {
-                f.write(bFileContent);
-                f.close();
-            }
+            f.write(bFileContent);
+            f.close();
         }
     }
 }

@@ -98,16 +98,16 @@ void Avatar::httpFinished(QNetworkReply *reply)
         return;
 
     QByteArray bAvatar = reply->readAll();
-    if (!bAvatar.isEmpty())
-    {
-        QString strNickOrChannel = reply->property("nickorchannel").toString();
-        QString strCategory = reply->property("category").toString();
-        QString strAvatarFile = reply->property("file").toString();
-        QString strAvatarPath = reply->property("path").toString();
+    if (bAvatar.isEmpty())
+        return;
 
-        saveAvatar(strAvatarPath, bAvatar);
-        updateAvatar(strCategory, strNickOrChannel, strAvatarFile);
-    }
+    QString strNickOrChannel = reply->property("nickorchannel").toString();
+    QString strCategory = reply->property("category").toString();
+    QString strAvatarFile = reply->property("file").toString();
+    QString strAvatarPath = reply->property("path").toString();
+
+    saveAvatar(strAvatarPath, bAvatar);
+    updateAvatar(strCategory, strNickOrChannel, strAvatarFile);
 }
 
 void Avatar::updateAvatar(const QString &strCategory, const QString &strNickOrChannel, const QString &strAvatarFile)

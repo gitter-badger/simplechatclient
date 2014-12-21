@@ -26,7 +26,11 @@
 class HtmlMessagesRenderer : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(HtmlMessagesRenderer)
+    static HtmlMessagesRenderer *Instance;
 public:
+    static HtmlMessagesRenderer *instance();
+
     HtmlMessagesRenderer();
 
     QString renderer(QString strData, MessageCategory eMessageCategory, qint64 iTime, QString strNick = QString::null);
