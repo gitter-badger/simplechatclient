@@ -381,7 +381,7 @@ QString OnetAuth::getVersion(const QString &strData)
         }
     }
 
-    return "20120711-1544b";
+    return "20140526-0005-3";
 }
 
 void OnetAuth::requestFinished(const QByteArray &bData)
