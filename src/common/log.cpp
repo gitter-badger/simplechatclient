@@ -112,7 +112,7 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
             QString strHeadCSS = HtmlMessagesRenderer::instance()->headCSS();
             QString strBodyCSS = HtmlMessagesRenderer::instance()->bodyCSS();
 
-            strSaveMessage = "<!DOCTYPE html><html><head><title>"+strFileName+"</title><style type=\"text/css\">"+strHeadCSS+"</style></head><body style=\""+strBodyCSS+"\">"+strSaveMessage;
+            strSaveMessage = "<!DOCTYPE html><html><head><title>"+strFileName+"</title><meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /><style type=\"text/css\">"+strHeadCSS+"</style></head><body style=\""+strBodyCSS+"\">"+strSaveMessage;
         }
 
         QString path;
