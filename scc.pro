@@ -205,7 +205,7 @@ HEADERS += src/common/commands.h \
     src/models/sound_notify.h \
     src/models/themes.h \
     src/models/tray.h \
-    src/models/updates.h \
+    src/models/update.h \
     src/models/user_profile.h \
     src/models/utils.h \
     src/onet/onet_auth.h \
