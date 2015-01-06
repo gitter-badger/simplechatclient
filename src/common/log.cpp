@@ -30,6 +30,8 @@
 
 #ifdef Q_OS_WIN
     #include <QStandardPaths>
+#else
+    #include "scc-config.h"
 #endif
 
 void Log::logOpened(const QString &strChannel)
