@@ -245,7 +245,9 @@ void ChatView::cam()
 
 void ChatView::kamerzysta()
 {
+#ifdef Q_OS_WIN
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strNick);
+#endif
 }
 
 void ChatView::friendsAdd()

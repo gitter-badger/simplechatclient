@@ -147,7 +147,9 @@ void NickListWidget::kamerzysta()
 {
     if (strSelectedNick.isEmpty()) return;
 
+#ifdef Q_OS_WIN
     (new Kamerzysta(Core::instance()->kamerzystaSocket))->show(strSelectedNick);
+#endif
 }
 
 void NickListWidget::friendsAdd()
