@@ -709,7 +709,7 @@
         <x>0</x>
         <y>10</y>
         <width>551</width>
-        <height>191</height>
+        <height>194</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout_3">
@@ -743,7 +743,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>75</width>
-             <height>20</height>
+             <height>24</height>
             </size>
            </property>
           </spacer>
@@ -937,6 +937,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_set_kick_rejoin">
+           <property name="minimumSize">
+            <size>
+             <width>75</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>75</width>
+             <height>24</height>
+            </size>
+           </property>
            <property name="text">
             <string>Apply</string>
            </property>
