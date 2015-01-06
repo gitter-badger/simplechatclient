@@ -6,6 +6,6 @@ Homepage: http://simplechatclien.sourceforge.net/
 Priority: standard
 Installed-Size: 22000
 Architecture: i386
-Depends: libc6 (>=2.15), libqca2-plugin-ossl, libqca2 (>=2.0.2), libssl-dev (>=1.0.1), libstdc++6 (>= 4.6), libphonon4 (>= 4:4.6.0), libqt4-network (>= 4:4.8.0), libqtcore4 (>= 4:4.8.0), libqtgui4 (>= 4:4.8.0), libqtwebkit4, phonon, libqt4-xml (>= 4:4.8.0)
+Depends: libc6, libgcc1, libstdc++6, libqt5gui5, libqt5dbus5, libqt5core5, libqt5xml5, libqt5webkitwidgets5, libqt5webkit5, libqt5network5, libqt5multimedia5, libqt5widgets5
 Description: Simple Chat Client
  Simple Chat Client to darmowy i otwarty, wieloplatformowy komunikator do rozmów na czacie czat.onet.pl
