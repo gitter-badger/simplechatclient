@@ -1,7 +1,7 @@
 ChangeLog for Simple Chat Client
 ========================= 
 
-Version 2.0.0 (unknown)
+Version 2.0.0 (2015-01-06)
 * Changed input line layout
 * Html logs by default
 * Added edit hightlight text, edit punish reason
@@ -9,7 +9,7 @@ Version 2.0.0 (unknown)
 * Internal small cam enabled by default on windows
 * Many bugfixes
 
-Version 1.9.0 (16.05.2014)
+Version 1.9.0 (2014-05-16)
 ================================
 * Fixed paste multi-line text - now cut on last space
 * Added youtube and images preview in main window
@@ -37,12 +37,12 @@ Version 1.9.0 (16.05.2014)
 * Dynamic font height in inputline
 * Added whois icons
 
-Version 1.8.1 (24.07.2013)
+Version 1.8.1 (2013-07-24)
 ================================
 * Fixed offline messages
 * Fixed invite focus
 
-Version 1.8.0 (08.06.2013)
+Version 1.8.0 (2013-06-08)
 ================================
 * Added join channel button
 * Added updates in options
@@ -58,24 +58,24 @@ Version 1.8.0 (08.06.2013)
 * Fixed offline messages
 * Many bugfixes
 
-Version 1.7.3 (07.04.2013)
+Version 1.7.3 (2013-04-07)
 ================================
 * Fixed replace emoticons
 * Fixed logs
 * Fixed commands
 
-Version 1.7.2 (24.03.2013)
+Version 1.7.2 (2013-03-24)
 ================================
 * Fixed replace emoticons
 * Fixed notes
 
-Version 1.7.1 (23.03.2013)
+Version 1.7.1 (2013-03-23)
 ================================
 * Fixed replace emoticons
 * Fixed reconnect
 * Fixed avatars bug
 
-Version 1.7.0 (15.02.2013)
+Version 1.7.0 (2013-02-15)
 ================================
 * Added theme dialog
 * Faster reconnect after wrong login
@@ -88,16 +88,16 @@ Version 1.7.0 (15.02.2013)
 * Fixed moderation
 * Many bugfixes
 
-Version 1.6.2 (04.12.2012)
+Version 1.6.2 (2012-12-04)
 ================================
 * Fixed auth
 * Fixed edit profile
 
-Version 1.6.1 (30.10.2012)
+Version 1.6.1 (2012-10-30)
 ================================
 * Fixed rank
 
-Version 1.6.0 (29.10.2012)
+Version 1.6.0 (2012-10-29)
 ================================
 * Addded rank
 * Added new emoticons
@@ -106,7 +106,7 @@ Version 1.6.0 (29.10.2012)
 * Added commands /raw /all /query /quote /kban /kbanip
 * Many bugfixes
 
-Version 1.5.0 (17.07.2012)
+Version 1.5.0 (2012-07-17)
 ================================
 * Added find nick
 * Changed channel settings layout
@@ -116,7 +116,7 @@ Version 1.5.0 (17.07.2012)
 * Added debug window
 * Many bugfixes
 
-Version 1.4.0 (10.03.2012)
+Version 1.4.0 (2012-03-10)
 ================================
 * Added avatars support
 * Added minimize to tray
@@ -126,7 +126,7 @@ Version 1.4.0 (10.03.2012)
 * Enabled DEP (permanent) and ASLR on windows
 * Many bugfixes
 
-Version 1.1.3 (05.12.2011)
+Version 1.1.3 (2011-12-05)
 ================================
 * Fixed priv logs
 * Added themes
@@ -135,7 +135,7 @@ Version 1.1.3 (05.12.2011)
 * Added find text
 * Many bugfixes
 
-Version 1.1.2 (10.09.2011)
+Version 1.1.2 (2011-09-10)
 ================================
 * Animated emoticons work again
 * Removed embedded styles
@@ -148,19 +148,19 @@ Version 1.1.2 (10.09.2011)
 * Fixed linux webcam refresh
 * Many bugfixes
 
-Version 1.1.1 (21.07.2011)
+Version 1.1.1 (2011-07-21)
 ================================
 * Added profiles
 * New crypt
 * Many bugfixes
 
-Version 1.1.0 (09.07.2011)
+Version 1.1.0 (2011-07-09)
 ================================
 * Added /mp3 command
 * Fixed update
 * Many bugfixes
 
-Version 1.0.13 (30.06.2011)
+Version 1.0.13 (2011-06-30)
 ================================
 * Fixed offline messages
 * Added button Find text
@@ -170,21 +170,21 @@ Version 1.0.13 (30.06.2011)
 * Fixed cam support in linux
 * Many bugfixes
 
-Version 1.0.12 (20.05.2011)
+Version 1.0.12 (2011-05-20)
 ================================
 * Added auto-away
 * New nicklist
 * Fixed logs - default saved by date
 * Many bugfixes
 
-Version 1.0.11 (29.04.2011)
+Version 1.0.11 (2011-04-29)
 ================================
 * Fixed auth
 * Added menu "open link"
 * Added offline messages support
 * Many bugfixes
 
-Version 1.0.10 (14.04.2011)
+Version 1.0.10 (2011-04-14)
 ================================
 * Fixed pasting multi-line
 * Fixed lag
@@ -206,14 +206,14 @@ Version 1.0.10 (14.04.2011)
 * Added basic cam support for linux
 * Many bugfixes
 
-Version 1.0.9 (03.12.2010)
-Version 1.0.8 (06.09.2010)
-Version 1.0.7 (04.09.2010)
-Version 1.0.6 (02.08.2010)
-Version 1.0.5 (04.07.2010)
-Version 1.0.4 (03.05.2010)
-Version 1.0.3 (23.04.2010)
-Version 1.0.2 (06.04.2010)
-Version 1.0.1 (31.03.2010)
-Version 1.0.0 (24.03.2010)
-Version 1.0 alpha (19.12.2009)
+Version 1.0.9 (2010-12-03)
+Version 1.0.8 (2010-09-06)
+Version 1.0.7 (2010-09-04)
+Version 1.0.6 (2010-08-02)
+Version 1.0.5 (2010-07-04)
+Version 1.0.4 (2010-05-03)
+Version 1.0.3 (2010-04-23)
+Version 1.0.2 (2010-04-06)
+Version 1.0.1 (2010-03-31)
+Version 1.0.0 (2010-03-24)
+Version 1.0 alpha (2009-12-19)
