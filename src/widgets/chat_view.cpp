@@ -143,6 +143,9 @@ void ChatView::reloadCacheImage(const QString &strImage)
 
     strFindImageSrc += strImage;
 
+    // convert to encoded url
+    strFindImageSrc = QUrl(strFindImageSrc).toEncoded();
+
     this->page()->mainFrame()->evaluateJavaScript("reloadImage('"+strFindImageSrc+"')");
 }
 
