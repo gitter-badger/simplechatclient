@@ -110,6 +110,7 @@ xcopy %QT_DIR%\bin\Qt5Positioning.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5OpenGL.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5PrintSupport.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5MultimediaWidgets.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5WebChannel.dll           %DESTINATION%\ /C /H /R /Y /Q
 
 echo Copying MinGW files
 xcopy %QT_DIR%\bin\libgcc_s_dw2-1.dll   %DESTINATION%\ /C /H /R /Y /Q
