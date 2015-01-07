@@ -25,15 +25,11 @@
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QUrl>
-#include <QtWebKitWidgets/QWebFrame>
-#include <QtWebKit/QWebElement>
-#include <QtWebKitWidgets/QWebPage>
 #include "settings.h"
 #include "update_gui.h"
 
 #define DOWNLOAD_LINK "http://simplechatclien.sourceforge.net/download/"
 #define DOWNLOAD_SITE_LINK "http://sourceforge.net/projects/simplechatclien/files/scc-%1.exe/download"
-#define DOWNLOAD_DIRECT_LINK "http://%1.dl.sourceforge.net/project/simplechatclien/scc-%2.exe"
 
 UpdateGui::UpdateGui(QWidget *parent) : QDialog(parent)
 {
@@ -93,39 +89,17 @@ void UpdateGui::buttonDownload()
     ui.pushButton_download->setEnabled(false);
 
 #ifdef Q_OS_WIN
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_SITE_LINK).arg(strVersion))));
-    pReply->setProperty("category", "sfsite");
+    QNetworkRequest request;
+    request.setUrl(QUrl(QString(DOWNLOAD_SITE_LINK).arg(strVersion)));
+    request.setHeader(QNetworkRequest::UserAgentHeader, "SimpleChatClientUpdate (+http://simplechatclien.sourceforge.net)");
+
+    accessManager->get(request);
 #else
     QDesktopServices::openUrl(QUrl(DOWNLOAD_LINK));
 #endif
 }
 
-// <meta http-equiv="refresh" content="5; url=https://downloads.sourceforge.net/project/simplechatclien/scc-1.6.2.0.exe?r=&amp;ts=1354737755&amp;use_mirror=switch">
-// http://leaseweb.dl.sourceforge.net/project/simplechatclien/scc-1.0.13.917.exe
-void UpdateGui::gotSFSite(QString site)
-{
-    QWebPage page;
-    page.mainFrame()->setHtml(site);
-
-    QWebElement document = page.mainFrame()->documentElement();
-    QWebElement head = document.findFirst("head");
-    QWebElement noscript = head.findFirst("noscript");
-
-    QString strNoScript = noscript.toPlainText();
-    QString strMirror = strNoScript.replace(QRegExp(".*use_mirror=(\\w+).*"), "\\1");
-
-    if (strMirror.size() < 25)
-    {
-        QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(QString(DOWNLOAD_DIRECT_LINK).arg(strMirror, strVersion))));
-        pReply->setProperty("category", "file");
-        connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-        connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
-    }
-    else
-        showError(tr("Cannot download file"));
-}
-
-void UpdateGui::gotFile(const QByteArray &bData)
+void UpdateGui::downloadedFile(const QByteArray &bData)
 {
     QString path = QFileInfo(QStandardPaths::writableLocation(QStandardPaths::TempLocation)).absoluteFilePath();
 
@@ -165,19 +139,32 @@ void UpdateGui::networkFinished(QNetworkReply *reply)
         return;
     }
 
-    QString strCategory = reply->property("category").toString();
+    QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+
+    if (!possibleRedirectUrl.toUrl().isEmpty())
+    {
+        QNetworkRequest request;
+        request.setUrl(possibleRedirectUrl.toUrl());
+        request.setHeader(QNetworkRequest::UserAgentHeader, "SimpleChatClientUpdate (+http://simplechatclien.sourceforge.net)");
+
+        QNetworkReply *pReply = accessManager->get(request);
+        connect(pReply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+        connect(pReply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(downloadError(QNetworkReply::NetworkError)));
+        return;
+    }
+
+    int iStatusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
     QByteArray bData = reply->readAll();
 
-    if (bData.isEmpty())
+    if ((bData.isEmpty()) || (iStatusCode != 200))
     {
         showError(tr("Cannot download file"));
         return;
     }
-
-    if (strCategory == "sfsite")
-        gotSFSite(QString(bData));
-    else if (strCategory == "file")
-        gotFile(bData);
+    else
+    {
+        downloadedFile(bData);
+    }
 }
 
 void UpdateGui::downloadProgress(qint64 bytesReceived,qint64 bytesTotal)
