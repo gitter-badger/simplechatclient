@@ -4227,6 +4227,8 @@ void OnetKernel::raw_817()
     if (strMessage.isEmpty())
         return;
 
+    // convert emots //
+    Convert::simpleReverseConvert(strMessage);
     // convert emots :)
     Replace::replaceEmots(strMessage);
 
