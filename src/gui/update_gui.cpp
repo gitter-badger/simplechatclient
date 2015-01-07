@@ -159,7 +159,6 @@ void UpdateGui::networkFinished(QNetworkReply *reply)
     if ((bData.isEmpty()) || (iStatusCode != 200))
     {
         showError(tr("Cannot download file"));
-        return;
     }
     else
     {
