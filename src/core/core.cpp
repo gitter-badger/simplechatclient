@@ -89,8 +89,7 @@ void Core::createAndShowGui()
     window->init();
 
     // updates
-    if (Settings::instance()->get("updates") == "true")
-        Update::instance()->checkUpdate();
+    Update::instance()->checkUpdate();
 }
 
 void Core::createSettings()

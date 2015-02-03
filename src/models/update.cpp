@@ -222,7 +222,8 @@ void Update::updateFinished(QNetworkReply *reply)
                 // save status
                 Settings::instance()->set("version_status", strVersionStatus);
 
-                Notification::instance()->refreshUpdate();
+                if (Settings::instance()->get("updates") == "true")
+                    Notification::instance()->refreshUpdate();
             }
         }
     }
