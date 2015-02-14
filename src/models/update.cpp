@@ -50,7 +50,7 @@ Update * Update::instance()
 
 Update::Update()
 {
-    updateAction = new QAction(QIcon(":/images/oxygen/16x16/download.png") , tr("Updates"), this);
+    updateAction = new QAction(QIcon(":/images/breeze/download.svg") , tr("Updates"), this);
     updateAction->setVisible(false);
 
     accessManager = new QNetworkAccessManager;

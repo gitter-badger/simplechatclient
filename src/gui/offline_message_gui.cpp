@@ -41,7 +41,7 @@ OfflineMessageGui::OfflineMessageGui(const QString &_strNick, QWidget *parent) :
 
 void OfflineMessageGui::createGui()
 {
-    ui.pushButton_reply->setIcon(QIcon(":/images/oxygen/16x16/mail-send.png"));
+    ui.pushButton_reply->setIcon(QIcon(":/images/breeze/mail-send.svg"));
 
     ui.pushButton_reply->setText(tr("Reply"));
 }

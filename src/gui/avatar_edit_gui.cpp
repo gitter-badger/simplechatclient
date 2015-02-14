@@ -62,10 +62,10 @@ AvatarEditGui::~AvatarEditGui()
 
 void AvatarEditGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
-    ui.toolButton_rotate_left->setIcon(QIcon(":/images/oxygen/16x16/object_rotate_left.png"));
-    ui.toolButton_rotate_right->setIcon(QIcon(":/images/oxygen/16x16/object_rotate_right.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
+    ui.toolButton_rotate_left->setIcon(QIcon(":/images/breeze/object_rotate_left.svg"));
+    ui.toolButton_rotate_right->setIcon(QIcon(":/images/breeze/object_rotate_right.svg"));
 
     ui.label_fileName_title->setText(tr("Filename:"));
     ui.label_size_title->setText(tr("Size:"));

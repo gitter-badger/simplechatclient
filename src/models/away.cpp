@@ -38,7 +38,7 @@ Away * Away::instance()
 Away::Away()
 {
     awayAction = new QAction(this);
-    awayAction->setIcon(QIcon(":/images/oxygen/16x16/im-user-away.png"));
+    awayAction->setIcon(QIcon(":/images/breeze/im-user-away.svg"));
     awayAction->setText(tr("Mark as away"));
     awayAction->setCheckable(true);
     awayAction->setChecked(false);

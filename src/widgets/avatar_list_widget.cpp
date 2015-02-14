@@ -72,13 +72,13 @@ bool AvatarListWidget::isInitialized() const
 
 void AvatarListWidget::createGui()
 {
-    ui.pushButton_add_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_edit_avatar->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
-    ui.pushButton_remove_avatar->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_set_empty_avatar1->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
-    ui.pushButton_apply_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_empty_avatar2->setIcon(QIcon(":/images/oxygen/16x16/image-missing.png"));
-    ui.pushButton_apply_collection_avatar->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
+    ui.pushButton_add_avatar->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.pushButton_edit_avatar->setIcon(QIcon(":/images/breeze/document-edit.svg"));
+    ui.pushButton_remove_avatar->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.pushButton_set_empty_avatar1->setIcon(QIcon(":/images/breeze/image-missing.svg"));
+    ui.pushButton_apply_avatar->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_set_empty_avatar2->setIcon(QIcon(":/images/breeze/image-missing.svg"));
+    ui.pushButton_apply_collection_avatar->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
 
     ui.tabWidget->setTabText(0, tr("My avatars"));
     ui.tabWidget->setTabText(1, tr("Collection of avatars"));

@@ -344,7 +344,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     #endif
 
     QMenu *mInvite = new QMenu(tr("Invite"));
-    mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    mInvite->setIcon(QIcon(":/images/breeze/legalmoves.svg"));
     QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
@@ -353,7 +353,7 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
             strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
-        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
         openChannelsActs[i]->setData(lChannelsCleared.at(i));
@@ -364,15 +364,15 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     }
 
     QMenu *mKick = new QMenu(tr("Kick From Channel"));
-    mKick->setIcon(QIcon(":/images/oxygen/16x16/im-kick-user.png"));
-    mKick->addAction(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"), tr("(reason)"), this, SLOT(kickWithReason()));
+    mKick->setIcon(QIcon(":/images/breeze/im-kick-user.svg"));
+    mKick->addAction(QIcon(":/images/breeze/view-conversation-balloon.svg"), tr("(reason)"), this, SLOT(kickWithReason()));
     if (!lPunishReasons.isEmpty()) mKick->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
         QString strPunishReasons = lPunishReasons.at(i);
 
         kickReasonAct[i] = new QAction(this);
-        kickReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+        kickReasonAct[i]->setIcon(QIcon(":/images/breeze/view-conversation-balloon.svg"));
         kickReasonAct[i]->setVisible(false);
         kickReasonAct[i]->setText(strPunishReasons);
         kickReasonAct[i]->setData(lPunishReasons.at(i));
@@ -383,15 +383,15 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     }
 
     QMenu *mKickAndBan = new QMenu(tr("Kick & Ban"));
-    mKickAndBan->setIcon(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"));
-    mKickAndBan->addAction(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"), tr("(reason)"), this, SLOT(kbanWithReason()));
+    mKickAndBan->setIcon(QIcon(":/images/breeze/im-ban-kick-user.svg"));
+    mKickAndBan->addAction(QIcon(":/images/breeze/view-conversation-balloon.svg"), tr("(reason)"), this, SLOT(kbanWithReason()));
     if (!lPunishReasons.isEmpty()) mKickAndBan->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
         QString strPunishReasons = lPunishReasons.at(i);
 
         kbanReasonAct[i] = new QAction(this);
-        kbanReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+        kbanReasonAct[i]->setIcon(QIcon(":/images/breeze/view-conversation-balloon.svg"));
         kbanReasonAct[i]->setVisible(false);
         kbanReasonAct[i]->setText(strPunishReasons);
         kbanReasonAct[i]->setData(lPunishReasons.at(i));
@@ -402,21 +402,21 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     }
 
     QMenu *friends = new QMenu(tr("Friends list"));
-    friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
+    friends->setIcon(QIcon(":/images/breeze/meeting-attending.svg"));
     if (Friends::instance()->contains(strSelectedNick))
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
+        friends->addAction(QIcon(":/images/breeze/list-remove.svg"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
+        friends->addAction(QIcon(":/images/breeze/list-add.svg"), tr("Add to friends"), this, SLOT(friendsAdd()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
-    ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
+    ignore->setIcon(QIcon(":/images/breeze/meeting-attending-tentative.svg"));
     if (Ignore::instance()->contains(strSelectedNick))
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
+        ignore->addAction(QIcon(":/images/breeze/list-remove.svg"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
+        ignore->addAction(QIcon(":/images/breeze/list-add.svg"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
-    privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
+    privilege->setIcon(QIcon(":/images/breeze/irc-operator.svg"));
 
     if ((strNickModes.contains(FLAG_OP)) && ((iSelfMaxModes >= FLAG_OWNER_INT) || (strSelectedNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
@@ -439,13 +439,13 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QMenu *menu = new QMenu(strSelectedNick);
-    menu->addAction(QIcon(":/images/oxygen/16x16/user-identity.png"), strSelectedNick, this, SLOT(nick()));
+    menu->addAction(QIcon(":/images/breeze/user-identity.svg"), strSelectedNick, this, SLOT(nick()));
     menu->addSeparator();
-    menu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
-    menu->addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));
+    menu->addAction(QIcon(":/images/breeze/list-add-user.svg"), tr("Priv"), this, SLOT(priv()));
+    menu->addAction(QIcon(":/images/breeze/text-field.svg"), tr("Whois"), this, SLOT(whois()));
     if (strSelectedNick.at(0) != '~')
     {
-        menu->addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
+        menu->addAction(QIcon(":/images/breeze/view-pim-contacts.svg"), tr("Profile"), this, SLOT(profile()));
         if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))
         {
             if (Settings::instance()->get("webcam") == "system")
@@ -474,11 +474,11 @@ void NickListWidget::contextMenuEvent(QContextMenuEvent *e)
     if (iSelfMaxModes >= FLAG_HALFOP_INT)
     {
         menu->addSeparator();
-        menu->addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));
+        menu->addAction(QIcon(":/images/breeze/im-kick-user.svg"), tr("Kick From Channel"), this, SLOT(kick()));
         menu->addMenu(mKick);
-        menu->addAction(QIcon(":/images/oxygen/16x16/im-ban-user.png"), tr("Ban From Channel"), this, SLOT(ban()));
+        menu->addAction(QIcon(":/images/breeze/im-ban-user.svg"), tr("Ban From Channel"), this, SLOT(ban()));
         menu->addMenu(mKickAndBan);
-        menu->addAction(QIcon(":/images/oxygen/16x16/im-user-busy.png"), tr("IP Ban"), this, SLOT(ipban()));
+        menu->addAction(QIcon(":/images/breeze/im-user-busy.svg"), tr("IP Ban"), this, SLOT(ipban()));
     }
     if (!privilege->isEmpty())
     {

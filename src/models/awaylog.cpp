@@ -41,7 +41,7 @@ Awaylog * Awaylog::instance()
 
 Awaylog::Awaylog()
 {
-    awaylogAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-tasks.png"), tr("Awaylog"), this);
+    awaylogAction = new QAction(QIcon(":/images/breeze/view-pim-tasks.svg"), tr("Awaylog"), this);
     awaylogAction->setVisible(false);
 }
 

@@ -51,25 +51,25 @@ OptionsGui::OptionsGui(QWidget *parent) : QDialog(parent)
 
 void OptionsGui::createGui()
 {
-    ui.pushButton_profiles->setIcon(QIcon(":/images/oxygen/16x16/preferences-activities.png"));
-    ui.pushButton_themes->setIcon(QIcon(":/images/oxygen/16x16/view-presentation.png"));
-    ui.pushButton_highlight_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_highlight_edit->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
-    ui.pushButton_highlight_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_punish_reason_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_punish_reason_edit->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
-    ui.pushButton_punish_reason_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.pushButton_reverse_colors->setIcon(QIcon(":/images/oxygen/16x16/format-stroke-color.png"));
-    ui.pushButton_restore_default_colors->setIcon(QIcon(":/images/oxygen/16x16/edit-undo.png"));
-    ui.pushButton_play_beep->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
-    ui.pushButton_play_query->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
-    ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
-    ui.pushButton_sound_query_change->setIcon(QIcon(":/images/oxygen/16x16/document-edit.png"));
-    ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/oxygen/16x16/folder-txt.png"));
-    ui.pushButton_set_background_image->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
-    ui.pushButton_set_winamp->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_mpris_format->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_profiles->setIcon(QIcon(":/images/breeze/preferences-activities.svg"));
+    ui.pushButton_themes->setIcon(QIcon(":/images/breeze/view-presentation.svg"));
+    ui.pushButton_highlight_add->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.pushButton_highlight_edit->setIcon(QIcon(":/images/breeze/document-edit.svg"));
+    ui.pushButton_highlight_remove->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.pushButton_punish_reason_add->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.pushButton_punish_reason_edit->setIcon(QIcon(":/images/breeze/document-edit.svg"));
+    ui.pushButton_punish_reason_remove->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.pushButton_reverse_colors->setIcon(QIcon(":/images/breeze/format-stroke-color.svg"));
+    ui.pushButton_restore_default_colors->setIcon(QIcon(":/images/breeze/edit-undo.svg"));
+    ui.pushButton_play_beep->setIcon(QIcon(":/images/breeze/media-playback-start.svg"));
+    ui.pushButton_play_query->setIcon(QIcon(":/images/breeze/media-playback-start.svg"));
+    ui.pushButton_sound_beep_change->setIcon(QIcon(":/images/breeze/document-edit.svg"));
+    ui.pushButton_sound_query_change->setIcon(QIcon(":/images/breeze/document-edit.svg"));
+    ui.pushButton_logs_open_folder->setIcon(QIcon(":/images/breeze/folder-txt.svg"));
+    ui.pushButton_set_background_image->setIcon(QIcon(":/images/breeze/insert-image.svg"));
+    ui.pushButton_set_winamp->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_set_mpris_format->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     // page basic
     ui.groupBox_basic->setTitle(tr("Basic"));
@@ -196,42 +196,42 @@ void OptionsGui::createGui()
 
     // options list
     QListWidgetItem *basic = new QListWidgetItem(ui.listWidget_options);
-    basic->setIcon(QIcon(":/images/oxygen/16x16/view-media-artist.png"));
+    basic->setIcon(QIcon(":/images/breeze/view-media-artist.svg"));
     basic->setText(tr("Basic"));
     basic->setToolTip(tr("Basic"));
 
     QListWidgetItem *highlight = new QListWidgetItem(ui.listWidget_options);
-    highlight->setIcon(QIcon(":/images/oxygen/16x16/feed-subscribe.png"));
+    highlight->setIcon(QIcon(":/images/breeze/feed-subscribe.svg"));
     highlight->setText(tr("Highlight"));
     highlight->setToolTip(tr("Highlight"));
 
     QListWidgetItem *punish_reason = new QListWidgetItem(ui.listWidget_options);
-    punish_reason->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+    punish_reason->setIcon(QIcon(":/images/breeze/view-conversation-balloon.svg"));
     punish_reason->setText(tr("Punish reason"));
     punish_reason->setToolTip(tr("Punish reason"));
 
     QListWidgetItem *colors = new QListWidgetItem(ui.listWidget_options);
-    colors->setIcon(QIcon(":/images/oxygen/16x16/preferences-desktop-display-color.png"));
+    colors->setIcon(QIcon(":/images/breeze/preferences-desktop-display-color.svg"));
     colors->setText(tr("Colors"));
     colors->setToolTip(tr("Colors"));
 
     QListWidgetItem *sounds = new QListWidgetItem(ui.listWidget_options);
-    sounds->setIcon(QIcon(":/images/oxygen/16x16/media-playback-start.png"));
+    sounds->setIcon(QIcon(":/images/breeze/media-playback-start.svg"));
     sounds->setText(tr("Sounds"));
     sounds->setToolTip(tr("Sounds"));
 
     QListWidgetItem *logs = new QListWidgetItem(ui.listWidget_options);
-    logs->setIcon(QIcon(":/images/oxygen/16x16/text-field.png"));
+    logs->setIcon(QIcon(":/images/breeze/text-field.svg"));
     logs->setText(tr("Logs"));
     logs->setToolTip(tr("Logs"));
 
     QListWidgetItem *background_image = new QListWidgetItem(ui.listWidget_options);
-    background_image->setIcon(QIcon(":/images/oxygen/16x16/games-config-background.png"));
+    background_image->setIcon(QIcon(":/images/breeze/games-config-background.svg"));
     background_image->setText(tr("Background image"));
     background_image->setToolTip(tr("Background image"));
 
     QListWidgetItem *view = new QListWidgetItem(ui.listWidget_options);
-    view->setIcon(QIcon(":/images/oxygen/16x16/view-time-schedule.png"));
+    view->setIcon(QIcon(":/images/breeze/view-time-schedule.svg"));
     view->setText(tr("View"));
     view->setToolTip(tr("View"));
 
@@ -252,12 +252,12 @@ void OptionsGui::createGui()
 #endif
 
     QListWidgetItem *notification = new QListWidgetItem(ui.listWidget_options);
-    notification->setIcon(QIcon(":/images/oxygen/16x16/help-hint.png"));
+    notification->setIcon(QIcon(":/images/breeze/help-hint.svg"));
     notification->setText(tr("Notification"));
     notification->setToolTip(tr("Notification"));
 
     QListWidgetItem *webcam = new QListWidgetItem(ui.listWidget_options);
-    webcam->setIcon(QIcon(":/images/oxygen/16x16/camera-web.png"));
+    webcam->setIcon(QIcon(":/images/breeze/camera-web.svg"));
     webcam->setText(tr("Webcam"));
     webcam->setToolTip(tr("Webcam"));
 
@@ -266,12 +266,12 @@ void OptionsGui::createGui()
 #endif
 
     QListWidgetItem *updates = new QListWidgetItem(ui.listWidget_options);
-    updates->setIcon(QIcon(":/images/oxygen/16x16/system-software-update.png"));
+    updates->setIcon(QIcon(":/images/breeze/system-software-update.svg"));
     updates->setText(tr("Updates"));
     updates->setToolTip(tr("Updates"));
 
     QListWidgetItem *adv = new QListWidgetItem(ui.listWidget_options);
-    adv->setIcon(QIcon(":/images/oxygen/16x16/dialog-warning.png"));
+    adv->setIcon(QIcon(":/images/breeze/dialog-warning.svg"));
     adv->setText(tr("Advanced"));
     adv->setToolTip(tr("Advanced"));
 }

@@ -43,9 +43,9 @@ ModerationGui::ModerationGui(const QString &_strCurrentChannel, QWidget *parent)
 
 void ModerationGui::createGui()
 {
-    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_accept->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_remove->setText(tr("Remove"));

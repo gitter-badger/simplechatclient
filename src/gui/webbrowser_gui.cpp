@@ -34,7 +34,7 @@ WebBrowserGui::WebBrowserGui(const QUrl &url, QWidget *parent) : QDialog(parent)
     ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
     ui->webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, true);
 
-    ui->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui->buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
     ui->buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     // signals

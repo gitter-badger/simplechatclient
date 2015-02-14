@@ -37,8 +37,8 @@ ChannelKeyGui::ChannelKeyGui(const QString &_strChannel, QWidget *parent) : QDia
 
 void ChannelKeyGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
 
     ui.label_msg->setText(tr("Enter key:"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));

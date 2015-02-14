@@ -57,7 +57,7 @@ MyAvatarGui::~MyAvatarGui()
 
 void MyAvatarGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 

@@ -95,9 +95,9 @@ void Kamerzysta::getPath()
         msgBox.setWindowTitle(tr("Error"));
         msgBox.setText(tr("Kamerzysta not found!"));
         QPushButton *downloadButton = msgBox.addButton(tr("Download"), QMessageBox::AcceptRole);
-        downloadButton->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
+        downloadButton->setIcon(QIcon(":/images/breeze/preferences-web-browser-shortcuts.svg"));
         QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
-        cancelButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+        cancelButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
         msgBox.exec();
 
         if (msgBox.clickedButton() == downloadButton)

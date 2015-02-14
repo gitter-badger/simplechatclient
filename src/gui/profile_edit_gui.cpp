@@ -40,8 +40,8 @@ ProfileEditGui::ProfileEditGui(const QString &_strNick, QWidget *parent) : QDial
 
 void ProfileEditGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
 
     ui.label_nick->setText(tr("Nick:"));
     ui.label_password->setText(tr("Password:"));

@@ -38,7 +38,7 @@ AboutGui::AboutGui(QWidget *parent) : QDialog(parent)
 
 void AboutGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
     ui.tabWidget->setTabText(0, tr("&About"));
     ui.tabWidget->setTabText(1, tr("A&uthors"));

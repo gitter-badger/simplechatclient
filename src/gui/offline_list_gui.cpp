@@ -42,9 +42,9 @@ void OfflineListGui::createGui()
     ui.pushButton_accept->setEnabled(false);
     ui.pushButton_reject->setEnabled(false);
 
-    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/mail-mark-read.png"));
-    ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/mail-mark-junk.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_accept->setIcon(QIcon(":/images/breeze/mail-mark-read.svg"));
+    ui.pushButton_reject->setIcon(QIcon(":/images/breeze/mail-mark-junk.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_accept->setText(tr("Read"));
     ui.pushButton_reject->setText(tr("Reject"));

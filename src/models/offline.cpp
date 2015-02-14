@@ -40,7 +40,7 @@ Offline * Offline::instance()
 
 Offline::Offline()
 {
-    offlineMessagesAction = new QAction(QIcon(":/images/oxygen/16x16/mail-mark-unread.png") , tr("Offline messages"), this);
+    offlineMessagesAction = new QAction(QIcon(":/images/breeze/mail-mark-unread.svg") , tr("Offline messages"), this);
     offlineMessagesAction->setVisible(false);
 }
 

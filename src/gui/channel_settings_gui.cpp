@@ -69,19 +69,19 @@ ChannelSettingsGui::~ChannelSettingsGui()
 
 void ChannelSettingsGui::createGui()
 {
-    ui.pushButton_transfer->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-request-response.png"));
-    ui.pushButton_remove_channel->setIcon(QIcon(":/images/oxygen/16x16/meeting-participant-no-response.png"));
-    ui.pushButton_set_website->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_topic->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.toolButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
-    ui.toolButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
-    ui.pushButton_set_desc->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_password->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_kick_rejoin->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_set_limit->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok-apply.png"));
-    ui.pushButton_permission_add->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.pushButton_permission_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_transfer->setIcon(QIcon(":/images/breeze/meeting-participant-request-response.svg"));
+    ui.pushButton_remove_channel->setIcon(QIcon(":/images/breeze/meeting-participant-no-response.svg"));
+    ui.pushButton_set_website->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_set_topic->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.toolButton_bold->setIcon(QIcon(":/images/breeze/format-text-bold.svg"));
+    ui.toolButton_italic->setIcon(QIcon(":/images/breeze/format-text-italic.svg"));
+    ui.pushButton_set_desc->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_set_password->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_set_kick_rejoin->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_set_limit->setIcon(QIcon(":/images/breeze/dialog-ok-apply.svg"));
+    ui.pushButton_permission_add->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.pushButton_permission_remove->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     // summary
@@ -140,8 +140,8 @@ void ChannelSettingsGui::createGui()
     // permissions
     ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/op.png"), tr("Operators"));
     ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/halfop.png"), tr("Half-operators"));
-    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Banned"));
-    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/oxygen/16x16/im-user.png"), tr("Invited"));
+    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/breeze/im-kick-user.svg"), tr("Banned"));
+    ui.tabWidget_permissions->addTab(new QListWidget(), QIcon(":/images/breeze/im-user.svg"), tr("Invited"));
 
     ui.pushButton_permission_add->setText(tr("Add"));
     ui.pushButton_permission_remove->setText(tr("Remove"));
@@ -158,32 +158,32 @@ void ChannelSettingsGui::createGui()
 
     // channel settings list
     QListWidgetItem *summary = new QListWidgetItem(ui.listWidget_channel_settings);
-    summary->setIcon(QIcon(":/images/oxygen/16x16/view-list-details.png"));
+    summary->setIcon(QIcon(":/images/breeze/view-list-details.svg"));
     summary->setText(tr("Summary"));
     summary->setToolTip(tr("Summary"));
 
     QListWidgetItem *general = new QListWidgetItem(ui.listWidget_channel_settings);
-    general->setIcon(QIcon(":/images/oxygen/16x16/preferences-other.png"));
+    general->setIcon(QIcon(":/images/breeze/preferences-other.svg"));
     general->setText(tr("General"));
     general->setToolTip(tr("General"));
 
     QListWidgetItem *advanced = new QListWidgetItem(ui.listWidget_channel_settings);
-    advanced->setIcon(QIcon(":/images/oxygen/16x16/dialog-warning.png"));
+    advanced->setIcon(QIcon(":/images/breeze/dialog-warning.svg"));
     advanced->setText(tr("Advanced"));
     advanced->setToolTip(tr("Advanced"));
 
     QListWidgetItem *permissions = new QListWidgetItem(ui.listWidget_channel_settings);
-    permissions->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
+    permissions->setIcon(QIcon(":/images/breeze/irc-operator.svg"));
     permissions->setText(tr("Permissions"));
     permissions->setToolTip(tr("Permissions"));
 
     QListWidgetItem *avatar = new QListWidgetItem(ui.listWidget_channel_settings);
-    avatar->setIcon(QIcon(":/images/oxygen/16x16/edit-image-face-detect.png"));
+    avatar->setIcon(QIcon(":/images/breeze/edit-image-face-detect.svg"));
     avatar->setText(tr("Avatar"));
     avatar->setToolTip(tr("Avatar"));
 
     QListWidgetItem *statistics = new QListWidgetItem(ui.listWidget_channel_settings);
-    statistics->setIcon(QIcon(":/images/oxygen/16x16/office-chart-bar.png"));
+    statistics->setIcon(QIcon(":/images/breeze/office-chart-bar.svg"));
     statistics->setText(tr("Statistics"));
     statistics->setToolTip(tr("Statistics"));
 

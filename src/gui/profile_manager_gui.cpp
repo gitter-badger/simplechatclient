@@ -47,10 +47,10 @@ ProfileManagerGui::ProfileManagerGui(OptionsGui *_pOptionsGui, QWidget *parent) 
 
 void ProfileManagerGui::createGui()
 {
-    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
-    ui.pushButton_edit->setIcon(QIcon(":/images/oxygen/16x16/user-group-properties.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_add->setIcon(QIcon(":/images/breeze/user-group-new.svg"));
+    ui.pushButton_edit->setIcon(QIcon(":/images/breeze/user-group-properties.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/user-group-delete.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_edit->setText(tr("Edit"));

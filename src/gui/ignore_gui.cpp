@@ -40,9 +40,9 @@ IgnoreGui::IgnoreGui(QWidget *parent) : QDialog(parent)
 
 void IgnoreGui::createGui()
 {
-    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_add->setIcon(QIcon(":/images/breeze/list-add-user.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/list-remove-user.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -66,7 +66,7 @@ void IgnoreGui::refresh()
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(SortedListWidgetNicklistRole, false); // is nicklist
         item->setText(strNick);
-        item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
+        item->setIcon(QIcon(":/images/breeze/meeting-attending-tentative.svg"));
 
         ui.listWidget_nicks->addItem(item);
     }

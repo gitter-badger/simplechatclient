@@ -44,7 +44,7 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 
     QToolButton *bJoinChannel = new QToolButton(this);
     bJoinChannel->setAutoRaise(true);
-    bJoinChannel->setIcon(QIcon(":/images/oxygen/16x16/tab-new-background.png"));
+    bJoinChannel->setIcon(QIcon(":/images/breeze/tab-new-background.svg"));
     bJoinChannel->setIconSize(QSize(22,22));
     bJoinChannel->setToolTip(tr("Join channel"));
     bJoinChannel->setFocusPolicy(Qt::NoFocus);
@@ -52,7 +52,7 @@ TabManager::TabManager(QWidget *parent) : QTabWidget(parent)
 
     bChannelsList = new QToolButton(this);
     bChannelsList->setAutoRaise(true);
-    bChannelsList->setIcon(QIcon(":/images/oxygen/16x16/tab-detach.png"));
+    bChannelsList->setIcon(QIcon(":/images/breeze/tab-detach.svg"));
     bChannelsList->setIconSize(QSize(22,22));
     bChannelsList->setToolTip(tr("Channels list"));
     bChannelsList->setFocusPolicy(Qt::NoFocus);

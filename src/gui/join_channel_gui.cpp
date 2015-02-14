@@ -39,8 +39,8 @@ JoinChannelGui::JoinChannelGui(QWidget *parent) : QDialog(parent)
 
 void JoinChannelGui::createGui()
 {
-    ui.pushButton_join->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_join->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_join->setText(tr("Join"));
     ui.label_channel_name->setText(tr("Channel name:"));

@@ -172,9 +172,9 @@ void UserProfileGui::createGui()
     mainLayout->addWidget(pushButtonWidget);
     this->setLayout(mainLayout);
 
-    toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
-    pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    toolButton_zoom->setIcon(QIcon(":/images/breeze/zoom-in.svg"));
+    pushButton_more->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    pushButton_close->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     label_sex->setText(tr("Sex:"));
     label_age->setText(tr("Age:"));
@@ -279,13 +279,13 @@ void UserProfileGui::buttonMore()
     if (moreWidget->isVisible())
     {
         moreWidget->setVisible(false);
-        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+        pushButton_more->setIcon(QIcon(":/images/breeze/list-add.svg"));
         pushButton_more->setText(tr("More..."));
     }
     else
     {
         moreWidget->setVisible(true);
-        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+        pushButton_more->setIcon(QIcon(":/images/breeze/list-remove.svg"));
         pushButton_more->setText(tr("Less..."));
     }
 

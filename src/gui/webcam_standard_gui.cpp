@@ -50,9 +50,9 @@ WebcamStandardGui::~WebcamStandardGui()
 
 void WebcamStandardGui::createGui()
 {
-    ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.toolButton_vote_minus->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.toolButton_vote_plus->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.label_list_nick->setText(tr("Nick"));
     ui.label_list_spectators->setText(tr("Spectators"));

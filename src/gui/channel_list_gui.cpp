@@ -46,10 +46,10 @@ ChannelListGui::ChannelListGui(QWidget *parent) : QDialog(parent)
 
 void ChannelListGui::createGui()
 {
-    ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
-    ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
-    ui.buttonBox->button(QDialogButtonBox::Retry)->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_search->setIcon(QIcon(":/images/breeze/edit-find.svg"));
+    ui.pushButton_clear->setIcon(QIcon(":/images/breeze/draw-eraser.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Retry)->setIcon(QIcon(":/images/breeze/view-refresh.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.groupBox_search->setTitle(tr("Search"));
     ui.groupBox_type->setTitle(tr("Type"));
@@ -81,12 +81,12 @@ void ChannelListGui::createGui()
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
 
-    ui.tabWidget->setTabIcon(0, QIcon(":/images/oxygen/16x16/accessories-dictionary.png"));
-    ui.tabWidget->setTabIcon(1, QIcon(":/images/oxygen/16x16/applications-education-university.png"));
-    ui.tabWidget->setTabIcon(2, QIcon(":/images/oxygen/16x16/system-users.png"));
-    ui.tabWidget->setTabIcon(3, QIcon(":/images/oxygen/16x16/emblem-favorite.png"));
-    ui.tabWidget->setTabIcon(4, QIcon(":/images/oxygen/16x16/karbon.png"));
-    ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
+    ui.tabWidget->setTabIcon(0, QIcon(":/images/breeze/accessories-dictionary.svg"));
+    ui.tabWidget->setTabIcon(1, QIcon(":/images/breeze/applications-education-university.svg"));
+    ui.tabWidget->setTabIcon(2, QIcon(":/images/breeze/system-users.svg"));
+    ui.tabWidget->setTabIcon(3, QIcon(":/images/breeze/emblem-favorite.svg"));
+    ui.tabWidget->setTabIcon(4, QIcon(":/images/breeze/karbon.svg"));
+    ui.tabWidget->setTabIcon(5, QIcon(":/images/breeze/applications-education-language.svg"));
 
     ui.buttonBox->button(QDialogButtonBox::Retry)->setText(tr("Refresh"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
@@ -440,9 +440,9 @@ void ChannelListGui::allCellDoubleClicked(int row, int column)
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
-            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            exitButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
-            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            enterButton->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
@@ -487,9 +487,9 @@ void ChannelListGui::eroticCellDoubleClicked(int row, int column)
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
-            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            exitButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
-            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            enterButton->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)

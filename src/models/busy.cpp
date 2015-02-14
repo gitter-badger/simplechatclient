@@ -38,7 +38,7 @@ Busy * Busy::instance()
 Busy::Busy()
 {
     busyAction = new QAction(this);
-    busyAction->setIcon(QIcon(":/images/oxygen/16x16/im-user-offline.png"));
+    busyAction->setIcon(QIcon(":/images/breeze/im-user-offline.svg"));
     busyAction->setText(tr("Mark as busy"));
     busyAction->setCheckable(true);
     busyAction->setChecked(false);

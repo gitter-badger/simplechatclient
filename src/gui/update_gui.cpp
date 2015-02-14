@@ -60,7 +60,7 @@ void UpdateGui::createGui()
 #ifndef Q_OS_WIN
     ui.progressBar->hide();
 #endif
-    ui.pushButton_download->setIcon(QIcon(":/images/oxygen/16x16/download.png"));
+    ui.pushButton_download->setIcon(QIcon(":/images/breeze/download.svg"));
     ui.pushButton_download->setText(tr("Download"));
 }
 
