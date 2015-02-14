@@ -172,7 +172,7 @@ void MainWindow::createActions()
 
     camsAction = new QAction(QIcon(":/images/breeze/camera-web.svg"),tr("Webcams"), this);
     notesAction = new QAction(QIcon(":/images/breeze/story-editor.svg"), tr("Notes"), this);
-    aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
+    aboutAction = new QAction(QIcon(":/images/breeze/help-hint.svg"), tr("About SCC ..."), this);
 
     minimizeAction = new QAction(QIcon(":/images/breeze/view-close.svg"), tr("Mi&nimize"), this);
     maximizeAction = new QAction(QIcon(":/images/breeze/view-fullscreen.svg"), tr("Ma&ximize"), this);
@@ -233,7 +233,7 @@ void MainWindow::createMenus()
     sccMenu->addAction(quitAction);
 
     mainToolButton = new QToolButton(this);
-    mainToolButton->setIcon(QIcon(":/images/logo16x16.png"));
+    mainToolButton->setIcon(QIcon(":/images/breeze/application-menu.svg"));
     mainToolButton->setText(tr("SCC"));
     mainToolButton->setMenu(sccMenu);
     mainToolButton->setPopupMode(QToolButton::InstantPopup);

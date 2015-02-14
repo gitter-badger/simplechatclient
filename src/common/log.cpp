@@ -124,7 +124,7 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
         path = SCC_DATA_DIR;
 #endif
 
-        strSaveMessage = strSaveMessage.replace("qrc:/images/oxygen/16x16", "file://"+path+"/images");
+        strSaveMessage = strSaveMessage.replace("qrc:/images/breeze", "file://"+path+"/images");
         strSaveMessage = strSaveMessage.replace("qrc:", "file://"+path);
     }
 
