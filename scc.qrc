@@ -12,7 +12,6 @@
         <file>images/pubcam.png</file>
         <file>images/screener.png</file>
         <file>images/privcam.png</file>
-        <file>images/winamp.png</file>
         <file>images/mpris.png</file>
         <file>images/transparent.png</file>
         <file>images/crop.png</file>
@@ -135,5 +134,6 @@
         <file>images/breeze/zoom-in.svg</file>
         <file>images/breeze/zoom-out.svg</file>
         <file>images/breeze/application-menu.svg</file>
+        <file>images/breeze/quickopen.svg</file>
     </qresource>
 </RCC>

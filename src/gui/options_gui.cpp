@@ -236,7 +236,7 @@ void OptionsGui::createGui()
     view->setToolTip(tr("View"));
 
     QListWidgetItem *winamp = new QListWidgetItem(ui.listWidget_options);
-    winamp->setIcon(QIcon(":/images/winamp.png"));
+    winamp->setIcon(QIcon(":/images/breeze/quickopen.svg"));
     winamp->setText(tr("Winamp"));
     winamp->setToolTip(tr("Winamp"));
 
