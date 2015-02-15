@@ -569,16 +569,16 @@ void ChatView::menuNick(QContextMenuEvent *event)
             {
 #ifdef Q_OS_WIN
                 if (bKamerzystaExists)
-                    menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(kamerzysta()));
+                    menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam"), this, SLOT(kamerzysta()));
                 else
-                    menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+                    menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam internal"), this, SLOT(cam()));
 #else
-                menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+                menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam internal"), this, SLOT(cam()));
 #endif
             }
             else // internal
             {
-                menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+                menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam internal"), this, SLOT(cam()));
             }
         }
     }
