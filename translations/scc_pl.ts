@@ -1514,6 +1514,10 @@
         <translation>Ogólne</translation>
     </message>
     <message>
+        <source>Profile cannot be changed when logged</source>
+        <translation>Zmiana profilu i kompozycji dostępna po wylogowaniu z czata</translation>
+    </message>
+    <message>
         <source>Restart program to apply the changes.</source>
         <translation>Uruchom ponownie program aby zastosować wprowadzone zmiany.</translation>
     </message>

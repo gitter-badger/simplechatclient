@@ -539,6 +539,7 @@ void OptionsGui::setDefaultValues()
     // disable change nick if connected
     if (Settings::instance()->get("logged") == "true")
     {
+        ui.label_logged_warning->setText(tr("Profile cannot be changed when logged"));
         ui.comboBox_profiles->setDisabled(true);
         ui.pushButton_profiles->setDisabled(true);
         ui.lineEdit_theme->setDisabled(true);
@@ -546,6 +547,7 @@ void OptionsGui::setDefaultValues()
     }
     else
     {
+        ui.label_logged_warning->clear();
         ui.comboBox_profiles->setDisabled(false);
         ui.pushButton_profiles->setDisabled(false);
         ui.lineEdit_theme->setDisabled(false);

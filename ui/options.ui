@@ -94,7 +94,7 @@
         <x>0</x>
         <y>20</y>
         <width>441</width>
-        <height>281</height>
+        <height>321</height>
        </rect>
       </property>
       <property name="title">
@@ -112,7 +112,7 @@
          <x>10</x>
          <y>30</y>
          <width>421</width>
-         <height>231</height>
+         <height>241</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -226,7 +226,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="topMargin">
            <number>10</number>
           </property>
@@ -246,6 +246,19 @@
             </property>
             <property name="wordWrap">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_logged_warning">
+            <property name="styleSheet">
+             <string notr="true">font-weight:bold;</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
