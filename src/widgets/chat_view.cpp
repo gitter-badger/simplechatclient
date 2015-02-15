@@ -644,7 +644,7 @@ void ChatView::menuStandard(QContextMenuEvent *event)
     if (strChatViewChannel.at(0) == '#')
     {
         QMenu *channel = new QMenu(strChatViewChannel, &menu);
-        channel->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
+        channel->setIcon(QIcon(":/images/breeze/irc-operator.svg"));
         if (ChannelFavourites::instance()->contains(strChatViewChannel))
             channel->addAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Remove channel from favourites"), this, SLOT(removeCurrentChannelFromFavourites()));
         else
