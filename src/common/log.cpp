@@ -86,8 +86,10 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
     bool bLogsByDate = Settings::instance()->get("logs_by_date") == "true" ? true : false;
     if (bLogsByDate)
     {
-        QString strDate = QDate().currentDate().toString("yyyy-MM");
-        path += strDate+"/";
+        QString strDateY = QDate().currentDate().toString("yyyy");
+        QString strDateM = QDate().currentDate().toString("MM");
+        QString strDateD = QDate().currentDate().toString("dd");
+        path += strDateY+"/"+strDateM+"/"+strDateD+"/";
     }
 
     // create dir if not exist
