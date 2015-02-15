@@ -241,7 +241,7 @@ void OptionsGui::createGui()
     winamp->setToolTip(tr("Winamp"));
 
     QListWidgetItem *mpris = new QListWidgetItem(ui.listWidget_options);
-    mpris->setIcon(QIcon(":/images/mpris.png"));
+    mpris->setIcon(QIcon(":/images/breeze/folder-sound.svg"));
     mpris->setText(tr("MPRIS"));
     mpris->setToolTip(tr("MPRIS"));
 
