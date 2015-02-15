@@ -193,7 +193,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     channel_settings->show();
 
     moderation = new QToolButton(this);
-    moderation->setIcon(QIcon(":/images/breeze/layer-visible-on.svg"));
+    moderation->setIcon(QIcon(":/images/breeze/irc-voice.svg"));
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
 

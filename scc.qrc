@@ -79,7 +79,6 @@
         <file>images/breeze/irc-operator.svg</file>
         <file>images/breeze/karbon.svg</file>
         <file>images/breeze/key-enter.svg</file>
-        <file>images/breeze/layer-visible-on.svg</file>
         <file>images/breeze/legalmoves.svg</file>
         <file>images/breeze/list-add.svg</file>
         <file>images/breeze/list-add-user.svg</file>
@@ -134,6 +133,7 @@
         <file>images/breeze/zoom-in.svg</file>
         <file>images/breeze/zoom-out.svg</file>
         <file>images/breeze/application-menu.svg</file>
-        <file>images/breeze/quickopen.svg</file>
+        <file>images/breeze/folder-sound.svg</file>
+        <file>images/breeze/irc-voice.svg</file>
     </qresource>
 </RCC>
