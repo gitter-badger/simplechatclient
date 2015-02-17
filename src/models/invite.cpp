@@ -36,7 +36,7 @@ Invite * Invite::instance()
 
 Invite::Invite()
 {
-    inviteAction = new QAction(QIcon(":/images/breeze/legalmoves.svg"), tr("Invite"), this);
+    inviteAction = new QAction(QIcon(":/images/breeze/list-add.svg"), tr("Invite"), this);
     inviteAction->setVisible(false);
 }
 
