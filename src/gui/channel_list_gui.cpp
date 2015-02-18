@@ -84,7 +84,7 @@ void ChannelListGui::createGui()
     ui.tabWidget->setTabIcon(0, QIcon(":/images/breeze/accessories-dictionary.svg"));
     ui.tabWidget->setTabIcon(1, QIcon(":/images/breeze/applications-education-university.svg"));
     ui.tabWidget->setTabIcon(2, QIcon(":/images/breeze/system-users.svg"));
-    ui.tabWidget->setTabIcon(3, QIcon(":/images/breeze/emblem-favorite.svg"));
+    ui.tabWidget->setTabIcon(3, QIcon(":/images/breeze/taxes-finances.svg"));
     ui.tabWidget->setTabIcon(4, QIcon(":/images/breeze/karbon.svg"));
     ui.tabWidget->setTabIcon(5, QIcon(":/images/breeze/applications-education-language.svg"));
 

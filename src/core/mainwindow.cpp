@@ -160,7 +160,7 @@ void MainWindow::createActions()
 
     // onet action
     channelListAction = new QAction(QIcon(":/images/breeze/documentation.svg"), tr("Channel list"), this);
-    channelHomesAction = new QAction(QIcon(":/images/breeze/configure.svg"), tr("My channels"), this);
+    channelHomesAction = new QAction(QIcon(":/images/breeze/view-group.svg"), tr("My channels"), this);
     channelFavouritesAction = new QAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Favorite channels"), this);
     friendsAction = new QAction(QIcon(":/images/breeze/meeting-attending.svg"), tr("Friends"), this);
     ignoreAction = new QAction(QIcon(":/images/breeze/meeting-attending-tentative.svg"), tr("Ignored"), this);

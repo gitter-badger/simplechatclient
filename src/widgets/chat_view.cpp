@@ -559,7 +559,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
     menu.addAction(QIcon(":/images/breeze/user-identity.svg"), strNick, this, SLOT(nick()));
     menu.addSeparator();
     menu.addAction(QIcon(":/images/breeze/list-add-user.svg"), tr("Priv"), this, SLOT(priv()));
-    menu.addAction(QIcon(":/images/breeze/text-field.svg"), tr("Whois"), this, SLOT(whois()));
+    menu.addAction(QIcon(":/images/breeze/user-properties.svg"), tr("Whois"), this, SLOT(whois()));
     if (strNick.at(0) != '~')
     {
         menu.addAction(QIcon(":/images/breeze/view-pim-contacts.svg"), tr("Profile"), this, SLOT(profile()));

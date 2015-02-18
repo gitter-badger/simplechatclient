@@ -173,7 +173,7 @@ void UserProfileGui::createGui()
     this->setLayout(mainLayout);
 
     toolButton_zoom->setIcon(QIcon(":/images/breeze/zoom-in.svg"));
-    pushButton_more->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    pushButton_more->setIcon(QIcon(":/images/breeze/go-down.svg"));
     pushButton_close->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     label_sex->setText(tr("Sex:"));
@@ -279,13 +279,13 @@ void UserProfileGui::buttonMore()
     if (moreWidget->isVisible())
     {
         moreWidget->setVisible(false);
-        pushButton_more->setIcon(QIcon(":/images/breeze/list-add.svg"));
+        pushButton_more->setIcon(QIcon(":/images/breeze/go-down.svg"));
         pushButton_more->setText(tr("More..."));
     }
     else
     {
         moreWidget->setVisible(true);
-        pushButton_more->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+        pushButton_more->setIcon(QIcon(":/images/breeze/go-up.svg"));
         pushButton_more->setText(tr("Less..."));
     }
 

@@ -134,5 +134,9 @@
         <file>images/breeze/application-menu.svg</file>
         <file>images/breeze/folder-sound.svg</file>
         <file>images/breeze/irc-voice.svg</file>
+        <file>images/breeze/taxes-finances.svg</file>
+        <file>images/breeze/view-group.svg</file>
+        <file>images/breeze/go-down.svg</file>
+        <file>images/breeze/go-up.svg</file>
     </qresource>
 </RCC>
