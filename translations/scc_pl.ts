@@ -699,7 +699,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>
@@ -890,7 +890,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>
@@ -3589,7 +3589,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>
@@ -3792,7 +3792,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>

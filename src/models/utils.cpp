@@ -303,7 +303,7 @@ QString Utils::convertChannelCatToString(int cat)
     else if (cat == 1)
         return tr("Tame");
     else if (cat == 2)
-        return tr("With class");
+        return tr("Classy");
     else if (cat == 3)
         return tr("Cult");
     else
@@ -319,7 +319,7 @@ QString Utils::convertChannelCatToString(int cat, bool moderated, bool recommend
     else if (cat == 1)
         strResult = tr("Tame");
     else if (cat == 2)
-        strResult = tr("With class");
+        strResult = tr("Classy");
     else if (cat == 3)
         strResult = tr("Cult");
 

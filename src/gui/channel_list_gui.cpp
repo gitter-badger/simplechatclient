@@ -69,7 +69,7 @@ void ChannelListGui::createGui()
 
     ui.checkBox_wild->setText(tr("Wild"));
     ui.checkBox_tame->setText(tr("Tame"));
-    ui.checkBox_with_class->setText(tr("With class"));
+    ui.checkBox_with_class->setText(tr("Classy"));
     ui.checkBox_cult->setText(tr("Cult"));
     ui.checkBox_moderated->setText(tr("Moderated"));
     ui.checkBox_recommended->setText(tr("Recommended"));
@@ -407,7 +407,7 @@ void ChannelListGui::getOptions()
     // tame
     bShowTame = ui.checkBox_tame->isChecked();
 
-    // with class
+    // classy
     bShowWithClass = ui.checkBox_with_class->isChecked();
 
     // cult

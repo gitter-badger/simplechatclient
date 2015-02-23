@@ -519,7 +519,7 @@ void OnetKernel::raw_mode()
                 QString strStatus;
                 if (strValue.toInt() == 0) strStatus = tr("Wild");
                 else if (strValue.toInt() == 1) strStatus = tr("Tame");
-                else if (strValue.toInt() == 2) strStatus = tr("With class");
+                else if (strValue.toInt() == 2) strStatus = tr("Classy");
                 else if (strValue.toInt() == 3) strStatus = tr("Cult");
                 else strStatus = tr("unknown");
 
