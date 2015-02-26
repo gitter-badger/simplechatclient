@@ -2,7 +2,7 @@
 project (scc)
 cmake_minimum_required (VERSION 2.8.11 FATAL_ERROR)
 include (FindPkgConfig)
-set (QT_MIN_VERSION "5.2.1")
+set (QT_MIN_VERSION "5.0.0")
 find_package(Qt5Core REQUIRED)
 find_package(Qt5LinguistTools)
 
