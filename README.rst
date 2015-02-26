@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master
+    :target: https://travis-ci.org/simplechatclient/simplechatclient
+
 ##########################
 What is Simple Chat Client
 ##########################

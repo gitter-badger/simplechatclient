@@ -2,7 +2,7 @@ before_install:
  - sudo apt-get update -qq
 install:
  - sudo apt-get install -qq gcc g++ cmake libc6 libgcc1 libstdc++6 libqca2 libssl libqt5gui5 libqt5dbus5 libqt5core5 libqt5xml5 libqt5webkitwidgets5 libqt5webkit5 libqt5network5 libqt5multimedia5 libqt5widgets5 libqt5sql5 libqt5qml5 libqt5quick5 libqt5sensors5 libqt5positioning5 libqt5opengl5 libqt5printsupport5 libqt5multimediawidgets5 libqt5webchannel5
- - sudo apt-get install -qq qt5-default qttools5-dev-tools
+ - sudo apt-get install -qq qt5-default qttools5-dev-tools qtbase5-dev
 script:
  - ./add-scc-to-whitelist.sh
  - ./compile.sh
