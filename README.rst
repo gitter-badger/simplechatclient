@@ -1,9 +1,11 @@
 
 .. |travisone| image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=1.0
     :target: https://travis-ci.org/simplechatclient/simplechatclient/
+	:align: middle
 
 .. |travismaster| image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master
     :target: https://travis-ci.org/simplechatclient/simplechatclient/
+	:align: middle
 
 1.0 |travisone| master |travismaster|
 
