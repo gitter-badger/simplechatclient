@@ -4,7 +4,6 @@ before_install:
 install:
  - sudo apt-get install cmake make pkg-config g++ libssl-dev
  - sudo apt-get install qtbase5-dev qt5-default qt5-qmake
- - sudo apt-get install libqca-qt5-2-dev
 script:
  - ./add-scc-to-whitelist.sh
  - ./compile.sh
