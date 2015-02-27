@@ -1,6 +1,7 @@
 install:
  - sudo apt-get install libssl-dev libqca2-dev libqca2-plugin-ossl libphonon-dev g++ cmake make pkg-config
 script:
+ - chmod +x ./add-scc-to-whitelist.sh ./compile.sh
  - ./add-scc-to-whitelist.sh
  - ./compile.sh
 after_success:
