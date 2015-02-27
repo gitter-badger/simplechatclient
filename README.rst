@@ -5,8 +5,7 @@
 .. |travismaster| image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master
     :target: https://travis-ci.org/simplechatclient/simplechatclient/
 
-1.0    |travisone|
-master |travismaster|
+1.0 |travisone| master |travismaster|
 
 ##########################
 What is Simple Chat Client
