@@ -1,6 +1,6 @@
 before_install:
  - sudo add-apt-repository --yes ppa:kalakris/cmake
- - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+ - sudo add-apt-repository --yes ppa:beineri/opt-qt541
  - sudo apt-get update -qq
 install:
  - sudo apt-get install cmake make pkg-config g++ libssl-dev
@@ -9,5 +9,3 @@ script:
  - chmod +x ./add-scc-to-whitelist.sh ./compile.sh
  - ./add-scc-to-whitelist.sh
  - ./compile.sh
-after_success:
- - scc --version
