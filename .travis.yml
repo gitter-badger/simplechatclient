@@ -6,7 +6,7 @@ before_install:
 install:
  - sudo apt-get install cmake make pkg-config g++-4.8 libssl-dev
  - sudo apt-get install qt54base qt54multimedia qt54translations qt54tools qt54svg
- - /opt/qt54/bin/qt54-env.sh
+ - source /opt/qt54/bin/qt54-env.sh
 script:
  - chmod +x ./add-scc-to-whitelist.sh ./compile.sh
  - ./add-scc-to-whitelist.sh
