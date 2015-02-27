@@ -4,7 +4,7 @@ before_install:
  - sudo apt-get update -qq
 install:
  - sudo apt-get install cmake make pkg-config g++ libssl-dev
- - sudo apt-get install qt54base qt54multimedia qt54translations qt54tools qt54svg qt54-meta 
+ - sudo apt-get install qt54base qt54multimedia qt54translations qt54tools qt54svg
  - export QTDIR=/opt/qt54
  - export PATH=$QTDIR/bin:$PATH
  - export LD_LIBRARY_PATH=$QTDIR/lib/:$QTDIR/lib/`uname -m`-linux-gnu:$LD_LIBRARY_PATH
