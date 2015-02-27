@@ -4,5 +4,3 @@ script:
  - chmod +x ./add-scc-to-whitelist.sh ./compile.sh
  - ./add-scc-to-whitelist.sh
  - ./compile.sh
-after_success:
- - scc --version
