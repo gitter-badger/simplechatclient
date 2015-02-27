@@ -5,7 +5,7 @@ before_install:
 install:
  - sudo apt-get install make pkg-config g++-4.8 libssl-dev
  - export CXX="g++-4.8" CC="gcc-4.8"
- - wget http://www.cmake.org/files/v3.0/cmake-3.0.2-Linux-i386.tar.gz && tar -xzf cmake-3.0.2-Linux-i386.tar.gz && sudo cp -fR cmake-3.0.2-Linux-i386/* /usr
+ - wget http://www.cmake.org/files/v3.1/cmake-3.1.3-Linux-x86_64.tar.gz && tar -xzf cmake-3.1.3-Linux-x86_64.tar.gz && sudo cp -fR cmake-3.1.3-Linux-x86_64/* /usr
  - cmake --version
  - sudo apt-get install qt54-meta-full
  - source /opt/qt54/bin/qt54-env.sh
