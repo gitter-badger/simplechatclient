@@ -1,11 +1,13 @@
 before_install:
- - sudo add-apt-repository --yes ppa:smspillaz/cmake-2.8.12
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo add-apt-repository --yes ppa:beineri/opt-qt541
  - sudo apt-get update -qq
 install:
- - sudo apt-get install cmake make pkg-config g++-4.8 libssl-dev
+ - sudo apt-get install make pkg-config g++-4.8 libssl-dev
  - export CXX="g++-4.8" CC="gcc-4.8"
+ - wget http://www.cmake.org/files/v3.1/cmake-3.1.0-Linux-i386.tar.gz
+ - tar -xzf cmake-3.1.0-Linux-i386.tar.gz
+ - sudo cp -fR cmake-3.1.0-Linux-i386/* /usr
  - sudo apt-get install qt54-meta-full
  - source /opt/qt54/bin/qt54-env.sh
  - git clone git://anongit.kde.org/qca
