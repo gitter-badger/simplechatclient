@@ -17,5 +17,5 @@ install:
  - cd ..
 script:
  - cmake . -DCMAKE_INSTALL_PREFIX=/usr/local
- - make -j `nproc`
+ - make
  - sudo make install
