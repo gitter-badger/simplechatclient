@@ -8,6 +8,11 @@ install:
  - export CXX="g++-4.8" CC="gcc-4.8"
  - sudo apt-get install qt54-meta-full
  - source /opt/qt54/bin/qt54-env.sh
+ - git clone git://anongit.kde.org/qca
+ - $ cd qca
+ - $ cmake .
+ - $ make
+ - $ sudo make install
 script:
  - chmod +x ./add-scc-to-whitelist.sh ./compile.sh
  - ./add-scc-to-whitelist.sh
