@@ -1,12 +1,8 @@
-1.0
- 
-.. image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=1.0
-    :target: https://travis-ci.org/simplechatclient/simplechatclient/
+.. | 1.0 | image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=1.0
+   :target: https://travis-ci.org/simplechatclient/simplechatclient/
 
-master
-
-.. image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master
-    :target: https://travis-ci.org/simplechatclient/simplechatclient/
+.. | master | image:: https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master
+   :target: https://travis-ci.org/simplechatclient/simplechatclient/
 
 ##########################
 What is Simple Chat Client
