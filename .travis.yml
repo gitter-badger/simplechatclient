@@ -1,13 +1,12 @@
 before_install:
  - sudo add-apt-repository --yes ppa:kalakris/cmake
+ - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo add-apt-repository --yes ppa:beineri/opt-qt541
  - sudo apt-get update -qq
 install:
- - sudo apt-get install cmake make pkg-config g++ libssl-dev
+ - sudo apt-get install cmake make pkg-config g++-4.8 libssl-dev
  - sudo apt-get install qt54base qt54multimedia qt54translations qt54tools qt54svg
- - export QTDIR=/opt/qt54
- - export PATH=$QTDIR/bin:$PATH
- - export LD_LIBRARY_PATH=$QTDIR/lib/:$QTDIR/lib/`uname -m`-linux-gnu:$LD_LIBRARY_PATH
+ - /opt/qt54/bin/qt54-env.sh
 script:
  - chmod +x ./add-scc-to-whitelist.sh ./compile.sh
  - ./add-scc-to-whitelist.sh
