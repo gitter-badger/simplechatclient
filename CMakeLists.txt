@@ -61,7 +61,7 @@ message (STATUS " * build type: ${CMAKE_BUILD_TYPE}")
 
 # install
 if (UNIX AND NOT APPLE)
-	install (FILES AUTHORS ChangeLog LICENSE README.rst scc.png TODO DESTINATION ${SCC_DATA_DIR})
+	install (FILES AUTHORS ChangeLog LICENSE README.md scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
 	
 	install (FILES images/registered_user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
