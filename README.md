@@ -1,5 +1,5 @@
 
-1.0 [![Build Status](https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=1.0)](https://travis-ci.org/simplechatclient/simplechatclient) master [![Build Status](https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master)](https://travis-ci.org/simplechatclient/simplechatclient)
+[![Build Status](https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master)](https://travis-ci.org/simplechatclient/simplechatclient)
 
 # What is Simple Chat Client
 
