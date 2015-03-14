@@ -18,7 +18,7 @@ The program of the assumptions is small, lightweight and stable client.
 1. Download Debian Installer from [http://simplechatclien.sourceforge.net/download](http://simplechatclien.sourceforge.net/download)
 2. Run downloaded installer
 
-## Dev build information
+## Compiling
 
 ### Windows Requirements
 
@@ -36,17 +36,18 @@ QT_DIR
 
 ### Linux Debian/Ubuntu packages
 
-	cmake make pkg-config g++ libssl-dev qtbase5-dev qttools5-dev qttools5-dev-tools qtmultimedia5-dev libqt5webkit5-dev
-	
+	cmake make pkg-config g++ libssl-dev libqca2(>=2.1.0) qtbase5-dev qttools5-dev qttools5-dev-tools
+	libqt5gui5-dev libqt5dbus5-dev libqt5core5-dev libqt5xml5-dev libqt5webkitwidgets5-dev libqt5webkit5-dev libqt5network5-dev libqt5multimedia5-dev libqt5widgets5-dev libqt5sql5-dev libqt5qml5-dev libqt5quick5-dev libqt5sensors5-dev libqt5positioning5-dev libqt5opengl5-dev libqt5printsupport5-dev libqt5multimediawidgets5-dev libqt5webchannel5-dev libqt5svg5-dev
+
 Install qca plugin from https://projects.kde.org/projects/kdesupport/qca/repository
 
 We need qca build with Qt5 support. Current version from packages is with Qt4 support.
 
-	   $ git clone git://anongit.kde.org/qca
-	   $ cd qca
-	   $ cmake .
-	   $ make
-	   $ sudo make install
+	$ git clone git://anongit.kde.org/qca
+	$ cd qca
+	$ cmake .
+	$ make
+	$ sudo make install
 
 ### Custom build
 
