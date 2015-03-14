@@ -1,28 +1,26 @@
-
-[![Build Status](https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master)](https://travis-ci.org/simplechatclient/simplechatclient)
-
-# What is Simple Chat Client
-
-
+##[Simple Chat Client](http://simplechatclien.sourceforge.net "Simple Chat Client Offical Site") [![Build Status](https://travis-ci.org/simplechatclient/simplechatclient.svg?branch=master)](https://travis-ci.org/simplechatclient/simplechatclient)
 Simple Chat Client is a lightweight and simple program which allows talking in the czat.onet.pl
 without using a browser or java.
 
 The program of the assumptions is small, lightweight and stable client.
 
+![](images/screenshot.png)
 
-## Release Information
+## Install & Run ##
 
+### Windows ###
 
-This repo contains in development code for future releases.
+1. Download Windows Installer from [http://simplechatclien.sourceforge.net/download](http://simplechatclien.sourceforge.net/download)
+2. Run downloaded installer
 
-To download the latest stable release please visit the [Simple Chat Client Downloads](
-http://simplechatclien.sourceforge.net/download/) page.
+### Linux ###
 
+1. Download Debian Installer from [http://simplechatclien.sourceforge.net/download](http://simplechatclien.sourceforge.net/download)
+2. Run downloaded installer
 
-## SCC Requirements
+## Dev build information
 
-
-### Windows
+### Windows Requirements
 
 [Microsoft Visual C++ 2008 SP1 Redistributable Package (x86)](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=5582)
 
