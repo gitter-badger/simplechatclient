@@ -179,6 +179,9 @@ void UpdateGui::downloadError(QNetworkReply::NetworkError)
 
 void UpdateGui::showError(const QString &strError)
 {
-    ui.label_title->setText(tr("Error"));
-    ui.label_content->setText(QString("<center><b>%1</b></center>").arg(strError));
+    ui.progressBar->hide();
+    ui.pushButton_download->hide();
+
+    ui.label_title->setText("");
+    ui.label_content->setText(QString("<center><b>%1<br/>%2<br/><br/>%3<br/><a href=\"%4\">%4</a></b></center>").arg(tr("Error"), strError, tr("Visit homepage"), "http://simplechatclien.sourceforge.net"));
 }

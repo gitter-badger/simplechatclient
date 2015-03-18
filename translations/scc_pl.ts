@@ -2167,6 +2167,10 @@
         <source>Cannot open saved file</source>
         <translation>Nie można otworzyć zapisanego pliku</translation>
     </message>
+    <message>
+        <source>Visit homepage</source>
+        <translation>Pobierz z strony internetowej</translation>
+    </message>
 </context>
 <context>
     <name>UserAvatarGui</name>
