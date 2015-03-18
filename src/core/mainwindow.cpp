@@ -156,7 +156,7 @@ void MainWindow::createActions()
     trayAction->setEnabled(false);
 
     connectAction = new QAction(QIcon(":/images/breeze/network-connect.svg"), tr("&Connect"), this);
-    optionsAction = new QAction(QIcon(":/images/breeze/preferences-system.svg"), tr("Options"), this);
+    optionsAction = new QAction(QIcon(":/images/settings.svg"), tr("Options"), this);
 
     // onet action
     channelListAction = new QAction(QIcon(":/images/breeze/documentation.svg"), tr("Channel list"), this);

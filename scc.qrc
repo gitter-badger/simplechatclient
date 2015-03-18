@@ -138,5 +138,6 @@
         <file>images/breeze/view-group.svg</file>
         <file>images/breeze/go-down.svg</file>
         <file>images/breeze/go-up.svg</file>
+        <file>images/settings.svg</file>
     </qresource>
 </RCC>
