@@ -1330,9 +1330,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="checkBox_show_join_part_200">
+         <widget class="QCheckBox" name="checkBox_show_join_part_big_channel">
           <property name="text">
-           <string>Show join/part when number of nicks &gt; 200</string>
+           <string>Show join/part when number of nicks &gt; 50</string>
           </property>
          </widget>
         </item>

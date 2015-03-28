@@ -99,7 +99,7 @@ private slots:
 
     void setFontFormating(bool bValue);
     void setShowJoinPart(bool bValue);
-    void setShowJoinPart200(bool bValue);
+    void setShowJoinPartBigChannel(bool bValue);
     void setEmoticons(bool bValue);
     void setReplaceEmoticons(bool bValue);
     void setNicklist(bool bValue);

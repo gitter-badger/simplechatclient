@@ -145,7 +145,7 @@ void OptionsGui::createGui()
     ui.groupBox_view->setTitle(tr("View"));
     ui.checkBox_font_formating->setText(tr("Font formating"));
     ui.checkBox_show_join_part->setText(tr("Show join/part"));
-    ui.checkBox_show_join_part_200->setText(tr("Show join/part on big channels"));
+    ui.checkbox_show_join_part_big_channel->setText(tr("Show join/part on big channels"));
     ui.checkBox_emoticons->setText(tr("Emoticons"));
     ui.checkBox_replace_emoticons->setText(tr("Replace emoticons"));
     ui.checkBox_nicklist->setText(tr("Nicklist"));
@@ -353,7 +353,7 @@ void OptionsGui::setDefaultValues()
 
     QString strFontFormating = Settings::instance()->get("font_formating");
     QString strShowJoinPart = Settings::instance()->get("show_join_part");
-    QString strShowJoinPart200 = Settings::instance()->get("show_join_part_200");
+    QString strShowJoinPartBigChannel = Settings::instance()->get("show_join_part_big_channel");
     QString strEmoticons = Settings::instance()->get("emoticons");
     QString strReplaceEmoticons = Settings::instance()->get("replace_emoticons");
     QString strNicklist = Settings::instance()->get("nicklist");
@@ -431,11 +431,11 @@ void OptionsGui::setDefaultValues()
     else
         ui.checkBox_show_join_part->setChecked(false);
 
-    // show join part 200
-    if (strShowJoinPart200 == "true")
-        ui.checkBox_show_join_part_200->setChecked(true);
+    // show join part big channel
+    if (strShowJoinPartBigChannel == "true")
+        ui.checkBox_show_join_part_big_channel->setChecked(true);
     else
-        ui.checkBox_show_join_part_200->setChecked(false);
+        ui.checkBox_show_join_part_big_channel->setChecked(false);
 
     // emoticons
     if (strEmoticons == "true")
@@ -610,7 +610,7 @@ void OptionsGui::createSignals()
 
     connect(ui.checkBox_font_formating, SIGNAL(clicked(bool)), this, SLOT(setFontFormating(bool)));
     connect(ui.checkBox_show_join_part, SIGNAL(clicked(bool)), this, SLOT(setShowJoinPart(bool)));
-    connect(ui.checkBox_show_join_part_200, SIGNAL(clicked(bool)), this, SLOT(setShowJoinPart200(bool)));
+    connect(ui.checkBox_show_join_part_big_channel, SIGNAL(clicked(bool)), this, SLOT(setShowJoinPartBigChannel(bool)));
     connect(ui.checkBox_emoticons, SIGNAL(clicked(bool)), this, SLOT(setEmoticons(bool)));
     connect(ui.checkBox_replace_emoticons, SIGNAL(clicked(bool)), this, SLOT(setReplaceEmoticons(bool)));
     connect(ui.checkBox_nicklist, SIGNAL(clicked(bool)), this, SLOT(setNicklist(bool)));
@@ -1192,14 +1192,14 @@ void OptionsGui::setShowJoinPart(bool bValue)
     delete pConfig;
 }
 
-void OptionsGui::setShowJoinPart200(bool bValue)
+void OptionsGui::setShowJoinPartBigChannel(bool bValue)
 {
     QString strValue = (bValue ? "true" : "false");
 
-    Settings::instance()->set("show_join_part_200", strValue);
+    Settings::instance()->set("show_join_part_big_channel", strValue);
 
     Config *pConfig = new Config();
-    pConfig->set("show_join_part_200", strValue);
+    pConfig->set("show_join_part_big_channel", strValue);
     delete pConfig;
 }
 

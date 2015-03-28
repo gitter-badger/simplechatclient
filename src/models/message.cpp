@@ -96,7 +96,7 @@ bool Message::isHideJoinPart(const QString &strChannel, MessageCategory eMessage
             return true;
 
         int iNickCount = Nick::instance()->getFromChannel(strChannel).size();
-        if ((Settings::instance()->get("show_join_part_200") == "false") && (iNickCount > 200))
+        if ((Settings::instance()->get("show_join_part_big_channel") == "false") && (iNickCount > 50))
             return true;
     }
     return false;
