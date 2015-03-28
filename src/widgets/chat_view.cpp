@@ -186,6 +186,11 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
         Log::save(strChatViewChannel, strContent, Log::Html);
 }
 
+void ChatView::channel()
+{
+    Core::instance()->mainWindow()->insertTextToInputLine(strChannel+" ");
+}
+
 void ChatView::joinChannel()
 {
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
@@ -429,12 +434,7 @@ void ChatView::clear()
 void ChatView::menuChannel(QContextMenuEvent *event)
 {
     QMenu menu;
-
-    QAction *nameAct = new QAction(strChannel, &menu);
-    nameAct->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
-    nameAct->setDisabled(true);
-
-    menu.addAction(nameAct);
+    menu.addAction(QIcon(":/images/breeze/irc-join-channel.svg"), strChannel, this, SLOT(channel()));
     menu.addSeparator();
     menu.addAction(QIcon(":/images/breeze/legalmoves.svg"), tr("Join channel"), this, SLOT(joinChannel()));
     if (ChannelFavourites::instance()->contains(strChannel))

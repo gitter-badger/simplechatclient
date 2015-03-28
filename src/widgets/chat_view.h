@@ -56,6 +56,7 @@ public slots:
     void search();
 
 private slots:
+    void channel();
     void joinChannel();
     void addChannelToFavourites();
     void removeChannelFromFavourites();
