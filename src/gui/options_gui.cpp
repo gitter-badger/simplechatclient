@@ -145,7 +145,7 @@ void OptionsGui::createGui()
     ui.groupBox_view->setTitle(tr("View"));
     ui.checkBox_font_formating->setText(tr("Font formating"));
     ui.checkBox_show_join_part->setText(tr("Show join/part"));
-    ui.checkbox_show_join_part_big_channel->setText(tr("Show join/part on big channels"));
+    ui.checkBox_show_join_part_big_channel->setText(tr("Show join/part on big channels"));
     ui.checkBox_emoticons->setText(tr("Emoticons"));
     ui.checkBox_replace_emoticons->setText(tr("Replace emoticons"));
     ui.checkBox_nicklist->setText(tr("Nicklist"));
