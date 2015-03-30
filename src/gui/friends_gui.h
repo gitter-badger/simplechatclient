@@ -22,7 +22,7 @@
 
 #include <QDialog>
 #include "ui_friends.h"
-#include "defines.h"
+#include "core/defines.h"
 
 class FriendsGui : public QDialog
 {

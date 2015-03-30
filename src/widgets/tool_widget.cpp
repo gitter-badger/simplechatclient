@@ -22,20 +22,20 @@
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QToolButton>
-#include "channel.h"
-#include "core.h"
-#include "commands.h"
-#include "config.h"
-#include "convert.h"
-#include "channel_settings_gui.h"
-#include "emoticons_gui.h"
-#include "message.h"
-#include "mainwindow.h"
-#include "moderation_gui.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "common/commands.h"
+#include "common/config.h"
+#include "common/convert.h"
+#include "gui/channel_settings_gui.h"
+#include "gui/emoticons_gui.h"
+#include "models/message.h"
+#include "core/mainwindow.h"
+#include "gui/moderation_gui.h"
 #include "inputline_widget.h"
-#include "replace.h"
-#include "settings.h"
-#include "utils.h"
+#include "common/replace.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "tool_widget.h"
 
 ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000000")

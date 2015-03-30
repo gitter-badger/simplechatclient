@@ -20,7 +20,7 @@
 #ifndef CHAT_VIEW_H
 #define CHAT_VIEW_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QtWebKitWidgets/QWebView>
 
 class ChatView : public QWebView

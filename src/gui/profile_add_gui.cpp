@@ -19,9 +19,9 @@
 
 #include <QDesktopWidget>
 #include <QMessageBox>
-#include "core.h"
-#include "config.h"
-#include "simple_crypt.h"
+#include "core/core.h"
+#include "common/config.h"
+#include "common/simple_crypt.h"
 #include "register_nick_gui.h"
 #include "profile_manager_gui.h"
 #include "profile_add_gui.h"

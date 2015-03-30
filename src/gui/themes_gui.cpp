@@ -19,9 +19,9 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "config.h"
-#include "settings.h"
-#include "themes.h"
+#include "common/config.h"
+#include "models/settings.h"
+#include "models/themes.h"
 #include "themes_gui.h"
 
 ThemesGui::ThemesGui(QWidget *parent) : QDialog(parent)

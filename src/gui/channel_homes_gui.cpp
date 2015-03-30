@@ -21,11 +21,11 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
-#include "avatar.h"
-#include "channel.h"
-#include "core.h"
+#include "models/avatar.h"
+#include "models/channel.h"
+#include "core/core.h"
 #include "channel_settings_gui.h"
-#include "channel_homes.h"
+#include "models/channel_homes.h"
 #include "channel_homes_gui.h"
 
 ChannelHomesGui::ChannelHomesGui(QWidget *parent) : QDialog(parent)

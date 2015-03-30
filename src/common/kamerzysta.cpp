@@ -30,9 +30,9 @@
 #include <QTimer>
 #include <QTextStream>
 #include <QUrl>
-#include "core.h"
+#include "core/core.h"
 #include "log.h"
-#include "settings.h"
+#include "models/settings.h"
 #include "kamerzysta.h"
 
 Kamerzysta::Kamerzysta(QTcpSocket *_socket) : socket(_socket)

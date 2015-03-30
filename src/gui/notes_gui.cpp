@@ -19,7 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "notes.h"
+#include "models/notes.h"
 #include "notes_gui.h"
 
 NotesGui::NotesGui(QWidget *parent) : QDialog(parent)

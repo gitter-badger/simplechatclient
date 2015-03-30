@@ -20,8 +20,8 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QMenu>
-#include "core.h"
-#include "invite.h"
+#include "core/core.h"
+#include "models/invite.h"
 #include "invite_list_gui.h"
 
 InviteListGui::InviteListGui(QWidget *parent) : QDialog(parent)

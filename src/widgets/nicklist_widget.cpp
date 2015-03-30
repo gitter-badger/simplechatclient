@@ -21,23 +21,23 @@
 #include <QInputDialog>
 #include <QListWidgetItem>
 #include <QMenu>
-#include "channel.h"
-#include "core.h"
-#include "defines.h"
-#include "friends.h"
-#include "ignore.h"
-#include "mainwindow.h"
-#include "nick.h"
-#include "punish_reason.h"
-#include "settings.h"
-#include "user_profile_gui.h"
-#include "webcam_gui.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "core/defines.h"
+#include "models/friends.h"
+#include "models/ignore.h"
+#include "core/mainwindow.h"
+#include "models/nick.h"
+#include "models/punish_reason.h"
+#include "models/settings.h"
+#include "gui/user_profile_gui.h"
+#include "gui/webcam_gui.h"
 #include "nicklist_widget.h"
 
 #ifdef Q_OS_WIN
     #include <QDir>
     #include <QSettings>
-    #include "kamerzysta.h"
+    #include "common/kamerzysta.h"
 #endif
 
 NickListWidget::NickListWidget(const QString &_strChannel) : strChannel(_strChannel), strSelectedNick(QString::null)

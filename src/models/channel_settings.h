@@ -22,7 +22,7 @@
 
 #include <QHash>
 #include <QObject>
-#include "defines.h"
+#include "core/defines.h"
 
 class ChannelSettings : public QObject
 {

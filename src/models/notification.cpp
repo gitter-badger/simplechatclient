@@ -20,9 +20,9 @@
 #include <QMenu>
 #include <QToolButton>
 #include "awaylog.h"
-#include "core.h"
+#include "core/core.h"
 #include "invite.h"
-#include "mainwindow.h"
+#include "core/mainwindow.h"
 #include "offline.h"
 #include "settings.h"
 #include "update.h"

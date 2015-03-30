@@ -20,7 +20,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QObject>
 
 class Message : public QObject

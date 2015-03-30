@@ -19,7 +19,7 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "core.h"
+#include "core/core.h"
 #include "channel_key_gui.h"
 
 ChannelKeyGui::ChannelKeyGui(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)

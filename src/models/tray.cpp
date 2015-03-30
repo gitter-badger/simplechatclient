@@ -18,9 +18,9 @@
  */
 
 #include "channel.h"
-#include "convert.h"
-#include "core.h"
-#include "mainwindow.h"
+#include "common/convert.h"
+#include "core/core.h"
+#include "core/mainwindow.h"
 #include "settings.h"
 #include "tray.h"
 

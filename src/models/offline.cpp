@@ -19,8 +19,8 @@
 
 #include <QAction>
 #include <QDateTime>
-#include "convert.h"
-#include "log.h"
+#include "common/convert.h"
+#include "common/log.h"
 #include "notification.h"
 #include "settings.h"
 #include "offline.h"

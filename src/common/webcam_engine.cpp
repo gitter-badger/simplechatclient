@@ -21,7 +21,7 @@
 #include <QStringList>
 #include <QTextCodec>
 
-#include "settings.h"
+#include "models/settings.h"
 #include "webcam_engine.h"
 #include "webcam_network.h"
 

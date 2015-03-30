@@ -21,9 +21,9 @@
 #include <QDomDocument>
 #include <QFileDialog>
 
-#include "avatar_edit_gui.h"
+#include "gui/avatar_edit_gui.h"
 
-#include "settings.h"
+#include "models/settings.h"
 #include "avatar_list_widget.h"
 #include "ui_avatar_list_widget.h"
 

@@ -19,8 +19,8 @@
 
 #include <QDesktopWidget>
 #include <QCompleter>
-#include "core.h"
-#include "channel_list.h"
+#include "core/core.h"
+#include "models/channel_list.h"
 #include "join_channel_gui.h"
 
 JoinChannelGui::JoinChannelGui(QWidget *parent) : QDialog(parent)

@@ -25,7 +25,7 @@
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QUrl>
-#include "settings.h"
+#include "models/settings.h"
 #include "update_gui.h"
 
 #define DOWNLOAD_LINK "http://simplechatclien.sourceforge.net/download/"

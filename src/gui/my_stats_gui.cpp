@@ -19,12 +19,12 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "core.h"
-#include "my_profile.h"
-#include "my_stats.h"
-#include "simple_percentage_widget.h"
-#include "simple_stats_widget.h"
-#include "utils.h"
+#include "core/core.h"
+#include "models/my_profile.h"
+#include "models/my_stats.h"
+#include "widgets/simple_percentage_widget.h"
+#include "widgets/simple_stats_widget.h"
+#include "models/utils.h"
 #include "my_stats_gui.h"
 
 MyStatsGui::MyStatsGui(QWidget *parent) : QDialog(parent)

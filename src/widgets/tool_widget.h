@@ -20,7 +20,7 @@
 #ifndef TOOL_WIDGET_H
 #define TOOL_WIDGET_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QWidget>
 class InputLineWidget;
 

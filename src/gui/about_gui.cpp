@@ -19,8 +19,8 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "defines.h"
-#include "settings.h"
+#include "core/defines.h"
+#include "models/settings.h"
 #include "about_gui.h"
 
 AboutGui::AboutGui(QWidget *parent) : QDialog(parent)

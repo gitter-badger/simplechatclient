@@ -19,7 +19,7 @@
 
 #include <QDir>
 #include <QUuid>
-#include "settings.h"
+#include "models/settings.h"
 #include "xml.h"
 #include "config.h"
 

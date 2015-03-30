@@ -18,8 +18,8 @@
  */
 
 #include <QDesktopWidget>
-#include "core.h"
-#include "offline.h"
+#include "core/core.h"
+#include "models/offline.h"
 #include "offline_message_gui.h"
 #include "offline_list_gui.h"
 

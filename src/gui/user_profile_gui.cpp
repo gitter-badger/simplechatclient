@@ -31,11 +31,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTimer>
-#include "convert.h"
-#include "core.h"
+#include "common/convert.h"
+#include "core/core.h"
 #include "user_avatar_gui.h"
-#include "user_profile.h"
-#include "utils.h"
+#include "models/user_profile.h"
+#include "models/utils.h"
 #include "user_profile_gui.h"
 
 UserProfileGui::UserProfileGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)

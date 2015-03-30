@@ -23,7 +23,7 @@
 
 #include <QDialog>
 
-#include "onet_avatar.h"
+#include "onet/onet_avatar.h"
 #include "ui_my_avatar.h"
 
 class MyAvatarGui : public QDialog

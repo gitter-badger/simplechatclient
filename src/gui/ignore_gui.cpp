@@ -20,8 +20,8 @@
 #include <QDesktopWidget>
 #include <QInputDialog>
 #include <QTimer>
-#include "core.h"
-#include "ignore.h"
+#include "core/core.h"
+#include "models/ignore.h"
 #include "ignore_gui.h"
 
 IgnoreGui::IgnoreGui(QWidget *parent) : QDialog(parent)

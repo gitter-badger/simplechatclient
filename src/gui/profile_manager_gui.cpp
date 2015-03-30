@@ -20,12 +20,12 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QMessageBox>
-#include "core.h"
+#include "core/core.h"
 #include "options_gui.h"
 #include "profile_add_gui.h"
 #include "profile_edit_gui.h"
-#include "profile_manager.h"
-#include "settings.h"
+#include "models/profile_manager.h"
+#include "models/settings.h"
 #include "profile_manager_gui.h"
 
 #ifdef Q_OS_WIN

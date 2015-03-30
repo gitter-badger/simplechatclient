@@ -24,11 +24,11 @@
 #include <QTabBar>
 #include <QToolButton>
 #include <QWidgetAction>
-#include "channel.h"
-#include "core.h"
-#include "defines.h"
-#include "join_channel_gui.h"
-#include "mainwindow.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "core/defines.h"
+#include "gui/join_channel_gui.h"
+#include "core/mainwindow.h"
 #include "tab_manager.h"
 
 TabManager::TabManager(QWidget *parent) : QTabWidget(parent)

@@ -21,10 +21,10 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
-#include "avatar.h"
-#include "channel.h"
-#include "core.h"
-#include "channel_favourites.h"
+#include "models/avatar.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "models/channel_favourites.h"
 #include "channel_favourites_gui.h"
 
 ChannelFavouritesGui::ChannelFavouritesGui(QWidget *parent) : QDialog(parent)

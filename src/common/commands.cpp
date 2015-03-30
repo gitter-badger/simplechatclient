@@ -20,12 +20,12 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QPushButton>
-#include "channel.h"
+#include "models/channel.h"
 #include "convert.h"
-#include "message.h"
+#include "models/message.h"
 #include "replace.h"
-#include "settings.h"
-#include "utils.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "commands.h"
 
 #ifdef Q_OS_WIN

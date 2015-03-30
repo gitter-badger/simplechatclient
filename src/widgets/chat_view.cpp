@@ -26,31 +26,31 @@
 #include <QUrl>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKit/QWebElement>
-#include "channel.h"
-#include "core.h"
-#include "channel_favourites.h"
-#include "channel_settings_gui.h"
-#include "find_text_gui.h"
-#include "friends.h"
-#include "html_messages_renderer.h"
-#include "ignore.h"
-#include "log.h"
-#include "mainwindow.h"
-#include "moderation_gui.h"
-#include "notes.h"
-#include "nick.h"
-#include "punish_reason.h"
-#include "settings.h"
-#include "user_profile_gui.h"
-#include "webbrowser_gui.h"
-#include "webcam_gui.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "models/channel_favourites.h"
+#include "gui/channel_settings_gui.h"
+#include "gui/find_text_gui.h"
+#include "models/friends.h"
+#include "common/html_messages_renderer.h"
+#include "models/ignore.h"
+#include "common/log.h"
+#include "core/mainwindow.h"
+#include "gui/moderation_gui.h"
+#include "models/notes.h"
+#include "models/nick.h"
+#include "models/punish_reason.h"
+#include "models/settings.h"
+#include "gui/user_profile_gui.h"
+#include "gui/webbrowser_gui.h"
+#include "gui/webcam_gui.h"
 #include "chat_view.h"
 
 #ifdef Q_OS_WIN
     #include <QApplication>
     #include <QDir>
     #include <QSettings>
-    #include "kamerzysta.h"
+    #include "common/kamerzysta.h"
 #endif
 
 ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScrollToBottom(true)

@@ -20,9 +20,9 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QTimer>
-#include "core.h"
-#include "offline.h"
-#include "settings.h"
+#include "core/core.h"
+#include "models/offline.h"
+#include "models/settings.h"
 #include "offline_message_gui.h"
 
 OfflineMessageGui::OfflineMessageGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick), messagesQuoted(false), messagesReplied(false), messagesQuotedToSender(false)

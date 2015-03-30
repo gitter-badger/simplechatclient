@@ -21,8 +21,8 @@
 #include <QDir>
 #include <QListWidget>
 #include <QPixmap>
-#include "config.h"
-#include "inputline_widget.h"
+#include "common/config.h"
+#include "widgets/inputline_widget.h"
 #include "emoticons_gui.h"
 
 #ifndef Q_OS_WIN

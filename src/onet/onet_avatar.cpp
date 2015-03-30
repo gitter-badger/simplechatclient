@@ -31,8 +31,8 @@
 #include <QUrl>
 #include <QUuid>
 
-#include "settings.h"
-#include "my_avatar.h"
+#include "models/settings.h"
+#include "models/my_avatar.h"
 
 #include "onet_avatar.h"
 

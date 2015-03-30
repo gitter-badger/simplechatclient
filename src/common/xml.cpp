@@ -21,7 +21,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
-#include "settings.h"
+#include "models/settings.h"
 #include "xml.h"
 
 Xml::Xml(const QString &_strFile, const QString &_strRootName, const QHash<QString,QString> &_lDefaultValues) : strFile(_strFile), strRootName(_strRootName), lDefaultValues(_lDefaultValues)

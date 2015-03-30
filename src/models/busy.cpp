@@ -18,7 +18,7 @@
  */
 
 #include <QAction>
-#include "core.h"
+#include "core/core.h"
 #include "settings.h"
 #include "busy.h"
 

@@ -22,10 +22,10 @@
 #include <QDebug>
 #include <QGraphicsPixmapItem>
 
-#include "onet_avatar.h"
-#include "avatar_edit_scene.h"
-#include "my_avatar.h"
-#include "settings.h"
+#include "onet/onet_avatar.h"
+#include "widgets/avatar_edit_scene.h"
+#include "models/my_avatar.h"
+#include "models/settings.h"
 
 #include "avatar_edit_gui.h"
 

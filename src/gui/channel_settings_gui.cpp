@@ -23,17 +23,17 @@
 #include <QMessageBox>
 #include <QTimer>
 
-#include "avatar_list_widget.h"
-#include "convert.h"
-#include "core.h"
-#include "channel_homes.h"
-#include "channel_settings.h"
-#include "nick.h"
-#include "onet_avatar.h"
-#include "settings.h"
-#include "simple_percentage_widget.h"
-#include "simple_stats_widget.h"
-#include "utils.h"
+#include "widgets/avatar_list_widget.h"
+#include "common/convert.h"
+#include "core/core.h"
+#include "models/channel_homes.h"
+#include "models/channel_settings.h"
+#include "models/nick.h"
+#include "onet/onet_avatar.h"
+#include "models/settings.h"
+#include "widgets/simple_percentage_widget.h"
+#include "widgets/simple_stats_widget.h"
+#include "models/utils.h"
 #include "channel_settings_gui.h"
 
 ChannelSettingsGui::ChannelSettingsGui(const QString &_strChannel, QWidget *parent) : QDialog(parent), strChannel(_strChannel)

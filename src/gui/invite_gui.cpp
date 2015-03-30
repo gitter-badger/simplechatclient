@@ -19,8 +19,8 @@
 
 #include <QDesktopWidget>
 #include <QMenu>
-#include "core.h"
-#include "invite.h"
+#include "core/core.h"
+#include "models/invite.h"
 #include "invite_gui.h"
 
 InviteGui::InviteGui(const QString &_strId, qint64 _iDateTime, const QString &_strNick, const QString &_strChannel, QWidget *parent) : QDialog(parent), strId(_strId), iDateTime(_iDateTime), strNick(_strNick), strChannel(_strChannel)

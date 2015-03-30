@@ -24,14 +24,14 @@
 #include <QInputDialog>
 #include <QStandardPaths>
 #include <QUrl>
-#include "config.h"
-#include "core.h"
-#include "highlight.h"
-#include "mainwindow.h"
+#include "common/config.h"
+#include "core/core.h"
+#include "models/highlight.h"
+#include "core/mainwindow.h"
 #include "profile_manager_gui.h"
-#include "punish_reason.h"
-#include "settings.h"
-#include "sound_notify.h"
+#include "models/punish_reason.h"
+#include "models/settings.h"
+#include "models/sound_notify.h"
 #include "themes_gui.h"
 #include "options_gui.h"
 

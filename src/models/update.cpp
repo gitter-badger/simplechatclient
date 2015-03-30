@@ -22,8 +22,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStringList>
-#include "core.h"
-#include "update_gui.h"
+#include "core/core.h"
+#include "gui/update_gui.h"
 #include "message.h"
 #include "notification.h"
 #include "settings.h"

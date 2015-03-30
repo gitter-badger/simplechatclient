@@ -20,9 +20,9 @@
 #include <QDesktopWidget>
 #include <QMessageBox>
 #include <QPushButton>
-#include "config.h"
-#include "simple_crypt.h"
-#include "settings.h"
+#include "common/config.h"
+#include "common/simple_crypt.h"
+#include "models/settings.h"
 #include "profile_edit_gui.h"
 
 ProfileEditGui::ProfileEditGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)

@@ -19,11 +19,11 @@
 
 #include <QDateTime>
 #include <QFileInfo>
-#include "avatar.h"
-#include "cache.h"
+#include "models/avatar.h"
+#include "models/cache.h"
 #include "convert.h"
-#include "nick.h"
-#include "settings.h"
+#include "models/nick.h"
+#include "models/settings.h"
 #include "html_messages_renderer.h"
 
 HtmlMessagesRenderer * HtmlMessagesRenderer::Instance = 0;

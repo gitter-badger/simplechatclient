@@ -20,8 +20,8 @@
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "awaylog.h"
-#include "core.h"
+#include "models/awaylog.h"
+#include "core/core.h"
 #include "awaylog_gui.h"
 
 AwaylogGui::AwaylogGui(QWidget *parent) : QDialog(parent)

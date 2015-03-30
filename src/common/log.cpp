@@ -22,10 +22,10 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
-#include "channel.h"
+#include "models/channel.h"
 #include "convert.h"
 #include "html_messages_renderer.h"
-#include "settings.h"
+#include "models/settings.h"
 #include "log.h"
 
 #ifdef Q_OS_WIN

@@ -18,7 +18,7 @@
  */
 
 #include <QDesktopWidget>
-#include "chat_view.h"
+#include "widgets/chat_view.h"
 #include "find_text_gui.h"
 
 FindTextGui::FindTextGui(ChatView *_chatView, QWidget *parent) : QDialog(parent), chatView(_chatView)

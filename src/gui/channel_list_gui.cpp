@@ -22,11 +22,11 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QTimer>
-#include "core.h"
-#include "channel_list.h"
-#include "mainwindow.h"
-#include "settings.h"
-#include "utils.h"
+#include "core/core.h"
+#include "models/channel_list.h"
+#include "core/mainwindow.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "channel_list_gui.h"
 
 ChannelListGui::ChannelListGui(QWidget *parent) : QDialog(parent)

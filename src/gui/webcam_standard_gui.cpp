@@ -20,10 +20,10 @@
 #include <QPushButton>
 #include <QTimer>
 
-#include "defines.h"
-#include "core.h"
-#include "simple_rank_widget.h"
-#include "webcam_delegate.h"
+#include "core/defines.h"
+#include "core/core.h"
+#include "widgets/simple_rank_widget.h"
+#include "widgets/webcam_delegate.h"
 #include "webcam_standard_gui.h"
 
 WebcamStandardGui::WebcamStandardGui()

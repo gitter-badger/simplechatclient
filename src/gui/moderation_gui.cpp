@@ -20,10 +20,10 @@
 #include <QDateTime>
 #include <QDesktopWidget>
 #include <QTimer>
-#include "core.h"
-#include "channel.h"
-#include "message.h"
-#include "settings.h"
+#include "core/core.h"
+#include "models/channel.h"
+#include "models/message.h"
+#include "models/settings.h"
 #include "moderation_gui.h"
 
 ModerationGui::ModerationGui(const QString &_strCurrentChannel, QWidget *parent) : QDialog(parent), strCurrentChannel(_strCurrentChannel)

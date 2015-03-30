@@ -18,7 +18,7 @@
  */
 
 #include <QStringList>
-#include "settings.h"
+#include "models/settings.h"
 #include "replace.h"
 
 void Replace::replaceEmots(QString &strData)

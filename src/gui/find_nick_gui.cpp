@@ -20,10 +20,10 @@
 #include <QDesktopWidget>
 #include <QMenu>
 #include <QTimer>
-#include "core.h"
-#include "channel.h"
-#include "defines.h"
-#include "find_nick.h"
+#include "core/core.h"
+#include "models/channel.h"
+#include "core/defines.h"
+#include "models/find_nick.h"
 #include "find_nick_gui.h"
 
 FindNickGui::FindNickGui(QWidget *parent) : QDialog(parent)

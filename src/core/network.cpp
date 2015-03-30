@@ -21,16 +21,16 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include <QTextCodec>
-#include "autoaway.h"
-#include "away.h"
-#include "busy.h"
-#include "config.h"
+#include "models/autoaway.h"
+#include "models/away.h"
+#include "models/busy.h"
+#include "common/config.h"
 #include "core.h"
-#include "simple_crypt.h"
-#include "lag.h"
-#include "nick.h"
-#include "message.h"
-#include "settings.h"
+#include "common/simple_crypt.h"
+#include "models/lag.h"
+#include "models/nick.h"
+#include "models/message.h"
+#include "models/settings.h"
 #include "network.h"
 
 Network::Network(const QString &_strServer, int _iPort) : strServer(_strServer), iPort(_iPort), iActive(0), bAuthorized(false)

@@ -20,9 +20,9 @@
 #include <QLabel>
 #include <QSplitter>
 #include <QVBoxLayout>
-#include "nicklist_delegate.h"
-#include "nicklist_widget.h"
-#include "settings.h"
+#include "widgets/nicklist_delegate.h"
+#include "widgets/nicklist_widget.h"
+#include "models/settings.h"
 #include "tab_widget.h"
 
 TabWidget::TabWidget(const QString &_strName) : strName(_strName)

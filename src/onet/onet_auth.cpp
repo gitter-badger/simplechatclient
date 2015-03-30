@@ -28,10 +28,10 @@
 #include <QTimer>
 #include <QUrl>
 
-#include "captcha_gui.h"
-#include "core.h"
-#include "message.h"
-#include "settings.h"
+#include "gui/captcha_gui.h"
+#include "core/core.h"
+#include "models/message.h"
+#include "models/settings.h"
 #include "onet_auth.h"
 
 #define AJAX_API "http://czat.onet.pl/include/ajaxapi.xml.php3"

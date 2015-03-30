@@ -22,8 +22,8 @@
 
 #include <QWidget>
 
-#include "onet_avatar.h"
-#include "my_avatar.h"
+#include "onet/onet_avatar.h"
+#include "models/my_avatar.h"
 
 #include "ui_avatar_list_widget.h"
 

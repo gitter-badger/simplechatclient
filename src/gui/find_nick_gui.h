@@ -22,7 +22,7 @@
 
 #include <QDialog>
 #include "ui_find_nick.h"
-#include "defines.h"
+#include "core/defines.h"
 
 class FindNickGui : public QDialog
 {

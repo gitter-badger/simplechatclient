@@ -21,7 +21,7 @@
 #define CHANNEL_HOMES_H
 
 #include <QObject>
-#include "defines.h"
+#include "core/defines.h"
 
 class ChannelHomes : public QObject
 {

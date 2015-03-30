@@ -20,7 +20,7 @@
 #ifndef THEMES_H
 #define THEMES_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QObject>
 
 class Themes : public QObject

@@ -21,9 +21,9 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
-#include "core.h"
-#include "channel.h"
-#include "friends.h"
+#include "core/core.h"
+#include "models/channel.h"
+#include "models/friends.h"
 #include "friends_gui.h"
 
 FriendsGui::FriendsGui(QWidget *parent) : QDialog(parent)

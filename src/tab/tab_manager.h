@@ -20,7 +20,7 @@
 #ifndef TAB_MANAGER_H
 #define TAB_MANAGER_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QTabWidget>
 
 QT_BEGIN_NAMESPACE

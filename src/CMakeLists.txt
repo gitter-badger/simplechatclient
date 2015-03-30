@@ -339,13 +339,6 @@ find_package(Qt5Xml)
 # include qt qtnetwork
 include_directories (
 	${CMAKE_BINARY_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}/common
-	${CMAKE_CURRENT_SOURCE_DIR}/core
-	${CMAKE_CURRENT_SOURCE_DIR}/gui
-	${CMAKE_CURRENT_SOURCE_DIR}/models
-	${CMAKE_CURRENT_SOURCE_DIR}/onet
-	${CMAKE_CURRENT_SOURCE_DIR}/tab
-	${CMAKE_CURRENT_SOURCE_DIR}/widgets
 )
 
 # resources

@@ -22,10 +22,10 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QPushButton>
-#include "core.h"
-#include "convert.h"
-#include "my_profile.h"
-#include "utils.h"
+#include "core/core.h"
+#include "common/convert.h"
+#include "models/my_profile.h"
+#include "models/utils.h"
 #include "my_profile_gui.h"
 
 MyProfileGui::MyProfileGui(QWidget *parent) : QDialog(parent)
