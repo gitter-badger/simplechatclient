@@ -53,7 +53,7 @@ cd /D %SCC_DIR%
 :end_compile_qca
 
 if not exist %OPENSSL_DIR%\include\openssl\ssl.h (
-echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1j.exe
+echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1m.exe
 pause
 exit
 )
@@ -62,7 +62,7 @@ exit
 if exist src\scc.exe (
 del /Q /F /A src\scc.exe
 )
-cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=%QCA2_DIR%
+cmake . -G "MinGW Makefiles"
 mingw32-make
 
 if not exist src\scc.exe (

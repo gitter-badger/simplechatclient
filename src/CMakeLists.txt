@@ -306,20 +306,17 @@ endif (WIN32)
 
 # qca2
 if (WIN32)
-	set (QCA2_INCLUDE_DIRS ${Qt5Widgets_INCLUDES}/QtCrypto)
-	set (QCA2_LIBRARY_DIRS ${WIN32_QCA2_DIR}/lib)
 	if (MINGW)
-		set (QCA2_LIBRARIES -lqca)
+		set (QCA2_LIBRARIES ${Qt5Core_DIR}/../../libqca.dll.a)
 	else (MINGW)
-		set (QCA2_LIBRARIES ${WIN32_QCA2_DIR}/lib/libqca.lib)
+		set (QCA2_LIBRARIES ${Qt5Core_DIR}/../../qca.lib)
 	endif (MINGW)
 else (WIN32)
 	pkg_search_module (QCA2 REQUIRED qca2)
+	include_directories (${QCA2_INCLUDE_DIRS})
+	link_directories (${QCA2_LIBRARY_DIRS})
+	add_definitions (${QCA2_CFLAGS_OTHER})
 endif (WIN32)
-
-include_directories (${QCA2_INCLUDE_DIRS})
-link_directories (${QCA2_LIBRARY_DIRS})
-add_definitions (${QCA2_CFLAGS_OTHER})
 
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)
