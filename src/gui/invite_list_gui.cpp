@@ -95,6 +95,16 @@ void InviteListGui::createList()
 
         ui.listWidget->addItem(item);
     }
+
+    // select first item
+    if (ui.listWidget->count() > 0) {
+        ui.listWidget->setCurrentRow(0);
+
+        ui.pushButton_accept->setEnabled(true);
+        ui.pushButton_reject->setEnabled(true);
+        ui.pushButton_ignore->setEnabled(true);
+        ui.toolButton_options->setEnabled(true);
+    }
 }
 
 void InviteListGui::itemClicked(QListWidgetItem *)
