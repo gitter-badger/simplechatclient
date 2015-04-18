@@ -452,6 +452,8 @@ void ChannelListGui::allCellDoubleClicked(int row, int column)
         }
     }
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::teenCellDoubleClicked(int row, int column)
@@ -460,6 +462,8 @@ void ChannelListGui::teenCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_teen->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::commonCellDoubleClicked(int row, int column)
@@ -468,6 +472,8 @@ void ChannelListGui::commonCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_common->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::eroticCellDoubleClicked(int row, int column)
@@ -499,10 +505,18 @@ void ChannelListGui::eroticCellDoubleClicked(int row, int column)
             }
         }
         else
+        {
             Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+            this->close();
+        }
     }
     else
+    {
         Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+        this->close();
+    }
 }
 
 void ChannelListGui::thematicCellDoubleClicked(int row, int column)
@@ -511,6 +525,8 @@ void ChannelListGui::thematicCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_thematic->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::regionalCellDoubleClicked(int row, int column)
@@ -519,6 +535,8 @@ void ChannelListGui::regionalCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_regional->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::buttonClear()
