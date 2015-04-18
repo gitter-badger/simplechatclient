@@ -511,8 +511,8 @@ void OnetKernel::raw_mode()
             else if (strFlag == "-L") strDisplay = QString(tr("* Channel %1 no longer has limit redirection (set by %2)")).arg(strChannel, strWho);
             else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strChannel, strValue, strWho);
             else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strChannel, strWho);
-            else if (strFlag == "+D") strDisplay = QString(tr("* Channel %1 now hide users joining to the channel (set by %2)")).arg(strChannel, strWho);
-            else if (strFlag == "-D") strDisplay = QString(tr("* Channel %1 no longer hide users joining to the channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+D") strDisplay = QString(tr("* Channel %1 is now protected channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-D") strDisplay = QString(tr("* Channel %1 is no longer protected channel (set by %2)")).arg(strChannel, strWho);
 
             else if (strFlag.at(1) == 'F')
             {
