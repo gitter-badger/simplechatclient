@@ -39,7 +39,7 @@ public:
     void setChannel(const QString &channel);
 
     QString getInfo(const QString &key);
-    QHash<QString,QString> getAllInfo();
+    QMap<QString,QString> getAllInfo();
     void setInfo(const QString &key, const QString &value);
 
     QMultiHash<QString,QString> getAllPermission();
@@ -59,7 +59,7 @@ public:
 private:
     QString strChannel;
 
-    QHash<QString,QString> lSettingsInfo;
+    QMap<QString,QString> lSettingsInfo;
     QMultiHash<QString,QString> lSettingsPermissions;
     ObjectStatus infoStatus;
 

@@ -342,7 +342,7 @@ void ChannelSettingsGui::refreshChannelInfo()
         return;
     }
 
-    QHashIterator<QString, QString> it(ChannelSettings::instance()->getAllInfo());
+    QMapIterator<QString, QString> it(ChannelSettings::instance()->getAllInfo());
     while (it.hasNext())
     {
         it.next();
@@ -466,6 +466,13 @@ void ChannelSettingsGui::refreshChannelInfo()
             {
                 ui.label_summary_status->setText(tr("Public"));
                 ui.radioButton_status_pub->setChecked(true);
+            }
+        }
+        else if (strKey == "protected")
+        {
+            if (strValue.toInt() == 1)
+            {
+                ui.label_summary_status->setText(QString("%1 %2").arg(ui.label_summary_status->text(), tr("Protected")));
             }
         }
         else if (strKey == "rank")

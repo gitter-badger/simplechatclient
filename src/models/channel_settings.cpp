@@ -65,7 +65,7 @@ QString ChannelSettings::getInfo(const QString &key)
     return lSettingsInfo.value(key, QString::null);
 }
 
-QHash<QString,QString> ChannelSettings::getAllInfo()
+QMap<QString,QString> ChannelSettings::getAllInfo()
 {
     return lSettingsInfo;
 }

@@ -850,6 +850,10 @@
         <translation>Prywatny</translation>
     </message>
     <message>
+        <source>Protected</source>
+        <translation>Chroniony</translation>
+    </message>
+    <message>
         <source>Category:</source>
         <translation>Kategoria:</translation>
     </message>
