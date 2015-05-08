@@ -623,6 +623,7 @@ void MainWindow::openUpdate()
 void MainWindow::startAnimatedTrayIcon()
 {
     movieTrayIcon->start();
+    QApplication::alert(this, 0);
 }
 
 void MainWindow::stopAnimatedTrayIcon()
