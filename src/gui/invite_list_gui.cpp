@@ -134,6 +134,9 @@ void InviteListGui::buttonAccept()
 
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
     Invite::instance()->remove(strId);
+
+    if (ui.listWidget->count() == 0)
+        this->close();
 }
 
 void InviteListGui::buttonReject()
@@ -149,6 +152,9 @@ void InviteListGui::buttonReject()
 
     Core::instance()->network->send(QString("INVREJECT %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strId);
+
+    if (ui.listWidget->count() == 0)
+        this->close();
 }
 
 void InviteListGui::buttonIgnore()
@@ -164,6 +170,9 @@ void InviteListGui::buttonIgnore()
 
     Core::instance()->network->send(QString("INVIGNORE %1 %2").arg(strNick, strChannel));
     Invite::instance()->remove(strId);
+
+    if (ui.listWidget->count() == 0)
+         this->close();
 }
 
 void InviteListGui::whois()
