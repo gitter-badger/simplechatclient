@@ -233,7 +233,7 @@ void MainWindow::createMenus()
     sccMenu->addAction(quitAction);
 
     mainToolButton = new QToolButton(this);
-    mainToolButton->setIcon(QIcon(":/images/breeze/application-menu.svg"));
+    mainToolButton->setIcon(QIcon(":/images/menu.svg"));
     mainToolButton->setText(tr("SCC"));
     mainToolButton->setMenu(sccMenu);
     mainToolButton->setPopupMode(QToolButton::InstantPopup);
@@ -241,7 +241,7 @@ void MainWindow::createMenus()
 
     // notification
     notificationToolButton = new QToolButton(this);
-    notificationToolButton->setIcon(QIcon(":/images/breeze/emblem-important.svg"));
+    notificationToolButton->setIcon(QIcon(":/images/notification.svg"));
     notificationToolButton->setText(tr("N&otification"));
     notificationToolButton->setMenu(Notification::instance()->getNotificationMenu());
     notificationToolButton->setPopupMode(QToolButton::InstantPopup);

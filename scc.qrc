@@ -53,7 +53,6 @@
         <file>images/breeze/edit-select-all.svg</file>
         <file>images/breeze/edit-undo.svg</file>
         <file>images/breeze/emblem-favorite.svg</file>
-        <file>images/breeze/emblem-important.svg</file>
         <file>images/breeze/face-smile.svg</file>
         <file>images/breeze/feed-subscribe.svg</file>
         <file>images/breeze/folder-txt.svg</file>
@@ -131,7 +130,6 @@
         <file>images/breeze/view-time-schedule.svg</file>
         <file>images/breeze/zoom-in.svg</file>
         <file>images/breeze/zoom-out.svg</file>
-        <file>images/breeze/application-menu.svg</file>
         <file>images/breeze/folder-sound.svg</file>
         <file>images/breeze/irc-voice.svg</file>
         <file>images/breeze/taxes-finances.svg</file>
@@ -139,5 +137,7 @@
         <file>images/breeze/go-down.svg</file>
         <file>images/breeze/go-up.svg</file>
         <file>images/settings.svg</file>
+        <file>images/menu.svg</file>
+        <file>images/notification.svg</file>
     </qresource>
 </RCC>

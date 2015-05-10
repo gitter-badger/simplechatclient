@@ -13,8 +13,8 @@
    height="22"
    id="svg3109"
    version="1.1"
-   inkscape:version="0.48+devel r"
-   sodipodi:docname="application-menu.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="menu.svg">
   <defs
      id="defs3111" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.68116"
-     inkscape:cx="-28.174835"
-     inkscape:cy="23.304834"
+     inkscape:zoom="32.137494"
+     inkscape:cx="16.834965"
+     inkscape:cy="11.075907"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -35,16 +35,21 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1366"
-     inkscape:window-height="669"
-     inkscape:window-x="-4"
-     inkscape:window-y="25"
+     inkscape:window-height="706"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:showpageshadow="false">
+     inkscape:showpageshadow="false"
+     inkscape:snap-page="true">
     <inkscape:grid
        type="xygrid"
        id="grid4108"
        originx="-1.0000233px"
-       originy="-1.0000029px" />
+       originy="-1.0000029px"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
     <sodipodi:guide
        position="2,20"
        orientation="18,0"
@@ -86,7 +91,9 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="" />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -96,11 +103,16 @@
      id="layer1"
      transform="translate(-534.14288,-579.07648)">
     <path
-       style="opacity:1;fill:#4d4d4d;fill-opacity:1;stroke:none"
-       d="m 3,3 0,2 16,0 0,-2 z m 0,7 0,2 16,0 0,-2 z m 0,7 0,2 2,0 0,-2 z m 7,0 0,2 2,0 0,-2 z m 7,0 0,2 2,0 0,-2 z"
-       transform="translate(534.14288,579.07648)"
-       id="path4163"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccccccccccccccccccccc" />
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none"
+       d="m 537.14288,582.07648 c 0,0.66667 0,1.33333 0,2 5.33333,0 10.66667,0 16,0 0,-0.66667 0,-1.33333 0,-2 -5.33333,0 -10.66667,0 -16,0 z"
+       id="path4424" />
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none"
+       d="m 537.14288,589.07648 c 0,0.66667 0,1.33333 0,2 5.33333,0 10.66667,0 16,0 0,-0.66667 0,-1.33333 0,-2 -5.33333,0 -10.66667,0 -16,0 z"
+       id="path4422" />
+    <path
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none"
+       d="m 537.14288,596.07648 c 0,0.66667 0,1.33333 0,2 5.33333,0 10.66667,0 16,0 0,-0.66667 0,-1.33333 0,-2 -5.33333,0 -10.66667,0 -16,0 z"
+       id="path4163" />
   </g>
 </svg>
