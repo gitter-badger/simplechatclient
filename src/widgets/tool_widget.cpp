@@ -183,7 +183,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     separator2->show();
 
     emoticons = new QToolButton(this);
-    emoticons->setIcon(QIcon(":/images/breeze/face-smile.svg"));
+    emoticons->setIcon(QIcon(":/images/smile.svg"));
     emoticons->setToolTip(tr("Emoticons"));
     emoticons->show();
 
