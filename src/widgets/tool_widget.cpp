@@ -188,7 +188,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     emoticons->show();
 
     channel_settings = new QToolButton(this);
-    channel_settings->setIcon(QIcon(":/images/breeze/configure.svg"));
+    channel_settings->setIcon(QIcon(":/images/settings.svg"));
     channel_settings->setToolTip(tr("Channel settings"));
     channel_settings->show();
 

@@ -34,7 +34,6 @@
         <file>images/breeze/applications-internet.svg</file>
         <file>images/breeze/applications-system.svg</file>
         <file>images/breeze/camera-web.svg</file>
-        <file>images/breeze/configure.svg</file>
         <file>images/breeze/dialog-cancel.svg</file>
         <file>images/breeze/dialog-close.svg</file>
         <file>images/breeze/dialog-ok.svg</file>
@@ -139,5 +138,6 @@
         <file>images/menu.svg</file>
         <file>images/notification.svg</file>
         <file>images/smile.svg</file>
+        <file>images/options.svg</file>
     </qresource>
 </RCC>

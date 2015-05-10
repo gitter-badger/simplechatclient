@@ -651,7 +651,7 @@ void ChatView::menuStandard(QContextMenuEvent *event)
             channel->addAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Add channel to favourites"), this, SLOT(addCurrentChannelToFavourites()));
         if (strSelfModes.contains(FLAG_MOD))
             channel->addAction(QIcon(":/images/breeze/irc-voice.svg"), tr("Moderation"), this, SLOT(openCurrentChannelModeration()));
-        channel->addAction(QIcon(":/images/breeze/configure.svg"), tr("Channel settings"), this, SLOT(openCurrentChannelSettings()));
+        channel->addAction(QIcon(":/images/settings.svg"), tr("Channel settings"), this, SLOT(openCurrentChannelSettings()));
 
         menu.addSeparator();
         menu.addMenu(channel);

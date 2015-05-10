@@ -58,7 +58,7 @@ void ChannelHomesGui::createGui()
 
     QMenu *optionsMenu = new QMenu(this);
     optionsMenu->addAction(QIcon(":/images/breeze/legalmoves.svg"), tr("Join"), this, SLOT(join()));
-    optionsMenu->addAction(QIcon(":/images/breeze/configure.svg"), tr("Settings"), this, SLOT(settings()));
+    optionsMenu->addAction(QIcon(":/images/settings.svg"), tr("Settings"), this, SLOT(settings()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }
