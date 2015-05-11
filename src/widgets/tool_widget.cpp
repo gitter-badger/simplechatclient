@@ -41,7 +41,7 @@
 ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000000")
 {
     showFontButtons = new QToolButton(this);
-    showFontButtons->setIcon(QIcon(":/images/breeze/format-text-color.svg"));
+    showFontButtons->setIcon(QIcon(":/images/draw-brush.svg"));
     showFontButtons->setToolTip(tr("Show/Hide font buttons"));
     showFontButtons->show();
 
@@ -193,7 +193,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     channel_settings->show();
 
     moderation = new QToolButton(this);
-    moderation->setIcon(QIcon(":/images/breeze/irc-voice.svg"));
+    moderation->setIcon(QIcon(":/images/moderation.svg"));
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
 

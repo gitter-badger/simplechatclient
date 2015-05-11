@@ -57,7 +57,6 @@
         <file>images/breeze/format-font-size-more.svg</file>
         <file>images/breeze/format-stroke-color.svg</file>
         <file>images/breeze/format-text-bold.svg</file>
-        <file>images/breeze/format-text-color.svg</file>
         <file>images/breeze/format-text-italic.svg</file>
         <file>images/breeze/games-config-background.svg</file>
         <file>images/breeze/help-hint.svg</file>
@@ -129,7 +128,6 @@
         <file>images/breeze/zoom-in.svg</file>
         <file>images/breeze/zoom-out.svg</file>
         <file>images/breeze/folder-sound.svg</file>
-        <file>images/breeze/irc-voice.svg</file>
         <file>images/breeze/taxes-finances.svg</file>
         <file>images/breeze/view-group.svg</file>
         <file>images/breeze/go-down.svg</file>
@@ -139,5 +137,7 @@
         <file>images/notification.svg</file>
         <file>images/smile.svg</file>
         <file>images/options.svg</file>
+        <file>images/draw-brush.svg</file>
+        <file>images/moderation.svg</file>
     </qresource>
 </RCC>
