@@ -1,9 +1,5 @@
-Version 2.0.1 (2015-01-07)
+Version 2.1.0 (2015-05-11)
 ================================
-* Changed input line layout
-* Html logs by default
-* Added edit hightlight text, edit punish reason
-* Added to context menu: add/remove channel to favourites, moderation, channel settings
-* Internal small cam enabled by default on windows
-* Fixed updates
-* Many bugfixes
+* New icons
+* Changed logs dir to yyyy/mm/dd
+* Many bugfixes 
