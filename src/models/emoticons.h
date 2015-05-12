@@ -21,7 +21,7 @@
 #define EMOTICONS_H
 
 #include <QObject>
-#include "defines.h"
+#include "core/defines.h"
 
 class Emoticons : public QObject
 {

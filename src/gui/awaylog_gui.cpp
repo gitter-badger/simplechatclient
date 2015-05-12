@@ -20,8 +20,8 @@
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "awaylog.h"
-#include "core.h"
+#include "models/awaylog.h"
+#include "core/core.h"
 #include "awaylog_gui.h"
 
 AwaylogGui::AwaylogGui(QWidget *parent) : QDialog(parent)
@@ -42,9 +42,9 @@ void AwaylogGui::createGui()
 {
     ui.pushButton_copy->setEnabled(false);
 
-    ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/document-revert.png"));
-    ui.pushButton_copy->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
-    ui.pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_clear->setIcon(QIcon(":/images/breeze/document-revert.svg"));
+    ui.pushButton_copy->setIcon(QIcon(":/images/breeze/edit-copy.svg"));
+    ui.pushButton_close->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_clear->setText(tr("Clear"));
     ui.pushButton_copy->setText(tr("Copy"));

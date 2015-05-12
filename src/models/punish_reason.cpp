@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
+#include "common/config.h"
 #include "punish_reason.h"
 
 PunishReason * PunishReason::Instance = 0;

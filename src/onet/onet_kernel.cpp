@@ -20,40 +20,40 @@
 #include <QDateTime>
 #include <QMessageBox> // raw 433
 #include <QUuid> // raw invite
-#include "autoaway.h"
-#include "avatar.h"
-#include "away.h"
-#include "busy.h"
-#include "channel.h"
-#include "channel_favourites.h"
-#include "channel_homes.h"
-#include "channel_key_gui.h"
-#include "channel_list.h"
-#include "channel_settings.h"
-#include "convert.h"
-#include "core.h"
-#include "find_nick.h"
-#include "friends.h"
-#include "ignore.h"
-#include "invite_gui.h"
-#include "invite.h"
-#include "lag.h"
-#include "log.h"
-#include "mainwindow.h"
-#include "message.h"
-#include "my_profile.h"
-#include "my_stats.h"
-#include "nick.h"
-#include "offline.h"
+#include "models/autoaway.h"
+#include "models/avatar.h"
+#include "models/away.h"
+#include "models/busy.h"
+#include "models/channel.h"
+#include "models/channel_favourites.h"
+#include "models/channel_homes.h"
+#include "gui/channel_key_gui.h"
+#include "models/channel_list.h"
+#include "models/channel_settings.h"
+#include "common/convert.h"
+#include "core/core.h"
+#include "models/find_nick.h"
+#include "models/friends.h"
+#include "models/ignore.h"
+#include "gui/invite_gui.h"
+#include "models/invite.h"
+#include "models/lag.h"
+#include "common/log.h"
+#include "core/mainwindow.h"
+#include "models/message.h"
+#include "models/my_profile.h"
+#include "models/my_stats.h"
+#include "models/nick.h"
+#include "models/offline.h"
 #include "onet_utils.h"
-#include "profile_manager.h"
-#include "replace.h"
-#include "settings.h"
-#include "sound_notify.h"
-#include "tab_container.h"
-#include "themes.h"
-#include "tray.h"
-#include "user_profile.h"
+#include "models/profile_manager.h"
+#include "common/replace.h"
+#include "models/settings.h"
+#include "models/sound_notify.h"
+#include "tab/tab_container.h"
+#include "models/themes.h"
+#include "models/tray.h"
+#include "models/user_profile.h"
 #include "onet_kernel.h"
 
 OnetKernel::OnetKernel(TabContainer *_pTabC) : pTabC(_pTabC)
@@ -511,15 +511,15 @@ void OnetKernel::raw_mode()
             else if (strFlag == "-L") strDisplay = QString(tr("* Channel %1 no longer has limit redirection (set by %2)")).arg(strChannel, strWho);
             else if (strFlag == "+J") strDisplay = QString(tr("* Channel %1 now prevents users from automatically rejoining the channel when they are kicked. Limit is set to %2 sec. (set by %3)")).arg(strChannel, strValue, strWho);
             else if (strFlag == "-J") strDisplay = QString(tr("* Channel %1 no longer prevents users from automatically rejoining the channel when they are kicked (set by %2)")).arg(strChannel, strWho);
-            else if (strFlag == "+D") strDisplay = QString(tr("* Channel %1 now hide users joining to the channel (set by %2)")).arg(strChannel, strWho);
-            else if (strFlag == "-D") strDisplay = QString(tr("* Channel %1 no longer hide users joining to the channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "+D") strDisplay = QString(tr("* Channel %1 is now protected channel (set by %2)")).arg(strChannel, strWho);
+            else if (strFlag == "-D") strDisplay = QString(tr("* Channel %1 is no longer protected channel (set by %2)")).arg(strChannel, strWho);
 
             else if (strFlag.at(1) == 'F')
             {
                 QString strStatus;
                 if (strValue.toInt() == 0) strStatus = tr("Wild");
                 else if (strValue.toInt() == 1) strStatus = tr("Tame");
-                else if (strValue.toInt() == 2) strStatus = tr("With class");
+                else if (strValue.toInt() == 2) strStatus = tr("Classy");
                 else if (strValue.toInt() == 3) strStatus = tr("Cult");
                 else strStatus = tr("unknown");
 
@@ -4227,6 +4227,8 @@ void OnetKernel::raw_817()
     if (strMessage.isEmpty())
         return;
 
+    // convert emots //
+    Convert::simpleReverseConvert(strMessage);
     // convert emots :)
     Replace::replaceEmots(strMessage);
 

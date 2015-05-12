@@ -36,9 +36,9 @@ UserAvatarGui::UserAvatarGui(const QPixmap &_avatar, QWidget *parent) : QDialog(
 
 void UserAvatarGui::createGui()
 {
-    ui.toolButton_zoom_out->setIcon(QIcon(":/images/oxygen/16x16/zoom-out.png"));
-    ui.toolButton_zoom_in->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.toolButton_zoom_out->setIcon(QIcon(":/images/breeze/zoom-out.svg"));
+    ui.toolButton_zoom_in->setIcon(QIcon(":/images/breeze/zoom-in.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 

@@ -21,11 +21,11 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
-#include "avatar.h"
-#include "channel.h"
-#include "core.h"
+#include "models/avatar.h"
+#include "models/channel.h"
+#include "core/core.h"
 #include "channel_settings_gui.h"
-#include "channel_homes.h"
+#include "models/channel_homes.h"
 #include "channel_homes_gui.h"
 
 ChannelHomesGui::ChannelHomesGui(QWidget *parent) : QDialog(parent)
@@ -46,10 +46,10 @@ void ChannelHomesGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
-    ui.pushButton_create->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
-    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_create->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/irc-close-channel.svg"));
+    ui.toolButton_options->setIcon(QIcon(":/images/breeze/applications-system.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_create->setText(tr("Create"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -57,8 +57,8 @@ void ChannelHomesGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(join()));
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Settings"), this, SLOT(settings()));
+    optionsMenu->addAction(QIcon(":/images/breeze/legalmoves.svg"), tr("Join"), this, SLOT(join()));
+    optionsMenu->addAction(QIcon(":/images/settings.svg"), tr("Settings"), this, SLOT(settings()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }

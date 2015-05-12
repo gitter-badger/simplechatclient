@@ -22,26 +22,26 @@
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QToolButton>
-#include "channel.h"
-#include "core.h"
-#include "commands.h"
-#include "config.h"
-#include "convert.h"
-#include "channel_settings_gui.h"
-#include "emoticons_gui.h"
-#include "message.h"
-#include "mainwindow.h"
-#include "moderation_gui.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "common/commands.h"
+#include "common/config.h"
+#include "common/convert.h"
+#include "gui/channel_settings_gui.h"
+#include "gui/emoticons_gui.h"
+#include "models/message.h"
+#include "core/mainwindow.h"
+#include "gui/moderation_gui.h"
 #include "inputline_widget.h"
-#include "replace.h"
-#include "settings.h"
-#include "utils.h"
+#include "common/replace.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "tool_widget.h"
 
 ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000000")
 {
     showFontButtons = new QToolButton(this);
-    showFontButtons->setIcon(QIcon(":/images/oxygen/16x16/format-text-color.png"));
+    showFontButtons->setIcon(QIcon(":/images/draw-brush.svg"));
     showFontButtons->setToolTip(tr("Show/Hide font buttons"));
     showFontButtons->show();
 
@@ -51,7 +51,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     separator1->show();
 
     bold = new QToolButton(this);
-    bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
+    bold->setIcon(QIcon(":/images/breeze/format-text-bold.svg"));
     bold->setToolTip(tr("Bold"));
     bold->setCheckable(true);
     bold->setAutoRaise(true);
@@ -59,7 +59,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     bMyBold = false;
 
     italic = new QToolButton(this);
-    italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
+    italic->setIcon(QIcon(":/images/breeze/format-text-italic.svg"));
     italic->setToolTip(tr("Italic"));
     italic->setCheckable(true);
     italic->setAutoRaise(true);
@@ -169,7 +169,7 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     sizeMenu->addAction(size24Act);
 
     size = new QToolButton(this);
-    size->setIcon(QIcon(":/images/oxygen/16x16/format-font-size-more.png"));
+    size->setIcon(QIcon(":/images/breeze/format-font-size-more.svg"));
     size->setToolTip(tr("Font size"));
     size->setFont(QFont("Times New Roman", -1, -1, false));
     size->setPopupMode(QToolButton::InstantPopup);
@@ -183,17 +183,17 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     separator2->show();
 
     emoticons = new QToolButton(this);
-    emoticons->setIcon(QIcon(":/images/oxygen/16x16/face-smile.png"));
+    emoticons->setIcon(QIcon(":/images/smile.svg"));
     emoticons->setToolTip(tr("Emoticons"));
     emoticons->show();
 
     channel_settings = new QToolButton(this);
-    channel_settings->setIcon(QIcon(":/images/oxygen/16x16/configure.png"));
+    channel_settings->setIcon(QIcon(":/images/settings.svg"));
     channel_settings->setToolTip(tr("Channel settings"));
     channel_settings->show();
 
     moderation = new QToolButton(this);
-    moderation->setIcon(QIcon(":/images/oxygen/16x16/layer-visible-on.png"));
+    moderation->setIcon(QIcon(":/images/moderation.svg"));
     moderation->setToolTip(tr("Moderation"));
     moderation->show();
 
@@ -207,12 +207,12 @@ ToolWidget::ToolWidget(QWidget *parent) : QWidget(parent), strCurrentColor("#000
     pInputLine->show();
 
     sendButton = new QToolButton(this);
-    sendButton->setIcon(QIcon(":/images/oxygen/16x16/key-enter.png"));
+    sendButton->setIcon(QIcon(":/images/breeze/key-enter.svg"));
     sendButton->setToolTip(tr("Send"));
     sendButton->show();
 
     moderSendButton = new QToolButton(this);
-    moderSendButton->setIcon(QIcon(":/images/oxygen/16x16/meeting-observer.png"));
+    moderSendButton->setIcon(QIcon(":/images/breeze/meeting-observer.svg"));
     moderSendButton->setToolTip(tr("Send to moderators"));
     moderSendButton->show();
 

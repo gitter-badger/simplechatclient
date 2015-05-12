@@ -14,3 +14,9 @@
 /object_script.scc.Debug
 /Makefile.Release
 /Makefile.Debug
+scc.sdf
+*.suo
+*.sln
+scc.vcxproj.user
+scc.vcxproj
+scc.vcxproj.filters

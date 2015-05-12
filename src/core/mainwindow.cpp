@@ -26,46 +26,46 @@
 #include <QToolBar>
 #include <QToolButton>
 
-#include "about_gui.h"
-#include "autoaway.h"
-#include "away.h"
-#include "awaylog.h"
-#include "awaylog_gui.h"
-#include "busy.h"
-#include "channel.h"
-#include "channel_favourites_gui.h"
-#include "channel_homes_gui.h"
-#include "channel_list_gui.h"
-#include "config.h"
+#include "gui/about_gui.h"
+#include "models/autoaway.h"
+#include "models/away.h"
+#include "models/awaylog.h"
+#include "gui/awaylog_gui.h"
+#include "models/busy.h"
+#include "models/channel.h"
+#include "gui/channel_favourites_gui.h"
+#include "gui/channel_homes_gui.h"
+#include "gui/channel_list_gui.h"
+#include "common/config.h"
 #include "core.h"
-#include "find_nick_gui.h"
-#include "friends_gui.h"
-#include "ignore_gui.h"
-#include "invite_list_gui.h"
-#include "invite.h"
-#include "lag.h"
-#include "message.h"
-#include "my_avatar_gui.h"
-#include "my_profile_gui.h"
-#include "my_stats_gui.h"
-#include "nick.h"
-#include "notes_gui.h"
-#include "notification.h"
-#include "offline.h"
-#include "offline_list_gui.h"
-#include "options_gui.h"
-#include "onet_auth.h"
-#include "onet_kernel.h"
-#include "settings.h"
-#include "tab_container.h"
-#include "tab_manager.h"
-#include "update.h"
-#include "update_gui.h"
-#include "webcam_gui.h"
-#include "tool_widget.h"
+#include "gui/find_nick_gui.h"
+#include "gui/friends_gui.h"
+#include "gui/ignore_gui.h"
+#include "gui/invite_list_gui.h"
+#include "models/invite.h"
+#include "models/lag.h"
+#include "models/message.h"
+#include "gui/my_avatar_gui.h"
+#include "gui/my_profile_gui.h"
+#include "gui/my_stats_gui.h"
+#include "models/nick.h"
+#include "gui/notes_gui.h"
+#include "models/notification.h"
+#include "models/offline.h"
+#include "gui/offline_list_gui.h"
+#include "gui/options_gui.h"
+#include "onet/onet_auth.h"
+#include "onet/onet_kernel.h"
+#include "models/settings.h"
+#include "tab/tab_container.h"
+#include "tab/tab_manager.h"
+#include "models/update.h"
+#include "gui/update_gui.h"
+#include "gui/webcam_gui.h"
+#include "widgets/tool_widget.h"
 
 #ifdef Q_OS_WIN
-    #include "kamerzysta.h"
+    #include "common/kamerzysta.h"
 #endif
 
 #include "mainwindow.h"
@@ -155,29 +155,29 @@ void MainWindow::createActions()
     trayAction->setFont(QFont(this->font().family(), -1, 75, false));
     trayAction->setEnabled(false);
 
-    connectAction = new QAction(QIcon(":/images/oxygen/16x16/network-connect.png"), tr("&Connect"), this);
-    optionsAction = new QAction(QIcon(":/images/oxygen/16x16/preferences-system.png"), tr("Options"), this);
+    connectAction = new QAction(QIcon(":/images/breeze/network-connect.svg"), tr("&Connect"), this);
+    optionsAction = new QAction(QIcon(":/images/options.svg"), tr("Options"), this);
 
     // onet action
-    channelListAction = new QAction(QIcon(":/images/oxygen/16x16/documentation.png"), tr("Channel list"), this);
-    channelHomesAction = new QAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("My channels"), this);
-    channelFavouritesAction = new QAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Favorite channels"), this);
-    friendsAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending.png"), tr("Friends"), this);
-    ignoreAction = new QAction(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"), tr("Ignored"), this);
-    findNickAction = new QAction(QIcon(":/images/oxygen/16x16/edit-find-user.png"), tr("Find nick"), this);
+    channelListAction = new QAction(QIcon(":/images/breeze/documentation.svg"), tr("Channel list"), this);
+    channelHomesAction = new QAction(QIcon(":/images/breeze/view-group.svg"), tr("My channels"), this);
+    channelFavouritesAction = new QAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Favorite channels"), this);
+    friendsAction = new QAction(QIcon(":/images/breeze/meeting-attending.svg"), tr("Friends"), this);
+    ignoreAction = new QAction(QIcon(":/images/breeze/meeting-attending-tentative.svg"), tr("Ignored"), this);
+    findNickAction = new QAction(QIcon(":/images/breeze/edit-find-user.svg"), tr("Find nick"), this);
 
-    myStatsAction = new QAction(QIcon(":/images/oxygen/16x16/office-chart-bar.png"),tr("My statistics"), this);
-    myProfileAction = new QAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"),tr("My profile"), this);
-    myAvatarAction = new QAction(QIcon(":/images/oxygen/16x16/edit-image-face-show.png"),tr("My avatar"), this);
+    myStatsAction = new QAction(QIcon(":/images/breeze/office-chart-bar.svg"),tr("My statistics"), this);
+    myProfileAction = new QAction(QIcon(":/images/breeze/view-pim-contacts.svg"),tr("My profile"), this);
+    myAvatarAction = new QAction(QIcon(":/images/breeze/edit-image-face-show.svg"),tr("My avatar"), this);
 
-    camsAction = new QAction(QIcon(":/images/oxygen/16x16/camera-web.png"),tr("Webcams"), this);
-    notesAction = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Notes"), this);
-    aboutAction = new QAction(QIcon(":/images/logo16x16.png"), tr("About SCC ..."), this);
+    camsAction = new QAction(QIcon(":/images/breeze/camera-web.svg"),tr("Webcams"), this);
+    notesAction = new QAction(QIcon(":/images/breeze/story-editor.svg"), tr("Notes"), this);
+    aboutAction = new QAction(QIcon(":/images/breeze/help-hint.svg"), tr("About SCC ..."), this);
 
-    minimizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-close.png"), tr("Mi&nimize"), this);
-    maximizeAction = new QAction(QIcon(":/images/oxygen/16x16/view-fullscreen.png"), tr("Ma&ximize"), this);
-    restoreAction = new QAction(QIcon(":/images/oxygen/16x16/view-restore.png"), tr("&Restore"), this);
-    quitAction = new QAction(QIcon(":/images/oxygen/16x16/application-exit.png"), tr("&Quit"), this);
+    minimizeAction = new QAction(QIcon(":/images/breeze/view-close.svg"), tr("Mi&nimize"), this);
+    maximizeAction = new QAction(QIcon(":/images/breeze/view-fullscreen.svg"), tr("Ma&ximize"), this);
+    restoreAction = new QAction(QIcon(":/images/breeze/view-restore.svg"), tr("&Restore"), this);
+    quitAction = new QAction(QIcon(":/images/breeze/application-exit.svg"), tr("&Quit"), this);
 
     // shortcut
     connectAction->setShortcuts(QKeySequence::New);
@@ -198,7 +198,7 @@ void MainWindow::createMenus()
 {
     // chat
     chatMenu = new QMenu(tr("&Chat"));
-    chatMenu->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
+    chatMenu->setIcon(QIcon(":/images/breeze/meeting-attending.svg"));
     chatMenu->addAction(channelListAction);
     chatMenu->addAction(findNickAction);
     chatMenu->addAction(camsAction);
@@ -207,7 +207,7 @@ void MainWindow::createMenus()
 
     // my
     myMenu = new QMenu(tr("&My"));
-    myMenu->setIcon(QIcon(":/images/oxygen/16x16/user-identity.png"));
+    myMenu->setIcon(QIcon(":/images/breeze/user-identity.svg"));
     myMenu->addAction(myStatsAction);
     myMenu->addAction(myProfileAction);
     myMenu->addAction(myAvatarAction);
@@ -233,7 +233,7 @@ void MainWindow::createMenus()
     sccMenu->addAction(quitAction);
 
     mainToolButton = new QToolButton(this);
-    mainToolButton->setIcon(QIcon(":/images/logo16x16.png"));
+    mainToolButton->setIcon(QIcon(":/images/menu.svg"));
     mainToolButton->setText(tr("SCC"));
     mainToolButton->setMenu(sccMenu);
     mainToolButton->setPopupMode(QToolButton::InstantPopup);
@@ -241,7 +241,7 @@ void MainWindow::createMenus()
 
     // notification
     notificationToolButton = new QToolButton(this);
-    notificationToolButton->setIcon(QIcon(":/images/oxygen/16x16/emblem-important.png"));
+    notificationToolButton->setIcon(QIcon(":/images/notification.svg"));
     notificationToolButton->setText(tr("N&otification"));
     notificationToolButton->setMenu(Notification::instance()->getNotificationMenu());
     notificationToolButton->setPopupMode(QToolButton::InstantPopup);
@@ -465,7 +465,7 @@ void MainWindow::updateButtons()
             connectAction->setEnabled(true);
             connectAction->setText(tr("&Connect"));
             connectAction->setIconText(tr("&Connect"));
-            connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-connect.png"));
+            connectAction->setIcon(QIcon(":/images/breeze/network-connect.svg"));
         }
         else if (Settings::instance()->get("socket_state") == "connected")
         {
@@ -473,7 +473,7 @@ void MainWindow::updateButtons()
             connectAction->setEnabled(true);
             connectAction->setText(tr("&Disconnect"));
             connectAction->setIconText(tr("&Disconnect"));
-            connectAction->setIcon(QIcon(":/images/oxygen/16x16/network-disconnect.png"));
+            connectAction->setIcon(QIcon(":/images/breeze/network-disconnect.svg"));
         }
     }
 
@@ -623,6 +623,7 @@ void MainWindow::openUpdate()
 void MainWindow::startAnimatedTrayIcon()
 {
     movieTrayIcon->start();
+    QApplication::alert(this, 0);
 }
 
 void MainWindow::stopAnimatedTrayIcon()
@@ -923,8 +924,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
         QPushButton *quitButton = msgBox.addButton(tr("Quit"), QMessageBox::ActionRole);
         QPushButton *cancelButton = msgBox.addButton(tr("Cancel"), QMessageBox::ActionRole);
 
-        quitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-        cancelButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+        quitButton->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
+        cancelButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
 
         dontPrompt.blockSignals(true); // hack: blocking singals so QMessageBox won't close
         msgBox.exec();

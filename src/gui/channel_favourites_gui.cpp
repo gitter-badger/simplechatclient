@@ -21,10 +21,10 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
-#include "avatar.h"
-#include "channel.h"
-#include "core.h"
-#include "channel_favourites.h"
+#include "models/avatar.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "models/channel_favourites.h"
 #include "channel_favourites_gui.h"
 
 ChannelFavouritesGui::ChannelFavouritesGui(QWidget *parent) : QDialog(parent)
@@ -45,10 +45,10 @@ void ChannelFavouritesGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
-    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/irc-close-channel.png"));
-    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_add->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/irc-close-channel.svg"));
+    ui.toolButton_options->setIcon(QIcon(":/images/breeze/applications-system.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -56,7 +56,7 @@ void ChannelFavouritesGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join"), this, SLOT(join()));
+    optionsMenu->addAction(QIcon(":/images/breeze/legalmoves.svg"), tr("Join"), this, SLOT(join()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }

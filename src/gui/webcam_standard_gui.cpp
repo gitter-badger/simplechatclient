@@ -20,10 +20,10 @@
 #include <QPushButton>
 #include <QTimer>
 
-#include "defines.h"
-#include "core.h"
-#include "simple_rank_widget.h"
-#include "webcam_delegate.h"
+#include "core/defines.h"
+#include "core/core.h"
+#include "widgets/simple_rank_widget.h"
+#include "widgets/webcam_delegate.h"
 #include "webcam_standard_gui.h"
 
 WebcamStandardGui::WebcamStandardGui()
@@ -50,9 +50,9 @@ WebcamStandardGui::~WebcamStandardGui()
 
 void WebcamStandardGui::createGui()
 {
-    ui.toolButton_vote_minus->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
-    ui.toolButton_vote_plus->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.toolButton_vote_minus->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.toolButton_vote_plus->setIcon(QIcon(":/images/breeze/list-add.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.label_list_nick->setText(tr("Nick"));
     ui.label_list_spectators->setText(tr("Spectators"));

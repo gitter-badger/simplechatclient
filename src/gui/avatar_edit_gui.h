@@ -22,9 +22,9 @@
 
 #include <QDialog>
 
-#include "onet_avatar.h"
-#include "avatar_edit_scene.h"
-#include "my_avatar.h"
+#include "onet/onet_avatar.h"
+#include "widgets/avatar_edit_scene.h"
+#include "models/my_avatar.h"
 #include "ui_avatar_edit.h"
 
 class AvatarEditGui : public QDialog

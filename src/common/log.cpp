@@ -22,10 +22,10 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
-#include "channel.h"
+#include "models/channel.h"
 #include "convert.h"
 #include "html_messages_renderer.h"
-#include "settings.h"
+#include "models/settings.h"
 #include "log.h"
 
 #ifdef Q_OS_WIN
@@ -86,8 +86,10 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
     bool bLogsByDate = Settings::instance()->get("logs_by_date") == "true" ? true : false;
     if (bLogsByDate)
     {
-        QString strDate = QDate().currentDate().toString("yyyy-MM");
-        path += strDate+"/";
+        QString strDateY = QDate().currentDate().toString("yyyy");
+        QString strDateM = QDate().currentDate().toString("MM");
+        QString strDateD = QDate().currentDate().toString("dd");
+        path += strDateY+"/"+strDateM+"/"+strDateD+"/";
     }
 
     // create dir if not exist
@@ -124,7 +126,7 @@ void Log::save(const QString &strChannel, const QString &strMessage, Log::LogsFo
         path = SCC_DATA_DIR;
 #endif
 
-        strSaveMessage = strSaveMessage.replace("qrc:/images/oxygen/16x16", "file://"+path+"/images");
+        strSaveMessage = strSaveMessage.replace("qrc:/images/breeze", "file://"+path+"/images");
         strSaveMessage = strSaveMessage.replace("qrc:", "file://"+path);
     }
 

@@ -18,11 +18,11 @@
  */
 
 #include <QPainter>
-#include "avatar.h"
-#include "core.h"
-#include "defines.h"
-#include "settings.h"
-#include "themes.h"
+#include "models/avatar.h"
+#include "core/core.h"
+#include "core/defines.h"
+#include "models/settings.h"
+#include "models/themes.h"
 #include "nicklist_delegate.h"
 
 NickListDelegate::NickListDelegate(QObject *parent)

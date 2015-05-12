@@ -22,10 +22,10 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QPushButton>
-#include "core.h"
-#include "convert.h"
-#include "my_profile.h"
-#include "utils.h"
+#include "core/core.h"
+#include "common/convert.h"
+#include "models/my_profile.h"
+#include "models/utils.h"
 #include "my_profile_gui.h"
 
 MyProfileGui::MyProfileGui(QWidget *parent) : QDialog(parent)
@@ -53,10 +53,10 @@ MyProfileGui::~MyProfileGui()
 
 void MyProfileGui::createGui()
 {
-    ui.toolButton_bold->setIcon(QIcon(":/images/oxygen/16x16/format-text-bold.png"));
-    ui.toolButton_italic->setIcon(QIcon(":/images/oxygen/16x16/format-text-italic.png"));
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.toolButton_bold->setIcon(QIcon(":/images/breeze/format-text-bold.svg"));
+    ui.toolButton_italic->setIcon(QIcon(":/images/breeze/format-text-italic.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
 
     ui.label_ltype->setText(tr("Type:"));
     ui.label_sex->setText(tr("Sex:"));

@@ -26,31 +26,31 @@
 #include <QUrl>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKit/QWebElement>
-#include "channel.h"
-#include "core.h"
-#include "channel_favourites.h"
-#include "channel_settings_gui.h"
-#include "find_text_gui.h"
-#include "friends.h"
-#include "html_messages_renderer.h"
-#include "ignore.h"
-#include "log.h"
-#include "mainwindow.h"
-#include "moderation_gui.h"
-#include "notes.h"
-#include "nick.h"
-#include "punish_reason.h"
-#include "settings.h"
-#include "user_profile_gui.h"
-#include "webbrowser_gui.h"
-#include "webcam_gui.h"
+#include "models/channel.h"
+#include "core/core.h"
+#include "models/channel_favourites.h"
+#include "gui/channel_settings_gui.h"
+#include "gui/find_text_gui.h"
+#include "models/friends.h"
+#include "common/html_messages_renderer.h"
+#include "models/ignore.h"
+#include "common/log.h"
+#include "core/mainwindow.h"
+#include "gui/moderation_gui.h"
+#include "models/notes.h"
+#include "models/nick.h"
+#include "models/punish_reason.h"
+#include "models/settings.h"
+#include "gui/user_profile_gui.h"
+#include "gui/webbrowser_gui.h"
+#include "gui/webcam_gui.h"
 #include "chat_view.h"
 
 #ifdef Q_OS_WIN
     #include <QApplication>
     #include <QDir>
     #include <QSettings>
-    #include "kamerzysta.h"
+    #include "common/kamerzysta.h"
 #endif
 
 ChatView::ChatView(const QString &_strChatViewChannel) : strChatViewChannel(_strChatViewChannel), bScrollToBottom(true)
@@ -184,6 +184,11 @@ void ChatView::displayMessage(const QString &strData, MessageCategory eMessageCa
     // html logs
     if (Settings::instance()->get("logs_format") == "html")
         Log::save(strChatViewChannel, strContent, Log::Html);
+}
+
+void ChatView::channel()
+{
+    Core::instance()->mainWindow()->insertTextToInputLine(strChannel+" ");
 }
 
 void ChatView::joinChannel()
@@ -429,18 +434,13 @@ void ChatView::clear()
 void ChatView::menuChannel(QContextMenuEvent *event)
 {
     QMenu menu;
-
-    QAction *nameAct = new QAction(strChannel, &menu);
-    nameAct->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
-    nameAct->setDisabled(true);
-
-    menu.addAction(nameAct);
+    menu.addAction(QIcon(":/images/breeze/irc-join-channel.svg"), strChannel, this, SLOT(channel()));
     menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/legalmoves.png"), tr("Join channel"), this, SLOT(joinChannel()));
+    menu.addAction(QIcon(":/images/breeze/legalmoves.svg"), tr("Join channel"), this, SLOT(joinChannel()));
     if (ChannelFavourites::instance()->contains(strChannel))
-        menu.addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Remove channel from favourites"), this, SLOT(removeChannelFromFavourites()));
+        menu.addAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Remove channel from favourites"), this, SLOT(removeChannelFromFavourites()));
     else
-        menu.addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Add channel to favourites"), this, SLOT(addChannelToFavourites()));
+        menu.addAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Add channel to favourites"), this, SLOT(addChannelToFavourites()));
 
     menu.exec(event->globalPos());
 }
@@ -461,7 +461,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
 #endif
 
     QMenu *mInvite = new QMenu(tr("Invite"));
-    mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    mInvite->setIcon(QIcon(":/images/breeze/legalmoves.svg"));
     QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
     {
@@ -470,7 +470,7 @@ void ChatView::menuNick(QContextMenuEvent *event)
             strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
-        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
         openChannelsActs[i]->setData(lChannelsCleared.at(i));
@@ -481,15 +481,15 @@ void ChatView::menuNick(QContextMenuEvent *event)
      }
 
     QMenu *mKick = new QMenu(tr("Kick From Channel"));
-    mKick->setIcon(QIcon(":/images/oxygen/16x16/im-kick-user.png"));
-    mKick->addAction(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"), tr("(reason)"), this, SLOT(kickWithReason()));
+    mKick->setIcon(QIcon(":/images/breeze/im-kick-user.svg"));
+    mKick->addAction(QIcon(":/images/breeze/view-conversation-balloon.svg"), tr("(reason)"), this, SLOT(kickWithReason()));
     if (!lPunishReasons.isEmpty()) mKick->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
         QString strPunishReasons = lPunishReasons.at(i);
 
         kickReasonAct[i] = new QAction(this);
-        kickReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+        kickReasonAct[i]->setIcon(QIcon(":/images/breeze/view-conversation-balloon.svg"));
         kickReasonAct[i]->setVisible(false);
         kickReasonAct[i]->setText(strPunishReasons);
         kickReasonAct[i]->setData(lPunishReasons.at(i));
@@ -500,15 +500,15 @@ void ChatView::menuNick(QContextMenuEvent *event)
     }
 
     QMenu *mKickAndBan = new QMenu(tr("Kick & Ban"));
-    mKickAndBan->setIcon(QIcon(":/images/oxygen/16x16/im-ban-kick-user.png"));
-    mKickAndBan->addAction(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"), tr("(reason)"), this, SLOT(kbanWithReason()));
+    mKickAndBan->setIcon(QIcon(":/images/breeze/im-ban-kick-user.svg"));
+    mKickAndBan->addAction(QIcon(":/images/breeze/view-conversation-balloon.svg"), tr("(reason)"), this, SLOT(kbanWithReason()));
     if (!lPunishReasons.isEmpty()) mKickAndBan->addSeparator();
     for (int i = 0; i < lPunishReasons.size(); ++i)
     {
         QString strPunishReasons = lPunishReasons.at(i);
 
         kbanReasonAct[i] = new QAction(this);
-        kbanReasonAct[i]->setIcon(QIcon(":/images/oxygen/16x16/view-conversation-balloon.png"));
+        kbanReasonAct[i]->setIcon(QIcon(":/images/breeze/view-conversation-balloon.svg"));
         kbanReasonAct[i]->setVisible(false);
         kbanReasonAct[i]->setText(strPunishReasons);
         kbanReasonAct[i]->setData(lPunishReasons.at(i));
@@ -519,21 +519,21 @@ void ChatView::menuNick(QContextMenuEvent *event)
     }
 
     QMenu *friends = new QMenu(tr("Friends list"));
-    friends->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
+    friends->setIcon(QIcon(":/images/breeze/meeting-attending.svg"));
     if (Friends::instance()->contains(strNick))
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from friends"), this, SLOT(friendsDel()));
+        friends->addAction(QIcon(":/images/breeze/list-remove.svg"), tr("Remove from friends"), this, SLOT(friendsDel()));
     else
-        friends->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to friends"), this, SLOT(friendsAdd()));
+        friends->addAction(QIcon(":/images/breeze/list-add.svg"), tr("Add to friends"), this, SLOT(friendsAdd()));
 
     QMenu *ignore = new QMenu(tr("Ignore list"));
-    ignore->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending-tentative.png"));
+    ignore->setIcon(QIcon(":/images/breeze/meeting-attending-tentative.svg"));
     if (Ignore::instance()->contains(strNick))
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-remove.png"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
+        ignore->addAction(QIcon(":/images/breeze/list-remove.svg"), tr("Remove from Ignore list"), this, SLOT(ignoreDel()));
     else
-        ignore->addAction(QIcon(":/images/oxygen/16x16/list-add.png"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
+        ignore->addAction(QIcon(":/images/breeze/list-add.svg"), tr("Add to Ignore list"), this, SLOT(ignoreAdd()));
 
     QMenu *privilege = new QMenu(tr("Actions"));
-    privilege->setIcon(QIcon(":/images/oxygen/16x16/irc-operator.png"));
+    privilege->setIcon(QIcon(":/images/breeze/irc-operator.svg"));
 
     if ((strNickModes.contains(FLAG_OP)) && ((iSelfMaxModes >= FLAG_OWNER_INT) || (strNick == strMe)))
         privilege->addAction(QIcon(":/images/op.png"), tr("Take super operator status"), this, SLOT(opDel()));
@@ -556,29 +556,29 @@ void ChatView::menuNick(QContextMenuEvent *event)
         privilege->addAction(QIcon(":/images/voice.png"), tr("Give guest status"), this, SLOT(voiceAdd()));
 
     QMenu menu;
-    menu.addAction(QIcon(":/images/oxygen/16x16/user-identity.png"), strNick, this, SLOT(nick()));
+    menu.addAction(QIcon(":/images/breeze/user-identity.svg"), strNick, this, SLOT(nick()));
     menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
-    menu.addAction(QIcon(":/images/oxygen/16x16/text-field.png"), tr("Whois"), this, SLOT(whois()));
+    menu.addAction(QIcon(":/images/breeze/list-add-user.svg"), tr("Priv"), this, SLOT(priv()));
+    menu.addAction(QIcon(":/images/breeze/user-properties.svg"), tr("Whois"), this, SLOT(whois()));
     if (strNick.at(0) != '~')
     {
-        menu.addAction(QIcon(":/images/oxygen/16x16/view-pim-contacts.png"), tr("Profile"), this, SLOT(profile()));
+        menu.addAction(QIcon(":/images/breeze/view-pim-contacts.svg"), tr("Profile"), this, SLOT(profile()));
         if ((strNickModes.contains(FLAG_CAM_PUB)) || (strNickModes.contains(FLAG_CAM_PRIV)))
         {
             if (Settings::instance()->get("webcam") == "system")
             {
 #ifdef Q_OS_WIN
                 if (bKamerzystaExists)
-                    menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam"), this, SLOT(kamerzysta()));
+                    menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam"), this, SLOT(kamerzysta()));
                 else
-                    menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+                    menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam internal"), this, SLOT(cam()));
 #else
-                menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+                menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam internal"), this, SLOT(cam()));
 #endif
             }
             else // internal
             {
-                menu.addAction(QIcon(":/images/pubcam.png"), tr("Webcam internal"), this, SLOT(cam()));
+                menu.addAction(QIcon(":/images/breeze/camera-web.svg"), tr("Webcam internal"), this, SLOT(cam()));
             }
         }
     }
@@ -591,11 +591,11 @@ void ChatView::menuNick(QContextMenuEvent *event)
     if (iSelfMaxModes >= FLAG_HALFOP_INT)
     {
         menu.addSeparator();
-        menu.addAction(QIcon(":/images/oxygen/16x16/im-kick-user.png"), tr("Kick From Channel"), this, SLOT(kick()));
+        menu.addAction(QIcon(":/images/breeze/im-kick-user.svg"), tr("Kick From Channel"), this, SLOT(kick()));
         menu.addMenu(mKick);
-        menu.addAction(QIcon(":/images/oxygen/16x16/im-ban-user.png"), tr("Ban From Channel"), this, SLOT(ban()));
+        menu.addAction(QIcon(":/images/breeze/im-ban-user.svg"), tr("Ban From Channel"), this, SLOT(ban()));
         menu.addMenu(mKickAndBan);
-        menu.addAction(QIcon(":/images/oxygen/16x16/im-user-busy.png"), tr("IP Ban"), this, SLOT(ipban()));
+        menu.addAction(QIcon(":/images/breeze/im-user-busy.svg"), tr("IP Ban"), this, SLOT(ipban()));
     }
     if (!privilege->isEmpty())
     {
@@ -616,42 +616,42 @@ void ChatView::menuStandard(QContextMenuEvent *event)
     if (!this->selectedText().isEmpty())
     {
         QAction *copy = this->pageAction(QWebPage::Copy);
-        copy->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
+        copy->setIcon(QIcon(":/images/breeze/edit-copy.svg"));
         menu.addAction(copy);
     }
 
     QAction *selectAll = this->pageAction(QWebPage::SelectAll);
-    selectAll->setIcon(QIcon(":/images/oxygen/16x16/edit-select-all.png"));
+    selectAll->setIcon(QIcon(":/images/breeze/edit-select-all.svg"));
     menu.addAction(selectAll);
 
     if (!this->selectedText().isEmpty())
     {
-        QAction *sendToNotes = new QAction(QIcon(":/images/oxygen/16x16/story-editor.png"), tr("Send to notes"), &menu);
+        QAction *sendToNotes = new QAction(QIcon(":/images/breeze/story-editor.svg"), tr("Send to notes"), &menu);
         connect(sendToNotes, SIGNAL(triggered()), this, SLOT(sendToNotes()));
         menu.addAction(sendToNotes);
     }
 
     menu.addSeparator();
 
-    QAction *search = new QAction(QIcon(":/images/oxygen/16x16/edit-find.png"), tr("Find..."), &menu);
+    QAction *search = new QAction(QIcon(":/images/breeze/edit-find.svg"), tr("Find..."), &menu);
     connect(search, SIGNAL(triggered()), this, SLOT(search()));
     menu.addAction(search);
 
-    QAction *clear = new QAction(QIcon(":/images/oxygen/16x16/draw-eraser.png"), tr("Clear"), &menu);
+    QAction *clear = new QAction(QIcon(":/images/breeze/draw-eraser.svg"), tr("Clear"), &menu);
     connect(clear, SIGNAL(triggered()), this, SLOT(clear()));
     menu.addAction(clear);
 
     if (strChatViewChannel.at(0) == '#')
     {
         QMenu *channel = new QMenu(strChatViewChannel, &menu);
-        channel->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        channel->setIcon(QIcon(":/images/breeze/irc-operator.svg"));
         if (ChannelFavourites::instance()->contains(strChatViewChannel))
-            channel->addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Remove channel from favourites"), this, SLOT(removeCurrentChannelFromFavourites()));
+            channel->addAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Remove channel from favourites"), this, SLOT(removeCurrentChannelFromFavourites()));
         else
-            channel->addAction(QIcon(":/images/oxygen/16x16/emblem-favorite.png"), tr("Add channel to favourites"), this, SLOT(addCurrentChannelToFavourites()));
+            channel->addAction(QIcon(":/images/breeze/emblem-favorite.svg"), tr("Add channel to favourites"), this, SLOT(addCurrentChannelToFavourites()));
         if (strSelfModes.contains(FLAG_MOD))
-            channel->addAction(QIcon(":/images/oxygen/16x16/layer-visible-on.png"), tr("Moderation"), this, SLOT(openCurrentChannelModeration()));
-        channel->addAction(QIcon(":/images/oxygen/16x16/configure.png"), tr("Channel settings"), this, SLOT(openCurrentChannelSettings()));
+            channel->addAction(QIcon(":/images/moderation.svg"), tr("Moderation"), this, SLOT(openCurrentChannelModeration()));
+        channel->addAction(QIcon(":/images/settings.svg"), tr("Channel settings"), this, SLOT(openCurrentChannelSettings()));
 
         menu.addSeparator();
         menu.addMenu(channel);
@@ -700,22 +700,22 @@ void ChatView::menuWebsite(QContextMenuEvent *event)
     QMenu menu;
 
     QAction *websiteLinkAct = new QAction(strShortLink, this);
-    websiteLinkAct->setIcon(QIcon(":/images/oxygen/16x16/preferences-web-browser-shortcuts.png"));
+    websiteLinkAct->setIcon(QIcon(":/images/breeze/preferences-web-browser-shortcuts.svg"));
     websiteLinkAct->setDisabled(true);
 
     menu.addAction(websiteLinkAct);
     menu.addSeparator();
-    menu.addAction(QIcon(":/images/oxygen/16x16/applications-internet.png"), tr("Open link"), this, SLOT(openWebbrowser()));
+    menu.addAction(QIcon(":/images/breeze/applications-internet.svg"), tr("Open link"), this, SLOT(openWebbrowser()));
 
     QRegExp exYoutube_1("youtube.com/watch\\?.*v=([a-zA-Z0-9_-]{11})");
     QRegExp exYoutube_2("youtube.com/v/([a-zA-Z0-9_-]{11})");
     QRegExp exYoutube_3("youtu.be/([a-zA-Z0-9_-]{11})");
 
     if ((strWebsite.contains(exYoutube_1)) || (strWebsite.contains(exYoutube_2)) || (strWebsite.contains(exYoutube_3)))
-        menu.addAction(QIcon(":/images/oxygen/16x16/media-playback-start.png"), tr("Watch video"), this, SLOT(watchVideo()));
+        menu.addAction(QIcon(":/images/breeze/media-playback-start.svg"), tr("Watch video"), this, SLOT(watchVideo()));
 
     QAction *copyLinkToClipboard = this->pageAction(QWebPage::CopyLinkToClipboard);
-    copyLinkToClipboard->setIcon(QIcon(":/images/oxygen/16x16/edit-copy.png"));
+    copyLinkToClipboard->setIcon(QIcon(":/images/breeze/edit-copy.svg"));
     menu.addAction(copyLinkToClipboard);
 
     menu.exec(event->globalPos());

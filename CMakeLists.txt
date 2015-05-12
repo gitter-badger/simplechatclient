@@ -2,14 +2,14 @@
 project (scc)
 cmake_minimum_required (VERSION 2.8.11 FATAL_ERROR)
 include (FindPkgConfig)
-set (QT_MIN_VERSION "5.2.1")
+set (QT_MIN_VERSION "5.0.0")
 find_package(Qt5Core REQUIRED)
 find_package(Qt5LinguistTools)
 
 # gcc minimum
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+if (CMAKE_COMPILER_IS_GNUCXX)
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.8)
-        message(FATAL_ERROR "GCC version must be at least 4.8!")
+        message(FATAL_ERROR "G++ version must be at least 4.8!")
     endif()
 else()
     message(WARNING "You are using an unsupported compiler!")
@@ -20,17 +20,23 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo." FORCE)
 endif (NOT CMAKE_BUILD_TYPE)
 
-# standard
-set (CMAKE_C_FLAGS "-Wall -Wextra ${CMAKE_C_FLAGS}")
-set (CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
+if (CMAKE_COMPILER_IS_GNUCXX)
+	# standard
+	set (CMAKE_C_FLAGS "-Wall -Wextra ${CMAKE_C_FLAGS}")
+	set (CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
 
-# pedantic
-#set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
-#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++11 ${CMAKE_CXX_FLAGS}")
+	# pedantic
+	#set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
+	#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++11 ${CMAKE_CXX_FLAGS}")
 
-# debug
-#set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
-#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++11 -ggdb -pg ${CMAKE_CXX_FLAGS}")
+	# debug
+	#set (CMAKE_C_FLAGS "-Wall -Wextra -pedantic -ansi ${CMAKE_C_FLAGS}")
+	#set (CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic -ansi -std=c++11 -ggdb -pg ${CMAKE_CXX_FLAGS}")
+endif (CMAKE_COMPILER_IS_GNUCXX)
+
+if (MSVC)
+	set (COMMON_COMPILE_FLAGS "/MP")
+endif (MSVC)
 
 if (MINGW)
 	# enable ASLR
@@ -61,14 +67,14 @@ message (STATUS " * build type: ${CMAKE_BUILD_TYPE}")
 
 # install
 if (UNIX AND NOT APPLE)
-	install (FILES AUTHORS ChangeLog LICENSE README.rst scc.png TODO DESTINATION ${SCC_DATA_DIR})
+	install (FILES AUTHORS ChangeLog LICENSE README.md scc.png TODO DESTINATION ${SCC_DATA_DIR})
 	install (FILES scc.desktop DESTINATION ${SCC_SHARE_DIR}/applications)
 	
 	install (FILES images/registered_user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES images/registered_user_avatar_big.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES images/unregistered_user_avatar.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES images/unregistered_user_avatar_big.png DESTINATION ${SCC_DATA_DIR}/images)
-	install (FILES images/oxygen/16x16/media-playback-start.png DESTINATION ${SCC_DATA_DIR}/images)
+	install (FILES images/breeze/media-playback-start.svg DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES images/admin.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES images/bot.png DESTINATION ${SCC_DATA_DIR}/images)
 	install (FILES images/dev.png DESTINATION ${SCC_DATA_DIR}/images)

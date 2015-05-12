@@ -19,9 +19,9 @@
 
 #include <QDesktopWidget>
 #include <QMessageBox>
-#include "core.h"
-#include "config.h"
-#include "simple_crypt.h"
+#include "core/core.h"
+#include "common/config.h"
+#include "common/simple_crypt.h"
 #include "register_nick_gui.h"
 #include "profile_manager_gui.h"
 #include "profile_add_gui.h"
@@ -43,9 +43,9 @@ ProfileAddGui::ProfileAddGui(ProfileManagerGui *_profileManager, QWidget *parent
 
 void ProfileAddGui::createGui()
 {
-    ui.pushButton_register_nick->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
-    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+    ui.pushButton_register_nick->setIcon(QIcon(":/images/breeze/list-add-user.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
 
     ui.radioButton_unregistered_nick->setText(tr("Unregistered nick"));
     ui.radioButton_registered_nick->setText(tr("Registered nick"));

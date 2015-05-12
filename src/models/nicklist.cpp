@@ -19,10 +19,10 @@
 
 #include <QLabel>
 #include "channel.h"
-#include "core.h"
-#include "mainwindow.h"
+#include "core/core.h"
+#include "core/mainwindow.h"
 #include "message.h"
-#include "nicklist_widget.h"
+#include "widgets/nicklist_widget.h"
 #include "settings.h"
 #include "nicklist.h"
 

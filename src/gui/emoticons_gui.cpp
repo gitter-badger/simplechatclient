@@ -21,8 +21,8 @@
 #include <QDir>
 #include <QListWidget>
 #include <QPixmap>
-#include "config.h"
-#include "inputline_widget.h"
+#include "common/config.h"
+#include "widgets/inputline_widget.h"
 #include "emoticons_gui.h"
 
 #ifndef Q_OS_WIN
@@ -123,8 +123,8 @@ EmoticonsGui::EmoticonsGui(InputLineWidget *_pInputLineWidget, QWidget *parent) 
 
 void EmoticonsGui::createGui()
 {
-    ui.pushButton_insert->setIcon(QIcon(":/images/oxygen/16x16/insert-image.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_insert->setIcon(QIcon(":/images/breeze/insert-image.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_insert->setText(tr("Insert"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
@@ -165,7 +165,7 @@ void EmoticonsGui::createSignals()
     for (int i = 0; i < ui.tabWidget->count(); ++i)
     {
         EmoticonsTabGui *tab = (EmoticonsTabGui *)ui.tabWidget->widget(i);
-        connect(tab->listWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buttonInsert()));
+        connect(tab->listWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(buttonInsert()));
     }
 }
 

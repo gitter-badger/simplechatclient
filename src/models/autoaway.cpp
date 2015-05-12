@@ -19,7 +19,7 @@
 
 #include <QDateTime>
 #include <QTimer>
-#include "core.h"
+#include "core/core.h"
 #include "settings.h"
 #include "autoaway.h"
 

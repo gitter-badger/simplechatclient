@@ -21,9 +21,9 @@
 #include <QInputDialog>
 #include <QMenu>
 #include <QTimer>
-#include "core.h"
-#include "channel.h"
-#include "friends.h"
+#include "core/core.h"
+#include "models/channel.h"
+#include "models/friends.h"
 #include "friends_gui.h"
 
 FriendsGui::FriendsGui(QWidget *parent) : QDialog(parent)
@@ -44,10 +44,10 @@ void FriendsGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
-    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/list-add-user.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/list-remove-user.png"));
-    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_add->setIcon(QIcon(":/images/breeze/list-add-user.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/list-remove-user.svg"));
+    ui.toolButton_options->setIcon(QIcon(":/images/breeze/applications-system.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_remove->setText(tr("Remove"));
@@ -55,11 +55,11 @@ void FriendsGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+    optionsMenu->addAction(QIcon(":/images/breeze/list-add-user.svg"), tr("Priv"), this, SLOT(priv()));
+    optionsMenu->addAction(QIcon(":/images/breeze/user-properties.svg"), tr("Whois"), this, SLOT(whois()));
 
     QMenu *mInvite = new QMenu(tr("Invite"));
-    mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    mInvite->setIcon(QIcon(":/images/breeze/legalmoves.svg"));
 
     QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
@@ -69,7 +69,7 @@ void FriendsGui::createGui()
             strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
-        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
         openChannelsActs[i]->setData(lChannelsCleared.at(i));
@@ -104,7 +104,7 @@ void FriendsGui::refresh()
         SortedListWidgetItem *item = new SortedListWidgetItem();
         item->setData(SortedListWidgetNicklistRole, false); // is nicklist
         item->setText(it.key());
-        item->setIcon(QIcon(":/images/oxygen/16x16/meeting-attending.png"));
+        item->setIcon(QIcon(":/images/breeze/meeting-attending.svg"));
 
         if (it.value())
             ui.listWidget_online->addItem(item);

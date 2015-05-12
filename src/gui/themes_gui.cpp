@@ -19,9 +19,9 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "config.h"
-#include "settings.h"
-#include "themes.h"
+#include "common/config.h"
+#include "models/settings.h"
+#include "models/themes.h"
 #include "themes_gui.h"
 
 ThemesGui::ThemesGui(QWidget *parent) : QDialog(parent)
@@ -39,7 +39,7 @@ ThemesGui::ThemesGui(QWidget *parent) : QDialog(parent)
 
 void ThemesGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.label_view->setText(tr("View"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));

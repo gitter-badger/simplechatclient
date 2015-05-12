@@ -224,7 +224,7 @@
            <item>
             <widget class="QCheckBox" name="checkBox_with_class">
              <property name="text">
-              <string>With class</string>
+              <string>Classy</string>
              </property>
             </widget>
            </item>

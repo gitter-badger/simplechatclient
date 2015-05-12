@@ -18,7 +18,7 @@
  */
 
 #include <QDesktopWidget>
-#include "chat_view.h"
+#include "widgets/chat_view.h"
 #include "find_text_gui.h"
 
 FindTextGui::FindTextGui(ChatView *_chatView, QWidget *parent) : QDialog(parent), chatView(_chatView)
@@ -45,8 +45,8 @@ void FindTextGui::createGui()
     ui.pushButton_find_next->setText(tr("Find next"));
     ui.pushButton_close->setText(tr("Close"));
 
-    ui.pushButton_find_next->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
-    ui.pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_find_next->setIcon(QIcon(":/images/breeze/edit-find.svg"));
+    ui.pushButton_close->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.radioButton_direction_up->setChecked(true);
 }

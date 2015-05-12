@@ -19,8 +19,8 @@
 
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "defines.h"
-#include "settings.h"
+#include "core/defines.h"
+#include "models/settings.h"
 #include "about_gui.h"
 
 AboutGui::AboutGui(QWidget *parent) : QDialog(parent)
@@ -38,7 +38,7 @@ AboutGui::AboutGui(QWidget *parent) : QDialog(parent)
 
 void AboutGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+    ui.buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
     ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Ok"));
     ui.tabWidget->setTabText(0, tr("&About"));
     ui.tabWidget->setTabText(1, tr("A&uthors"));
@@ -48,19 +48,17 @@ void AboutGui::createGui()
 void AboutGui::setDefaultValues()
 {
     QString strVersionStatus = Settings::instance()->get("version_status");
+    QString strCurrentVersion = Settings::instance()->get("version");
 
     QString strVersion;
     if (strVersionStatus == UPDATE_STATUS_UPTODATE)
-        strVersion = tr("Up-to-date version");
+        strVersion = QString("%1 (%2)").arg(tr("Up-to-date version"), strCurrentVersion);
     else if (strVersionStatus == UPDATE_STATUS_BETA)
-        strVersion = tr("Unstable version");
+        strVersion = QString("%1 (%2)").arg(tr("Unstable version"), strCurrentVersion);
     else if (strVersionStatus == UPDATE_STATUS_OUTOFDATE)
          strVersion = QString("<span style=\"color:#ff0000\">%1</span>").arg(tr("A new version is available"));
     else
-    {
-        QString strCurrentVersion = Settings::instance()->get("version");
         strVersion = QString("%1 %2").arg(tr("Version"), strCurrentVersion);
-    }
 
     QString strTitle = QString("<p style=\"font-size:16px;\"><b>Simple Chat Client</b></p>");
     strTitle += "<p>"+strVersion+"</p>";

@@ -699,7 +699,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>
@@ -850,6 +850,10 @@
         <translation>Prywatny</translation>
     </message>
     <message>
+        <source>Protected</source>
+        <translation>Chroniony</translation>
+    </message>
+    <message>
         <source>Category:</source>
         <translation>Kategoria:</translation>
     </message>
@@ -890,7 +894,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>
@@ -1512,6 +1516,10 @@
     <message>
         <source>Basic</source>
         <translation>Ogólne</translation>
+    </message>
+    <message>
+        <source>Profile cannot be changed when logged</source>
+        <translation>Zmiana profilu i kompozycji dostępna po wylogowaniu z czata</translation>
     </message>
     <message>
         <source>Restart program to apply the changes.</source>
@@ -2162,6 +2170,10 @@
     <message>
         <source>Cannot open saved file</source>
         <translation>Nie można otworzyć zapisanego pliku</translation>
+    </message>
+    <message>
+        <source>Visit homepage</source>
+        <translation>Pobierz z strony internetowej</translation>
     </message>
 </context>
 <context>
@@ -2889,12 +2901,12 @@
         <translation>* Pokój %1 nie posiada już blokady uniemożliwiającej użytkownikom na automatyczny powrót do pokoju kiedy zostaną wyrzuceni (Ustawił %2)</translation>
     </message>
     <message>
-        <source>* Channel %1 now hide users joining to the channel (set by %2)</source>
-        <translation>* Pokój %1 ukrywa od teraz wchodzących do niego użytkowników (Ustawił %2)</translation>
+        <source>* Channel %1 is now protected channel (set by %2)</source>
+        <translation>* Pokój %1 jest teraz pokojem chronionym (Ustawił %2)</translation>
     </message>
     <message>
-        <source>* Channel %1 no longer hide users joining to the channel (set by %2)</source>
-        <translation>* Pokój %1 pokazuje od teraz wchodzących do niego użytkowników (Ustawił %2)</translation>
+        <source>* Channel %1 is no longer protected channel (set by %2)</source>
+        <translation>* Pokój %1 nie jest już chronionym pokojem (Ustawił %2)</translation>
     </message>
     <message>
         <source>* Channel %1 now has status %2 (set by %3)</source>
@@ -3585,7 +3597,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>
@@ -3788,7 +3800,7 @@
         <translation>Oswojony</translation>
     </message>
     <message>
-        <source>With class</source>
+        <source>Classy</source>
         <translation>Z klasą</translation>
     </message>
     <message>

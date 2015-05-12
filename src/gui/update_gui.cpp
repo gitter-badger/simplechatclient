@@ -25,7 +25,7 @@
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QUrl>
-#include "settings.h"
+#include "models/settings.h"
 #include "update_gui.h"
 
 #define DOWNLOAD_LINK "http://simplechatclien.sourceforge.net/download/"
@@ -60,7 +60,7 @@ void UpdateGui::createGui()
 #ifndef Q_OS_WIN
     ui.progressBar->hide();
 #endif
-    ui.pushButton_download->setIcon(QIcon(":/images/oxygen/16x16/download.png"));
+    ui.pushButton_download->setIcon(QIcon(":/images/breeze/download.svg"));
     ui.pushButton_download->setText(tr("Download"));
 }
 
@@ -179,6 +179,9 @@ void UpdateGui::downloadError(QNetworkReply::NetworkError)
 
 void UpdateGui::showError(const QString &strError)
 {
-    ui.label_title->setText(tr("Error"));
-    ui.label_content->setText(QString("<center><b>%1</b></center>").arg(strError));
+    ui.progressBar->hide();
+    ui.pushButton_download->hide();
+
+    ui.label_title->setText("");
+    ui.label_content->setText(QString("<center><b>%1<br/>%2<br/><br/>%3<br/><a href=\"%4\">%4</a></b></center>").arg(tr("Error"), strError, tr("Visit homepage"), "http://simplechatclien.sourceforge.net"));
 }

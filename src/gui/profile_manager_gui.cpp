@@ -20,12 +20,12 @@
 #include <QDesktopWidget>
 #include <QDir>
 #include <QMessageBox>
-#include "core.h"
+#include "core/core.h"
 #include "options_gui.h"
 #include "profile_add_gui.h"
 #include "profile_edit_gui.h"
-#include "profile_manager.h"
-#include "settings.h"
+#include "models/profile_manager.h"
+#include "models/settings.h"
 #include "profile_manager_gui.h"
 
 #ifdef Q_OS_WIN
@@ -47,10 +47,10 @@ ProfileManagerGui::ProfileManagerGui(OptionsGui *_pOptionsGui, QWidget *parent) 
 
 void ProfileManagerGui::createGui()
 {
-    ui.pushButton_add->setIcon(QIcon(":/images/oxygen/16x16/user-group-new.png"));
-    ui.pushButton_edit->setIcon(QIcon(":/images/oxygen/16x16/user-group-properties.png"));
-    ui.pushButton_remove->setIcon(QIcon(":/images/oxygen/16x16/user-group-delete.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_add->setIcon(QIcon(":/images/breeze/user-group-new.svg"));
+    ui.pushButton_edit->setIcon(QIcon(":/images/breeze/user-group-properties.svg"));
+    ui.pushButton_remove->setIcon(QIcon(":/images/breeze/user-group-delete.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_add->setText(tr("Add"));
     ui.pushButton_edit->setText(tr("Edit"));

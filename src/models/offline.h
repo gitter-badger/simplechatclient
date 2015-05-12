@@ -20,7 +20,7 @@
 #ifndef OFFLINE_H
 #define OFFLINE_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QObject>
 
 QT_BEGIN_NAMESPACE

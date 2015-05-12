@@ -20,7 +20,7 @@
 #include <QtWidgets/QApplication>
 #include <QTextCodec>
 #include "core.h"
-#include "settings.h"
+#include "models/settings.h"
 
 #include <iostream>
 

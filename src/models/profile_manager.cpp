@@ -18,7 +18,7 @@
  */
 
 #include <QDir>
-#include "config.h"
+#include "common/config.h"
 #include "settings.h"
 #include "profile_manager.h"
 

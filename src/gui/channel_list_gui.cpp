@@ -22,11 +22,11 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QTimer>
-#include "core.h"
-#include "channel_list.h"
-#include "mainwindow.h"
-#include "settings.h"
-#include "utils.h"
+#include "core/core.h"
+#include "models/channel_list.h"
+#include "core/mainwindow.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "channel_list_gui.h"
 
 ChannelListGui::ChannelListGui(QWidget *parent) : QDialog(parent)
@@ -46,10 +46,10 @@ ChannelListGui::ChannelListGui(QWidget *parent) : QDialog(parent)
 
 void ChannelListGui::createGui()
 {
-    ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
-    ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
-    ui.buttonBox->button(QDialogButtonBox::Retry)->setIcon(QIcon(":/images/oxygen/16x16/view-refresh.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_search->setIcon(QIcon(":/images/breeze/edit-find.svg"));
+    ui.pushButton_clear->setIcon(QIcon(":/images/breeze/draw-eraser.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Retry)->setIcon(QIcon(":/images/breeze/view-refresh.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.groupBox_search->setTitle(tr("Search"));
     ui.groupBox_type->setTitle(tr("Type"));
@@ -69,7 +69,7 @@ void ChannelListGui::createGui()
 
     ui.checkBox_wild->setText(tr("Wild"));
     ui.checkBox_tame->setText(tr("Tame"));
-    ui.checkBox_with_class->setText(tr("With class"));
+    ui.checkBox_with_class->setText(tr("Classy"));
     ui.checkBox_cult->setText(tr("Cult"));
     ui.checkBox_moderated->setText(tr("Moderated"));
     ui.checkBox_recommended->setText(tr("Recommended"));
@@ -81,12 +81,12 @@ void ChannelListGui::createGui()
     ui.tabWidget->setTabText(4, tr("Thematic"));
     ui.tabWidget->setTabText(5, tr("Regional"));
 
-    ui.tabWidget->setTabIcon(0, QIcon(":/images/oxygen/16x16/accessories-dictionary.png"));
-    ui.tabWidget->setTabIcon(1, QIcon(":/images/oxygen/16x16/applications-education-university.png"));
-    ui.tabWidget->setTabIcon(2, QIcon(":/images/oxygen/16x16/system-users.png"));
-    ui.tabWidget->setTabIcon(3, QIcon(":/images/oxygen/16x16/emblem-favorite.png"));
-    ui.tabWidget->setTabIcon(4, QIcon(":/images/oxygen/16x16/karbon.png"));
-    ui.tabWidget->setTabIcon(5, QIcon(":/images/oxygen/16x16/applications-education-language.png"));
+    ui.tabWidget->setTabIcon(0, QIcon(":/images/breeze/accessories-dictionary.svg"));
+    ui.tabWidget->setTabIcon(1, QIcon(":/images/breeze/applications-education-university.svg"));
+    ui.tabWidget->setTabIcon(2, QIcon(":/images/breeze/system-users.svg"));
+    ui.tabWidget->setTabIcon(3, QIcon(":/images/breeze/taxes-finances.svg"));
+    ui.tabWidget->setTabIcon(4, QIcon(":/images/breeze/karbon.svg"));
+    ui.tabWidget->setTabIcon(5, QIcon(":/images/breeze/applications-education-language.svg"));
 
     ui.buttonBox->button(QDialogButtonBox::Retry)->setText(tr("Refresh"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
@@ -407,7 +407,7 @@ void ChannelListGui::getOptions()
     // tame
     bShowTame = ui.checkBox_tame->isChecked();
 
-    // with class
+    // classy
     bShowWithClass = ui.checkBox_with_class->isChecked();
 
     // cult
@@ -440,9 +440,9 @@ void ChannelListGui::allCellDoubleClicked(int row, int column)
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
-            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            exitButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
-            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            enterButton->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
@@ -452,6 +452,8 @@ void ChannelListGui::allCellDoubleClicked(int row, int column)
         }
     }
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::teenCellDoubleClicked(int row, int column)
@@ -460,6 +462,8 @@ void ChannelListGui::teenCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_teen->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::commonCellDoubleClicked(int row, int column)
@@ -468,6 +472,8 @@ void ChannelListGui::commonCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_common->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::eroticCellDoubleClicked(int row, int column)
@@ -487,9 +493,9 @@ void ChannelListGui::eroticCellDoubleClicked(int row, int column)
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
-            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            exitButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
-            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            enterButton->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)
@@ -499,10 +505,18 @@ void ChannelListGui::eroticCellDoubleClicked(int row, int column)
             }
         }
         else
+        {
             Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+            this->close();
+        }
     }
     else
+    {
         Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+        this->close();
+    }
 }
 
 void ChannelListGui::thematicCellDoubleClicked(int row, int column)
@@ -511,6 +525,8 @@ void ChannelListGui::thematicCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_thematic->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::regionalCellDoubleClicked(int row, int column)
@@ -519,6 +535,8 @@ void ChannelListGui::regionalCellDoubleClicked(int row, int column)
 
     QString strChannel = ui.tableWidget_regional->item(row, 0)->text();
     Core::instance()->network->send(QString("JOIN %1").arg(strChannel));
+
+    this->close();
 }
 
 void ChannelListGui::buttonClear()

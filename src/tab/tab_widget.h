@@ -20,8 +20,8 @@
 #ifndef TAB_WIDGET_H
 #define TAB_WIDGET_H
 
-#include "chat_view.h"
-#include "topic_widget.h"
+#include "widgets/chat_view.h"
+#include "widgets/topic_widget.h"
 #include <QWidget>
 class NickListWidget;
 

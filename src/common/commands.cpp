@@ -20,12 +20,12 @@
 #include <QIcon>
 #include <QMessageBox>
 #include <QPushButton>
-#include "channel.h"
+#include "models/channel.h"
 #include "convert.h"
-#include "message.h"
+#include "models/message.h"
 #include "replace.h"
-#include "settings.h"
-#include "utils.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "commands.h"
 
 #ifdef Q_OS_WIN
@@ -386,9 +386,9 @@ QString Commands::cmdJoin()
             msgBox.setWindowTitle(tr("Warning"));
             msgBox.setText(QString("%1\n%2").arg(tr("Erotic category may contain content intended only for adults."), tr("To enter you must be over 18 years.")));
             QPushButton *exitButton = msgBox.addButton(tr("Exit"), QMessageBox::AcceptRole);
-            exitButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-cancel.png"));
+            exitButton->setIcon(QIcon(":/images/breeze/dialog-cancel.svg"));
             QPushButton *enterButton = msgBox.addButton(tr("Enter"), QMessageBox::RejectRole);
-            enterButton->setIcon(QIcon(":/images/oxygen/16x16/dialog-ok.png"));
+            enterButton->setIcon(QIcon(":/images/breeze/dialog-ok.svg"));
             msgBox.exec();
 
             if (msgBox.clickedButton() == enterButton)

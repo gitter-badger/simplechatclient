@@ -20,10 +20,10 @@
 #include <QLabel>
 #include <QUuid>
 #include "avatar.h"
-#include "core.h"
-#include "convert.h"
-#include "log.h"
-#include "mainwindow.h"
+#include "core/core.h"
+#include "common/convert.h"
+#include "common/log.h"
+#include "core/mainwindow.h"
 #include "channel.h"
 
 Channel * Channel::Instance = 0;

@@ -19,8 +19,8 @@
 
 #include <QDir>
 #include <QPixmap>
-#include "settings.h"
-#include "utils.h"
+#include "models/settings.h"
+#include "models/utils.h"
 #include "convert.h"
 
 #ifdef Q_OS_WIN

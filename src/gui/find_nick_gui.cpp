@@ -20,10 +20,10 @@
 #include <QDesktopWidget>
 #include <QMenu>
 #include <QTimer>
-#include "core.h"
-#include "channel.h"
-#include "defines.h"
-#include "find_nick.h"
+#include "core/core.h"
+#include "models/channel.h"
+#include "core/defines.h"
+#include "models/find_nick.h"
 #include "find_nick_gui.h"
 
 FindNickGui::FindNickGui(QWidget *parent) : QDialog(parent)
@@ -42,10 +42,10 @@ void FindNickGui::createGui()
 {
     ui.toolButton_options->setEnabled(false);
 
-    ui.pushButton_search->setIcon(QIcon(":/images/oxygen/16x16/edit-find.png"));
-    ui.pushButton_clear->setIcon(QIcon(":/images/oxygen/16x16/draw-eraser.png"));
-    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_search->setIcon(QIcon(":/images/breeze/edit-find.svg"));
+    ui.pushButton_clear->setIcon(QIcon(":/images/breeze/draw-eraser.svg"));
+    ui.toolButton_options->setIcon(QIcon(":/images/breeze/applications-system.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.label_find_nick->setText(tr("Find nick:"));
     ui.pushButton_search->setText(tr("Search"));
@@ -55,11 +55,11 @@ void FindNickGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/list-add-user.png"), tr("Priv"), this, SLOT(priv()));
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+    optionsMenu->addAction(QIcon(":/images/breeze/list-add-user.svg"), tr("Priv"), this, SLOT(priv()));
+    optionsMenu->addAction(QIcon(":/images/breeze/user-properties.svg"), tr("Whois"), this, SLOT(whois()));
 
     QMenu *mInvite = new QMenu(tr("Invite"));
-    mInvite->setIcon(QIcon(":/images/oxygen/16x16/legalmoves.png"));
+    mInvite->setIcon(QIcon(":/images/breeze/legalmoves.svg"));
 
     QList<CaseIgnoreString> lChannelsCleared = Channel::instance()->getListClearedSorted();
     for (int i = 0; i < lChannelsCleared.size(); ++i)
@@ -69,7 +69,7 @@ void FindNickGui::createGui()
             strOpenChannel = Channel::instance()->getAlternativeName(strOpenChannel);
 
         openChannelsActs[i] = new QAction(this);
-        openChannelsActs[i]->setIcon(QIcon(":/images/oxygen/16x16/irc-join-channel.png"));
+        openChannelsActs[i]->setIcon(QIcon(":/images/breeze/irc-join-channel.svg"));
         openChannelsActs[i]->setVisible(false);
         openChannelsActs[i]->setText(strOpenChannel);
         openChannelsActs[i]->setData(lChannelsCleared.at(i));

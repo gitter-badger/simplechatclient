@@ -19,7 +19,7 @@
 
 #include "webcam_mini_gui.h"
 #include "webcam_standard_gui.h"
-#include "webcam_engine.h"
+#include "common/webcam_engine.h"
 #include "webcam_gui.h"
 
 WebcamGui::WebcamGui(QString _strNick, bool _bMini) : strNick(_strNick), bMini(_bMini)

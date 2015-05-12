@@ -20,12 +20,12 @@
 #include <QEvent>
 #include <QKeyEvent>
 #include <QTextEdit>
-#include "channel.h"
-#include "commands.h"
-#include "core.h"
-#include "emoticons.h"
-#include "mainwindow.h"
-#include "nick.h"
+#include "models/channel.h"
+#include "common/commands.h"
+#include "core/core.h"
+#include "models/emoticons.h"
+#include "core/mainwindow.h"
+#include "models/nick.h"
 #include "inputline_widget.h"
 
 InputLineWidget::InputLineWidget(QWidget *parent) : QTextEdit(parent), index(0), strLastWord(QString::null), iLastMessage(-1), iLastMessageLimit(30)

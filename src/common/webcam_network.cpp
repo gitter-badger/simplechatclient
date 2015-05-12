@@ -21,7 +21,7 @@
 #include <QTcpSocket>
 #include <QTextCodec>
 #include <QTimer>
-#include "settings.h"
+#include "models/settings.h"
 #include "webcam_network.h"
 
 WebcamNetwork::WebcamNetwork() : iLastActive(0), iLastKeepAlive(0), bReconnecting(true)

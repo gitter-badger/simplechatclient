@@ -22,8 +22,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QStringList>
-#include "core.h"
-#include "update_gui.h"
+#include "core/core.h"
+#include "gui/update_gui.h"
 #include "message.h"
 #include "notification.h"
 #include "settings.h"
@@ -50,7 +50,7 @@ Update * Update::instance()
 
 Update::Update()
 {
-    updateAction = new QAction(QIcon(":/images/oxygen/16x16/download.png") , tr("Updates"), this);
+    updateAction = new QAction(QIcon(":/images/breeze/download.svg") , tr("Updates"), this);
     updateAction->setVisible(false);
 
     accessManager = new QNetworkAccessManager;
@@ -222,7 +222,8 @@ void Update::updateFinished(QNetworkReply *reply)
                 // save status
                 Settings::instance()->set("version_status", strVersionStatus);
 
-                Notification::instance()->refreshUpdate();
+                if (Settings::instance()->get("updates") == "true")
+                    Notification::instance()->refreshUpdate();
             }
         }
     }

@@ -18,13 +18,13 @@
  */
 
 #include <QSplitter>
-#include "avatar.h"
-#include "core.h"
-#include "channel.h"
-#include "log.h"
-#include "nick.h"
-#include "nicklist_widget.h"
-#include "settings.h"
+#include "models/avatar.h"
+#include "core/core.h"
+#include "models/channel.h"
+#include "common/log.h"
+#include "models/nick.h"
+#include "widgets/nicklist_widget.h"
+#include "models/settings.h"
 #include "tab_manager.h"
 #include "tab_container.h"
 

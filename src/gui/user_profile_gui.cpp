@@ -31,11 +31,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTimer>
-#include "convert.h"
-#include "core.h"
+#include "common/convert.h"
+#include "core/core.h"
 #include "user_avatar_gui.h"
-#include "user_profile.h"
-#include "utils.h"
+#include "models/user_profile.h"
+#include "models/utils.h"
 #include "user_profile_gui.h"
 
 UserProfileGui::UserProfileGui(const QString &_strNick, QWidget *parent) : QDialog(parent), strNick(_strNick)
@@ -172,9 +172,9 @@ void UserProfileGui::createGui()
     mainLayout->addWidget(pushButtonWidget);
     this->setLayout(mainLayout);
 
-    toolButton_zoom->setIcon(QIcon(":/images/oxygen/16x16/zoom-in.png"));
-    pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
-    pushButton_close->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    toolButton_zoom->setIcon(QIcon(":/images/breeze/zoom-in.svg"));
+    pushButton_more->setIcon(QIcon(":/images/breeze/go-down.svg"));
+    pushButton_close->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     label_sex->setText(tr("Sex:"));
     label_age->setText(tr("Age:"));
@@ -279,13 +279,13 @@ void UserProfileGui::buttonMore()
     if (moreWidget->isVisible())
     {
         moreWidget->setVisible(false);
-        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-add.png"));
+        pushButton_more->setIcon(QIcon(":/images/breeze/go-down.svg"));
         pushButton_more->setText(tr("More..."));
     }
     else
     {
         moreWidget->setVisible(true);
-        pushButton_more->setIcon(QIcon(":/images/oxygen/16x16/list-remove.png"));
+        pushButton_more->setIcon(QIcon(":/images/breeze/go-up.svg"));
         pushButton_more->setText(tr("Less..."));
     }
 

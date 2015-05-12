@@ -53,7 +53,7 @@ cd /D %SCC_DIR%
 :end_compile_qca
 
 if not exist %OPENSSL_DIR%\include\openssl\ssl.h (
-echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1j.exe
+echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1m.exe
 pause
 exit
 )
@@ -62,7 +62,7 @@ exit
 if exist src\scc.exe (
 del /Q /F /A src\scc.exe
 )
-cmake . -G "MinGW Makefiles" -DWIN32_QCA2_DIR=%QCA2_DIR%
+cmake . -G "MinGW Makefiles"
 mingw32-make
 
 if not exist src\scc.exe (
@@ -83,7 +83,7 @@ echo Copying main files
 xcopy AUTHORS      %DESTINATION%\ /R /Y /Q
 xcopy ChangeLog    %DESTINATION%\ /R /Y /Q
 xcopy LICENSE      %DESTINATION%\ /R /Y /Q
-xcopy README.rst   %DESTINATION%\ /R /Y /Q
+xcopy README.md    %DESTINATION%\ /R /Y /Q
 xcopy TODO         %DESTINATION%\ /R /Y /Q
 xcopy VERSION      %DESTINATION%\ /R /Y /Q
 xcopy src\scc.exe  %DESTINATION%\ /R /Y /Q
@@ -103,6 +103,7 @@ xcopy %QT_DIR%\bin\icuin53.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\icuuc53.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\icudt53.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5Sql.dll           %DESTINATION%\ /C /H /R /Y /Q
+xcopy %QT_DIR%\bin\Qt5Svg.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5Qml.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5Quick.dll           %DESTINATION%\ /C /H /R /Y /Q
 xcopy %QT_DIR%\bin\Qt5Sensors.dll           %DESTINATION%\ /C /H /R /Y /Q
@@ -120,6 +121,8 @@ xcopy %QT_DIR%\bin\libwinpthread-1.dll  %DESTINATION%\ /C /H /R /Y /Q
 echo Copying Qt plugins
 xcopy %QT_DIR%\plugins\imageformats\qgif.dll         %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\imageformats\qjpeg.dll        %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
+xcopy %QT_DIR%\plugins\imageformats\qsvg.dll         %DESTINATION%\plugins\imageformats\   /C /H /R /Y /Q
+xcopy %QT_DIR%\plugins\iconengines\qsvgicon.dll         %DESTINATION%\plugins\iconengines\   /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\mediaservice\dsengine.dll     %DESTINATION%\plugins\mediaservice\ /C /H /R /Y /Q
 xcopy %QT_DIR%\plugins\platforms\qwindows.dll        %DESTINATION%\plugins\platforms\ /C /H /R /Y /Q
 
@@ -144,7 +147,7 @@ xcopy images\registered_user_avatar.png %DESTINATION%\images\ /C /H /R /Y /Q
 xcopy images\registered_user_avatar_big.png %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\unregistered_user_avatar.png %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\unregistered_user_avatar_big.png %DESTINATION%\images\ /C /H /R /Y /Q 
-xcopy images\oxygen\16x16\media-playback-start.png %DESTINATION%\images\ /C /H /R /Y /Q 
+xcopy images\breeze\media-playback-start.svg %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\admin.png %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\bot.png %DESTINATION%\images\ /C /H /R /Y /Q 
 xcopy images\dev.png %DESTINATION%\images\ /C /H /R /Y /Q 

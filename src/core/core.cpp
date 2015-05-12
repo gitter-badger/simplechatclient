@@ -20,11 +20,11 @@
 #include <QCoreApplication>
 #include <QFile>
 #include <QTcpSocket>
-#include "config.h"
+#include "common/config.h"
 #include "mainwindow.h"
-#include "settings.h"
-#include "themes.h"
-#include "update.h"
+#include "models/settings.h"
+#include "models/themes.h"
+#include "models/update.h"
 #include "core.h"
 
 Core * Core::Instance = 0;
@@ -89,8 +89,7 @@ void Core::createAndShowGui()
     window->init();
 
     // updates
-    if (Settings::instance()->get("updates") == "true")
-        Update::instance()->checkUpdate();
+    Update::instance()->checkUpdate();
 }
 
 void Core::createSettings()

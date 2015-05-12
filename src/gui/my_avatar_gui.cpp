@@ -22,11 +22,11 @@
 #include <QPushButton>
 #include <QTimer>
 
-#include "avatar_list_widget.h"
-#include "core.h"
-#include "my_profile.h"
-#include "onet_avatar.h"
-#include "settings.h"
+#include "widgets/avatar_list_widget.h"
+#include "core/core.h"
+#include "models/my_profile.h"
+#include "onet/onet_avatar.h"
+#include "models/settings.h"
 
 #include "my_avatar_gui.h"
 
@@ -57,7 +57,7 @@ MyAvatarGui::~MyAvatarGui()
 
 void MyAvatarGui::createGui()
 {
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 }
 

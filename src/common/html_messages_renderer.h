@@ -21,7 +21,7 @@
 #define HTML_MESSAGES_RENDERER_H
 
 #include <QObject>
-#include "defines.h"
+#include "core/defines.h"
 
 class HtmlMessagesRenderer : public QObject
 {

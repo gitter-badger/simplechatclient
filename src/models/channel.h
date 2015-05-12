@@ -20,8 +20,8 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
-#include "defines.h"
-#include "tab_widget.h"
+#include "core/defines.h"
+#include "tab/tab_widget.h"
 #include <QHash>
 #include <QObject>
 

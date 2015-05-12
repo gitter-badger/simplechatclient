@@ -19,8 +19,8 @@
 
 #include <QDesktopWidget>
 #include <QMenu>
-#include "core.h"
-#include "invite.h"
+#include "core/core.h"
+#include "models/invite.h"
 #include "invite_gui.h"
 
 InviteGui::InviteGui(const QString &_strId, qint64 _iDateTime, const QString &_strNick, const QString &_strChannel, QWidget *parent) : QDialog(parent), strId(_strId), iDateTime(_iDateTime), strNick(_strNick), strChannel(_strChannel)
@@ -47,11 +47,11 @@ InviteGui::InviteGui(const QString &_strId, qint64 _iDateTime, const QString &_s
 
 void InviteGui::createGui()
 {
-    ui.pushButton_accept->setIcon(QIcon(":/images/oxygen/16x16/user-online.png"));
-    ui.pushButton_reject->setIcon(QIcon(":/images/oxygen/16x16/user-invisible.png"));
-    ui.pushButton_ignore->setIcon(QIcon(":/images/oxygen/16x16/user-busy.png"));
-    ui.toolButton_options->setIcon(QIcon(":/images/oxygen/16x16/applications-system.png"));
-    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/oxygen/16x16/dialog-close.png"));
+    ui.pushButton_accept->setIcon(QIcon(":/images/breeze/user-online.svg"));
+    ui.pushButton_reject->setIcon(QIcon(":/images/breeze/user-invisible.svg"));
+    ui.pushButton_ignore->setIcon(QIcon(":/images/breeze/user-busy.svg"));
+    ui.toolButton_options->setIcon(QIcon(":/images/breeze/applications-system.svg"));
+    ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 
     ui.pushButton_accept->setText(tr("Accept"));
     ui.pushButton_reject->setText(tr("Reject"));
@@ -61,7 +61,7 @@ void InviteGui::createGui()
     ui.buttonBox->button(QDialogButtonBox::Close)->setText(tr("Close"));
 
     QMenu *optionsMenu = new QMenu(this);
-    optionsMenu->addAction(QIcon(":/images/oxygen/16x16/user-properties.png"), tr("Whois"), this, SLOT(whois()));
+    optionsMenu->addAction(QIcon(":/images/breeze/user-properties.svg"), tr("Whois"), this, SLOT(whois()));
 
     ui.toolButton_options->setMenu(optionsMenu);
 }

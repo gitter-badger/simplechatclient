@@ -20,7 +20,7 @@
 #ifndef TAB_CONTAINER_H
 #define TAB_CONTAINER_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QObject>
 class TabManager;
 

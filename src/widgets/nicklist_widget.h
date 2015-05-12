@@ -20,7 +20,7 @@
 #ifndef NICKLIST_WIDGET_H
 #define NICKLIST_WIDGET_H
 
-#include "defines.h"
+#include "core/defines.h"
 #include <QListWidget>
 
 class NickListWidget : public QListWidget
