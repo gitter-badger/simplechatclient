@@ -20,7 +20,6 @@
 #include <QDesktopWidget>
 #include <QMenuBar>
 #include <QMessageBox>
-#include <QMovie>
 #include <QSystemTrayIcon>
 #include <QTimer>
 #include <QToolBar>
@@ -109,10 +108,6 @@ MainWindow::~MainWindow()
     QObject::disconnect(pTabM, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
     delete pTabC;
     delete pTabM;
-
-    // stop tray
-    stopAnimatedTrayIcon();
-    delete movieTrayIcon;
 
     // hide tray
     trayIcon->hide();
@@ -276,9 +271,6 @@ void MainWindow::createMenus()
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setToolTip("Simple Chat Client");
     trayIcon->setVisible(true);
-
-    // movie tray icon
-    movieTrayIcon = new QMovie(":/images/logo16x16.gif");
 }
 
 void MainWindow::createSignals()
@@ -310,7 +302,6 @@ void MainWindow::createSignals()
     connect(Offline::instance()->offlineMessagesAction, SIGNAL(triggered()), this, SLOT(openOfflineMessages()));
     connect(Update::instance()->updateAction, SIGNAL(triggered()), this, SLOT(openUpdate()));
 
-    connect(movieTrayIcon, SIGNAL(frameChanged(int)), this, SLOT(updateTrayIcon()));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
@@ -619,23 +610,10 @@ void MainWindow::openUpdate()
     UpdateGui(this).exec();
 }
 
-// animated tray icon
-void MainWindow::startAnimatedTrayIcon()
+// start alert
+void MainWindow::startAlert()
 {
-    movieTrayIcon->start();
     QApplication::alert(this, 0);
-}
-
-void MainWindow::stopAnimatedTrayIcon()
-{
-    movieTrayIcon->stop();
-    trayIcon->setIcon(QIcon(":/images/logo16x16.png"));
-}
-
-void MainWindow::updateTrayIcon()
-{
-    QIcon icon(movieTrayIcon->currentPixmap());
-    trayIcon->setIcon(icon);
 }
 
 // tray
