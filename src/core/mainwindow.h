@@ -23,7 +23,6 @@
 #include "defines.h"
 class QToolButton;
 class QMenuBar;
-class QMovie;
 class QToolBar;
 class OnetAuth;
 class OnetKernel;
@@ -65,8 +64,7 @@ public:
 
 public slots:
     void updateNick(const QString &strNick);
-    void startAnimatedTrayIcon();
-    void stopAnimatedTrayIcon();
+    void startAlert();
 
 private:
     QToolBar *toolBar;
@@ -83,7 +81,6 @@ private:
     QAction *notesAction;
     QMenu *trayIconMenu;
     QSystemTrayIcon *trayIcon;
-    QMovie *movieTrayIcon;
 
     QAction *minimizeAction;
     QAction *maximizeAction;
@@ -127,7 +124,6 @@ private slots:
     void openOptions();
     void openNotes();
     void openAbout();
-    void updateTrayIcon();
     void trayIconActivated(QSystemTrayIcon::ActivationReason activationReason);
     void toolbarOrientationChanged(Qt::Orientation orientation);
 
