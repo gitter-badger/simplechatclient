@@ -50,7 +50,7 @@ WebcamStandardGui::~WebcamStandardGui()
 
 void WebcamStandardGui::createGui()
 {
-    ui.toolButton_vote_minus->setIcon(QIcon(":/images/breeze/list-remove.svg"));
+    ui.toolButton_vote_minus->setIcon(QIcon(":/images/breeze/list-minus.svg"));
     ui.toolButton_vote_plus->setIcon(QIcon(":/images/breeze/list-add.svg"));
     ui.buttonBox->button(QDialogButtonBox::Close)->setIcon(QIcon(":/images/breeze/dialog-close.svg"));
 

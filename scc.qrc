@@ -138,5 +138,6 @@
         <file>images/options.svg</file>
         <file>images/draw-brush.svg</file>
         <file>images/moderation.svg</file>
+        <file>images/breeze/list-minus.svg</file>
     </qresource>
 </RCC>
