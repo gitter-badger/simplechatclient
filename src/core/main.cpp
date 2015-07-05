@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 
     // set organization
     QCoreApplication::setOrganizationName("scc");
-    QCoreApplication::setOrganizationDomain("simplechatclien.sourceforge.net");
+    QCoreApplication::setOrganizationDomain("simplechatclient.github.io");
     QCoreApplication::setApplicationName("scc");
 
     // debug off
