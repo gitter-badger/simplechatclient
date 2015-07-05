@@ -67,10 +67,8 @@ void Update::checkUpdate()
     checkUpdateSourceforge();
 }
 
-void Update::checkUpdateSourceforge()
+void Update::updateRequest(const QString &strMethod, const QString &strUrl, const QString &strUrlMarker)
 {
-    QString strUrl = UPDATE_URL_SOURCEFORGE;
-
     QString strAgentPlatform = this->getPlatform();
     QString strAgentUrl = "http://simplechatclien.sourceforge.net";
     QString strAgentProgram = "SimpleChatClient";
@@ -83,25 +81,29 @@ void Update::checkUpdateSourceforge()
 
     QString strUUID = Settings::instance()->get("unique_id");
     QRegExp rUUID("^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$");
-    if ((!strUUID.isEmpty()) && (rUUID.exactMatch(strUUID)))
+    if ((strMethod == "POST") && (!strUUID.isEmpty()) && (rUUID.exactMatch(strUUID)))
     {
         QString strContent = QString("{\"uuid\":\"%1\"}").arg(strUUID);
 
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         QNetworkReply *pReply = accessManager->post(request, strContent.toLatin1());
-        pReply->setProperty("update_url", UPDATE_URL_SOURCEFORGE);
+        pReply->setProperty("update_url", strUrlMarker);
     }
     else
     {
         QNetworkReply *pReply = accessManager->get(request);
-        pReply->setProperty("update_url", UPDATE_URL_SOURCEFORGE);
+        pReply->setProperty("update_url", strUrlMarker);
     }
+}
+
+void Update::checkUpdateSourceforge()
+{
+    updateRequest("POST", UPDATE_URL_SOURCEFORGE, UPDATE_URL_SOURCEFORGE);
 }
 
 void Update::checkUpdateGithub()
 {
-    QNetworkReply *pReply = accessManager->get(QNetworkRequest(QUrl(UPDATE_URL_GITHUB)));
-    pReply->setProperty("update_url", UPDATE_URL_GITHUB);
+    updateRequest("GET", UPDATE_URL_GITHUB, UPDATE_URL_GITHUB);
 }
 
 int Update::fastParseVersion(QString strVersionXml)
@@ -182,8 +184,7 @@ void Update::updateFinished(QNetworkReply *reply)
         QVariant possibleRedirectUrl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
         if (!possibleRedirectUrl.toUrl().isEmpty())
         {
-            QNetworkReply *replyRedirect = accessManager->get(QNetworkRequest(possibleRedirectUrl.toUrl()));
-            replyRedirect->setProperty("update_url", update_url);
+            updateRequest("GET", possibleRedirectUrl.toString(), update_url);
             return;
         }
 

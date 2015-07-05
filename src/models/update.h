@@ -46,6 +46,7 @@ private:
     QNetworkAccessManager *accessManager;
     QHash<QString, QString> hUpdateResults;
 
+    void updateRequest(const QString &strMethod, const QString &strUrl, const QString &strUrlMarker);
     void checkUpdateSourceforge();
     void checkUpdateGithub();
     int fastParseVersion(QString strXml);
