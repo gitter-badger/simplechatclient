@@ -2,7 +2,7 @@ Package: simplechatclient
 Version: 2.1.0
 Section: net
 Maintainer: Piotr Luczko <piotr.luczko@gmail.com>
-Homepage: http://simplechatclien.sourceforge.net/
+Homepage: http://simplechatclient.github.io/
 Priority: standard
 Installed-Size: 22000
 Architecture: i386

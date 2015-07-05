@@ -6,9 +6,9 @@ OutputBaseFilename=scc-2.1.0.0
 
 AppName=Simple Chat Client
 AppPublisher=Simple Chat Client
-AppPublisherURL=http://simplechatclien.sourceforge.net/
+AppPublisherURL=http://simplechatclient.github.io
 AppSupportURL=http://czat.onet.pl/scc,chat.html
-AppUpdatesURL=http://simplechatclien.sourceforge.net/download/
+AppUpdatesURL=http://simplechatclient.github.io/download
 
 DefaultDirName={pf32}\SimpleChatClient
 DefaultGroupName=Simple Chat Client
