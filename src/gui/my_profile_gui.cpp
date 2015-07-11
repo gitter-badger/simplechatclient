@@ -24,6 +24,7 @@
 #include <QPushButton>
 #include "core/core.h"
 #include "common/convert.h"
+#include "models/avatar.h"
 #include "models/my_profile.h"
 #include "models/utils.h"
 #include "my_profile_gui.h"
@@ -147,7 +148,7 @@ void MyProfileGui::avatarFinished(QNetworkReply *reply)
         ui.label_avatar->setPixmap(avatar.scaled(QSize(50,50), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else
-        ui.label_avatar->setText(tr("No photo available"));
+        ui.label_avatar->setPixmap(Avatar::instance()->getEmptyRegisteredUserAvatar());
 }
 
 void MyProfileGui::refresh()
@@ -164,7 +165,7 @@ void MyProfileGui::refresh()
             if (!strValue.isEmpty())
                 accessManager->get(QNetworkRequest(QUrl(strValue)));
             else
-                ui.label_avatar->setText(tr("No photo available"));
+                ui.label_avatar->setPixmap(QPixmap(Avatar::instance()->getEmptyRegisteredUserAvatar()));
         }
         else if (strKey == "birthdate")
         {

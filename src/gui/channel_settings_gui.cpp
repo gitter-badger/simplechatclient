@@ -26,6 +26,7 @@
 #include "widgets/avatar_list_widget.h"
 #include "common/convert.h"
 #include "core/core.h"
+#include "models/avatar.h"
 #include "models/channel_homes.h"
 #include "models/channel_settings.h"
 #include "models/nick.h"
@@ -1139,7 +1140,7 @@ void ChannelSettingsGui::refreshAvatar()
         return;
     }
 
-    ui.label_channel_avatar->setText(tr("No photo available"));
+    ui.label_channel_avatar->setPixmap(QPixmap(":/images/channel_avatar.png"));
 }
 
 void ChannelSettingsGui::avatarSelected(const QString &avatarUrl)

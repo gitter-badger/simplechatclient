@@ -34,6 +34,7 @@
 #include "common/convert.h"
 #include "core/core.h"
 #include "user_avatar_gui.h"
+#include "models/avatar.h"
 #include "models/user_profile.h"
 #include "models/utils.h"
 #include "user_profile_gui.h"
@@ -211,7 +212,7 @@ void UserProfileGui::refreshUserInfo()
             if (!strValue.isEmpty())
                 showAvatar(strValue);
             else
-                label_avatar->setText(tr("No photo available"));
+                label_avatar->setPixmap(QPixmap(Avatar::instance()->getEmptyRegisteredUserAvatar()));
         }
         else if (strKey == "birthdate")
         {
