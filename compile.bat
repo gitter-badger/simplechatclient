@@ -53,7 +53,7 @@ cd /D %SCC_DIR%
 :end_compile_qca
 
 if not exist %OPENSSL_DIR%\include\openssl\ssl.h (
-echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_1m.exe
+echo Download OpenSSL from http://slproweb.com/download/Win32OpenSSL-1_0_2d.exe
 pause
 exit
 )
