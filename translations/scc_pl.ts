@@ -63,10 +63,6 @@
         <source>Apply avatar</source>
         <translation>Ustaw awatar</translation>
     </message>
-    <message>
-        <source>No photo available</source>
-        <translation>Brak zdjęcia</translation>
-    </message>
 </context>
 <context>
     <name>Busy</name>
@@ -1364,10 +1360,6 @@
         <translation>Aktualny awatar:</translation>
     </message>
     <message>
-        <source>No photo available</source>
-        <translation>Brak zdjęcia</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
@@ -1405,10 +1397,6 @@
     <message>
         <source>Website:</source>
         <translation>Website:</translation>
-    </message>
-    <message>
-        <source>No photo available</source>
-        <translation>Brak zdjęcia</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2236,10 +2224,6 @@
     <message>
         <source>Less...</source>
         <translation>Mniej...</translation>
-    </message>
-    <message>
-        <source>No photo available</source>
-        <translation>Brak zdjęcia</translation>
     </message>
 </context>
 <context>
